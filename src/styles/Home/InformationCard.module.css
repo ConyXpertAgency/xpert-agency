@@ -1,0 +1,30 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    width: 17.385dvw;
+    gap: .8rem;
+    position: relative;
+    padding: 0px .2rem;
+}
+.Card:nth-child(-n + 2)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: radial-gradient(circle,rgba(130, 171, 74, 1) 0%, rgba(4, 23, 50, 1) 100%);
+}
+.Card {
+    h1 {
+        font-size: 1rem;
+        font-weight: bolder;
+    }
+    p {
+        margin-top: -.4rem;
+        font-size: .9rem;
+        opacity: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+}

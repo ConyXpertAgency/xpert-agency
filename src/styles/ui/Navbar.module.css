@@ -1,0 +1,68 @@
+.Navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1rem;
+    width: 100%;
+}
+
+.Navbar img {
+    width: 20%;
+    height: 20%;
+}
+.Navbar ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    height: 100%;
+}
+
+.Navbar section {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.Navbar ul li:hover {
+    opacity: 80%;
+    color: var(--color-success);
+}
+.Navbar ul li strong {
+    display: flex;
+    align-items: center;
+
+    gap: .4rem;
+}
+.Navbar ul li:hover strong svg {
+    transform: rotate(0.5turn);
+}
+
+.Navbar ul .active{
+    color: var(--color-success);
+    margin: .8rem;
+    transform: translateY(-.4rem);
+    border-bottom: 2px solid var(--color-success);
+}
+
+.Navbar section select{
+    cursor: pointer;
+}
+
+.Navbar section select:focus{
+    border: none;
+    outline: none;
+}
+
+.Navbar section select:hover{
+    color: var(--color-success);
+}
+
+.Navbar section a{
+    border: 2px solid var(--color-success);
+    padding: .8rem 1rem;
+    border-radius: 1.2rem;
+}
+.Navbar section a:hover{
+    background-color: var(--color-success)
+}

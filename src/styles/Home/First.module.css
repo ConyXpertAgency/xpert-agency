@@ -1,0 +1,346 @@
+.First {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+.Left {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100dvh;
+    justify-content: space-between;
+    gap: 1rem;
+    min-width: 0;
+
+}
+
+.Left header {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+
+    h1 {
+        font-size: 3rem;
+        font-weight: bolder;
+        display: flex;
+        flex-direction: column;
+    }
+
+    p {
+        font-size: 1.2rem;
+        opacity: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.Buttons {
+    display: flex;
+
+    gap: 1.2rem;
+}
+
+.Left footer {
+    display: flex;
+    gap: 1rem;
+}
+
+.Right {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    min-width: 0;
+
+    article {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+
+        section {
+            display: flex;
+            gap: .8rem;
+        }
+    }
+}
+
+.CardRight {
+    background-color: rgba(30, 49, 76, .6);
+    width: 100%;
+    border-radius: var(--radius-xl);
+    padding: .8rem;
+}
+
+.FirstCard {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+
+    header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    article {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 1.2rem;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    span {
+        width: 100%;
+        text-align: center;
+
+        h1 {
+            font-size: 3rem;
+            color: var(--color-success);
+            font-weight: bold;
+        }
+
+        p {
+            font-size: .9rem;
+        }
+    }
+}
+
+.SecondCard {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    width: 100%;
+
+    h1 {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: .4rem;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+
+            strong {
+                font-size: .9rem;
+            }
+        }
+    }
+}
+
+.ThirdCard {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.FourCard {
+    display: flex;
+    flex-direction: column;
+
+    article {
+        display: flex;
+        flex-direction: row;
+        .TextFourCard {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 60%;
+            height: 100%;
+            p {
+                display: flex;
+                flex-direction: column;
+            }
+            a {
+                display: flex;
+                align-items: center;
+                gap: .2rem;
+            }
+            a:hover {
+                opacity: 80%;
+                svg {
+                    transform: translateX(.4rem);
+                }
+            }
+        }
+    }
+
+    section {
+        scale: 1;
+        width: 100%;
+    }
+
+}
+
+.chartContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    scale: .8;
+}
+
+.chartLine {
+    fill: none;
+    stroke: var(--color-success);
+    /* Color verde claro */
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.glowPoint {
+    fill: #ffffff;
+    stroke: var(--color-success);
+    stroke-width: 3;
+    filter: drop-shadow(0px 0px 8px var(--color-success));
+}
+
+/* Sombra opcional debajo de la línea */
+.chartArea {
+    fill: url(#gradient);
+    opacity: 0.2;
+}
+
+.circularProgress {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(#a3e635 340deg, rgba(255, 255, 255, 0.2) 0deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Círculo interior para crear el efecto de "dona" (anillo) */
+.circularProgress::before {
+    content: "";
+    position: absolute;
+    width: 120px;
+    /* Ajusta este valor para cambiar el grosor del anillo */
+    height: 120px;
+    background-color: var(--color-bg-primary);
+    /* Debe coincidir con el color del fondo */
+    border-radius: 50%;
+}
+
+/* Texto del porcentaje */
+.progressValue {
+    position: relative;
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Contenedor principal del mapa */
+.mapContainer {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 2 / 1;
+    /* Aquí puedes usar una imagen de un mapa de puntos o cuadrícula */
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    /* Hace que el mapa de fondo sea sutil como en tu imagen */
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Contenedor real para que la capa de puntos tenga opacidad completa */
+.mapWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 2 / 1;
+}
+
+.mapWrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(163, 230, 53, 0.15) 10%, transparent 10%);
+    background-size: 15px 15px;
+    /* Simula la textura de puntos/grid del mapa original */
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Estilo base para cada punto brillante (hotspot) */
+.hotspot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #a3e635 !important;
+    /* Verde lima brillante */
+    border-radius: 50%;
+    box-shadow: 0 0 12px 4px #a3e635;
+    /* Efecto de brillo (glow) */
+}
+
+/* Puntos grandes o cúmulos (efecto calor difuminado) */
+.hotspotCluster {
+    position: absolute;
+    background-color: #a3e635;
+    background: radial-gradient(circle, rgba(163, 230, 53, 0.8) 0%, rgba(163, 230, 53, 0) 70%);
+    border-radius: 50%;
+}
+
+/* Coordenadas aproximadas de ejemplo para ubicar los puntos visualmente */
+.pointNa {
+    top: 35%;
+    left: 20%;
+    width: 10px;
+    height: 10px;
+}
+
+.pointSa {
+    top: 65%;
+    left: 30%;
+    width: 10px;
+    height: 10px;
+}
+
+.pointEu {
+    top: 30%;
+    left: 52%;
+    width: 10px;
+    height: 10px;
+}
+
+.pointAf {
+    top: 55%;
+    left: 53%;
+    width: 10px;
+    height: 10px;
+}
+
+.pointAs {
+    top: 35%;
+    left: 75%;
+    width: 10px;
+    height: 10px;
+}
+
+.pointAu {
+    top: 70%;
+    left: 82%;
+    width: 10px;
+    height: 10px;
+}

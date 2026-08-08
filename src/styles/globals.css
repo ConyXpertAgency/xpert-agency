@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+:root {
+  /* ─── Colores de fondo ─────────────────────────── */
+  --color-bg-primary: #041732;        /* Fondo principal (azul marino oscuro) */
+  --color-bg-secondary: #162e4c;      /* Fondo de paneles/inputs */
+  --color-bg-tertiary: #1e314c;       /* Fondo de tarjetas elevadas */
+  --color-bg-elevated: #22334b;       /* Superficies flotantes */
+  --color-bg-hover: #32465d;          /* Hover sobre fondos oscuros */
+
+  /* ─── Colores de superficie clara ──────────────── */
+  --color-surface: #f2f3f4;           /* Fondo claro (modo claro) */
+  --color-surface-hover: #b8bcc6;     /* Hover en superficie clara */
+
+  /* ─── Colores de borde ────────────────────────── */
+  --color-border: #1c314c;
+  --color-border-strong: #34455d;
+
+  /* ─── Colores de texto ────────────────────────── */
+  --color-text-primary: #f2f3f4;      /* Texto principal sobre oscuro */
+  --color-text-secondary: #b8bcc6;    /* Texto secundario */
+  --color-text-muted: #95989e;        /* Texto deshabilitado/sutil */
+  --color-text-inverse: #041732;      /* Texto sobre fondos claros */
+
+  /* ─── Colores de acento ───────────────────────── */
+  --color-accent: #6d8aac;            /* Acento azul claro */
+  --color-accent-strong: #355b8a;     /* Acento azul intenso */
+  --color-accent-soft: #486c8f;
+  --color-success: #82ab4a;           /* Verde de éxito */
+  --color-success-soft: #304b35;
+  --color-warning: #986e5d;           /* Ámbar/tierra de advertencia */
+  --color-danger: #8a3b35;            /* Rojo de error */
+  --color-warm: #514430;              /* Tono tierra */
+
+  /* ─── Tipografía ──────────────────────────────── */
+  --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-heading: var(--font-family-base);
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --font-size-xs: 0.75rem;            /* 12px */
+  --font-size-sm: 0.875rem;           /* 14px */
+  --font-size-base: 1rem;             /* 16px */
+  --font-size-lg: 1.125rem;           /* 18px */
+  --font-size-xl: 1.25rem;            /* 20px */
+  --font-size-2xl: 1.5rem;            /* 24px */
+  --font-size-3xl: 1.875rem;          /* 30px */
+  --font-size-4xl: 2.25rem;           /* 36px */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ─── Espaciado ───────────────────────────────── */
+  --spacing-1: 0.25rem;               /* 4px */
+  --spacing-2: 0.5rem;                /* 8px */
+  --spacing-3: 0.75rem;               /* 12px */
+  --spacing-4: 1rem;                  /* 16px */
+  --spacing-5: 1.5rem;                /* 24px */
+  --spacing-6: 2rem;                  /* 32px */
+  --spacing-8: 3rem;                  /* 48px */
+  --spacing-10: 4rem;                 /* 64px */
+  --spacing-12: 5rem;                 /* 80px */
+
+  /* ─── Tamaños de componentes ──────────────────── */
+  --size-xs: 1.5rem;                  /* 24px */
+  --size-sm: 2rem;                    /* 32px */
+  --size-base: 2.5rem;                /* 40px */
+  --size-lg: 3rem;                    /* 48px */
+  --size-xl: 3.5rem;                  /* 56px */
+
+  --container-max-width: 1200px;
+  --container-narrow: 800px;
+
+  /* ─── Radios de borde ─────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 100%;
+
+  /* ─── Sombras ─────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+
+  /* ─── Transiciones ────────────────────────────── */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ─── Z-index ─────────────────────────────────── */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-modal: 1030;
+  --z-tooltip: 1040;
+  --z-toast: 1050;
+
+  /* ─── Breakpoints ─────────────────────────────── */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+
+  /* ─── Scrollbar ───────────────────────────────── */
+  --scrollbar-width: 10px;
+  --scrollbar-thumb: #34455d;
+  --scrollbar-track: #041732;
+}
+
+
+@theme inline {
+  --color-background: var(--color-bg-primary);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/*@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}*/
+* {
+  transition: all .2s;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+}
+
+main {
+  padding: .8rem 2rem;
+}
+
+.details {
+  color: var(--color-success);
+  font-weight: var(--font-weight-regular);
+}
+
+.AppShell {
+  max-width: 100dvw;
+  overflow-x: hidden;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
