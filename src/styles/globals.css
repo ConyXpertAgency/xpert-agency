@@ -167,3 +167,8 @@ p {
   border-radius: var(--radius-md);
 
 }
+
+h1,h2, p {
+  display: flex;
+  flex-direction: column;
+}
