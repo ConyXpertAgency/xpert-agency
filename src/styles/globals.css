@@ -7,7 +7,8 @@
   --color-bg-tertiary: #1e314c;       /* Fondo de tarjetas elevadas */
   --color-bg-elevated: #22334b;       /* Superficies flotantes */
   --color-bg-hover: #32465d;          /* Hover sobre fondos oscuros */
-
+  --card-bg-gradient: linear-gradient(215deg,rgba(17, 44, 77, 1) 
+  20%, rgba(7, 22, 48, 1) 100%);
   /* ─── Colores de superficie clara ──────────────── */
   --color-surface: #f2f3f4;           /* Fondo claro (modo claro) */
   --color-surface-hover: #b8bcc6;     /* Hover en superficie clara */
@@ -152,4 +153,17 @@ main {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  gap: 2rem;
+}
+
+p {
+  opacity: 80%;
+}
+
+.line {
+  background-color: var(--color-success);
+  width: 6rem;
+  height: .3rem;
+  border-radius: var(--radius-md);
+
 }

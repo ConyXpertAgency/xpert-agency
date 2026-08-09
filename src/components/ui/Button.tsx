@@ -3,7 +3,7 @@ import styles from '../../styles/ui/Button.module.css'
 import { FaArrowRight } from 'react-icons/fa'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'full' | 'outline' | 'ghost'
+    variant?: 'full' | 'outline' | 'outlineG' | 'ghost'
     children?: React.ReactNode
     arrow?: boolean
 }
@@ -11,6 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const variantMap: Record<string, string> = {
     full: styles.full,
     outline: styles.outline,
+    outlineG: styles.outlineG,
     ghost: styles.ghost,
 }
 

@@ -77,6 +77,8 @@
     display: flex;
     flex-direction: column;
     gap: .4rem;
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
 
     header {
         display: flex;
@@ -113,6 +115,8 @@
     flex-direction: column;
     gap: .8rem;
     width: 100%;
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
 
     h1 {
         font-size: 1rem;
@@ -142,12 +146,15 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
 }
 
 .FourCard {
     display: flex;
     flex-direction: column;
-
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
     article {
         display: flex;
         flex-direction: row;

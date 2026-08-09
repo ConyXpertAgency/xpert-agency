@@ -1,0 +1,38 @@
+.Card {
+    background: var(--card-bg-gradient);
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-bg-secondary);
+    min-height: 30dvh;
+    padding: .8rem;
+    cursor: pointer;
+    gap: .8rem;
+    
+    .Img {
+        box-shadow: 0 0 2px 2px var(--color-bg-hover);
+    }
+    .Text {
+        h1 {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            svg {
+                color: var(--color-success);
+            }
+        }
+        p {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+.Card:hover {
+    transform: translateY(-.4rem);
+}
+
+.Card:hover span h1 svg {
+
+    transform: translateX(.4rem);
+}

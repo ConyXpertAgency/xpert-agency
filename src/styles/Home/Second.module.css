@@ -1,0 +1,83 @@
+.Second {
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    ul {
+        padding: 1rem;
+        margin-top: 2rem;
+        display: flex;
+        height: 20dvh;
+        background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
+        border-radius: var(--radius-lg);
+        align-items: center;
+        justify-content: space-around;
+        box-shadow: 5px 5px 20px 1px var(--color-bg-secondary);
+
+        li {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: .8rem 2rem;
+            h1 {
+                font-size: 2rem;
+                font-weight: bold;
+                color: var(--color-success);
+            }
+            svg {
+                color: var(--color-success);
+            }
+
+        }
+
+        li:nth-child(-n +3) {
+            border-right: 2px solid var(--color-bg-secondary);
+        }
+    }
+}
+
+.Footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    button {
+        color: var(--color-success);
+        font-weight: bold;
+    }
+    button:hover {
+        color: var(--color-surface);
+    }
+}
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    article {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bolder;
+
+        }
+    }
+
+    p {
+        width: 60%;
+    }
+}
+
+.Content {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}

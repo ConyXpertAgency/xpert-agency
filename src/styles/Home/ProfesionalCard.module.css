@@ -1,0 +1,46 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
+    border: 2px solid var(--color-bg-secondary);
+    padding: .8rem;
+    border-radius: var(--radius-xl);
+    width: 22dvw;
+    box-shadow: -5px 6px 20px 1px var(--color-bg-secondary);
+    picture {
+        width: 100%;
+        aspect-ratio: 1;
+        background-size: cover;
+        background-position: center;
+        border-radius: var(--radius-lg);
+    }
+    header {
+        h1 {
+            font-size: 1.4rem;
+            font-weight: bolder;
+        }
+        strong {
+            font-size: 1.1rem;
+        }
+    }
+    footer {
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+        p {
+            display: flex;
+            flex-direction: column;
+        }
+        section {
+            display: flex;
+            gap: .4rem;
+        }
+        button {
+            width: 50%;
+            font-size: .8rem;
+            border-radius: 2rem;
+        }
+    }
+}

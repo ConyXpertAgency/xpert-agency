@@ -7,8 +7,7 @@ import { GiChart, GiRobotGrab } from 'react-icons/gi'
 import styles from '@/styles/Home/First.module.css'
 import InformationCard from './InformationCard'
 import PictureSvg from '../ui/PictureSvg'
-import { IoIosMore } from 'react-icons/io'
-import { FaArrowLeft, FaArrowRight, FaCogs, FaProjectDiagram, FaTruckMoving } from 'react-icons/fa'
+import { FaArrowRight, FaCogs, FaProjectDiagram, FaTruckMoving } from 'react-icons/fa'
 
 const First = () => {
     return (
@@ -133,7 +132,7 @@ const First = () => {
                             <span className={`${styles.TextFourCard}`}>
                                 <div className={`${styles.Jeje}`}></div>
                                 <p><span>Delivering value</span><span> across industries</span>  and borders.</p>
-                                <Link href={'/cases'} className='details'>See our cases <FaArrowRight/></Link>
+                                <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
                             </span>
 
                         </article>

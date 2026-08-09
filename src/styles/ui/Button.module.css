@@ -47,6 +47,17 @@
     box-shadow: 0px 1px 10px var(--color-surface);
     text-shadow: 0px 1px 5px var(--color-text-inverse);
 }
+.outlineG {
+    background: transparent;
+    color: var(--color-surface);
+    border-color: var(--color-success);
+}
+
+.outlineG:hover:not(:disabled) {
+    background: var(--color-success);
+    box-shadow: 0px 1px 10px var(--color-success);
+    text-shadow: 0px 1px 5px var(--color-surface);
+}
 
 .ghost {
     background: transparent;
