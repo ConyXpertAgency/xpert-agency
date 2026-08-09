@@ -1,0 +1,93 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+
+    article:first-child {
+        display: flex;
+        flex-direction: column;
+        gap: .4rem;
+
+        h1 {
+            font-weight: bolder;
+            font-size: 3rem;
+        }
+
+        p {
+            max-width: 60%;
+            opacity: 90%;
+        }
+    }
+
+    p {
+        display: inline;
+    }
+
+    article:last-child {
+        width: 35%;
+    }
+
+    strong {
+        opacity: 100% !important;
+    }
+}
+
+.Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .8rem;
+
+    li {
+        display: flex;
+        gap: .8rem;
+        background-color: var(--color-surface);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+
+        svg,
+        span {
+            color: var(--color-text-inverse);
+        }
+
+        .TextCardC {
+            width: 80%;
+
+            h1 {
+                font-weight: bold;
+            }
+        }
+
+        .Picture {
+            background-color: var(--color-surface-hover);
+        }
+        cursor: pointer;
+    }
+    li:hover {
+        opacity: 80%;
+        transform: translateY(-.4rem);
+    }
+}
+
+.FooterCard {
+    display: flex;
+    background: var(--card-bg-gradient);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--color-bg-hover);
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    header {
+        display: flex;
+        gap: .8rem;
+        align-items: center;
+    }
+
+    button {
+        color: var(--color-text-inverse);
+
+    }
+
+    button:hover {
+        text-shadow: var(--color-text-inverse) !important;
+    }
+}
