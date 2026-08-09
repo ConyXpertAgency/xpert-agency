@@ -128,7 +128,7 @@
   }
 }*/
 * {
-  transition: all .2s;
+  transition: all .2s ease-in-out;
 }
 
 body {
@@ -168,7 +168,7 @@ p {
 
 }
 
-h1,h2, p {
+h1,h2, p, span {
   display: flex;
   flex-direction: column;
 }

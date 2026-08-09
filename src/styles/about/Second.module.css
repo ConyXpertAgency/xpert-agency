@@ -1,0 +1,178 @@
+.Second {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    gap: 2rem;
+}
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.TextH {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    h1 {
+        font-size: 3rem;
+        font-weight: bolder;
+    }
+}
+
+.CardH {
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg-gradient);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.2rem;
+    align-items: start;
+    gap: 1rem;
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: .8rem;
+
+        p {
+            opacity: 100%;
+        }
+    }
+
+    svg {
+        color: var(--color-success);
+    }
+
+    footer {
+        display: flex;
+        gap: .8rem;
+        border-top: 2px solid var(--color-bg-secondary);
+        padding: 1rem;
+
+        strong {
+            color: var(--color-success);
+        }
+    }
+}
+
+.Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    place-items: center;
+    gap: .8rem;
+
+    div {
+        width: 4rem;
+    }
+
+    .number {
+        color: var(--color-success);
+        border-radius: var(--radius-full);
+        width: 4rem;
+        height: 4rem;
+        border: 2px solid var(--color-success);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    li {
+        width: 100%;
+    }
+
+    article {
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+        background: var(--card-bg-gradient);
+        border-radius: var(--radius-lg);
+        height: 60dvh;
+        width: 100%;
+        padding: .8rem;
+        border: 2px solid var(--color-bg-hover);
+        .Picture {
+            margin: 0 auto;
+            background: var(--card-bg-gradient);
+        }
+        h1 {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+    }
+}
+
+.CardCText {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    padding: .8rem;
+    ul {
+        padding: 1rem;
+        li {
+            list-style-type: disc !important;
+            font-size: .9rem;
+            opacity: .8;
+        }
+        li::marker {
+            color: var(--color-success);
+
+        }
+    }
+}
+
+.FooterCard {
+    background: var(--card-bg-gradient);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: .8rem;
+    box-shadow: 0 5px 10px 5px var(--color-bg-secondary);
+    border: 2px solid var(--color-bg-hover);
+    svg {
+        color: var(--color-success);
+    }
+    margin-top: -1.4rem;
+    span {
+        flex-direction: row;
+        gap: 1rem;
+        strong {
+            color: var(--color-success);
+            border-right: 2px solid var(--color-bg-hover);
+            padding: 0 1.2rem 0 0 ;
+        }
+    }
+}
+
+.List {
+    display: flex;
+    justify-content: space-between;
+    gap: .8rem;
+    li {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+        span {
+            width: 80%;
+            h1 {
+                font-weight: bold;
+            }
+        }
+    }
+    li:nth-child(-n + 3) {
+        span {
+            p {
+                padding: 0 1.2rem 0 0;
+                border-right: 2px solid var(--color-bg-hover);
+
+            }
+
+        }
+    }
+}
