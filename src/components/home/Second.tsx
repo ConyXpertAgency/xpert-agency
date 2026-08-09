@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfesionalCard from './ProfesionalCard'
+import { ProfesionalCard } from './index'
 import Button from '../ui/Button'
 import styles from '@/styles/Home/Second.module.css'
 import { GiGlobe } from 'react-icons/gi'

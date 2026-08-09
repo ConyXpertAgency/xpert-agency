@@ -1,32 +1,36 @@
+"use client"
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import styles from '@/styles/ui/Navbar.module.css'
 import { FaChevronDown } from 'react-icons/fa'
 
+const links = [
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+    { href: '/services', label: 'Services', hasDropdown: true },
+    { href: '/industries', label: 'Industries', hasDropdown: true },
+    { href: '/cases', label: 'Cases' },
+]
+
 const Navbar = () => {
+    const pathname = usePathname()
+
+    const isActive = (href: string) =>
+        href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`)
+
     return (
         <nav className={styles.Navbar}>
             <Image src={"/xpert_agency_logo.png"} alt='' width={500} height={20} />
             <ul>
-                <Link href={'/'}>
-                    <li className={styles.active}><strong>Home</strong></li>
-                </Link>
-                <Link href={'/about'}>
-                    <li><strong>About</strong></li>
-                </Link>
-                <Link href={'/services'}>
-                    <li>
-                        <strong>Services <FaChevronDown size={12}/></strong>
-                    </li>
-                </Link>
-                <Link href={'/industries'}>
-                    <li>
-                        <strong>Industries <FaChevronDown size={12}/></strong>
-                    </li>
-                </Link>
-                <Link href={'/cases'}>
-                    <li><strong>Cases</strong></li>
-                </Link>
+                {links.map(({ href, label, hasDropdown }) => (
+                    <Link key={href} href={href}>
+                        <li className={isActive(href) ? styles.active : undefined}>
+                            <strong>{label} {hasDropdown && <FaChevronDown size={12} />}</strong>
+                        </li>
+                    </Link>
+                ))}
             </ul>
             <section>
                 <select id="lang">

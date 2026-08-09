@@ -4,7 +4,7 @@ import { CiGlobe } from 'react-icons/ci'
 import { IoRocketOutline, IoShieldCheckmarkOutline } from 'react-icons/io5'
 import { GrGroup } from 'react-icons/gr'
 import styles from '@/styles/Home/Four.module.css'
-import OperationsCard from './OperationsCard'
+import { OperationsCard } from './index'
 import { BiTargetLock } from 'react-icons/bi'
 
 const Four = () => {

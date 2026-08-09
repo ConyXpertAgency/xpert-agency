@@ -5,7 +5,7 @@ import { IoShieldCheckmarkOutline } from 'react-icons/io5'
 import { CiGlobe } from 'react-icons/ci'
 import { GiChart, GiRobotGrab } from 'react-icons/gi'
 import styles from '@/styles/Home/First.module.css'
-import InformationCard from './InformationCard'
+import { InformationCard } from './index'
 import PictureSvg from '../ui/PictureSvg'
 import { FaArrowRight, FaCogs, FaProjectDiagram, FaTruckMoving } from 'react-icons/fa'
 

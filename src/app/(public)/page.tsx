@@ -1,7 +1,4 @@
-import First from "@/components/home/First";
-import Four from "@/components/home/Four";
-import Second from "@/components/home/Second";
-import Third from "@/components/home/Third";
+import { First, Four, Second, Third } from "@/components/home";
 
 
 export default function Home() {

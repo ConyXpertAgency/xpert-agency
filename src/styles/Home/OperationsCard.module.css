@@ -17,6 +17,7 @@
             display: flex;
             align-items: center;
             gap: .4rem;
+            font-weight: bold;
             svg {
                 color: var(--color-success);
             }
