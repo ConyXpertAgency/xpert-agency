@@ -1,0 +1,24 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.2rem;
+    article {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        gap: 1.2rem;
+        h1 {
+            font-size: 3rem;
+            font-weight: bolder;
+        }
+    }
+    p {
+        width: 40%;
+    }
+}
+.Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .8rem;
+}

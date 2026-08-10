@@ -13,6 +13,7 @@
   --color-bg-hover: #32465d;
   /* Hover sobre fondos oscuros */
   --card-bg-gradient: linear-gradient(215deg, #112c4d 20%, #071630 100%);
+  --card-bg-gradient3: linear-gradient(215deg, rgba(17, 44, 77, .6) 20%, rgba(7, 22, 48, .8) 100%);
   --card-bg-gradient2: linear-gradient(0deg,rgba(7, 22, 48, .95) 20%, rgba(17, 44, 77, .6) 40%, rgba(17, 44, 77,  .1) 100%);;
   /* ─── Colores de superficie clara ──────────────── */
   --color-surface: #f2f3f4;
