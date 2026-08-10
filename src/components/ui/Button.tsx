@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from '../../styles/ui/Button.module.css'
 import { FaArrowRight } from 'react-icons/fa'
+import styles from '../../styles/ui/Button.module.css'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'full' | 'outline' | 'outlineG' | 'ghost'
@@ -15,7 +15,7 @@ const variantMap: Record<string, string> = {
     ghost: styles.ghost,
 }
 
-const Button = ({ variant = 'full', children, arrow,className, ...rest }: ButtonProps) => {
+const Button = ({ variant = 'full', children, arrow, className, ...rest }: ButtonProps) => {
     return (
         <button
             className={`${styles.base} ${variantMap[variant]} ${className ?? ''}`}

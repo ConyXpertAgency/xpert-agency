@@ -2,50 +2,75 @@
 
 :root {
   /* ─── Colores de fondo ─────────────────────────── */
-  --color-bg-primary: #041732;        /* Fondo principal (azul marino oscuro) */
-  --color-bg-secondary: #162e4c;      /* Fondo de paneles/inputs */
-  --color-bg-tertiary: #1e314c;       /* Fondo de tarjetas elevadas */
-  --color-bg-elevated: #22334b;       /* Superficies flotantes */
-  --color-bg-hover: #32465d;          /* Hover sobre fondos oscuros */
-  --card-bg-gradient: linear-gradient(215deg,rgba(17, 44, 77, 1) 
-  20%, rgba(7, 22, 48, 1) 100%);
+  --color-bg-primary: #041732;
+  /* Fondo principal (azul marino oscuro) */
+  --color-bg-secondary: #162e4c;
+  /* Fondo de paneles/inputs */
+  --color-bg-tertiary: #1e314c;
+  /* Fondo de tarjetas elevadas */
+  --color-bg-elevated: #22334b;
+  /* Superficies flotantes */
+  --color-bg-hover: #32465d;
+  /* Hover sobre fondos oscuros */
+  --card-bg-gradient: linear-gradient(215deg, #112c4d 20%, #071630 100%);
+  --card-bg-gradient2: linear-gradient(0deg,rgba(7, 22, 48, .95) 20%, rgba(17, 44, 77, .6) 40%, rgba(17, 44, 77,  .1) 100%);;
   /* ─── Colores de superficie clara ──────────────── */
-  --color-surface: #f2f3f4;           /* Fondo claro (modo claro) */
-  --color-surface-hover: #b8bcc6;     /* Hover en superficie clara */
+  --color-surface: #f2f3f4;
+  /* Fondo claro (modo claro) */
+  --color-surface-hover: #b8bcc6;
+  /* Hover en superficie clara */
 
   /* ─── Colores de borde ────────────────────────── */
   --color-border: #1c314c;
   --color-border-strong: #34455d;
 
   /* ─── Colores de texto ────────────────────────── */
-  --color-text-primary: #f2f3f4;      /* Texto principal sobre oscuro */
-  --color-text-secondary: #b8bcc6;    /* Texto secundario */
-  --color-text-muted: #95989e;        /* Texto deshabilitado/sutil */
-  --color-text-inverse: #041732;      /* Texto sobre fondos claros */
+  --color-text-primary: #f2f3f4;
+  /* Texto principal sobre oscuro */
+  --color-text-secondary: #b8bcc6;
+  /* Texto secundario */
+  --color-text-muted: #95989e;
+  /* Texto deshabilitado/sutil */
+  --color-text-inverse: #041732;
+  /* Texto sobre fondos claros */
 
   /* ─── Colores de acento ───────────────────────── */
-  --color-accent: #6d8aac;            /* Acento azul claro */
-  --color-accent-strong: #355b8a;     /* Acento azul intenso */
+  --color-accent: #6d8aac;
+  /* Acento azul claro */
+  --color-accent-strong: #355b8a;
+  /* Acento azul intenso */
   --color-accent-soft: #486c8f;
-  --color-success: #82ab4a;           /* Verde de éxito */
+  --color-success: #82ab4a;
+  /* Verde de éxito */
   --color-success-soft: #304b35;
-  --color-warning: #986e5d;           /* Ámbar/tierra de advertencia */
-  --color-danger: #8a3b35;            /* Rojo de error */
-  --color-warm: #514430;              /* Tono tierra */
+  --color-warning: #986e5d;
+  /* Ámbar/tierra de advertencia */
+  --color-danger: #8a3b35;
+  /* Rojo de error */
+  --color-warm: #514430;
+  /* Tono tierra */
 
   /* ─── Tipografía ──────────────────────────────── */
   --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-family-heading: var(--font-family-base);
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --font-size-xs: 0.75rem;            /* 12px */
-  --font-size-sm: 0.875rem;           /* 14px */
-  --font-size-base: 1rem;             /* 16px */
-  --font-size-lg: 1.125rem;           /* 18px */
-  --font-size-xl: 1.25rem;            /* 20px */
-  --font-size-2xl: 1.5rem;            /* 24px */
-  --font-size-3xl: 1.875rem;          /* 30px */
-  --font-size-4xl: 2.25rem;           /* 36px */
+  --font-size-xs: 0.75rem;
+  /* 12px */
+  --font-size-sm: 0.875rem;
+  /* 14px */
+  --font-size-base: 1rem;
+  /* 16px */
+  --font-size-lg: 1.125rem;
+  /* 18px */
+  --font-size-xl: 1.25rem;
+  /* 20px */
+  --font-size-2xl: 1.5rem;
+  /* 24px */
+  --font-size-3xl: 1.875rem;
+  /* 30px */
+  --font-size-4xl: 2.25rem;
+  /* 36px */
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -57,22 +82,36 @@
   --line-height-relaxed: 1.75;
 
   /* ─── Espaciado ───────────────────────────────── */
-  --spacing-1: 0.25rem;               /* 4px */
-  --spacing-2: 0.5rem;                /* 8px */
-  --spacing-3: 0.75rem;               /* 12px */
-  --spacing-4: 1rem;                  /* 16px */
-  --spacing-5: 1.5rem;                /* 24px */
-  --spacing-6: 2rem;                  /* 32px */
-  --spacing-8: 3rem;                  /* 48px */
-  --spacing-10: 4rem;                 /* 64px */
-  --spacing-12: 5rem;                 /* 80px */
+  --spacing-1: 0.25rem;
+  /* 4px */
+  --spacing-2: 0.5rem;
+  /* 8px */
+  --spacing-3: 0.75rem;
+  /* 12px */
+  --spacing-4: 1rem;
+  /* 16px */
+  --spacing-5: 1.5rem;
+  /* 24px */
+  --spacing-6: 2rem;
+  /* 32px */
+  --spacing-8: 3rem;
+  /* 48px */
+  --spacing-10: 4rem;
+  /* 64px */
+  --spacing-12: 5rem;
+  /* 80px */
 
   /* ─── Tamaños de componentes ──────────────────── */
-  --size-xs: 1.5rem;                  /* 24px */
-  --size-sm: 2rem;                    /* 32px */
-  --size-base: 2.5rem;                /* 40px */
-  --size-lg: 3rem;                    /* 48px */
-  --size-xl: 3.5rem;                  /* 56px */
+  --size-xs: 1.5rem;
+  /* 24px */
+  --size-sm: 2rem;
+  /* 32px */
+  --size-base: 2.5rem;
+  /* 40px */
+  --size-lg: 3rem;
+  /* 48px */
+  --size-xl: 3.5rem;
+  /* 56px */
 
   --container-max-width: 1200px;
   --container-narrow: 800px;
@@ -168,7 +207,10 @@ p {
 
 }
 
-h1,h2, p, span {
+h1,
+h2,
+p,
+span {
   display: flex;
   flex-direction: column;
 }

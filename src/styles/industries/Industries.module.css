@@ -1,0 +1,51 @@
+.Header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    h1 {
+        font-size: 3rem;
+        font-weight: bolder;
+    }
+    p {
+        width: 35%;
+    }
+}
+.Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .8rem;
+}
+.InfoCard {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.2rem;
+    border-radius: var(--radius-xl);
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-hover);
+    header {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+        h1 {
+            font-weight: bold;
+        }
+        span:first-child {
+            border-radius: var(--radius-md);
+            border: 2px solid var(--color-bg-hover);
+        }
+    }
+    a {
+        color: var(--color-success);
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+    }
+    a:hover {
+        text-decoration: underline;
+        opacity: .8;
+        svg {
+            transform: translateX(.4rem);
+        }
+    }
+}
