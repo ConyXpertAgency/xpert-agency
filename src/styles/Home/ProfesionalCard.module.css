@@ -7,8 +7,10 @@
     border: 2px solid var(--color-bg-secondary);
     padding: .8rem;
     border-radius: var(--radius-xl);
-    width: 22dvw;
+    width: 23dvw;
     box-shadow: -5px 6px 20px 1px var(--color-bg-secondary);
+    height: 100%;
+    justify-content: space-between;
     picture {
         width: 100%;
         aspect-ratio: 1;
@@ -39,8 +41,9 @@
         }
         button {
             width: 50%;
-            font-size: .8rem;
+            font-size: .75rem;
             border-radius: 2rem;
+
         }
     }
 }

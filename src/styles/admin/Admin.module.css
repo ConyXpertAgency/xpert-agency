@@ -1,0 +1,934 @@
+.AdminBody {
+  margin: 0;
+  background: #0e1220;
+  color: #e6e9f0;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* ── General ─────────────────────────────────────────── */
+.CenterScreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.Muted {
+  color: #8a93a8;
+  font-size: 0.85rem;
+}
+
+.ErrorText {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin: 4px 0;
+}
+
+.SavedText {
+  color: #4ade80;
+  font-size: 0.85rem;
+  margin: 4px 0;
+}
+
+.PrimaryBtn {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.PrimaryBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.OutlineBtn {
+  background: transparent;
+  border: 1px solid #3a4256;
+  color: #c7cfdd;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.DangerBtn {
+  background: transparent;
+  border: 1px solid #7f1d1d;
+  color: #f87171;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.ConfirmDanger {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+  animation: pulse 0.6s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.55;
+  }
+}
+
+/* ── Login ───────────────────────────────────────────── */
+.LoginCard {
+  background: #171c2e;
+  border: 1px solid #2a3350;
+  border-radius: 14px;
+  padding: 32px;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.LoginCard h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.LoginCard label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #aab2c5;
+}
+
+.LoginCard input {
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #e6e9f0;
+  font-size: 0.9rem;
+}
+
+/* ── Shell ───────────────────────────────────────────── */
+.Shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.Topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #141927;
+  border-bottom: 1px solid #262e45;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.Topbar > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.TopbarActions {
+  display: flex;
+  gap: 8px;
+}
+
+.Main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* ── Sidebar ─────────────────────────────────────────── */
+.Sidebar {
+  width: 260px;
+  min-width: 260px;
+  max-height: 100dvh;
+  background: #11162a;
+  border-right: 1px solid #262e45;
+  overflow-y: auto;
+  padding: 16px 12px;
+}
+
+.Sidebar h3 {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a93a8;
+}
+
+.Group {
+  margin-bottom: 14px;
+}
+
+.Group h4 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: #5b6478;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.SectionBtn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #c7cfdd;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.SectionBtn:hover {
+  background: #1b2238;
+}
+
+.ActiveSection {
+  background: #1d2c55;
+  border-color: #2f4783;
+  color: #fff;
+}
+
+.LangBadges {
+  display: flex;
+  gap: 4px;
+  padding: 4px 8px;
+}
+
+.LangBadge {
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  color: #8a93a8;
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ActiveLang {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.GroupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #182040;
+  border: 1px solid #26304f;
+  color: #dbe4ff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.GroupHeader:hover {
+  background: #1d2a55;
+  border-color: #2f4783;
+}
+
+.GroupHeaderOpen {
+  background: #1b2a4e;
+  border-color: #2f4783;
+}
+
+.GroupCaret {
+  color: #5b6478;
+  font-size: 0.7rem;
+}
+
+.GroupBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 4px;
+}
+
+.SectionRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.DeprecatedBlock {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed #3a4256;
+}
+
+.DeprecatedBlock h4 {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  color: #8a6240;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.DeprecatedCollection {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9a8260;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 2px;
+}
+
+.DeprecatedTag {
+  background: #2b2012;
+  border: 1px solid #6b4f1f;
+  color: #d9a441;
+  font-size: 0.6rem;
+  padding: 1px 6px;
+  border-radius: 20px;
+  text-transform: lowercase;
+  font-weight: 500;
+}
+
+.DeprecatedSection {
+  color: #a08d6a;
+  text-decoration: line-through;
+  text-decoration-color: rgba(217, 164, 65, 0.35);
+}
+
+.DeprecatedSection:hover {
+  color: #d9c9a3;
+}
+
+.LangBadgeNew {
+  border-style: dashed;
+  border-color: #3b82f6;
+  color: #60a5fa;
+}
+
+.LangBadgeNew:hover {
+  background: #1d2c55;
+  color: #fff;
+}
+
+.NewBanner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #2a1f0e;
+  border: 1px solid #a16207;
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #fcd34d;
+  font-size: 0.85rem;
+}
+
+.NewBanner strong {
+  color: #fbbf24;
+}
+
+/* ── Secciones del editor visual ─────────────────────── */
+.VSection {
+  border: 1px solid #262e45;
+  border-radius: 12px;
+  background: #0e1424;
+  overflow: hidden;
+}
+
+.VSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  background: linear-gradient(90deg, #1b2a4e, #141927);
+  border-bottom: 1px solid #262e45;
+}
+
+.VSectionHeader strong {
+  color: #dbe4ff;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.VSectionHeader span {
+  color: #5b6478;
+  font-size: 0.7rem;
+}
+
+.VSectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+}
+
+/* ── Editor ──────────────────────────────────────────── */
+.Editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 16px;
+  gap: 12px;
+  overflow-y: auto;
+  max-height: 100dvh;
+}
+
+.EmptyState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a93a8;
+}
+
+.EditorHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.EditorHeader > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.EditorHeader > div:first-child strong {
+  font-size: 1.1rem;
+}
+
+.EditorHeaderActions {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.LangSwitch {
+  display: flex;
+  gap: 4px;
+}
+
+.LangSwitchBtn {
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  color: #c7cfdd;
+  padding: 7px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.SizeRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.SizeRow label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: #8a93a8;
+}
+
+.SizeRow input {
+  width: 64px;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 8px;
+  padding: 7px 8px;
+  color: #e6e9f0;
+}
+
+/* ── Toolbar ─────────────────────────────────────────── */
+.Toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  background: #141927;
+  border: 1px solid #262e45;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.Toolbar button {
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  color: #e6e9f0;
+  min-width: 36px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0 8px;
+}
+
+.Toolbar button:hover {
+  background: #22305a;
+}
+
+.ToolOp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #8a93a8;
+  padding: 0 8px;
+}
+
+.ToolOp input[type="number"] {
+  width: 58px;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 6px;
+  padding: 4px 6px;
+  color: #e6e9f0;
+}
+
+.ToolOp input[type="color"] {
+  width: 34px;
+  height: 30px;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+/* ── Textarea ────────────────────────────────────────── */
+.Textarea {
+  flex: 1;
+  min-height: 300px;
+  background: #0a0e1a;
+  border: 1px solid #262e45;
+  border-radius: 10px;
+  color: #d7e3f4;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  padding: 14px;
+  resize: none;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.Textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.EditorFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.EditorFooter code {
+  background: #1b2238;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* ── Visual editor (canvas) ──────────────────────────── */
+.Canvas {
+  flex: 1;
+  overflow-y: auto;
+  background: #0a0e1a;
+  border: 1px solid #262e45;
+  border-radius: 10px;
+  padding: 18px;
+  min-height: 300px;
+}
+
+.VisualEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 860px;
+}
+
+.VField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.VFieldRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.VKey {
+  font-size: 0.68rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  color: #5b6478;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.VObject {
+  border-left: 2px solid #262e45;
+  padding-left: 12px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.VArray {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border: 1px dashed #2a3350;
+  border-radius: 8px;
+}
+
+.VArrayRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.VArrayRow .Editable {
+  flex: 1;
+}
+
+.VCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 10px;
+}
+
+.VCard {
+  border: 1px solid #262e45;
+  border-radius: 10px;
+  background: #11162a;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.VCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #aab2c5;
+}
+
+.VCardHeader em {
+  color: #5b6478;
+}
+
+.ObjectToggle {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: #e6e9f0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 2px 0;
+}
+
+.AddBtn {
+  align-self: flex-start;
+  background: #1b2238;
+  border: 1px dashed #3a4256;
+  color: #8a93a8;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+.AddBtn:hover {
+  color: #fff;
+  border-color: #2563eb;
+}
+
+.MiniBtn {
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  color: #f87171;
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.NumberInput {
+  width: 90px;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 8px;
+  padding: 7px 8px;
+  color: #e6e9f0;
+}
+
+/* Editable text areas (canvas) */
+.Editable {
+  background: #10162b;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #e6e9f0;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  min-height: 28px;
+  font-family: inherit;
+}
+
+.Editable:hover {
+  border-color: #3a4256;
+}
+
+.Editable[data-active="true"],
+.Editable:focus {
+  border-color: #2563eb;
+  background: #131b36;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.EditableMultiline {
+  line-height: 1.5;
+}
+
+.Editable:empty::before {
+  content: attr(data-placeholder);
+  color: #4a5468;
+}
+
+.EditableRole_h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.EditableRole_h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.EditableRole_badge {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8bc540;
+}
+
+.EditableRole_btn {
+  font-weight: 600;
+  color: #ffffff;
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.EditableRole_link {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+/* Icon / image fields */
+.IconBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  color: #e6e9f0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.IconBtn:hover {
+  border-color: #2563eb;
+}
+
+.ImgField {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  background: #10162b;
+  border: 1px dashed #2a3350;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.ImgField img {
+  max-width: 160px;
+  max-height: 110px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #2a3350;
+  background: #0a0e1a;
+}
+
+.ImgField > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  word-break: break-all;
+}
+
+.ModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 12, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+}
+
+.IconModal {
+  background: #141927;
+  border: 1px solid #2a3350;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 720px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #262e45;
+}
+
+.ModalHeader h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.CloseBtn {
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  color: #e6e9f0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.SearchInput {
+  margin: 12px 18px;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #e6e9f0;
+  font-size: 0.9rem;
+}
+
+.IconGrid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 18px 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px;
+}
+
+.IconCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  border-radius: 10px;
+  color: #d7e3f4;
+  padding: 12px 6px;
+  cursor: pointer;
+  font-size: 0.68rem;
+  word-break: break-all;
+}
+
+.IconCell:hover {
+  background: #22305a;
+  border-color: #2563eb;
+}
+
+.IconLoading {
+  grid-column: 1 / -1;
+  color: #8a93a8;
+  padding: 20px;
+  text-align: center;
+}
+
+.UploadBox {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.UploadBox input[type="file"] {
+  color: #c7cfdd;
+}
+
+.UploadPreview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.UploadPreview img {
+  max-width: 120px;
+  max-height: 80px;
+  border-radius: 8px;
+  border: 1px solid #2a3350;
+}
+
+.UploadPreview span {
+  font-size: 0.8rem;
+  color: #8a93a8;
+}

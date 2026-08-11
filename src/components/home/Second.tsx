@@ -2,127 +2,59 @@ import React from 'react'
 import { ProfesionalCard } from './index'
 import Button from '../ui/Button'
 import styles from '@/styles/Home/Second.module.css'
-import { GiGlobe } from 'react-icons/gi'
-import { FaPerson } from 'react-icons/fa6'
-import { PiSuitcaseSimpleDuotone } from 'react-icons/pi'
-import { GrLineChart } from 'react-icons/gr'
 import PictureSvg from '../ui/PictureSvg'
-import { CiGlobe } from 'react-icons/ci'
-import { FiUsers } from 'react-icons/fi'
+import RichText from '../ui/RichText'
 import Link from 'next/link'
+import { getIcon } from '@/lib/supabase/icons'
+import { resolveStorageUrl } from '@/lib/supabase/client'
+import type { HomePartners } from '@/lib/supabase/types'
 
-const Second = () => {
+interface SecondProps {
+    partners: HomePartners
+    lang: string
+}
+
+const Second = ({ partners, lang }: SecondProps) => {
     return (
         <section className={styles.Second}>
             <header className={`${styles.Header}`}>
                 <article>
-                    <strong className='details'>OUR EXPERT NETWORK</strong>
+                    <strong className='details'><RichText>{partners.badge}</RichText></strong>
                     <h1>
-                        <span>Partners driving </span>
-                        operational excellence.
+                        <span><RichText>{partners.title}</RichText></span>
                     </h1>
                 </article>
-                <p><span>Our network of senior specialists combines deep industry experiencе</span>
-                    <span>with a hands-on approach to deliver measurable results.</span>
-                    <span>Trusted advisors. Proven operators. Real impact.</span>
-                </p>
+                <p>{partners.description.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}</p>
             </header>
             <section className={`${styles.Content}`}>
-                <ProfesionalCard name='Cony' slug='owner'>
-                    <p>
-                        <span>20+ years optimizing operations </span>
-                        <span>and driving lean transformation </span>
-                        <span>across global manufacturing.</span>
-                    </p>
-                    <section>
-                        <Button variant='outlineG'>
-                            Learn Operations
-                        </Button>
-                        <Button variant='outlineG'>
-                            Process Design
-                        </Button>
-                    </section>
-                </ProfesionalCard>
-                <ProfesionalCard name='Cony' slug='owner'>
-                    <p>
-                        <span>20+ years optimizing operations </span>
-                        <span>and driving lean transformation </span>
-                        <span>across global manufacturing.</span>
-                    </p>
-                    <section>
-                        <Button variant='outlineG'>
-                            Learn Operations
-                        </Button>
-                        <Button variant='outlineG'>
-                            Process Design
-                        </Button>
-                    </section>
-                </ProfesionalCard>
-                <ProfesionalCard name='Cony' slug='owner'>
-                    <p>
-                        <span>20+ years optimizing operations </span>
-                        <span>and driving lean transformation </span>
-                        <span>across global manufacturing.</span>
-                    </p>
-                    <section>
-                        <Button variant='outlineG'>
-                            Learn Operations
-                        </Button>
-                        <Button variant='outlineG'>
-                            Process Design
-                        </Button>
-                    </section>
-                </ProfesionalCard>
-                <ProfesionalCard name='Cony' slug='owner'>
-                    <p>
-                        <span>20+ years optimizing operations </span>
-                        <span>and driving lean transformation </span>
-                        <span>across global manufacturing.</span>
-                    </p>
-                    <section>
-                        <Button variant='outlineG'>
-                            Learn Operations
-                        </Button>
-                        <Button variant='outlineG'>
-                            Process Design
-                        </Button>
-                    </section>
-                </ProfesionalCard>
+                {partners.items.map((partner, i) => (
+                    <ProfesionalCard key={i} name={partner.name} slug={partner.slug} reference={resolveStorageUrl(partner.logo) ?? '/cony.png'}>
+                        <p>
+                            {partner.description.map((line, j) => <RichText as="span" key={j}>{line}</RichText>)}
+                        </p>
+                        <section>
+                            {partner.tags.map((tag, k) => (
+                                <Button key={k} variant='outlineG'>{tag}</Button>
+                            ))}
+                        </section>
+                    </ProfesionalCard>
+                ))}
             </section>
             <ul>
-                <li>
-                    <PictureSvg icon={FiUsers} size={48} />
-                    <span>
-                        <h1>30+</h1>
-                        <p>Senior experts</p>
-                    </span>
-                </li>
-                <li>
-                    <PictureSvg icon={CiGlobe} size={48} />
-                    <span>
-                        <h1>12+</h1>
-                        <p>Countries covered</p>
-                    </span>
-                </li>
-                <li>
-                    <PictureSvg icon={PiSuitcaseSimpleDuotone} size={48} />
-                    <span>
-                        <h1>200+</h1>
-                        <p>Projects delivered</p>
-                    </span>
-                </li>
-                <li>
-                    <PictureSvg icon={GrLineChart} size={48} />
-                    <span>
-                        <h1>98%</h1>
-                        <p>Client satisfaction</p>
-                    </span>
-                </li>
+                {partners.stats.map((stat, i) => (
+                    <li key={i}>
+                        <PictureSvg icon={getIcon(stat.icon)} size={48} />
+                        <span>
+                            <h1><RichText>{stat.value}</RichText></h1>
+                            <p><RichText>{stat.label}</RichText></p>
+                        </span>
+                    </li>
+                ))}
             </ul>
             <footer className={`${styles.Footer}`}>
-                <strong>Looking for a specific expertise?</strong>
-                <Link href={'/contact'}>
-                    <Button variant='outlineG'>{"Let's connect"}</Button>
+                <strong><RichText>{partners.footer.text}</RichText></strong>
+                <Link href={`/${lang}/contact`}>
+                    <Button variant='outlineG'><RichText>{partners.footer.cta}</RichText></Button>
                 </Link>
             </footer>
         </section>

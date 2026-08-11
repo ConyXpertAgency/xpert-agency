@@ -2,6 +2,7 @@ import React from 'react'
 import styles from '@/styles/industries/IndustrieCard.module.css'
 import type { IconType } from 'react-icons'
 import PictureSvg from '../ui/PictureSvg'
+import { resolveStorageUrl } from '@/lib/supabase/client'
 
 interface IndustrieCardProps extends React.HTMLAttributes<HTMLElement> {
     img?: string
@@ -11,7 +12,7 @@ interface IndustrieCardProps extends React.HTMLAttributes<HTMLElement> {
 const IndustrieCard = ({ img = 'hero-bg-20260205-153144-4f8569.jpg', style, className, children, icon }: IndustrieCardProps) => {
     const inlineStyle = {
         ...style,
-        backgroundImage: img ? `url(${img})` : undefined,
+        backgroundImage: img ? `url(${resolveStorageUrl(img) ?? img})` : undefined,
     }
     return (
         <article

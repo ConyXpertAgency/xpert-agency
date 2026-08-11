@@ -2,30 +2,39 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import styles from '@/styles/ui/Navbar.module.css'
 import { FaChevronDown } from 'react-icons/fa'
+import { LOCALES } from '@/lib/data'
+import type { Lang, NavItem } from '@/lib/supabase/types'
 
-const links = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/services', label: 'Services', hasDropdown: true },
-    { href: '/industries', label: 'Industries', hasDropdown: true },
-    { href: '/cases', label: 'Cases' },
-]
+interface NavbarProps {
+    lang: Lang
+    items: NavItem[]
+}
 
-const Navbar = () => {
+const Navbar = ({ lang, items }: NavbarProps) => {
     const pathname = usePathname()
+    const router = useRouter()
+
+    const localePath = pathname.replace(/^\/[a-z]{2}/, '') || '/'
+    const contact = items.find((i) => i.href === '/contact')
+    const links = items.filter((i) => i.href !== '/contact')
 
     const isActive = (href: string) =>
-        href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`)
+        href === '/' ? localePath === '/' : localePath === href || localePath.startsWith(`${href}/`)
+
+    const onLangChange = (next: string) => {
+        if (next === lang) return
+        router.push(`/${next}${localePath}`)
+    }
 
     return (
         <nav className={styles.Navbar}>
             <Image src={"/xpert_agency_logo.png"} alt='' width={500} height={20} />
             <ul>
                 {links.map(({ href, label, hasDropdown }) => (
-                    <Link key={href} href={href}>
+                    <Link key={href} href={`/${lang}${href}`}>
                         <li className={isActive(href) ? styles.active : undefined}>
                             <strong>{label} {hasDropdown && <FaChevronDown size={12} />}</strong>
                         </li>
@@ -33,14 +42,16 @@ const Navbar = () => {
                 ))}
             </ul>
             <section>
-                <select id="lang">
-                    <option value="en">EN </option>
-                    <option value="es">ES </option>
-                    <option value="de">DE </option>
+                <select id="lang" value={lang} onChange={(e) => onLangChange(e.target.value)}>
+                    {LOCALES.map((l) => (
+                        <option key={l} value={l}>{l.toUpperCase()}</option>
+                    ))}
                 </select>
-                <Link href={'/contact'}>
-                    Contact us
-                </Link>
+                {contact && (
+                    <Link href={`/${lang}${contact.href}`}>
+                        {contact.label}
+                    </Link>
+                )}
             </section>
         </nav>
     )

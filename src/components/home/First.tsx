@@ -7,65 +7,59 @@ import { GiChart, GiRobotGrab } from 'react-icons/gi'
 import styles from '@/styles/Home/First.module.css'
 import { InformationCard } from './index'
 import PictureSvg from '../ui/PictureSvg'
+import RichText from '../ui/RichText'
 import { FaArrowRight, FaCogs, FaProjectDiagram, FaTruckMoving } from 'react-icons/fa'
+import type { IconType } from 'react-icons'
+import type { HomeHero } from '@/lib/supabase/types'
 
-const First = () => {
+const infoCardIcons: IconType[] = [IoShieldCheckmarkOutline, CiGlobe, GiChart]
+const coreAreaIcons: IconType[] = [FaCogs, GiRobotGrab, FaTruckMoving, FaProjectDiagram]
+
+interface FirstProps {
+    hero: HomeHero
+}
+
+const First = ({ hero }: FirstProps) => {
+    const lines = hero.title.length > 0 ? hero.title : ['Xpert.agency']
     return (
         <header className={styles.First}>
             <section className={styles.Left}>
-                <strong className="details">MANUFACTURING & LOGISTICS CONSULTING</strong>
+                <strong className="details"><RichText>{hero.badge}</RichText></strong>
                 <header>
-                    <h1><span>Experts in integrated</span>
-                        <span>improvement of</span>
-                        manufacturing and
-                        logistics.</h1>
-                    <p><span>Process improvement, automation, digital transformation,</span>
-                        and operational reengineering.</p>
+                    <h1>{lines.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}</h1>
+                    <p><span><RichText>{hero.subtitle}</RichText></span></p>
                     <article className={styles.Buttons}>
-                        <Link href={'/contact'}>
+                        <Link href={`${hero.cta_primary_href}`}>
                             <Button variant="full" arrow={true}>
-                                Contact us
+                                <RichText>{hero.cta_primary}</RichText>
                             </Button>
                         </Link>
-                        <Link href={'/services'}>
+                        <Link href={`${hero.cta_secondary_href}`}>
                             <Button arrow={true} variant="outline">
-                                View services
+                                <RichText>{hero.cta_secondary}</RichText>
                             </Button>
                         </Link>
-
                     </article>
                 </header>
                 <footer>
-                    <InformationCard icon={IoShieldCheckmarkOutline}>
-
-                        <h1>45+ years</h1>
-                        <p>Combined experience delivering results</p>
-
-                    </InformationCard>
-                    <InformationCard icon={CiGlobe}>
-
-                        <h1>International reach</h1>
-                        <p><span>Projects across Europe,</span>Americas & Asia</p>
-
-                    </InformationCard>
-                    <InformationCard icon={GiChart}>
-
-                        <h1>Measurable impact</h1>
-                        <p><span>Data-driven solutions</span> that scale</p>
-
-                    </InformationCard>
+                    {hero.info_cards.map((card, i) => (
+                        <InformationCard key={i} icon={infoCardIcons[i] ?? infoCardIcons[0]}>
+                            <h1><RichText>{card.title}</RichText></h1>
+                            <p><RichText>{card.text}</RichText></p>
+                        </InformationCard>
+                    ))}
                 </footer>
             </section>
             <section className={styles.Right}>
                 <article>
                     <article className={`${styles.FirstCard} ${styles.CardRight}`}>
                         <header>
-                            <strong>Operational impact</strong>
+                            <strong><RichText>{hero.stat_impact.title}</RichText></strong>
                         </header>
                         <article>
                             <span>
-                                <h1>+27%</h1>
-                                <p>Average productivity increase</p>
+                                <h1><RichText>{hero.stat_impact.value}</RichText></h1>
+                                <p><RichText>{hero.stat_impact.label}</RichText></p>
                             </span>
                             <div className={`${styles.chartContainer}`}>
                                 <svg viewBox="0 0 400 250" width="100%" height="100%">
@@ -84,43 +78,32 @@ const First = () => {
                     </article>
                     <section>
                         <article className={`${styles.SecondCard} ${styles.CardRight}`}>
-                            <h1>Core focus areas</h1>
+                            <h1><RichText>{hero.core_areas_title}</RichText></h1>
                             <ul>
-                                <li>
-                                    <PictureSvg variant='full' width={3} height={3} icon={FaCogs} />
-                                    <strong>Process Optimization</strong>
-                                </li>
-                                <li>
-                                    <PictureSvg variant='full' width={3} height={3} icon={GiRobotGrab} />
-                                    <strong>Automation & Digitalization</strong>
-                                </li>
-                                <li>
-                                    <PictureSvg variant='full' width={3} height={3} icon={FaTruckMoving} />
-                                    <strong>Supply Chain Excellence</strong>
-                                </li>
-                                <li>
-                                    <PictureSvg variant='full' width={3} height={3} icon={FaProjectDiagram} />
-                                    <strong>Operational Reengineering</strong>
-                                </li>
+                                {hero.core_areas.map((area, i) => (
+                                    <li key={i}>
+                                        <PictureSvg variant='full' width={3} height={3} icon={coreAreaIcons[i] ?? coreAreaIcons[0]} />
+                                        <strong><RichText>{area}</RichText></strong>
+                                    </li>
+                                ))}
                             </ul>
                         </article>
                         <article className={`${styles.ThirdCard} ${styles.CardRight}`}>
-                            <strong>Project success rate</strong>
+                            <strong><RichText>{hero.stat_success.title}</RichText></strong>
                             <div className={`${styles.circularProgress}`}>
-                                <span className={`${styles.progressValue}`}>98%</span>
+                                <span className={`${styles.progressValue}`}><RichText>{hero.stat_success.value}</RichText></span>
                             </div>
-                            <p><span>On-time & on-scope</span> delivery</p>
+                            <p><span><RichText>{hero.stat_success.label}</RichText></span></p>
                         </article>
                     </section>
                     <article className={`${styles.FourCard} ${styles.CardRight}`}>
                         <header>
-                            <strong>Global project delivery</strong>
+                            <strong><RichText>{hero.global_delivery.title}</RichText></strong>
                         </header>
                         <article>
                             <section>
                                 <div className={`${styles.mapWrapper}`}>
                                     <div className={styles.mapContainer}></div>
-
                                     <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
                                     <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointSa}`}></div>
                                     <div className={`${styles.hotspot} ${styles.pointEu}`} style={{ top: '28%', left: '51%' }}></div>
@@ -131,10 +114,9 @@ const First = () => {
                             </section>
                             <span className={`${styles.TextFourCard}`}>
                                 <div className={`${styles.Jeje}`}></div>
-                                <p><span>Delivering value</span><span> across industries</span>  and borders.</p>
+                                <p><RichText>{hero.global_delivery.text}</RichText></p>
                                 <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
                             </span>
-
                         </article>
                     </article>
                 </article>

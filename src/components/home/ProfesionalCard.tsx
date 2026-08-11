@@ -1,4 +1,5 @@
 import React from 'react'
+import RichText from '../ui/RichText'
 import styles from '@/styles/Home/ProfesionalCard.module.css'
 
 interface ProfesionalCardProps {
@@ -13,8 +14,8 @@ const ProfesionalCard = ({reference = '/cony.png', name, slug, children}:Profesi
     <article className={`${styles.Card}`}>
         <picture style={{backgroundImage: `url(${reference})`}}></picture>
         <header>
-            <h1>{name}</h1>
-            <strong className='details'>{slug}</strong>
+            <h1><RichText>{name}</RichText></h1>
+            <strong className='details'><RichText>{slug}</RichText></strong>
         </header>
         <footer>
             {children}

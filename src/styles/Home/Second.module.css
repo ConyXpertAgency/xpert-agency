@@ -76,8 +76,10 @@
 }
 
 .Content {
-    display: flex;
+    display: grid;
     gap: 1rem;
     justify-content: center;
-    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    
+    align-items: start;
 }

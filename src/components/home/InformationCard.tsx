@@ -1,5 +1,6 @@
 import React from 'react'
 import PictureSvg from '../ui/PictureSvg'
+import RichText from '../ui/RichText'
 import type { IconType } from 'react-icons'
 import styles from '@/styles/Home/InformationCard.module.css'
 
@@ -17,8 +18,8 @@ const InformationCard = ({ icon, description, title, children }: InformationCard
             <PictureSvg variant="full" width={4} height={4} size={28} icon={icon} />
             {children ? children : (
                 <>
-                <h1>{title}</h1>
-                <p>{description}</p>
+                <h1><RichText>{title}</RichText></h1>
+                <p><RichText>{description}</RichText></p>
                 </>
             )}
         </article>

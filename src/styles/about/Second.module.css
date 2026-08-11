@@ -68,7 +68,12 @@
     div {
         width: 4rem;
     }
-
+    .CardO  {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: .8rem;
+    }
     .number {
         color: var(--color-success);
         border-radius: var(--radius-full);

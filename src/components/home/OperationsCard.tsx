@@ -1,5 +1,6 @@
 import React from 'react'
 import PictureSvg from '../ui/PictureSvg'
+import RichText from '../ui/RichText'
 import type { IconType } from 'react-icons'
 import { CiGlobe } from 'react-icons/ci';
 import { FaArrowRight } from 'react-icons/fa';
@@ -17,7 +18,7 @@ const OperationsCard = ({icon = CiGlobe,title = "test", children}:OperationsCard
     <article className={`${styles.Card}`}>
         <PictureSvg className={styles.Img} radius={'var(--radius-md)'} width={4} height={4} variant='full' icon={icon} size={32}/>
         <span className={`${styles.Text}`}>
-            <h1>{title} <FaArrowRight/></h1>
+            <h1><RichText>{title}</RichText> <FaArrowRight/></h1>
             <p>
                 {children}
             </p>
