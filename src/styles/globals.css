@@ -216,3 +216,15 @@ span {
   display: flex;
   flex-direction: column;
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+  main {
+    padding: .8rem 1rem;
+  }
+
+  .AppShell {
+    padding: .8rem;
+    gap: 1.5rem;
+  }
+}

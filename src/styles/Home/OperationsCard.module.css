@@ -38,3 +38,10 @@
 
     transform: translateX(.4rem);
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+    .Card {
+        min-height: auto;
+    }
+}

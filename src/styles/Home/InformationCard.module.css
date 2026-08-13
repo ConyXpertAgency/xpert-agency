@@ -28,3 +28,22 @@
         flex-direction: column;
     }
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Card {
+        width: 30%;
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .Card {
+        width: 100%;
+        flex: unset;
+    }
+
+    .Card:nth-child(-n + 2)::after {
+        display: none;
+    }
+}

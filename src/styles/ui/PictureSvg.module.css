@@ -8,6 +8,7 @@
 
 .full {
     background-color: var(--color-bg-secondary);
+    background: var(--card-bg-gradient);
     border-radius: var(--radius-full);
     padding: 1rem;
     color: var(--color-success);

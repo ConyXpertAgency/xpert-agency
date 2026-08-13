@@ -49,3 +49,30 @@
         }
     }
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .Header h1 {
+        font-size: 2rem;
+    }
+
+    .Header p {
+        width: 100%;
+    }
+
+    .Content {
+        grid-template-columns: 1fr;
+    }
+
+    .InfoCard {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+}

@@ -22,3 +22,33 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: .8rem;
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .Header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .Header article {
+        width: 100%;
+    }
+
+    .Header article h1 {
+        font-size: 2rem;
+    }
+
+    .Header p {
+        width: 100%;
+    }
+
+    .Content {
+        grid-template-columns: 1fr;
+    }
+}

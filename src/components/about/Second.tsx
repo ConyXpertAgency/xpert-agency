@@ -70,7 +70,7 @@ const Second = ({ second }: SecondProps) => {
             </ul>
             <article className={styles.FooterCard}>
                 <PictureSvg icon={TfiReload} size={32} />
-                <span>
+                <span className={styles.FooterCardTxt}>
                     <strong><RichText>{second.footer_card.title}</RichText></strong>
                     <p><RichText>{second.footer_card.text}</RichText></p>
                 </span>

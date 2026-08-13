@@ -67,3 +67,48 @@
     background-color: var(--color-success);
     box-shadow: 0 1px 5px 2px var(--color-success);
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Navbar {
+        flex-wrap: wrap;
+        gap: .8rem;
+    }
+
+    .Navbar img {
+        width: 30%;
+        height: auto;
+    }
+
+    .Navbar ul {
+        order: 3;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .Navbar section {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .Navbar {
+        padding: .8rem;
+    }
+
+    .Navbar img {
+        width: 45%;
+    }
+
+    .Navbar ul {
+        gap: .6rem;
+    }
+
+    .Navbar section {
+        gap: .8rem;
+    }
+
+    .Navbar section a {
+        padding: .5rem .8rem;
+    }
+}

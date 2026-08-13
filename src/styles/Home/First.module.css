@@ -351,3 +351,61 @@
     width: 10px;
     height: 10px;
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .First {
+        flex-direction: column;
+    }
+
+    .Left {
+        width: 100%;
+        height: auto;
+    }
+
+    .Right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .Left header h1 {
+        font-size: 2rem;
+    }
+
+    .Left header p {
+        font-size: 1rem;
+    }
+
+    .Buttons {
+        flex-wrap: wrap;
+    }
+
+    .Left footer {
+        p {
+            font-size: .8rem;
+        }
+        h1 {
+            font-size: .9rem;
+        }
+    }
+
+    .ThirdCard {
+        width: 100%;
+    }
+
+
+    .chartContainer {
+        width: 100%;
+        scale: 1;
+    }
+
+    .FourCard article {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .FourCard article .TextFourCard {
+        width: 100%;
+    }
+}

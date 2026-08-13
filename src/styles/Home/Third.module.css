@@ -142,3 +142,40 @@
 .pointAf { top: 55%; left: 53%; width: 15px; height: 15px; }
 .pointAs { top: 35%; left: 75%; width: 15px; height: 15px; }
 .pointAu { top: 70%; left: 82%; width: 15px; height: 15px; }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Third .Header {
+        flex-direction: column;
+    }
+
+    .mapWrapper {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 2 / 1;
+        scale: 1;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .Third .Header article header h1 {
+        font-size: 2rem;
+    }
+
+    .List {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .List li {
+        padding: 1rem 0;
+        width: 100%;
+    }
+
+    .List li:nth-child(-n +3) {
+        border-right: none;
+        border-bottom: 2px solid var(--color-bg-secondary);
+    }
+}

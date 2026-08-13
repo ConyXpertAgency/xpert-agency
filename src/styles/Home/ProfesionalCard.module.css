@@ -47,3 +47,14 @@
         }
     }
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+    .Card {
+        width: 100%;
+    }
+
+    .Card footer button {
+        width: 100%;
+    }
+}

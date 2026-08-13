@@ -181,3 +181,60 @@
         }
     }
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Second .Header {
+        flex-direction: column;
+    }
+
+    .Content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .TextH h1 {
+        font-size: 2rem;
+    }
+
+    .Content {
+        grid-template-columns: 1fr;
+    }
+
+    .Content article {
+        height: auto;
+    }
+
+    .FooterCard {
+        gap: 1rem;
+        text-align: center;
+        align-items: center;
+        .FooterCardTxt {
+            display: flex;
+            align-items: center;
+        }
+        span p span{
+            display: flex;
+            
+            max-height: 35%!important;
+            overflow-y: hidden!important;
+        }
+
+    }
+
+    .List {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .List li {
+        padding-bottom: 1rem;
+    }
+
+    .List li:nth-child(-n + 3) span p {
+        border-right: none;
+        border-bottom: 2px solid var(--color-bg-hover);
+        padding: 0 0 1rem 0;
+    }
+}

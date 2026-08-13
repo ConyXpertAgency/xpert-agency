@@ -197,3 +197,49 @@
         }
     }
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Content {
+        flex-direction: column;
+    }
+
+    .Right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .TextH h1 {
+        font-size: 2rem;
+    }
+
+    .TextH p {
+        width: 100%;
+    }
+
+    .Left header ul li {
+        flex-wrap: wrap;
+    }
+
+    .SecL ul li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .8rem;
+    }
+
+    .SecL footer {
+        flex-direction: column;
+        height: auto;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .Right form article {
+        flex-direction: column;
+    }
+
+    .Right footer section {
+        flex-direction: column;
+    }
+}

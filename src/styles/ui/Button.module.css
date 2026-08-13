@@ -69,3 +69,11 @@
     background: var(--color-surface-alt);
 }
 
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 576px) {
+    .base {
+        padding: .8rem 1.2rem;
+        font-size: .9rem;
+    }
+}
+

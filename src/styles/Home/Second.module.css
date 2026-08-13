@@ -83,3 +83,45 @@
     
     align-items: start;
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .Second ul {
+        flex-wrap: wrap;
+        height: auto;
+        gap: .8rem;
+    }
+
+    .Second ul li:nth-child(-n +3) {
+        border-right: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .Second .Header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .Second .Header article h1 {
+        font-size: 2rem;
+    }
+
+    .Second .Header p {
+        width: 100%;
+    }
+
+    .Content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .Content {
+        grid-template-columns: 1fr;
+    }
+
+    .Second ul li {
+        width: 100%;
+    }
+}
