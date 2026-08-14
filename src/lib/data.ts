@@ -208,10 +208,12 @@ export const getHomeGlobalReach = (lang: Lang) =>
     cta: "Explore our global capabilities",
   });
 
+// TODO: Explore approved radial "Expertise" center layout with capabilities around it once visual direction is confirmed. Current grid remains temporary to avoid a larger redesign.
+// TODO: Add Manuel's expertise once client provides confirmed details.
 export const getHomeRoles = (lang: Lang) =>
   getTyped<HomeRoles>("home", "roles", lang, {
     badge: "ROLES & CAPABILITIES",
-    title: "The expertise to transform operations.",
+    title: "The expertise in process improvements.",
     description: [
       "Xpert.agency connects organizations with a curated network of senior experts who drive project execution and operational transformation across industrial and logistics environments.",
     ],
@@ -221,14 +223,14 @@ export const getHomeRoles = (lang: Lang) =>
       { icon: "CiGlobe", title: "Global coverage" },
     ],
     items: [
-      { title: "Project Management", text: "Plan, execute and deliver complex projects on time, on scope and on budget." },
-      { title: "Operations Leadership", text: "Lead operations with focus on performance, efficiency, and team development." },
-      { title: "Systems Integration", text: "Integrate people, processes and technologies to create seamless and scalable operations." },
-      { title: "Process Optimization", text: "Identify bottlenecks and redesign processes to improve productivity and reduce costs." },
-      { title: "Data & Analytics", text: "Turn operational data into actionable insights that drive better decisions." },
-      { title: "Continuous Improvement", text: "Implement Lean, Six Sigma and best practices for sustainable performance gains." },
-      { title: "Supply Chain Consulting", text: "Optimize end-to-end supply chains for resilience, visibility and cost efficiency." },
-      { title: "Change Management", text: "Guide people through change and ensure adoption for lasting business results." },
+      { title: "Project Management (PMI/IPMA)", text: "Management of projects and programs across industrial and logistics environments." },
+      { title: "Interim Operations Management", text: "Interim management support for operational transitions and critical functions." },
+      { title: "Systems Integration", text: "Integration of automation, logistics and enterprise systems." },
+      { title: "Supply Chain Consulting", text: "Consulting across supply chain design, optimization and performance." },
+      { title: "Process Automation (RPA)", text: "Automation of business and logistics processes using RPA and digital tools." },
+      { title: "Lean Management", text: "Application of Lean principles to manufacturing and logistics operations." },
+      { title: "Change Management", text: "Support for organizational change in process transformation projects." },
+      { title: "Continuous Improvement", text: "Structured approaches to sustained operational improvement." },
     ],
     stats: [
       { icon: "GrGroup", value: "500+", label: "Vetted experts", text: "Senior professionals with real-world industrial experience." },
@@ -330,6 +332,8 @@ export const getAboutSecond = (lang: Lang) =>
     ],
   });
 
+// TODO: Add Manuel's services once client provides confirmed details.
+// TODO: Explore approved compact "brainstorm / octopus" service layout if the client wants a more visual presentation.
 export const getServicesPage = (lang: Lang) =>
   getTyped<ServicesPage>("services", "page", lang, {
     badge: "AREAS OF EXPERTISE",
@@ -341,16 +345,28 @@ export const getServicesPage = (lang: Lang) =>
       text: "across manufacturing and logistics — combining deep industry knowledge with proven methodologies.",
     },
     areas: [
-      { icon: "HiOutlineCog", title: "Process Optimization", text: "Improve efficiency and reduce waste across your operations." },
-      { icon: "GiRobotGrab", title: "Automation & Digitalization", text: "Leverage automation and digital tools to boost productivity." },
-      { icon: "FiClipboard", title: "Project Management", text: "Deliver projects on time, on scope, and on budget." },
-      { icon: "FaRegUser", title: "Interim Management", text: "Experienced leaders to drive results during critical transitions." },
-      { icon: "PiFactory", title: "Lean Manufacturing", text: "Eliminate waste and build a culture of continuous improvement." },
-      { icon: "AiOutlineTruck", title: "Supply Chain Consulting", text: "Strengthen supply chains for agility, resilience, and performance." },
-      { icon: "LuPuzzle", title: "Systems Integration", text: "Connect people, processes, and systems for seamless operations." },
-      { icon: "RiGraduationCapLine", title: "Coaching & Training", text: "Build capabilities and empower teams to excel." },
-      { icon: "IoBarChartOutline", title: "KPI Development", text: "Define and track the metrics that drive meaningful results." },
-      { icon: "IoShieldCheckmarkOutline", title: "Solution Validation", text: "Test, validate, and ensure solutions deliver real-world impact." },
+      { icon: "HiOutlineCog",             title: "Change Management",                        text: "" },
+      { icon: "GrGroup",                   title: "Continuous Improvement",                   text: "" },
+      { icon: "FiClipboard",               title: "Process Simulation",                       text: "" },
+      { icon: "IoShieldCheckmarkOutline",  title: "Post-Implementation Support",              text: "" },
+      { icon: "IoBarChartOutline",          title: "KPI Development",                          text: "" },
+      { icon: "IoShieldCheckmarkOutline",  title: "Solution Testing & Validation",            text: "" },
+      { icon: "AiOutlineTruck",            title: "Supply Chain Optimization",                text: "" },
+      { icon: "HiOutlineCog",             title: "Preventive & Corrective System Monitoring", text: "" },
+      { icon: "LuPuzzle",                  title: "Systems Integration",                      text: "" },
+      { icon: "FiClipboard",               title: "Process Auditing",                         text: "" },
+      { icon: "CiGlobe",                   title: "Logistics Sustainability Consulting",       text: "" },
+      { icon: "AiOutlineTruck",            title: "E-commerce & Logistics Chain Expertise",   text: "" },
+      { icon: "RiGraduationCapLine",       title: "Logistics & Supply Chain Training",        text: "" },
+      { icon: "PiFactory",                 title: "Lean Management Consulting",               text: "" },
+      { icon: "FiClipboard",               title: "Project Management Consulting",            text: "" },
+      { icon: "GiRobotGrab",               title: "Process Automation (RPA)",                 text: "" },
+      { icon: "AiOutlineTruck",            title: "Supply Chain Consulting",                  text: "" },
+      { icon: "GiRobotGrab",               title: "Systems Automation",                       text: "" },
+      { icon: "PiFactory",                 title: "Factory Lean Improvement",                 text: "" },
+      { icon: "FaRegUser",                 title: "Interim Management",                       text: "" },
+      { icon: "FiClipboard",               title: "Project Management (PMI)",                 text: "" },
+      { icon: "RiGraduationCapLine",       title: "Training & Coaching",                      text: "" },
     ],
     footer: {
       title: "Need a tailored approach?",
