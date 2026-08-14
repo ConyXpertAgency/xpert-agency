@@ -40,6 +40,26 @@ const Second = ({ partners, lang }: SecondProps) => {
                     </ProfesionalCard>
                 ))}
             </section>
+            {partners.about && (
+                <div className={styles.About}>
+                    <div className={styles.AboutCard}>
+                        <strong>Mission</strong>
+                        <p>{partners.about.mission}</p>
+                    </div>
+                    <div className={styles.AboutCard}>
+                        <strong>Vision</strong>
+                        <p>{partners.about.vision}</p>
+                    </div>
+                    <div className={styles.AboutCard}>
+                        <strong>Values</strong>
+                        <ul>
+                            {(partners.about.values ?? []).map((v, i) => (
+                                <li key={i}>{v}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            )}
             <ul>
                 {partners.stats.map((stat, i) => (
                     <li key={i}>
