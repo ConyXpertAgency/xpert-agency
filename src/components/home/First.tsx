@@ -54,19 +54,18 @@ const First = ({ hero }: FirstProps) => {
             </section>
             <section className={styles.Right}>
                 <article>
-                    {/* Panel alternado: Operational Impact XOR Global Project Delivery */}
-                    <div className={styles.HeroPanelStack}>
-                        {/* Panel 1: Operational Impact */}
-                        <article className={`${styles.HeroPanelImpact} ${styles.CardRight}`}>
+                    {/* Top row: Operational Impact + Project Success Rate */}
+                    <section className={styles.RightTop}>
+                        <article className={`${styles.ImpactCard} ${styles.CardRight}`}>
                             <header>
                                 <strong><RichText>{hero.stat_impact.title}</RichText></strong>
                             </header>
-                            <article>
-                                <span>
+                            <div className={styles.ImpactBody}>
+                                <span className={styles.ImpactStat}>
                                     <h1><RichText>{hero.stat_impact.value}</RichText></h1>
                                     <p><RichText>{hero.stat_impact.label}</RichText></p>
                                 </span>
-                                <div className={`${styles.chartContainer}`}>
+                                <div className={styles.chartContainer}>
                                     <svg viewBox="0 0 400 250" width="100%" height="100%">
                                         <defs>
                                             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
@@ -74,61 +73,55 @@ const First = ({ hero }: FirstProps) => {
                                                 <stop offset="100%" stopColor="transparent" />
                                             </linearGradient>
                                         </defs>
-                                        <path className={`${styles.chartArea}`} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40 L 380 230 L 20 230 Z" />
-                                        <path className={`${styles.chartLine}`} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40" />
-                                        <circle className={`${styles.glowPoint}`} cx="380" cy="40" r="6" />
+                                        <path className={styles.chartArea} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40 L 380 230 L 20 230 Z" />
+                                        <path className={styles.chartLine} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40" />
+                                        <circle className={styles.glowPoint} cx="380" cy="40" r="6" />
                                     </svg>
                                 </div>
-                            </article>
+                            </div>
                         </article>
-
-                        {/* Panel 2: Global Project Delivery */}
-                        <article className={`${styles.HeroPanelGlobal} ${styles.CardRight}`}>
-                            <header>
-                                <strong><RichText>{hero.global_delivery.title}</RichText></strong>
-                            </header>
-                            <article>
-                                <section>
-                                    <div className={`${styles.mapWrapper}`}>
-                                        <div className={styles.mapContainer}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointSa}`}></div>
-                                        <div className={`${styles.hotspot} ${styles.pointEu}`} style={{ top: '28%', left: '51%' }}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAf}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAs}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAu}`}></div>
-                                    </div>
-                                </section>
-                                <span className={`${styles.TextFourCard}`}>
-                                    <div className={`${styles.Jeje}`}></div>
-                                    <p><RichText>{hero.global_delivery.text}</RichText></p>
-                                    <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
-                                </span>
-                            </article>
-                        </article>
-                    </div>
-
-                    {/* Nivel inferior: Core Focus + Success Rate lado a lado */}
-                    <section>
-                        <article className={`${styles.SecondCard} ${styles.CardRight}`}>
-                            <h1><RichText>{hero.core_areas_title}</RichText></h1>
-                            <ul>
-                                {hero.core_areas.map((area, i) => (
-                                    <li key={i}>
-                                        <PictureSvg variant='full' width={3} height={3} icon={coreAreaIcons[i] ?? coreAreaIcons[0]} />
-                                        <strong><RichText>{area}</RichText></strong>
-                                    </li>
-                                ))}
-                            </ul>
-                        </article>
-                        <article className={`${styles.ThirdCard} ${styles.CardRight}`}>
+                        <article className={`${styles.SuccessCard} ${styles.CardRight}`}>
                             <strong><RichText>{hero.stat_success.title}</RichText></strong>
-                            <div className={`${styles.circularProgress}`}>
-                                <span className={`${styles.progressValue}`}><RichText>{hero.stat_success.value}</RichText></span>
+                            <div className={styles.circularProgress}>
+                                <span className={styles.progressValue}><RichText>{hero.stat_success.value}</RichText></span>
                             </div>
                             <p><span><RichText>{hero.stat_success.label}</RichText></span></p>
                         </article>
                     </section>
+
+                    {/* Bottom: persistent container, only content fades inside */}
+                    <div className={styles.BottomContainer}>
+                        {/* Content A: Core Focus Areas — visible 0–30s */}
+                        <div className={styles.BottomContentCore}>
+                            <strong className={styles.BottomLabel}><RichText>{hero.core_areas_title}</RichText></strong>
+                            <ul>
+                                {hero.core_areas.map((area, i) => (
+                                    <li key={i}>
+                                        <PictureSvg variant='full' width={2} height={2} size={14} icon={coreAreaIcons[i] ?? coreAreaIcons[0]} />
+                                        <strong><RichText>{area}</RichText></strong>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Content B: Global Project Delivery — visible 30–60s */}
+                        <div className={styles.BottomContentGlobal}>
+                            <strong className={styles.BottomLabel}><RichText>{hero.global_delivery.title}</RichText></strong>
+                            <div className={styles.mapWrapper}>
+                                <div className={styles.mapContainer}></div>
+                                <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
+                                <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointSa}`}></div>
+                                <div className={`${styles.hotspot} ${styles.pointEu}`} style={{ top: '28%', left: '51%' }}></div>
+                                <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAf}`}></div>
+                                <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAs}`}></div>
+                                <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAu}`}></div>
+                            </div>
+                            <div className={styles.GlobalText}>
+                                <p><RichText>{hero.global_delivery.text}</RichText></p>
+                                <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
+                            </div>
+                        </div>
+                    </div>
                 </article>
             </section>
         </header>
