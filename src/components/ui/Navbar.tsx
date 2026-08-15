@@ -31,7 +31,7 @@ const Navbar = ({ lang, items }: NavbarProps) => {
 
     return (
         <nav className={styles.Navbar}>
-            <Image src={"/logo_largo_transparente.png"} alt='Xpert.agency' width={500} height={50} style={{ objectFit: 'contain' }} />
+            <Image src={"/logo_largo_blanco2.png"} alt='Xpert.agency' width={500} height={50} className={styles.Logo} />
             <ul>
                 {links.map(({ href, label, hasDropdown }) => (
                     <Link key={href} href={`/${lang}${href}`}>
