@@ -1,0 +1,67 @@
+.Footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.ContactCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--card-bg-gradient);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-success);
+    box-shadow: 0 0 10px 2px var(--color-success);
+    padding: 2rem;
+    svg {
+        color: var(--color-success);
+    }
+}
+.TextCC {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    h1 {
+        font-size: 2.2rem;
+        font-weight: bold;
+    }
+    p {
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--color-success);
+
+    }
+}
+.ActionCC {
+    display: flex;
+    justify-content: space-between;
+    article {
+        display: flex;
+        gap: 1rem;
+    }
+    button {
+        color: var(--color-success);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 0 10px 2px var(--color-success);
+    }
+    button:hover {
+        color: var(--color-text);
+        svg {
+            color: var(--color-text);
+        }
+    }
+}
+
+.Details {
+    display: flex;
+    background: var(--card-bg-gradient);
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    gap: .8rem;
+    border-radius: var(--radius-lg);
+    div {
+        width: 80%;
+        height: 1px;
+        background-color: var(--color-success);
+    }
+}

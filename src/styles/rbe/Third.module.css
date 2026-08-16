@@ -1,0 +1,74 @@
+.Third {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 5rem;
+}
+.Header {
+    h1 {
+        font-weight: bolder;
+        font-size: 2.2rem;
+    }
+    p {
+        font-size: .8rem;
+    }
+}
+
+.Content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    .CardContent {
+        padding: 2rem;
+        background: var(--card-bg-gradient);
+        border-radius: var(--radius-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+        header {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            gap: .8rem;
+            padding: .8rem;
+            border-bottom: 2px solid var(--color-success);
+            svg {
+                color: var(--color-success);
+            }
+            h1 {
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+            p {
+                font-size: .8rem;
+                opacity: .8;
+            }
+
+        }
+        .ListCard {
+            display: flex;
+            flex-direction: column;
+            gap: .8rem;
+            list-style-type: disc;
+            font-size: .8rem;
+        }
+    }
+}
+
+.Footer {
+    display: flex;
+    gap: 1rem;
+    background: transparent;
+    border: 2px solid var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    align-items: center;
+    h1 {
+        color: var(--color-success);
+        font-weight: 400;
+        font-size: 1.2rem;
+        width: 20%;
+        margin-right: 1rem;
+    }
+}

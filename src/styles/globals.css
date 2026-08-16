@@ -228,3 +228,6 @@ span {
     gap: 1.5rem;
   }
 }
+a, button {
+  cursor: pointer;
+}

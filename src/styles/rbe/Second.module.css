@@ -1,0 +1,65 @@
+.Second {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    margin-top: 6rem;
+}
+.Right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    .Text {
+        h1 {
+            font-size: 2.2rem;
+            font-weight: bolder;
+        }
+    }
+}
+.List {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    li {
+        display: grid;
+        grid-template-columns: .3fr 1.7fr;
+        gap: .8rem;
+        padding: .8rem;
+        border-radius: var(--radius-md);
+        background: var(--card-bg-gradient);
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 5rem;
+            height: 5rem;
+            padding: .8rem;
+            border-radius: var(--radius-full);
+            background: var(--card-bg-gradient);
+            font-size: 2.2rem;
+            color: var(--color-success);
+        }
+    }
+}
+.TextCard {
+    padding: .8rem;
+    border-radius: var(--radius-md);
+    background: var(--card-bg-gradient);
+}
+.RBEfocus {
+    display: grid;
+    grid-template-columns: .3fr 1.7fr;
+    place-items: center;
+    gap: .8rem;
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-success);
+    box-shadow: 0 0 10px 2px var(--color-success);
+    padding: .8rem;
+    border-radius: var(--radius-md);
+    img {
+        width: 5rem;
+        height: 4rem;
+    }
+    h1 {
+        opacity: .8;
+        font-size: 1.5rem;
+    }
+}
