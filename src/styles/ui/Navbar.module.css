@@ -2,21 +2,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.2rem 2.5rem;
+    padding: 1.2rem 1rem;
     width: 100%;
-    background: rgba(1, 29, 69, 0.78);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--color-border);
 }
 
-/* Alto fijo evita el colapso de height:20% en flex row sin altura definida */
-.Logo {
-    height: 3.5rem;
-    width: auto;
-    object-fit: contain;
-    flex-shrink: 0;
-    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+.Navbar img {
+    width: 20%;
+    height: 20%;
 }
 
 .Navbar ul {
@@ -41,20 +33,19 @@
 .Navbar ul li strong {
     display: flex;
     align-items: center;
+
     gap: .4rem;
-    font-weight: 500;
-    font-size: 0.95rem;
 }
 
 .Navbar ul li:hover strong svg {
     transform: rotate(0.5turn);
 }
 
-/* Indicador sin desplazar los items adyacentes */
 .Navbar ul .active {
     color: var(--color-success);
+    margin: .8rem;
+    transform: translateY(-.4rem);
     border-bottom: 2px solid var(--color-success);
-    padding-bottom: .15rem;
 }
 
 .Navbar section select {
@@ -72,10 +63,8 @@
 
 .Navbar section a {
     border: 2px solid var(--color-success);
-    padding: .75rem 1.4rem;
+    padding: .8rem 1rem;
     border-radius: 4rem;
-    font-weight: 600;
-    font-size: 0.9rem;
 }
 
 .Navbar section a:hover {
@@ -88,11 +77,11 @@
     .Navbar {
         flex-wrap: wrap;
         gap: .8rem;
-        padding: 1rem 1.5rem;
     }
 
-    .Logo {
-        height: 2.8rem;
+    .Navbar img {
+        width: 30%;
+        height: auto;
     }
 
     .Navbar ul {
@@ -108,11 +97,11 @@
 
 @media (max-width: 576px) {
     .Navbar {
-        padding: .8rem 1rem;
+        padding: .8rem;
     }
 
-    .Logo {
-        height: 2.2rem;
+    .Navbar img {
+        width: 45%;
     }
 
     .Navbar ul {
@@ -124,13 +113,12 @@
     }
 
     .Navbar section a {
-        padding: .5rem .9rem;
-        font-size: 0.85rem;
+        padding: .5rem .8rem;
     }
 
     .Navbar ul .active {
         color: var(--color-success);
+        margin: 0.15rem!important;
         border-bottom: 2px solid var(--color-success);
-        padding-bottom: .15rem;
     }
 }

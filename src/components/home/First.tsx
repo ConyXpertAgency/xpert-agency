@@ -24,25 +24,23 @@ const First = ({ hero }: FirstProps) => {
     return (
         <header className={styles.First}>
             <section className={styles.Left}>
-                <div className={styles.LeftMain}>
-                    <strong className="details"><RichText>{hero.badge}</RichText></strong>
-                    <header>
-                        <h1>{lines.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}</h1>
-                        <p><span><RichText>{hero.subtitle}</RichText></span></p>
-                        <article className={styles.Buttons}>
-                            <Link href={`${hero.cta_primary_href}`}>
-                                <Button variant="full" arrow={true}>
-                                    <RichText>{hero.cta_primary}</RichText>
-                                </Button>
-                            </Link>
-                            <Link href={`${hero.cta_secondary_href}`}>
-                                <Button arrow={true} variant="outline">
-                                    <RichText>{hero.cta_secondary}</RichText>
-                                </Button>
-                            </Link>
-                        </article>
-                    </header>
-                </div>
+                <strong className="details"><RichText>{hero.badge}</RichText></strong>
+                <header>
+                    <h1>{lines.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}</h1>
+                    <p><span><RichText>{hero.subtitle}</RichText></span></p>
+                    <article className={styles.Buttons}>
+                        <Link href={`${hero.cta_primary_href}`}>
+                            <Button variant="full" arrow={true}>
+                                <RichText>{hero.cta_primary}</RichText>
+                            </Button>
+                        </Link>
+                        <Link href={`${hero.cta_secondary_href}`}>
+                            <Button arrow={true} variant="outline">
+                                <RichText>{hero.cta_secondary}</RichText>
+                            </Button>
+                        </Link>
+                    </article>
+                </header>
                 <footer>
                     {hero.info_cards.map((card, i) => (
                         <InformationCard key={i} icon={infoCardIcons[i] ?? infoCardIcons[0]}>
@@ -54,61 +52,30 @@ const First = ({ hero }: FirstProps) => {
             </section>
             <section className={styles.Right}>
                 <article>
-                    {/* Panel alternado: Operational Impact XOR Global Project Delivery */}
-                    <div className={styles.HeroPanelStack}>
-                        {/* Panel 1: Operational Impact */}
-                        <article className={`${styles.HeroPanelImpact} ${styles.CardRight}`}>
-                            <header>
-                                <strong><RichText>{hero.stat_impact.title}</RichText></strong>
-                            </header>
-                            <article>
-                                <span>
-                                    <h1><RichText>{hero.stat_impact.value}</RichText></h1>
-                                    <p><RichText>{hero.stat_impact.label}</RichText></p>
-                                </span>
-                                <div className={`${styles.chartContainer}`}>
-                                    <svg viewBox="0 0 400 250" width="100%" height="100%">
-                                        <defs>
-                                            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#a3e635" />
-                                                <stop offset="100%" stopColor="transparent" />
-                                            </linearGradient>
-                                        </defs>
-                                        <path className={`${styles.chartArea}`} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40 L 380 230 L 20 230 Z" />
-                                        <path className={`${styles.chartLine}`} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40" />
-                                        <circle className={`${styles.glowPoint}`} cx="380" cy="40" r="6" />
-                                    </svg>
-                                </div>
-                            </article>
+                    <article className={`${styles.FirstCard} ${styles.CardRight}`}>
+                        <header>
+                            <strong><RichText>{hero.stat_impact.title}</RichText></strong>
+                        </header>
+                        <article>
+                            <span>
+                                <h1><RichText>{hero.stat_impact.value}</RichText></h1>
+                                <p><RichText>{hero.stat_impact.label}</RichText></p>
+                            </span>
+                            <div className={`${styles.chartContainer}`}>
+                                <svg viewBox="0 0 400 250" width="100%" height="100%">
+                                    <defs>
+                                        <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#a3e635" />
+                                            <stop offset="100%" stopColor="transparent" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path className={`${styles.chartArea}`} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40 L 380 230 L 20 230 Z" />
+                                    <path className={`${styles.chartLine}`} d="M 20 220 Q 80 150, 120 180 T 220 140 T 320 90 T 380 40" />
+                                    <circle className={`${styles.glowPoint}`} cx="380" cy="40" r="6" />
+                                </svg>
+                            </div>
                         </article>
-
-                        {/* Panel 2: Global Project Delivery */}
-                        <article className={`${styles.HeroPanelGlobal} ${styles.CardRight}`}>
-                            <header>
-                                <strong><RichText>{hero.global_delivery.title}</RichText></strong>
-                            </header>
-                            <article>
-                                <section>
-                                    <div className={`${styles.mapWrapper}`}>
-                                        <div className={styles.mapContainer}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointSa}`}></div>
-                                        <div className={`${styles.hotspot} ${styles.pointEu}`} style={{ top: '28%', left: '51%' }}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAf}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAs}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAu}`}></div>
-                                    </div>
-                                </section>
-                                <span className={`${styles.TextFourCard}`}>
-                                    <div className={`${styles.Jeje}`}></div>
-                                    <p><RichText>{hero.global_delivery.text}</RichText></p>
-                                    <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
-                                </span>
-                            </article>
-                        </article>
-                    </div>
-
-                    {/* Nivel inferior: Core Focus + Success Rate lado a lado */}
+                    </article>
                     <section>
                         <article className={`${styles.SecondCard} ${styles.CardRight}`}>
                             <h1><RichText>{hero.core_areas_title}</RichText></h1>
@@ -129,6 +96,29 @@ const First = ({ hero }: FirstProps) => {
                             <p><span><RichText>{hero.stat_success.label}</RichText></span></p>
                         </article>
                     </section>
+                    <article className={`${styles.FourCard} ${styles.CardRight}`}>
+                        <header>
+                            <strong><RichText>{hero.global_delivery.title}</RichText></strong>
+                        </header>
+                        <article>
+                            <section>
+                                <div className={`${styles.mapWrapper}`}>
+                                    <div className={styles.mapContainer}></div>
+                                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
+                                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointSa}`}></div>
+                                    <div className={`${styles.hotspot} ${styles.pointEu}`} style={{ top: '28%', left: '51%' }}></div>
+                                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAf}`}></div>
+                                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAs}`}></div>
+                                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAu}`}></div>
+                                </div>
+                            </section>
+                            <span className={`${styles.TextFourCard}`}>
+                                <div className={`${styles.Jeje}`}></div>
+                                <p><RichText>{hero.global_delivery.text}</RichText></p>
+                                <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
+                            </span>
+                        </article>
+                    </article>
                 </article>
             </section>
         </header>
