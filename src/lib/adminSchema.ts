@@ -9,6 +9,7 @@ export const COLLECTION_LABELS: Record<string, string> = {
   industries: "🏭 Industries",
   cases: "📁 Cases",
   contact: "✉️ Contact",
+  rbe: "⚡ RBE",
   nav: "🧭 Navigation",
   settings: "⚙️ Settings",
 };
@@ -25,6 +26,14 @@ export const SECTION_LABELS: Record<string, Record<string, string>> = {
   industries: { page: "Industries page" },
   cases: { page: "Cases page" },
   contact: { page: "Contact page" },
+  rbe: {
+    first: "Hero",
+    second: "The challenge",
+    third: "3-phase model",
+    four: "10+1 elements",
+    five: "What does RBE mean?",
+    footer: "Contact / footer",
+  },
   nav: { items: "Navigation" },
   settings: { general: "General settings" },
 };
@@ -36,6 +45,7 @@ export const SECTION_ORDER = [
   "industries",
   "cases",
   "contact",
+  "rbe",
   "nav",
   "settings",
 ];
@@ -50,6 +60,7 @@ export const USED_SECTIONS: Record<string, string[]> = {
   industries: ["page"],
   cases: ["page"],
   contact: ["page"],
+  rbe: ["first", "second", "third", "four", "five", "footer"],
   nav: ["items"],
   settings: ["general"],
 };
@@ -82,6 +93,13 @@ export const ELEMENT_TEMPLATES: Record<string, Record<string, unknown>> = {
   "contact:page:methods": { icon: "", title: "", value: "", cta: "", href: "" },
   "contact:page:form.fields": { name: "", label: "", type: "text", required: false },
   "contact:page:form.buttons": { label: "", variant: "full" },
+  "rbe:first:list": { icon: "", title: "", text: "" },
+  "rbe:first:cards": { number: "", title: "", text: "" },
+  "rbe:second:list": { number: "", text: "" },
+  "rbe:third:phases": { icon: "", title: "", subtitle: [""], items: [""] },
+  "rbe:four:left": { icon: "", number: "", title: "", text: "" },
+  "rbe:four:right": { icon: "", number: "", title: "", text: "" },
+  "rbe:five:items": { icon: "", letter: "", title: "", text: "" },
   "nav:items": { href: "/", label: "" },
 };
 
@@ -158,6 +176,40 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
     { label: "Equipo y contacto", fields: ["team_section", "methods"] },
     { label: "Formulario", fields: ["form"] },
   ],
+  "rbe:first": [
+    { label: "Cabecera", fields: ["badge", "title", "subtitle", "text"] },
+    { label: "Botones", fields: ["cta_primary", "cta_primary_href", "cta_secondary", "cta_secondary_href"] },
+    { label: "Pilares", fields: ["list"] },
+    { label: "Fases (cards)", fields: ["cards"] },
+  ],
+  "rbe:second": [
+    { label: "Cabecera", fields: ["badge", "title", "text", "image"] },
+    { label: "Riesgos", fields: ["list"] },
+    { label: "Tarjeta de texto", fields: ["text_card"] },
+    { label: "RBE focus", fields: ["focus"] },
+  ],
+  "rbe:third": [
+    { label: "Cabecera", fields: ["title", "subtitle"] },
+    { label: "Fases", fields: ["phases"] },
+    { label: "Pie", fields: ["footer_title", "footer_text"] },
+  ],
+  "rbe:four": [
+    { label: "Cabecera", fields: ["title", "subtitle"] },
+    { label: "Elementos (izquierda)", fields: ["left"] },
+    { label: "Elementos (derecha)", fields: ["right"] },
+    { label: "Elemento +1", fields: ["extra"] },
+  ],
+  "rbe:five": [
+    { label: "Cabecera", fields: ["title", "subtitle", "image"] },
+    { label: "Significado RBE", fields: ["items"] },
+    { label: "Pie", fields: ["footer_text"] },
+  ],
+  "rbe:footer": [
+    { label: "Tarjeta de contacto", fields: ["title", "text"] },
+    { label: "Contacto", fields: ["contact_name", "contact_phone"] },
+    { label: "Botones", fields: ["cta"] },
+    { label: "Pie", fields: ["year"] },
+  ],
 };
 
 const KEY_LABELS: Record<string, string> = {
@@ -228,6 +280,19 @@ const KEY_LABELS: Record<string, string> = {
   privacy: "Texto de privacidad",
   trust: "Texto de confianza",
   footer_note: "Nota al pie",
+  footer_title: "Título del pie",
+  footer_text: "Texto del pie",
+  text_card: "Tarjeta de texto",
+  letter: "Letra",
+  contact_name: "Nombre de contacto",
+  contact_phone: "Teléfono de contacto",
+  year: "Año",
+  phases: "Fases",
+  phase: "Fase",
+  left: "Elementos (izquierda)",
+  right: "Elementos (derecha)",
+  extra: "Elemento +1",
+  list: "Lista",
   tags: "Etiquetas",
   tag: "Etiqueta",
   hasDropdown: "Flecha de submenú",
@@ -269,6 +334,12 @@ const PATH_LABELS: Record<string, string> = {
   "contact:page:form.privacy": "Texto de privacidad",
   "contact:page:form.trust": "Texto de confianza",
   "contact:page:form.footer_note": "Nota al pie",
+  "rbe:second:focus.icon": "Logo (imagen)",
+  "rbe:second:focus.badge": "Etiqueta (badge)",
+  "rbe:second:focus.title": "Título",
+  "rbe:four:extra.number": "Número",
+  "rbe:four:extra.title": "Título",
+  "rbe:four:extra.text": "Texto",
 };
 
 export function getGroups(collection: string, keyname: string): FieldGroup[] | undefined {

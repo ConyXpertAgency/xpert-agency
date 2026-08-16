@@ -12,6 +12,7 @@ export interface TextItem {
   title?: string;
   text?: string;
   icon?: string;
+  number?: string;
   value?: string;
   label?: string;
   lines?: string[];
@@ -177,6 +178,85 @@ export interface ContactPage {
     buttons: { label: string; variant: string }[];
     trust: string;
   };
+}
+
+/* ───────────────────────────── RBE ───────────────────────────── */
+
+export interface RbeFirst {
+  badge: string;
+  title: string[];
+  subtitle: string;
+  text: string;
+  cta_primary: string;
+  cta_primary_href: string;
+  cta_secondary: string;
+  cta_secondary_href: string;
+  list: TextItem[];
+  cards: TextItem[];
+}
+
+export interface RbeSecond {
+  badge: string;
+  title: string;
+  text: string;
+  image: string;
+  list: TextItem[];
+  text_card: string;
+  focus: { icon: string; badge: string; title: string };
+}
+
+export interface RbePhase {
+  icon: string;
+  title: string;
+  subtitle: string[];
+  items: string[];
+}
+
+export interface RbeThird {
+  title: string;
+  subtitle: string;
+  phases: RbePhase[];
+  footer_title: string;
+  footer_text: string;
+}
+
+export interface RbeElement {
+  icon: string;
+  number: string;
+  title: string;
+  text: string;
+}
+
+export interface RbeFour {
+  title: string;
+  subtitle: string;
+  left: RbeElement[];
+  right: RbeElement[];
+  extra: { number: string; title: string; text: string };
+}
+
+export interface RbeLetter {
+  icon: string;
+  letter: string;
+  title: string;
+  text: string;
+}
+
+export interface RbeFive {
+  title: string;
+  subtitle: string;
+  image: string;
+  items: RbeLetter[];
+  footer_text: string;
+}
+
+export interface RbeFooter {
+  title: string;
+  text: string;
+  contact_name: string;
+  contact_phone: string;
+  cta: string;
+  year: string;
 }
 
 /* ───────────────────────────── Nav / Settings ───────────────────────────── */

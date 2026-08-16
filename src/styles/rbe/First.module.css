@@ -83,3 +83,49 @@
         margin-top: -3rem;
     }
 }
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 992px) {
+    .First {
+        flex-direction: column;
+    }
+    .Left {
+        width: 100%;
+    }
+    .Right {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    .Card div {
+        margin-top: -2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .TextLeft h1 {
+        width: 100%;
+        font-size: 2.2rem;
+    }
+    .ListLeft {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .Right {
+        grid-template-columns: 1fr;
+    }
+    .ButtonsLeft {
+        flex-direction: column;
+        align-items: stretch;
+        a,
+        button {
+            width: 100%;
+        }
+    }
+    .ListLeft {
+        flex-direction: column;
+    }
+}

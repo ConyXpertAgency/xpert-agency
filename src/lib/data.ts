@@ -12,6 +12,12 @@ import type {
   IndustriesPage,
   Lang,
   NavItem,
+  RbeFirst,
+  RbeFive,
+  RbeFooter,
+  RbeFour,
+  RbeSecond,
+  RbeThird,
   ServicesPage,
   Settings,
 } from "./supabase/types";
@@ -488,6 +494,184 @@ export const getContactPage = (lang: Lang) =>
     },
   });
 
+export const getRbeFirst = (lang: Lang) =>
+  getTyped<RbeFirst>("rbe", "first", lang, {
+    badge: "Interim Management",
+    title: ["Rapid Business", "Elevating <strong>RBE™</strong>"],
+    subtitle: "Interim Management, elevate performance safe and quickly.",
+    text: "RBE™ is Xpert.agency's proprietary framework for rapid ramp-up and business process elevation. We step in, stabilize operations, protect value and drive measurable performance improvement fast, safe and sustainable.",
+    cta_primary: "See the approach",
+    cta_primary_href: "/rbe",
+    cta_secondary: "Explore the framework",
+    cta_secondary_href: "/rbe",
+    list: [
+      {
+        icon: "IoShieldCheckmarkOutline",
+        title: "Rapid ramp-up",
+        text: "Speed up operations to achieve expected results.",
+      },
+      {
+        icon: "SlTarget",
+        title: "Process elevation",
+        text: "Strengthen people, skills and systems.",
+      },
+      {
+        icon: "LuChartNoAxesCombined",
+        title: "Measurable impact",
+        text: "Elevate performance to best level - fast.",
+      },
+    ],
+    cards: [
+      { number: "01", title: "PREPARING", text: "Plan and prepare for corrective actions." },
+      { number: "02", title: "SAFEGUARDING", text: "Stabilize operations and protect value." },
+      { number: "03", title: "PREFORMING", text: "Execute improvements and elevate performance." },
+    ],
+  });
+
+export const getRbeSecond = (lang: Lang) =>
+  getTyped<RbeSecond>("rbe", "second", lang, {
+    badge: "THE CHALLENGE",
+    title: "What are we talking about?",
+    text: "Every investor, responsible manager and entrepreneur world-wide is knowing and fearing the difficulties in projects, when business processes are going to change and performance is expected quickly.",
+    image: "/need_RBE.png",
+    list: [
+      {
+        number: "01",
+        text: "Project go-live is a milestone everybody knows as an inevitable source of preoccupation, in spite of all possible closeness in planning, cautiousness in execution and consequence in controlling.",
+      },
+      {
+        number: "02",
+        text: "The launch of a new system or automation solution, embedded into business processes, is interfacing to many stakeholder interests, at least to the customer's. Many projects are suffering - more or less in any way - after go-live.",
+      },
+      {
+        number: "03",
+        text: "It is always a risky phase, where investors are losing money, managers are losing jobs and - in worst case - entrepreneurs are losing business, customer and reputation.",
+      },
+    ],
+    text_card:
+      "It is not enough to get support for ramp-up from system supplier. As well, additional manpower in operations is not able to compensate awaited inefficiencies during ramp-up.",
+    focus: {
+      icon: "/rbe_icon.png",
+      badge: "RBE focus",
+      title: "Let us talk about ramp-up with RBE - our solution for risk mitigation.",
+    },
+  });
+
+export const getRbeThird = (lang: Lang) =>
+  getTyped<RbeThird>("rbe", "third", lang, {
+    title: "What can you expect from RBE Interim Management",
+    subtitle: "A well-structured, systematic management approach to success.",
+    phases: [
+      {
+        icon: "FiClipboard",
+        title: "Preparing phase",
+        subtitle: ["Build clarity, assess risks and", "prepare the operation for ramp-up."],
+        items: [
+          "Check data and processes",
+          "Check rampup plan",
+          "Identify risks",
+          "Calculate RBE proposal",
+          "Define and execute preventing actions",
+          "Evaluate management training and plan",
+        ],
+      },
+      {
+        icon: "MdWeb",
+        title: "Safeguarding phase",
+        subtitle: ["Stabilize operations, monitor KPIs", "and strengthen control during execution."],
+        items: [
+          "Check & monitor KPI",
+          "Check alert system",
+          "Execute corrective actions",
+          "Adapt corrective actions",
+          "Develop strategies to improve operations and system",
+          "Do process mining to measure progress",
+        ],
+      },
+      {
+        icon: "PiUsersThree",
+        title: "Performing phase",
+        subtitle: ["Drive improvement waves, train teams", "and prepare long-term handover."],
+        items: [
+          "Define waves",
+          "Establish improvement waves",
+          "Provide collaborative team games",
+          "Establish progress visualization & reporting",
+          "Train-the-trainer coaching",
+          "Handover to executives",
+        ],
+      },
+    ],
+    footer_title: "RBE 3-PHASE MODEL",
+    footer_text:
+      "A structured management approach that drives rapid ramp-up, protects value, and delivers measurable impact - fast, safe and sustainable.",
+  });
+
+export const getRbeFour = (lang: Lang) =>
+  getTyped<RbeFour>("rbe", "four", lang, {
+    title: "10+1 Elements for ramp-up with RBE",
+    subtitle:
+      "A practical toolkit to stabilize operations fast, manage risks, and drive measurable performance improvements.",
+    left: [
+      { icon: "FaRegUser", number: "01", title: "RBE Survey", text: "Shaping individual concepts" },
+      { icon: "LuUsers", number: "03", title: "Interim Management Team", text: "Core team Specialists" },
+      { icon: "IoShieldCheckmarkOutline", number: "05", title: "FMEA/What-If Analysis", text: "Described risks. Preventives Correctives" },
+      { icon: "FiTool", number: "07", title: "Embedded Tools", text: "Process mining Gamification. Tutorials" },
+      { icon: "IoSchoolOutline", number: "09", title: "Operations Training", text: "Shop floor based Skill training • Skill coaching" },
+    ],
+    right: [
+      { icon: "FaRegUser", number: "02", title: "Three Phase Model", text: "Preparing Safeguarding Performing" },
+      { icon: "IoShieldCheckmarkOutline", number: "04", title: "Claim Management", text: "Requirements Set claims Defend claims" },
+      { icon: "IoIosPulse", number: "06", title: "Comprehensive Tests", text: "Flow exerciser System exerciser etc." },
+      { icon: "LuBrainCog", number: "08", title: "Systems Training", text: "Systems thinking LEAN training. Coaching" },
+      { icon: "BsBarChartLine", number: "10", title: "Visualization & Reporting", text: "KPI tracking Gemba walks. Standard reports" },
+    ],
+    extra: {
+      number: "+1",
+      title: "Improvement Waves",
+      text: "Exec-program Agile projects. Progress awards",
+    },
+  });
+
+export const getRbeFive = (lang: Lang) =>
+  getTyped<RbeFive>("rbe", "five", lang, {
+    title: "What does RBE mean?",
+    subtitle: "A phased framework that stabilizes operations fast and drives measurable improvement.",
+    image: "/panel_5.png",
+    items: [
+      {
+        icon: "IoRocketOutline",
+        letter: "R",
+        title: "Rapid ramp-up",
+        text: "Speed up operations to achieve expected performance within the planned timeframe.",
+      },
+      {
+        icon: "PiUsersThree",
+        letter: "B",
+        title: "Business processes",
+        text: "Strengthen people skills and process discipline to complement embedded technical systems for planning and execution.",
+      },
+      {
+        icon: "BsBarChart",
+        letter: "E",
+        title: "Elevating performance",
+        text: "Bring new business to best level - more than expected - stable and scalable to foster additional business.",
+      },
+    ],
+    footer_text:
+      "RBE closes the gap between planned performance and actual performance.",
+  });
+
+export const getRbeFooter = (lang: Lang) =>
+  getTyped<RbeFooter>("rbe", "footer", lang, {
+    title: "Contact",
+    text: "For ramp-up support, interim management and operational stabilization.",
+    contact_name: "Elmar A. Beckord",
+    contact_phone: "+49 171 889 2788",
+    cta: "Back to site",
+    year: "2026 RBE",
+  });
+
 export const getNav = (lang: Lang) =>
   getTyped<NavItem[]>("nav", "items", lang, [
     { href: "/", label: "Home" },
@@ -496,6 +680,7 @@ export const getNav = (lang: Lang) =>
     { href: "/industries", label: "Industries", hasDropdown: true },
     { href: "/cases", label: "Cases" },
     { href: "/contact", label: "Contact us" },
+    { href: "/rbe", label: "RBE" },
   ]);
 
 export const getSettings = (lang: Lang) =>

@@ -1,84 +1,62 @@
 import React from 'react'
 import Button from '../ui/Button'
 import PictureSvg from '../ui/PictureSvg'
-import { IoShieldCheckmarkOutline } from 'react-icons/io5'
-import { SlTarget } from 'react-icons/sl'
-import { LuChartNoAxesCombined } from 'react-icons/lu'
+import RichText from '../ui/RichText'
+import { getIcon } from '@/lib/supabase/icons'
 import styles from '@/styles/rbe/First.module.css'
 import Link from 'next/link'
+import type { RbeFirst } from '@/lib/supabase/types'
 
-const First = () => {
+interface FirstProps {
+    first: RbeFirst
+}
+
+const First = ({ first }: FirstProps) => {
     return (
         <header className={styles.First}>
             <section className={styles.Left}>
                 <section className={styles.Fleft}>
                     <article className={styles.TextLeft}>
-                        <strong className='details'>Interim Management</strong>
-                        <h1>Rapid Business
-                            Elevating <strong>RBE™</strong></h1>
+                        <strong className='details'><RichText>{first.badge}</RichText></strong>
+                        <h1>
+                            {first.title.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}
+                        </h1>
                         <p>
-                            Interim Management, elevate performance safe and quickly.
+                            <RichText>{first.subtitle}</RichText>
                         </p>
                         <p>
-                            {`RBE™ is Xpert.agency's proprietary framework for rapid ramp-up
-and business process elevation. We step in, stabilize operations,
-protect value and drive measurable performance improvement
-fast, safe and sustainable.`}
+                            <RichText>{first.text}</RichText>
                         </p>
                     </article>
                     <article className={styles.ButtonsLeft}>
-                        <Link href={'/rbe'}>
-                            <Button variant='full' arrow={true}>See the approach</Button>
+                        <Link href={first.cta_primary_href || '/rbe'}>
+                            <Button variant='full' arrow={true}><RichText>{first.cta_primary}</RichText></Button>
                         </Link>
-                        <Link href={'/rbe'}>
-                            <Button variant='ghost' arrow={true}>Explore the framework</Button>
+                        <Link href={first.cta_secondary_href || '/rbe'}>
+                            <Button variant='ghost' arrow={true}><RichText>{first.cta_secondary}</RichText></Button>
                         </Link>
                     </article>
                 </section>
                 <ul className={styles.ListLeft}>
-                    <li>
-                        <PictureSvg icon={IoShieldCheckmarkOutline} />
-                        <span>
-                            <h1>Rapid ramp-up</h1>
-                            <p>Speed up operations to
-                                achieve expected results.</p>
-                        </span>
-                    </li>
-                    <li>
-                        <PictureSvg icon={SlTarget} />
-                        <span>
-                            <h1>Process elevation</h1>
-                            <p>Strengthen people, skills and systems. </p>
-                        </span>
-                    </li>
-                    <li>
-                        <PictureSvg icon={LuChartNoAxesCombined} />
-                        <span>
-                            <h1>Measurable impact</h1>
-                            <p>Elevate performance to best level - fast.</p>
-                        </span>
-                    </li>
+                    {first.list.map((item, i) => (
+                        <li key={i}>
+                            <PictureSvg icon={getIcon(item.icon)} />
+                            <span>
+                                <h1><RichText>{item.title}</RichText></h1>
+                                <p><RichText>{item.text}</RichText></p>
+                            </span>
+                        </li>
+                    ))}
                 </ul>
             </section>
             <section className={styles.Right}>
-                <article className={styles.Card}>
-                    <div>01</div>
-                    <strong>PREPARING</strong>
-                    <p>Plan and prepare for
-                        corrective actions.</p>
-                </article>
-                <article className={styles.Card}>
-                    <div>02</div>
-                    <strong>SAFEGUARDING</strong>
-                    <p>Stabilize operations
-                        and protect value.</p>
-                </article>
-                <article className={styles.Card}>
-                    <div>03</div>
-                    <strong>PREFORMING</strong>
-                    <p>Execute improvements
-                        and elevate performance.</p>
-                </article>
+                {first.cards.map((card, i) => (
+                    <article key={i} className={styles.Card}>
+                        <div><RichText>{card.number}</RichText></div>
+                        <strong><RichText>{card.title}</RichText></strong>
+                        <p><RichText>{card.text}</RichText></p>
+                    </article>
+                ))}
             </section>
         </header>
     )
