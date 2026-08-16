@@ -40,7 +40,7 @@
         display: flex;
         gap: .8rem;
         background-color: var(--color-surface);
-        padding: .5rem .7rem;
+        padding: 1rem;
         border-radius: var(--radius-md);
 
         svg,
