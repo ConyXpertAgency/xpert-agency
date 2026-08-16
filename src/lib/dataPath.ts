@@ -15,6 +15,14 @@ export function updatePath(data: unknown, path: string[], next: unknown): unknow
   return clone;
 }
 
+export function getAtPath(data: unknown, path: string[]): unknown {
+  if (path.length === 0) return data;
+  const [head, ...rest] = path;
+  if (data === null || typeof data !== "object") return undefined;
+  if (Array.isArray(data)) return getAtPath(data[Number(head)], rest);
+  return getAtPath((data as Record<string, unknown>)[head], rest);
+}
+
 export function removeAtPath(data: unknown, path: string[]): unknown {
   if (path.length === 0) return data;
   const [head, ...rest] = path;

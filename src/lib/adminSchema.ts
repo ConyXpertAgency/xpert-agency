@@ -58,6 +58,43 @@ export function isUsedSection(collection: string, keyname: string): boolean {
   return USED_SECTIONS[collection]?.includes(keyname) ?? false;
 }
 
+// Plantillas para los elementos que se añaden a los arrays del editor visual.
+// La clave usa "*" para los índices numéricos en rutas anidadas.
+export const ELEMENT_TEMPLATES: Record<string, Record<string, unknown>> = {
+  "home:hero:info_cards": { title: "", text: "" },
+  "home:partners:items": { name: "", slug: "", logo: "", description: [""], tags: [""] },
+  "home:partners:cards": { title: "", text: "", items: [""] },
+  "home:partners:stats": { icon: "", value: "", label: "" },
+  "home:global_reach:features": { icon: "", title: "", text: "" },
+  "home:global_reach:stats": { icon: "", value: "", label: "", text: "" },
+  "home:roles:features": { icon: "", title: "" },
+  "home:roles:items": { title: "", text: "" },
+  "home:roles:stats": { icon: "", value: "", label: "", text: "" },
+  "about:first:features": { icon: "", title: "", text: "" },
+  "about:first:stats": { icon: "", value: "", label: "", text: "" },
+  "about:second:steps": { number: "", icon: "", title: "", text: [""], bullets: [""] },
+  "about:second:stats": { icon: "", value: "", label: "" },
+  "services:page:areas": { icon: "", title: "", text: "" },
+  "industries:page:items": { icon: "", title: "", text: "" },
+  "cases:page:items": { title: "", slug: "", description: "", stats: [] },
+  "cases:page:items.*.stats": { icon: "", value: "", text: "" },
+  "contact:page:features": { icon: "", title: "", text: "" },
+  "contact:page:methods": { icon: "", title: "", value: "", cta: "", href: "" },
+  "contact:page:form.fields": { name: "", label: "", type: "text", required: false },
+  "contact:page:form.buttons": { label: "", variant: "full" },
+  "nav:items": { href: "/", label: "" },
+};
+
+export function getElementTemplate(
+  collection: string,
+  keyname: string,
+  path: string[]
+): Record<string, unknown> | undefined {
+  const normalized = path.map((p) => (/^\d+$/.test(p) ? "*" : p)).join(".");
+  const key = normalized ? `${collection}:${keyname}:${normalized}` : `${collection}:${keyname}`;
+  return ELEMENT_TEMPLATES[key];
+}
+
 export interface FieldGroup {
   label: string;
   fields: string[];
@@ -75,6 +112,7 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
   "home:partners": [
     { label: "Cabecera", fields: ["badge", "title", "description"] },
     { label: "Perfiles de expertos", fields: ["items"] },
+    { label: "Misión / Visión / Valores", fields: ["cards"] },
     { label: "Estadísticas", fields: ["stats"] },
     { label: "Pie", fields: ["footer"] },
   ],
@@ -167,6 +205,8 @@ const KEY_LABELS: Record<string, string> = {
   feature: "Característica",
   items: "Elementos",
   item: "Elemento",
+  cards: "Tarjetas",
+  card: "Tarjeta",
   areas: "Áreas",
   area: "Área",
   steps: "Pasos",
@@ -190,6 +230,8 @@ const KEY_LABELS: Record<string, string> = {
   footer_note: "Nota al pie",
   tags: "Etiquetas",
   tag: "Etiqueta",
+  hasDropdown: "Flecha de submenú",
+  type: "Tipo",
 };
 
 const PATH_LABELS: Record<string, string> = {
@@ -233,10 +275,21 @@ export function getGroups(collection: string, keyname: string): FieldGroup[] | u
   return GROUP_SCHEMAS[`${collection}:${keyname}`];
 }
 
+// Etiquetas para campos dentro de arrays (los índices se sustituyen por "*").
+const WILDCARD_PATH_LABELS: Record<string, string> = {
+  "nav:items:items.*.label": "Texto del menú",
+  "nav:items:items.*.href": "Enlace (URL)",
+  "nav:items:items.*.hasDropdown": "Flecha de submenú",
+};
+
 export function fieldLabel(collection: string, keyname: string, path: string[]): string | undefined {
   const joined = path.join(".");
   const pathKey = `${collection}:${keyname}:${joined}`;
   if (PATH_LABELS[pathKey]) return PATH_LABELS[pathKey];
+  const wildcard = `${collection}:${keyname}:${path
+    .map((p) => (/^\d+$/.test(p) ? "*" : p))
+    .join(".")}`;
+  if (WILDCARD_PATH_LABELS[wildcard]) return WILDCARD_PATH_LABELS[wildcard];
   const leaf = path[path.length - 1];
   return KEY_LABELS[leaf];
 }

@@ -31,7 +31,7 @@ const Navbar = ({ lang, items }: NavbarProps) => {
 
     return (
         <nav className={styles.Navbar}>
-            <Image src={"/xpert_agency_logo.png"} alt='' width={500} height={20} />
+            <Image src={"/logo_largo_blanco2.webp"} alt='' width={500} height={50} />
             <ul>
                 {links.map(({ href, label, hasDropdown }) => (
                     <Link key={href} href={`/${lang}${href}`}>
@@ -48,7 +48,7 @@ const Navbar = ({ lang, items }: NavbarProps) => {
                     ))}
                 </select>
                 {contact && (
-                    <Link href={`/${lang}${contact.href}`}>
+                    <Link className={styles.ContactBtn} href={`/${lang}${contact.href}`}>
                         {contact.label}
                     </Link>
                 )}

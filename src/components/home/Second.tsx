@@ -40,7 +40,24 @@ const Second = ({ partners, lang }: SecondProps) => {
                     </ProfesionalCard>
                 ))}
             </section>
-            <ul>
+            <ul className={styles.ListCard}>
+                {partners.cards.map((card, i) => (
+                    <li className={styles.Card} key={i}>
+                        <strong><RichText>{card.title}</RichText></strong>
+                        {card.text && <p><RichText>{card.text}</RichText></p>}
+                        {card.items && card.items.length > 0 && (
+                            <ul>
+                                {card.items.map((item, j) => (
+                                    <li key={j}>
+                                        <p><RichText>{item}</RichText></p>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                ))}
+            </ul>
+            <ul className={styles.DataList}>
                 {partners.stats.map((stat, i) => (
                     <li key={i}>
                         <PictureSvg icon={getIcon(stat.icon)} size={48} />

@@ -5,8 +5,8 @@ import styles from "@/styles/admin/Admin.module.css";
 import Editable from "./Editable";
 import { getIcon } from "@/lib/supabase/icons";
 import { resolveStorageUrl } from "@/lib/supabase/client";
-import { removeAtPath, updatePath } from "@/lib/dataPath";
-import { fieldLabel, getGroups } from "@/lib/adminSchema";
+import { getAtPath, removeAtPath, updatePath } from "@/lib/dataPath";
+import { fieldLabel, getElementTemplate, getGroups } from "@/lib/adminSchema";
 
 type Role = "h1" | "h2" | "p" | "badge" | "btn" | "link";
 
@@ -56,14 +56,51 @@ const VisualEditor = ({
     onChange(removeAtPath(value, path) as Record<string, unknown>);
   };
 
+  const moveItem = (path: string[], index: number, dir: -1 | 1) => {
+    const arr = getAtPath(value, path);
+    if (!Array.isArray(arr)) return;
+    const next = [...arr];
+    const target = index + dir;
+    if (target < 0 || target >= next.length) return;
+    [next[index], next[target]] = [next[target], next[index]];
+    patch(path, next);
+  };
+
+  const addField = (path: string[]) => {
+    const key = window.prompt("Nuevo campo (nombre):")?.trim();
+    if (!key) return;
+    if (!/^[a-zA-Z0-9_]+$/.test(key)) {
+      window.alert("El nombre solo puede contener letras, números y guiones bajos.");
+      return;
+    }
+    const node = getAtPath(value, path);
+    if (node === null || typeof node !== "object" || Array.isArray(node)) return;
+    const obj = node as Record<string, unknown>;
+    if (key in obj) {
+      window.alert("Ese campo ya existe en este objeto.");
+      return;
+    }
+    const type = (
+      window.prompt(`Tipo para "${key}" (texto, numero, booleano, lista, objeto):`, "texto") ??
+      "texto"
+    ).trim();
+    let initial: unknown = "";
+    if (/^num(e|ero)?$/.test(type)) initial = 0;
+    else if (/^bool(eano)?$/.test(type)) initial = false;
+    else if (/^(lista|array)$/.test(type)) initial = [];
+    else if (/^(objeto|object)$/.test(type)) initial = {};
+    patch(path, { ...obj, [key]: initial });
+  };
+
   const label = (path: string[]): string => fieldLabel(collection, keyname, path) ?? path[path.length - 1];
 
   const renderArray = (arr: unknown[], key: string, path: string[]) => {
     const allStrings = arr.every((v) => typeof v === "string");
+    const template = getElementTemplate(collection, keyname, path);
     return (
       <div className={styles.VArray}>
         <span className={styles.VKey}>
-          {label(path)} · {arr.length}
+          {label(path) ?? "Elementos"} · {arr.length}
         </span>
         {allStrings ? (
           <>
@@ -74,6 +111,22 @@ const VisualEditor = ({
                   onChange={(next) => patch([...path, String(i)], next)}
                   role="p"
                 />
+                <button
+                  className={styles.ArrowBtn}
+                  onClick={() => moveItem(path, i, -1)}
+                  disabled={i === 0}
+                  title="Subir"
+                >
+                  ↑
+                </button>
+                <button
+                  className={styles.ArrowBtn}
+                  onClick={() => moveItem(path, i, 1)}
+                  disabled={i === arr.length - 1}
+                  title="Bajar"
+                >
+                  ↓
+                </button>
                 <button
                   className={styles.MiniBtn}
                   onClick={() => removeAt([...path, String(i)])}
@@ -100,15 +153,36 @@ const VisualEditor = ({
                     <span>
                       {display} <em>[{i}]</em>
                     </span>
-                    <button className={styles.MiniBtn} onClick={() => removeAt([...path, String(i)])}>
-                      ✕ eliminar
-                    </button>
+                    <div className={styles.VCardActions}>
+                      <button
+                        className={styles.ArrowBtn}
+                        onClick={() => moveItem(path, i, -1)}
+                        disabled={i === 0}
+                        title="Subir"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        className={styles.ArrowBtn}
+                        onClick={() => moveItem(path, i, 1)}
+                        disabled={i === arr.length - 1}
+                        title="Bajar"
+                      >
+                        ↓
+                      </button>
+                      <button className={styles.MiniBtn} onClick={() => removeAt([...path, String(i)])}>
+                        ✕ eliminar
+                      </button>
+                    </div>
                   </header>
                   {renderNode(item, [...path, String(i)])}
                 </div>
               );
             })}
-            <button className={styles.AddBtn} onClick={() => patch(path, [...arr, {}])}>
+            <button
+              className={styles.AddBtn}
+              onClick={() => patch(path, [...arr, { ...(template ?? {}) }])}
+            >
               + añadir elemento
             </button>
           </div>
@@ -210,21 +284,30 @@ const VisualEditor = ({
   const renderNode = (node: unknown, path: string[]): React.ReactNode => {
     if (Array.isArray(node)) return renderArray(node, "items", path);
     if (node === null || typeof node !== "object") return null;
-    return Object.entries(node as Record<string, unknown>).map(([k, v]) => (
-      <div key={k}>{renderLeaf(k, v, [...path, k])}</div>
-    ));
+    const obj = node as Record<string, unknown>;
+    return (
+      <>
+        {Object.entries(obj).map(([k, v]) => (
+          <div key={k}>{renderLeaf(k, v, [...path, k])}</div>
+        ))}
+        <button className={styles.AddBtn} onClick={() => addField(path)}>
+          + añadir campo
+        </button>
+      </>
+    );
   };
 
   const renderField = (k: string, v: unknown, path: string[]): React.ReactNode => (
     <div key={k}>{renderLeaf(k, v, [...path, k])}</div>
   );
 
-  const topKeys = Object.keys(value);
+  const isRootArray = Array.isArray(value);
+  const topKeys = isRootArray ? [] : Object.keys(value);
   const groups = getGroups(collection, keyname);
   const usedKeys = new Set<string>();
   const sections: { label: string; keys: string[] }[] = [];
 
-  if (groups && groups.length > 0) {
+  if (!isRootArray && groups && groups.length > 0) {
     for (const g of groups) {
       const present = g.fields.filter((f) => topKeys.includes(f));
       present.forEach((f) => usedKeys.add(f));
@@ -237,18 +320,27 @@ const VisualEditor = ({
 
   return (
     <div className={styles.VisualEditor}>
-      {sections.length === 0 && <p className={styles.Muted}>Este apartado está vacío todavía.</p>}
-      {sections.map((s) => (
-        <section key={s.label} className={styles.VSection}>
-          <header className={styles.VSectionHeader}>
-            <strong>{s.label}</strong>
-            <span>{s.keys.length} campos</span>
-          </header>
-          <div className={styles.VSectionBody}>
-            {s.keys.map((k) => renderField(k, value[k], []))}
-          </div>
-        </section>
-      ))}
+      {isRootArray ? (
+        renderArray(value as unknown[], "items", [])
+      ) : (
+        <>
+          {sections.length === 0 && <p className={styles.Muted}>Este apartado está vacío todavía.</p>}
+          {sections.map((s) => (
+            <section key={s.label} className={styles.VSection}>
+              <header className={styles.VSectionHeader}>
+                <strong>{s.label}</strong>
+                <span>{s.keys.length} campos</span>
+              </header>
+              <div className={styles.VSectionBody}>
+                {s.keys.map((k) => renderField(k, value[k], []))}
+              </div>
+            </section>
+          ))}
+          <button className={styles.AddBtn} onClick={() => addField([])}>
+            + añadir campo
+          </button>
+        </>
+      )}
     </div>
   );
 };

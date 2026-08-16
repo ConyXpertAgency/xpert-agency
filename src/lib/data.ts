@@ -152,6 +152,26 @@ export const getHomePartners = (lang: Lang) =>
         tags: ["Automation", "Warehouse Systems"],
       },
     ],
+    cards: [
+      {
+        title: "mission",
+        text: "Build efficient communication bridges between people and industrial infrastructure, helping clients reach their goals through consulting, innovative solutions and quality process automation services focused on fast, results-centered competitiveness.",
+      },
+      {
+        title: "vision",
+        text: "Guide our clients toward a successful future through our passion for process automation.",
+      },
+      {
+        title: "values",
+        items: [
+          "Customer satisfaction focus",
+          "Trust / reliability",
+          "Commitment",
+          "Flexibility / multidisciplinarity",
+          "Service and management quality",
+        ],
+      },
+    ],
     stats: [
       { icon: "FiUsers", value: "30+", label: "Senior experts" },
       { icon: "CiGlobe", value: "12+", label: "Countries covered" },

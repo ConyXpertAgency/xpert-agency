@@ -28,8 +28,8 @@ export async function PUT(request: NextRequest) {
   if (!body || typeof body.collection !== "string" || typeof body.keyname !== "string" || typeof body.lang !== "string") {
     return Response.json({ error: "collection, keyname y lang son obligatorios" }, { status: 400 });
   }
-  if (!body.data || typeof body.data !== "object" || Array.isArray(body.data)) {
-    return Response.json({ error: "data debe ser un objeto JSON" }, { status: 400 });
+  if (body.data === null || body.data === undefined || typeof body.data !== "object") {
+    return Response.json({ error: "data debe ser un objeto o array JSON" }, { status: 400 });
   }
 
   const { error } = await adminClient(tokenOf(request))

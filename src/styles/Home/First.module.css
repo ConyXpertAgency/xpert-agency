@@ -1,40 +1,55 @@
 .First {
     display: flex;
     width: 100%;
-    height: 100%;
+    min-height: 0;
     flex: 1;
     min-height: 0;
+    gap: clamp(2rem, 3vw, 3.5rem);
+    padding-inline: 1.3rem;
 }
 
 .Left {
     display: flex;
     flex-direction: column;
-    width: 60%;
-    height: 100dvh;
-    justify-content: space-between;
-    gap: 1rem;
+    width: 52%;
+    gap: .5rem;
     min-width: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1.4rem;
+    min-width: 0;
+    min-height: calc(100dvh - 7rem);
+    display: flex;
+    height: max-content;
 
 }
 
 .Left header {
-    display: flex;
     flex-direction: column;
-    gap: .8rem;
+    gap: .6rem;
+    display: flex;
 
     h1 {
-        font-size: 3rem;
-        font-weight: bolder;
-        display: flex;
         flex-direction: column;
+        font-size: clamp(2.6rem, 4vw, 3.65rem);
+        font-weight: bolder;
+        line-height: 1.08;
+        display: flex;
     }
 
     p {
-        font-size: 1.2rem;
-        opacity: 80%;
-        display: flex;
+        opacity: .8;
         flex-direction: column;
+        font-size: 1.1rem;
+        line-height: 1.45;
+        display: flex;
     }
+}
+
+.LeftMain {
+    flex-direction: column;
+    gap: .5rem;
+    display: flex;
 }
 
 .Buttons {
@@ -44,15 +59,18 @@
 }
 
 .Left footer {
-    display: flex;
     gap: 1rem;
+    margin-top: clamp(1.5rem, 3dvh, 2.5rem);
+    display: flex;
+    
 }
 
 .Right {
     display: flex;
     justify-content: center;
-    width: 40%;
+    width: 48%;
     min-width: 0;
+    height: max-content;
 
     article {
         display: flex;
@@ -71,6 +89,14 @@
     width: 100%;
     border-radius: var(--radius-xl);
     padding: .8rem;
+
+    p {
+        font-size: .72rem;
+    }
+
+    strong {
+        font-size: .85rem;
+    }
 }
 
 .FirstCard {
@@ -99,33 +125,34 @@
         text-align: center;
 
         h1 {
-            font-size: 3rem;
+            font-size: 2.2rem;
             color: var(--color-success);
             font-weight: bold;
         }
 
-        p {
-            font-size: .9rem;
-        }
     }
 }
 
 .SecondCard {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
     gap: .8rem;
     width: 100%;
     background: var(--card-bg-gradient);
     border: 2px solid var(--color-bg-secondary);
+    animation: desaparecer 10s infinite;
 
     h1 {
-        font-size: 1rem;
+        font-size: .85rem;
         font-weight: bold;
     }
 
     ul {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: .4rem;
 
         li {
@@ -133,12 +160,18 @@
             align-items: center;
             gap: .8rem;
 
+            span {
+                padding: .3rem;
+            }
+
             strong {
-                font-size: .9rem;
+                font-size: .85rem;
             }
         }
     }
 }
+
+
 
 .ThirdCard {
     width: 70%;
@@ -151,30 +184,47 @@
 }
 
 .FourCard {
-    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
     flex-direction: column;
     background: var(--card-bg-gradient);
     border: 2px solid var(--color-bg-secondary);
+    opacity: 0;
+    display: none;
+    animation: aparecer 10s infinite;
+
     article {
         display: flex;
         flex-direction: row;
-        .TextFourCard {
+
+        section {
             display: flex;
             flex-direction: column;
+        }
+
+        .TextFourCard {
+            display: flex;
+            flex-direction: row;
             justify-content: space-between;
-            width: 60%;
+            width: 100%;
             height: 100%;
+
+            font-size: .72rem;
+
             p {
                 display: flex;
-                flex-direction: column;
             }
+
             a {
                 display: flex;
                 align-items: center;
                 gap: .2rem;
             }
+
             a:hover {
                 opacity: 80%;
+
                 svg {
                     transform: translateX(.4rem);
                 }
@@ -187,6 +237,47 @@
         width: 100%;
     }
 
+}
+
+@keyframes desaparecer {
+
+    0%,
+    40% {
+        opacity: 1;
+    }
+
+    50%,
+    90% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes aparecer {
+
+    0%,
+    40% {
+        opacity: 0;
+    }
+
+    50%,
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.AnimationCards {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 22.5rem;
 }
 
 .chartContainer {
@@ -385,6 +476,7 @@
         p {
             font-size: .8rem;
         }
+
         h1 {
             font-size: .9rem;
         }

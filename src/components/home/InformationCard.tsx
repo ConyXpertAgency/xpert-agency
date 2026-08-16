@@ -15,12 +15,12 @@ interface InformationCardProps {
 const InformationCard = ({ icon, description, title, children }: InformationCardProps) => {
     return (
         <article className={styles.Card}>
-            <PictureSvg variant="full" width={4} height={4} size={28} icon={icon} />
+            <PictureSvg className={styles.Picture} variant="full" width={2.5} height={2.5} size={26} icon={icon} />
             {children ? children : (
-                <>
+                <article className={styles.Text}>
                 <h1><RichText>{title}</RichText></h1>
                 <p><RichText>{description}</RichText></p>
-                </>
+                </article>
             )}
         </article>
     )

@@ -31,18 +31,22 @@
         display: flex;
         flex-direction: column;
         gap: .8rem;
+        width: 100%;
         p {
             display: flex;
             flex-direction: column;
         }
         section {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
             gap: .4rem;
         }
         button {
-            width: 50%;
-            font-size: .75rem;
+            width: 8rem;
+            font-size: .72rem;
             border-radius: 2rem;
+            text-wrap: wrap;
+            padding: .6rem .3rem;
 
         }
     }

@@ -4,13 +4,13 @@
     flex-direction: column;
     gap: 2rem;
 
-    ul {
+    .DataList {
         padding: 1rem;
         margin-top: 2rem;
         display: flex;
         height: 20dvh;
         background: var(--card-bg-gradient);
-    border: 2px solid var(--color-bg-secondary);
+        border: 2px solid var(--color-bg-secondary);
         border-radius: var(--radius-lg);
         align-items: center;
         justify-content: space-around;
@@ -21,11 +21,13 @@
             justify-content: center;
             gap: 1rem;
             padding: .8rem 2rem;
+
             h1 {
                 font-size: 2rem;
                 font-weight: bold;
                 color: var(--color-success);
             }
+
             svg {
                 color: var(--color-success);
             }
@@ -38,15 +40,61 @@
     }
 }
 
+.ListCard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+
+    .Card {
+        background: var(--card-bg-gradient);
+        border-radius: var(--radius-md);
+        flex-direction: column;
+        gap: .6rem;
+        padding: 1.2rem;
+        display: flex;
+
+        strong {
+            color: var(--color-success);
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            font-size: .75rem;
+        }
+
+        p {
+            opacity: .8;
+            font-size: .85rem;
+            line-height: 1.5;
+        }
+        ul {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            list-style-type: none;
+            gap: .4rem;
+            li {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: .2rem;
+                font-size: .72rem;
+                text-align: center;
+                border-radius: var(--radius-sm);
+                background: var(--card-bg-gradient);
+            }
+        }
+    }
+}
+
 .Footer {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1.2rem;
+
     button {
         color: var(--color-success);
         font-weight: bold;
     }
+
     button:hover {
         color: var(--color-surface);
     }
@@ -80,7 +128,7 @@
     gap: 1rem;
     justify-content: center;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    
+
     align-items: start;
 }
 

@@ -42,3 +42,5 @@ next-env.d.ts
 
 /public/references/*
 /public/uploads/*
+*.sql
+generate-redesign-migration.mjs

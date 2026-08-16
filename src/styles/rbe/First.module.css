@@ -1,0 +1,85 @@
+.First {
+    display: flex;
+    justify-content: space-between;
+}
+.Left {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    width: 60%;
+}
+.Fleft {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+.TextLeft {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    h1 {
+        display: inline;
+        width: 80%;
+        font-size: 3rem;
+        font-weight: bolder;
+        strong {
+            color: var(--color-success);
+        }
+    }
+}
+.ButtonsLeft {
+    display: flex;
+    gap: .8rem;
+    a:first-child {
+        button {
+            color: var(--color-text-inverse);
+            border-radius: var(--radius-md);
+        }
+        
+    }
+    button:last-child {
+        border-bottom: 2px solid var(--color-success);
+        border-radius: 0;
+        color: var(--color-text);
+    }
+}
+
+.ListLeft {
+    display: flex;
+    background: var(--card-bg-gradient);
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    li {
+        display: flex;
+        gap: .8rem;
+        svg {
+            color: var(--color-success);
+        }
+    }
+}
+.Right {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    justify-content: space-between;
+}
+.Card {
+    background: var(--card-bg-gradient);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    div {
+        width: 4rem;
+        height: 4rem;
+        margin: 0 auto;
+        background: var(--card-bg-gradient);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        color: var(--color-success);
+        font-weight: bold;
+        border-radius: var(--radius-full);
+        margin-top: -3rem;
+    }
+}

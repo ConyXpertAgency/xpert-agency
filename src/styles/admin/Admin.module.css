@@ -692,6 +692,33 @@
   flex-shrink: 0;
 }
 
+.ArrowBtn {
+  background: #1b2238;
+  border: 1px solid #2a3350;
+  color: #c7cfdd;
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.ArrowBtn:hover {
+  background: #22305a;
+  color: #fff;
+}
+
+.ArrowBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.VCardActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .NumberInput {
   width: 90px;
   background: #0e1220;

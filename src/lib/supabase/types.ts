@@ -44,11 +44,18 @@ export interface Partner {
   tags: string[];
 }
 
+export interface HomeListCard {
+  title: string;
+  text?: string;
+  items?: string[];
+}
+
 export interface HomePartners {
   badge: string;
   title: string;
   description: string[];
   items: Partner[];
+  cards: HomeListCard[];
   stats: TextItem[];
   footer: { text: string; cta: string };
 }
