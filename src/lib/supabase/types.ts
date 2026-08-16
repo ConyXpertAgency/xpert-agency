@@ -50,7 +50,6 @@ export interface HomePartners {
   description: string[];
   items: Partner[];
   stats: TextItem[];
-  about: { mission: string; vision: string; values: string[] };
   footer: { text: string; cta: string };
 }
 
@@ -148,14 +147,6 @@ export interface ContactMethod {
   href: string;
 }
 
-export interface RegionContact {
-  region: string;
-  name: string;
-  locations: string[];
-  phone: string[];
-  email: string;
-}
-
 export interface ContactPage {
   badge: string;
   title: string;
@@ -163,7 +154,6 @@ export interface ContactPage {
   features: TextItem[];
   team_section: { title: string; footer: string };
   methods: ContactMethod[];
-  regions: RegionContact[];
   form: {
     title: string;
     subtitle: string;

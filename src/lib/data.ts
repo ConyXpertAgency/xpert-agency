@@ -59,27 +59,26 @@ async function getTyped<T>(
 export const getHomeHero = (lang: Lang) =>
   getTyped<HomeHero>("home", "hero", lang, {
     badge: "MANUFACTURING & LOGISTICS CONSULTING",
-    // TODO: Replace with official logo when client provides final asset.
-    // TODO: Add approved country points once map becomes data-driven or positions are approved.
     title: [
-      "Experts in integration,",
-      "improvement and engineering.",
+      "Experts in integrated",
+      "improvement of",
+      "manufacturing and logistics.",
     ],
     subtitle:
-      "Process efficiency, automation, digital transformation and operational effectiveness.",
+      "Process improvement, automation, digital transformation, and operational reengineering.",
     cta_primary: "Contact us",
     cta_primary_href: "/contact",
     cta_secondary: "View services",
     cta_secondary_href: "/services",
     info_cards: [
-      { title: "45+ years", text: "Experience + delivering results." },
-      { title: "International reach", text: "Projects across the continents." },
-      { title: "Measurable solutions", text: "Measurable solutions, data driven." },
+      { title: "45+ years", text: "Combined experience delivering results" },
+      { title: "International reach", text: "Projects across Europe, Americas & Asia" },
+      { title: "Measurable impact", text: "Data-driven solutions that scale" },
     ],
     stat_impact: {
       title: "Operational impact",
-      value: "+25%",
-      label: "Average increase",
+      value: "+27%",
+      label: "Average productivity increase",
     },
     core_areas_title: "Core focus areas",
     core_areas: [
@@ -90,8 +89,8 @@ export const getHomeHero = (lang: Lang) =>
     ],
     stat_success: {
       title: "Project success rate",
-      value: "90%",
-      label: "On time / In scope / In budget",
+      value: "98%",
+      label: "On-time & on-scope delivery",
     },
     global_delivery: {
       title: "Global project delivery",
@@ -107,40 +106,39 @@ export const getHomePartners = (lang: Lang) =>
       "Our network of senior specialists combines deep industry experience with a hands-on approach to deliver measurable results.",
       "Trusted advisors. Proven operators. Real impact.",
     ],
-    // TODO: Add Manuel profile once client provides photo, role, description and expertise.
     items: [
       {
         name: "Elmar A. Beckord",
-        slug: "Logistics Manager, Engineer, Trainer",
+        slug: "Logistics Manager",
         logo: "/uploads/elmar.png",
         description: [
           "Logistics Manager, Engineer, Trainer.",
-          "Project management, logistics engineering",
-          "and process improvement across global manufacturing.",
+          "Project management and process improvement",
+          "across global manufacturing operations.",
         ],
-        tags: ["Project Management", "Logistics Management", "Process Improvement", "Training & Coaching"],
+        tags: ["Project Management", "Logistics Engineering"],
       },
       {
-        name: "Lic. María Concepción Lona Romero",
-        slug: "Manager, Marketing, Accountant, HR",
+        name: "Maria Concepcion Lona",
+        slug: "Manager & Marketing",
         logo: "/uploads/cony.png",
         description: [
-          "Manager, Marketing, Accountant, Human Resources.",
-          "HR management, business administration,",
-          "public relations and coaching.",
+          "Manager, Marketing, Accountant, HR.",
+          "Sales, business administration and",
+          "project & product marketing.",
         ],
-        tags: ["HR Management", "Business Sales & Admin", "Project & Product Marketing", "Coaching"],
+        tags: ["HR Management", "Marketing"],
       },
       {
-        name: "Eduardo Benítez",
-        slug: "Quality Management",
+        name: "Eduardo Benitez",
+        slug: "Quality & Process",
         logo: "/uploads/eduardo.png",
         description: [
-          "Quality Management specialist.",
-          "Process mining, contracting, management",
-          "control and coaching across industrial projects.",
+          "Quality management and process mining.",
+          "Contracting, management control and",
+          "coaching across industrial projects.",
         ],
-        tags: ["Process Mining", "Contracting", "Management Control", "Coaching"],
+        tags: ["Quality", "Process Mining"],
       },
       {
         name: "Wissam El Khoury",
@@ -149,28 +147,17 @@ export const getHomePartners = (lang: Lang) =>
         description: [
           "Co-Founder ALS, warehouse constructions.",
           "Integrated logistics systems and automation",
-          "for airports and large-scale distribution.",
+          "for airports and distribution.",
         ],
-        tags: ["Warehouse Systems", "Integrated Logistics", "Automation", "Airport Logistics"],
+        tags: ["Automation", "Warehouse Systems"],
       },
     ],
     stats: [
-      { icon: "FiUsers", value: "20+", label: "Experts" },
-      { icon: "CiGlobe", value: "25+", label: "Countries" },
-      { icon: "PiSuitcaseSimpleDuotone", value: "300+", label: "Projects" },
-      { icon: "GrLineChart", value: "95%", label: "Client Satisfaction" },
+      { icon: "FiUsers", value: "30+", label: "Senior experts" },
+      { icon: "CiGlobe", value: "12+", label: "Countries covered" },
+      { icon: "PiSuitcaseSimpleDuotone", value: "200+", label: "Projects delivered" },
+      { icon: "GrLineChart", value: "98%", label: "Client satisfaction" },
     ],
-    about: {
-      mission: "Build efficient communication bridges between people and industrial infrastructure, helping clients reach their goals through consulting, innovative solutions and quality process automation services focused on fast, results-centered competitiveness.",
-      vision: "Guide our clients toward a successful future through our passion for process automation.",
-      values: [
-        "Customer satisfaction focus",
-        "Trust / reliability",
-        "Commitment",
-        "Flexibility / multidisciplinarity",
-        "Service and management quality",
-      ],
-    },
     footer: { text: "Looking for a specific expertise?", cta: "Let's connect" },
   });
 
@@ -199,12 +186,11 @@ export const getHomeGlobalReach = (lang: Lang) =>
       },
     ],
     stats: [
-      { icon: "CiGlobe", value: "5", label: "Continents Served", text: "Operational presence across five continents." },
-      { icon: "FiUsers", value: "50+", label: "Cross-border Projects", text: "Seamless coordination across regions and time zones." },
-      { icon: "IoChatboxEllipsesOutline", value: "10+", label: "Languages Supported", text: "Multilingual teams ensuring clear communication everywhere." },
-      { icon: "AiOutlineTruck", value: "Delivering", label: "Impact Across Borders", text: "End-to-end delivery across complex global operations." },
+      { icon: "CiGlobe", value: "35+", label: "Countries served", text: "Projects successfully delivered across five continents." },
+      { icon: "FiUsers", value: "250+", label: "Global expert network", text: "Engineers, consultants, and specialists worldwide." },
+      { icon: "IoChatboxEllipsesOutline", value: "12+", label: "Languages supported", text: "Multilingual teams ensuring clear communication everywhere." },
+      { icon: "AiOutlineTruck", value: "100+", label: "Cross-border projects", text: "End-to-end delivery across complex global operations." },
     ],
-    // TODO: Add country-level map points for South Africa, Malaysia, Thailand, Vietnam, Myanmar, Scotland, Russia and Morocco once the map becomes data-driven or positions are approved.
     cta: "Explore our global capabilities",
   });
 
@@ -246,21 +232,20 @@ export const getAboutFirst = (lang: Lang) =>
       "manufacturing and logistics.",
     ],
     text: [
-      "Xpert.agency, based in Germany, helps organizations optimize manufacturing, logistics and business processes through integrated continuous improvement, automation, digital transformation and operational reengineering solutions.",
+      "At Xpert.agency, we help organizations transform how they operate. We combine deep industry knowledge with digital solutions, automation and process excellence to design smarter, more connected and more efficient operations.",
     ],
     features: [
-      { icon: "FaChartLine", title: "Interim Experts", text: "Experienced specialists supporting operational transformation projects." },
-      { icon: "IoIosSettings", title: "Trainers & Coaches", text: "Training and coaching support for teams and leaders." },
-      { icon: "GrGroup", title: "Interim Managers", text: "Temporary management support for critical operational needs." },
-      { icon: "RiTargetLine", title: "Consultants", text: "Consulting support across manufacturing, logistics and business processes." },
+      { icon: "FaChartLine", title: "Industry expertise", text: "Deep understanding of manufacturing, logistics and supply chain." },
+      { icon: "IoIosSettings", title: "Smart operations", text: "Automation, digitization and data-driven decision making." },
+      { icon: "GrGroup", title: "End-to-end approach", text: "From strategy and design to implementation and continuous improvement." },
+      { icon: "RiTargetLine", title: "Results that last", text: "Measurable impact, sustainable solutions and long-term partnerships." },
     ],
     stats: [
       { icon: "IoShieldCheckmarkOutline", value: "45+", label: "Years of experience", text: "Delivering measurable results." },
-      { icon: "CiGlobe", value: "25+", label: "Countries", text: "Projects across Europe, Americas & Asia" },
-      { icon: "FaChartLine", value: "300+", label: "Projects", text: "Across industries and company sizes" },
-      { icon: "GrGroup", value: "20+", label: "Experts", text: "Experienced specialists across disciplines" },
+      { icon: "CiGlobe", value: "20+", label: "Countries", text: "Projects across Europe, Americas & Asia" },
+      { icon: "FaChartLine", value: "150+", label: "Successful projects", text: "Across industries and company sizes" },
+      { icon: "GrGroup", value: "30+", label: "Cross-functional experts", text: "Engineers, analysts and project leaders" },
     ],
-    // TODO: Add new country map points once the map becomes data-driven or positions are approved.
     right_card: {
       title: ["Global perspective.", "Local understanding."],
       text: "We work side by side with our clients to deliver value that transcends borders.",
@@ -279,45 +264,36 @@ export const getAboutSecond = (lang: Lang) =>
       author: "Execution. Teamwork. Impact.",
       sub: "That's how we work.",
     },
-    // TODO: Elmar will provide final detailed points for each methodology step.
     steps: [
       {
         number: "01",
         icon: "IoIosSearch",
-        title: "Data mining analysis & diagnosis",
-        text: ["Assessment of operational data and processes to identify priorities."],
-        bullets: [],
+        title: "Diagnose operations",
+        text: ["We analyze your processes, data and performance to uncover opportunities, bottlenecks and risks."],
+        bullets: ["Process & data assessment", "KPI baseline & benchmarking", "Root cause analysis"],
       },
       {
         number: "02",
         icon: "IoMdClipboard",
-        title: "Survey & quick wins",
-        text: ["Survey work to surface opportunities and define immediate improvements."],
-        bullets: [],
+        title: "Design improvement roadmap",
+        text: ["We co-create a tailored roadmap with prioritized initiatives and clear business impact."],
+        bullets: ["Solution & process design", "Business case & prioritization", "Change & risk planning"],
       },
       {
         number: "03",
-        icon: "FaChartLine",
-        title: "Improvement roadmap",
-        text: ["Prioritized roadmap for improvement initiatives."],
-        bullets: [],
+        icon: "HiOutlineCog6Tooth",
+        title: "Implement and coordinate",
+        text: ["We execute with precision, coordinating people, technology and processes for results."],
+        bullets: ["Project & program management", "Technology & integration", "Training & change enablement"],
       },
       {
         number: "04",
-        icon: "HiOutlineCog6Tooth",
-        title: "Agile and classic project management",
-        text: ["Project execution using agile and classic management practices."],
-        bullets: [],
-      },
-      {
-        number: "05",
         icon: "FiBarChart",
-        title: "Performance measurement",
-        text: ["Measurement of performance and progress against agreed indicators."],
-        bullets: [],
+        title: "Measure and optimize",
+        text: ["We track results in real time and continuously optimize for long-term value."],
+        bullets: ["Performance tracking (KPI)", "Continuous improvement", "Scalability & innovation"],
       },
     ],
-    // TODO: Add separate English RBE page with Preparing / Safeguarding / Performing and 10+1 elements.
     footer_card: {
       title: "Continuous improvement cycle",
       text: "We learn, adapt and evolve — driving sustained impact across your organization.",
@@ -371,6 +347,7 @@ export const getIndustriesPage = (lang: Lang) =>
       { icon: "MdOutlineShoppingCart", title: "Retail & E-commerce", text: "Enhancing customer experiences and streamlining operations across omnichannel ecosystems." },
       { icon: "AiOutlineTruck", title: "Warehousing & Logistics", text: "Driving visibility, agility, and on-time delivery through intelligent logistics solutions." },
       { icon: "IoBagHandleOutline", title: "Consumer Goods", text: "Accelerating innovation and ensuring consistency from product development to delivery." },
+      { icon: "PiFactoryLight", title: "Industrial Operations", text: "Improving asset performance, safety, and sustainability with data-driven operations." },
     ],
     info_card: {
       title: "Cross-industry expertise. Measurable results.",
@@ -383,54 +360,70 @@ export const getIndustriesPage = (lang: Lang) =>
 export const getCasesPage = (lang: Lang) =>
   getTyped<CasesPage>("cases", "page", lang, {
     header: {
-      badge: "CASES",
+      badge: "CASE STUDIES",
       title: "Proven impact across industries and challenges.",
       text: "We partner with organizations worldwide to solve complex operational challenges through integrated improvement, automation, and logistics solutions.",
     },
-    // TODO: Confirm final featured cases with client. Landmark appears twice in annotation; sixth slot left pending.
-    // TODO: Add View all cases page/list with the remaining real cases: Pistor AG, FENIX Outdoor Supply, Schuh Schmid, Birkenstock, HYMMEN Pisos, XOX Snacks, Giesecke+Devrient (G+D), Zeitfracht Medien, Weig-Karton, Kymmene Papier.
-    // TODO: Add client logos when provided; current project has no client logo assets.
     items: [
       {
-        title: "Almarai",
-        slug: "KSA",
-        description: "Project leader for distribution automation and new Distribution Centers in the Middle East.",
+        title: "NOVENTIS",
+        slug: "Advanced Manufacturing",
+        description: "Streamlined production and quality control across multi-site operations.",
         stats: [
-          { icon: "FaRegChartBar", value: ">50%", text: "reduction in personnel" },
-          { icon: "FaRegClock", value: ">30%", text: "reduction in delivery time" },
-          { icon: "IoShieldCheckmarkOutline", value: ">20%", text: "reduction in waste" },
+          { icon: "FaRegChartBar", value: "28%", text: "increase in overall equipment effectiveness" },
+          { icon: "FaRegClock", value: "22%", text: "reduction in cycle time" },
+          { icon: "IoShieldCheckmarkOutline", value: "99.2%", text: "quality compliance achieved" },
         ],
       },
       {
-        title: "Landmark",
-        slug: "Channel Distribution",
-        description: "Project Head for warehouse, sorting and fashion distribution integration across a large group.",
+        title: "LUMINA LOGISTICS",
+        slug: "Logistics & Supply Chain",
+        description: "Designed and implemented an end-to-end supply chain optimization program.",
         stats: [
-          { icon: "FaRegChartBar", value: ">70%", text: "reduction in personnel" },
-          { icon: "FaRegClock", value: ">50%", text: "reduction in delivery time" },
-          { icon: "IoShieldCheckmarkOutline", value: ">40%", text: "reduction in waste" },
+          { icon: "FaRegChartBar", value: "31%", text: "reduction in logistics costs" },
+          { icon: "FaRegClock", text: "On-time delivery improved to 98%" },
+          { icon: "IoShieldCheckmarkOutline", text: "Real-time visibility across 4 regions" },
         ],
       },
       {
-        // TODO: Add project/results details for Heineken when provided by client.
-        title: "Heineken",
-        slug: "Client",
-        description: "Case details pending from client.",
-        stats: [],
+        title: "NEXORA ENERGY",
+        slug: "Energy & Utilities",
+        description: "Integrated reliability and maintenance systems to improve asset performance.",
+        stats: [
+          { icon: "FaRegChartBar", value: "18%", text: "reduction in unplanned downtime" },
+          { icon: "FaRegClock", value: "25%", text: "improvement in maintenance efficiency" },
+          { icon: "IoShieldCheckmarkOutline", value: "$4.2M", text: "annual savings realized" },
+        ],
       },
       {
-        // TODO: Add project/results details for Diageo when provided by client.
-        title: "Diageo",
-        slug: "Client",
-        description: "Case details pending from client.",
-        stats: [],
+        title: "VERIDIAN LABS",
+        slug: "Life Sciences",
+        description: "Modernized operations and ensured regulatory compliance at scale.",
+        stats: [
+          { icon: "FaRegChartBar", value: "300%", text: "increase in production throughput" },
+          { icon: "FaRegClock", value: "100%", text: "regulatory audit compliance" },
+          { icon: "IoShieldCheckmarkOutline", value: "15+", text: "reduction in operational costs" },
+        ],
       },
       {
-        // TODO: Add project/results details for Nestlé when provided by client.
-        title: "Nestlé",
-        slug: "Client",
-        description: "Case details pending from client.",
-        stats: [],
+        title: "MARITEX GROUP",
+        slug: "Marine & Shipping",
+        description: "Optimized fleet operations and predictive maintenance capabilities.",
+        stats: [
+          { icon: "FaRegChartBar", value: "20%", text: "improvement in fleet utilization" },
+          { icon: "FaRegClock", value: "35%", text: "reduction in maintenance incidents" },
+          { icon: "IoShieldCheckmarkOutline", value: "$2.1M", text: "annual fuel savings" },
+        ],
+      },
+      {
+        title: "ALTRAX DISTRIBUTION",
+        slug: "Retail & Distribution",
+        description: "Automated warehouse operations and optimized inventory flow.",
+        stats: [
+          { icon: "FaRegChartBar", value: "40%", text: "increase in order fulfillment rate" },
+          { icon: "FaRegClock", value: "26%", text: "reduction in picking time" },
+          { icon: "IoShieldCheckmarkOutline", value: "99.5%", text: "inventory accuracy achieved" },
+        ],
       },
     ],
   });
@@ -438,7 +431,7 @@ export const getCasesPage = (lang: Lang) =>
 export const getContactPage = (lang: Lang) =>
   getTyped<ContactPage>("contact", "page", lang, {
     badge: "LET'S BUILD WHAT'S NEXT",
-    title: "Get in contact",
+    title: "Ready to improve your operations?",
     subtitle:
       "Share your goals and challenges. Our experts will help you design practical solutions that drive measurable results.",
     features: [
@@ -454,38 +447,6 @@ export const getContactPage = (lang: Lang) =>
       { icon: "FiPhone", title: "WhatsApp / Phone", value: "+52 55 2654 8997", cta: "Chat on WhatsApp", href: "" },
       { icon: "MdOutlineEmail", title: "Email", value: "contacto@xpert.agency", cta: "Send email", href: "" },
       { icon: "GrLocation", title: "Headquarters", value: "Mexico City, Mexico", cta: "View on map", href: "" },
-    ],
-    regions: [
-      {
-        region: "Europe",
-        name: "Elmar A. Beckord",
-        locations: ["Brunnthal / Otterloh, Germany", "Wakefield, UK"],
-        phone: ["+49 171 8892 788", "+55 52 3431 5953"],
-        email: "xpert.agency@hotmail.com",
-      },
-      {
-        // TODO: confirm if Manuel replaces or complements Cony in Americas
-        region: "Americas",
-        name: "Lic. Mar\u00eda Concepci\u00f3n Lona Romero",
-        locations: ["Mexico City (CDMX), Mexico", "Belo Horizonte, Brazil"],
-        phone: ["+52 55 34315953"],
-        email: "coniromero8@gmail.com",
-      },
-      {
-        region: "Arab Region",
-        name: "Wissam El Khoury",
-        locations: ["Dubai JLT, UAE", "Velenje, Slovenia"],
-        phone: ["+971 58540 4180"],
-        email: "info@als.systems",
-      },
-      {
-        // TODO: confirm Eduardo's direct contact — phone in source matches Europe team
-        region: "Asia",
-        name: "Eduardo Ben\u00edtez",
-        locations: ["Sansia Township, Taipei County, Taiwan"],
-        phone: ["+49 171 8892 788"],
-        email: "",
-      },
     ],
     form: {
       title: "Send us a message",

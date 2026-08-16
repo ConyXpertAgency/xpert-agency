@@ -57,19 +57,6 @@ const page = async () => {
                                 </li>
                             ))}
                         </ul>
-                        {data.regions?.length > 0 && (
-                            <div className={styles.Regions}>
-                                {data.regions.map((region, i) => (
-                                    <div key={i} className={styles.RegionCard}>
-                                        <strong>{region.region}</strong>
-                                        <span>{region.name}</span>
-                                        {region.locations.map((loc, j) => <p key={j}>{loc}</p>)}
-                                        {region.phone.map((tel, j) => <p key={j}>{tel}</p>)}
-                                        {region.email && <p>{region.email}</p>}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
                         <footer>
                             <section>
                                 <PictureSvg className={styles.PictureFL} size={38} icon={LuUsersRound} />

@@ -33,10 +33,6 @@ export async function generateMetadata(): Promise<Metadata> {
         de: "/de",
       },
     },
-    icons: {
-      icon: "/isotipo_xpert.png",
-      apple: "/isotipo_xpert.png",
-    },
     openGraph: {
       locale: lang === "es" ? "es_ES" : lang === "de" ? "de_DE" : "en_US",
     },
