@@ -837,6 +837,455 @@
   word-break: break-all;
 }
 
+/* ── Settings button (per field) ─────────────────────── */
+.SettingsBtn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #5b6478;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.SettingsBtn:hover {
+  color: #e6e9f0;
+  background: #1b2238;
+  border-color: #3a4256;
+}
+
+.SettingsFieldRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.SettingsFieldRow > .VKey {
+  padding-top: 8px;
+}
+
+.SettingsFieldRow > .Editable {
+  flex: 1;
+}
+
+.SettingsFieldRow > .SettingsBtn {
+  margin-top: 8px;
+}
+
+/* ── Text Properties Modal (sidebar-style) ──────────── */
+.SettingsModal {
+  max-width: 96vw;
+  width: 96vw;
+  max-height: 94vh;
+  height: 94vh;
+  border-radius: 14px;
+}
+
+.SettingsHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Body: 3-column layout ── */
+.SettingsBody {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Col 1: Property list (sidebar) ── */
+.SettingsPropList {
+  flex: 0 0 280px;
+  min-width: 280px;
+  overflow-y: auto;
+  background: #11162a;
+  border-right: 1px solid #262e45;
+  padding: 8px 0;
+}
+
+.SettingsPropGroup {
+  margin-bottom: 4px;
+}
+
+.SettingsPropGroupTitle {
+  padding: 10px 16px 6px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5b6478;
+  font-weight: 600;
+}
+
+.SettingsPropItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #c7cfdd;
+  padding: 9px 16px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.1s;
+  gap: 10px;
+}
+
+.SettingsPropItem:hover {
+  background: #1b2238;
+}
+
+.SettingsPropItemActive {
+  background: #1d2c55;
+  color: #fff;
+}
+
+.SettingsPropItemActive:hover {
+  background: #1d2c55;
+}
+
+.SettingsPropLabel {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.SettingsPropValue {
+  font-size: 0.72rem;
+  color: #4a5468;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.SettingsPropValueSet {
+  color: #60a5fa;
+}
+
+.SettingsPropItemActive .SettingsPropValue {
+  color: #93b4e8;
+}
+
+.SettingsPropItemActive .SettingsPropValueSet {
+  color: #93c5fd;
+}
+
+/* ── Col 2: Property detail panel ── */
+.SettingsDetailPanel {
+  flex: 0 0 360px;
+  min-width: 360px;
+  overflow-y: auto;
+  border-right: 1px solid #262e45;
+  display: flex;
+  flex-direction: column;
+}
+
+.SettingsDetailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.SettingsDetailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.SettingsDetailPropName {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #e6e9f0;
+}
+
+.SettingsDetailCategory {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5b6478;
+  background: #1b2238;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.SettingsDetailField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.SettingsDetailInput {
+  width: 100%;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #e6e9f0;
+  font-size: 0.95rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  box-sizing: border-box;
+}
+
+.SettingsDetailInput:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.SettingsDetailInput::placeholder {
+  color: #3a4256;
+}
+
+.SettingsDetailSelect {
+  width: 100%;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #e6e9f0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.SettingsDetailSelect:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.SettingsDetailColorRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.SettingsDetailColorPicker {
+  width: 52px;
+  height: 46px;
+  background: #0e1220;
+  border: 1px solid #2a3350;
+  border-radius: 10px;
+  padding: 3px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.SettingsDetailColorPicker::-webkit-color-swatch-wrapper { padding: 2px; }
+.SettingsDetailColorPicker::-webkit-color-swatch { border-radius: 6px; border: none; }
+
+.SettingsDetailColorRow .SettingsDetailInput {
+  flex: 1;
+}
+
+.SettingsDetailClear {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid #2a3350;
+  color: #8a93a8;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+.SettingsDetailClear:hover {
+  background: #1b2238;
+  color: #e6e9f0;
+}
+
+.SettingsDetailEmpty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #4a5468;
+  font-size: 0.85rem;
+}
+
+.SettingsDetailEmptyIcon {
+  font-size: 2rem;
+  opacity: 0.4;
+}
+
+/* ── Col 3: Preview ── */
+.SettingsPreviewPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.SettingsPreviewLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 20px 10px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a93a8;
+}
+
+.SettingsPreviewBox {
+  flex: 1;
+  margin: 0 16px 16px;
+  background: #0a0e1a;
+  border: 1px solid #262e45;
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+}
+
+.SettingsPreviewContent {
+  width: 100%;
+  min-height: 60px;
+  outline: none;
+  color: #e6e9f0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.SettingsPreviewContent:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.SettingsCompare {
+  display: flex;
+  gap: 1px;
+  margin: 0 20px;
+  border-top: 1px solid #262e45;
+}
+
+.SettingsCompareCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.SettingsCompareCol:first-child {
+  border-right: 1px solid #262e45;
+}
+
+.SettingsCompareLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5b6478;
+  padding: 10px 16px 6px;
+  font-weight: 600;
+}
+
+.SettingsCompareContent {
+  flex: 1;
+  min-height: 56px;
+  padding: 8px 16px 12px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #e6e9f0;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.SettingsCompareBefore {
+  color: #8a93a8;
+}
+
+.SettingsCompareAfter {
+  color: #e6e9f0;
+}
+
+.SettingsFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid #262e45;
+}
+
+.SettingsClearBtn {
+  background: transparent;
+  border: 1px solid #7f1d1d;
+  color: #f87171;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  margin-right: auto;
+}
+
+.SettingsClearBtn:hover {
+  background: #7f1d1d20;
+}
+
+.SettingsResetBtn {
+  background: transparent;
+  border: 1px solid #2a3350;
+  color: #8a93a8;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.SettingsResetBtn:hover {
+  background: #1b2238;
+  color: #e6e9f0;
+}
+
+.SettingsCancelBtn {
+  background: transparent;
+  border: 1px solid #2a3350;
+  color: #c7cfdd;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.SettingsCancelBtn:hover {
+  background: #1b2238;
+}
+
+.SettingsApplyBtn {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.SettingsApplyBtn:hover {
+  background: #1d4ed8;
+}
+
 .ModalOverlay {
   position: fixed;
   inset: 0;
@@ -853,8 +1302,6 @@
   border: 1px solid #2a3350;
   border-radius: 14px;
   width: 100%;
-  max-width: 720px;
-  max-height: 80vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -958,4 +1405,65 @@
 .UploadPreview span {
   font-size: 0.8rem;
   color: #8a93a8;
+}
+
+/* ── Editor inside Settings Modal ── */
+.EditorToolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  border-bottom: 1px solid #1b2238;
+  background: #151b2e;
+}
+
+.EditorToolbar button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #8a93a8;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-weight: 600;
+  transition: background 0.12s, color 0.12s;
+}
+
+.EditorToolbar button:hover {
+  background: #22305a;
+  color: #e6e9f0;
+}
+
+.EditorToolbarSep {
+  width: 1px;
+  height: 18px;
+  background: #2a3350;
+  margin: 0 6px;
+}
+
+.SettingsEditorContent {
+  border: none;
+  background: #0f1320;
+  display: inline;
+}
+
+.SettingsEditorContent * {
+  display: inline !important;
+}
+
+.SettingsEditorContent:focus {
+  outline: none;
+}
+
+.SettingsHoverBadge {
+  background: #7c3aed;
+  color: #fff;
+  font-size: 0.68rem;
+  padding: 2px 10px;
+  border-radius: 20px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin-left: 8px;
 }

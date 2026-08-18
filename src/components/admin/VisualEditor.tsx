@@ -33,6 +33,7 @@ interface VisualEditorProps {
   onChange: (next: Record<string, unknown>) => void;
   onPickIcon: (path: string[]) => void;
   onUploadImage: (path: string[]) => void;
+  onOpenSettings: (path: string[], value: string) => void;
   lang: string;
   collection: string;
   keyname: string;
@@ -43,6 +44,7 @@ const VisualEditor = ({
   onChange,
   onPickIcon,
   onUploadImage,
+  onOpenSettings,
   lang,
   collection,
   keyname,
@@ -111,6 +113,13 @@ const VisualEditor = ({
                   onChange={(next) => patch([...path, String(i)], next)}
                   role="p"
                 />
+                <button
+                  className={styles.SettingsBtn}
+                  onClick={() => onOpenSettings([...path, String(i)], item as string)}
+                  title="Propiedades del texto"
+                >
+                  ⚙
+                </button>
                 <button
                   className={styles.ArrowBtn}
                   onClick={() => moveItem(path, i, -1)}
@@ -226,13 +235,22 @@ const VisualEditor = ({
       return (
         <div className={styles.VField}>
           <span className={styles.VKey}>{label(path)}</span>
-          <Editable
-            value={val}
-            onChange={(next) => patch(path, next)}
-            role={roleFor(key)}
-            multiline={roleFor(key) === "p" || roleFor(key) === "h1"}
-            placeholder={label(path)}
-          />
+          <div className={styles.SettingsFieldRow}>
+            <Editable
+              value={val}
+              onChange={(next) => patch(path, next)}
+              role={roleFor(key)}
+              multiline={roleFor(key) === "p" || roleFor(key) === "h1"}
+              placeholder={label(path)}
+            />
+            <button
+              className={styles.SettingsBtn}
+              onClick={() => onOpenSettings(path, val)}
+              title="Propiedades del texto"
+            >
+              ⚙
+            </button>
+          </div>
         </div>
       );
     }

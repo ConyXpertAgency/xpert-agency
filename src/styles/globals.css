@@ -231,3 +231,10 @@ span {
 a, button {
   cursor: pointer;
 }
+
+/* RichText: force children inline to prevent block tags from stacking */
+.rt > * {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}

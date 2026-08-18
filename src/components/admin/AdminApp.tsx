@@ -9,6 +9,7 @@ import { COLLECTION_LABELS, LANGS, SECTION_LABELS, SECTION_ORDER, USED_SECTIONS,
 import type { Lang, ContentRow } from "@/lib/supabase/types";
 import IconPickerModal from "./IconPickerModal";
 import ImageUploadModal from "./ImageUploadModal";
+import TextPropertiesModal from "./TextPropertiesModal";
 import VisualEditor from "./VisualEditor";
 
 interface Selection {
@@ -38,6 +39,9 @@ export default function AdminApp() {
   const [modal, setModal] = useState<null | "icons" | "image">(null);
   const [iconTarget, setIconTarget] = useState<string[] | null>(null);
   const [imageTarget, setImageTarget] = useState<string[] | null>(null);
+
+  const [settingsTarget, setSettingsTarget] = useState<string[] | null>(null);
+  const [settingsValue, setSettingsValue] = useState("");
 
   const [opacity, setOpacity] = useState("0.6");
   const [color, setColor] = useState("#05154B");
@@ -349,6 +353,17 @@ export default function AdminApp() {
     setImageTarget(null);
   };
 
+  const openSettings = (path: string[], val: string) => {
+    setSettingsTarget(path);
+    setSettingsValue(val);
+  };
+
+  const applySettings = (next: string) => {
+    if (settingsTarget) patchPath(settingsTarget, next);
+    setSettingsTarget(null);
+    setSettingsValue("");
+  };
+
   if (checking) {
     return <div className={styles.CenterScreen}>Verificando sesión…</div>;
   }
@@ -609,13 +624,13 @@ export default function AdminApp() {
                 <button title="Cursiva" onClick={() => wrapActiveSelection("<em>", "</em>")}>
                   <i>I</i>
                 </button>
-                <button title="Título" onClick={() => wrapActiveSelection("\n<h1>", "</h1>\n")}>
+                <button title="Título" onClick={() => wrapActiveSelection("<span style=\"font-size:1.8em;font-weight:700\">", "</span>")}>
                   H1
                 </button>
-                <button title="Subtítulo" onClick={() => wrapActiveSelection("\n<h2>", "</h2>\n")}>
+                <button title="Subtítulo" onClick={() => wrapActiveSelection("<span style=\"font-size:1.3em;font-weight:600\">", "</span>")}>
                   H2
                 </button>
-                <button title="Párrafo" onClick={() => wrapActiveSelection("\n<p>", "</p>\n")}>
+                <button title="Párrafo" onClick={() => wrapActiveSelection("<span style=\"display:inline\">", "</span>")}>
                   P
                 </button>
                 <button
@@ -714,6 +729,7 @@ export default function AdminApp() {
                       setImageTarget(path);
                       setModal("image");
                     }}
+                    onOpenSettings={openSettings}
                     lang={selected.lang}
                     collection={selected.collection}
                     keyname={selected.keyname}
@@ -738,6 +754,16 @@ export default function AdminApp() {
         <IconPickerModal onPick={pickIcon} onClose={() => setModal(null)} />
       )}
       {modal === "image" && <ImageUploadModal onUpload={pickImage} onClose={() => setModal(null)} />}
+      {settingsTarget && (
+        <TextPropertiesModal
+          value={settingsValue}
+          onApply={applySettings}
+          onClose={() => {
+            setSettingsTarget(null);
+            setSettingsValue("");
+          }}
+        />
+      )}
     </div>
   );
 }

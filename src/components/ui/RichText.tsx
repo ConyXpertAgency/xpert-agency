@@ -8,7 +8,8 @@ interface RichTextProps {
 
 const RichText = ({ as: Tag = "span", className, children }: RichTextProps) => {
   const text = children == null ? "" : String(children);
-  return <Tag className={className} dangerouslySetInnerHTML={{ __html: text }} />;
+  const cls = [className, "rt"].filter(Boolean).join(" ");
+  return <Tag className={cls} dangerouslySetInnerHTML={{ __html: text }} />;
 };
 
 export default RichText;
