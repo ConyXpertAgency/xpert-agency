@@ -34,7 +34,7 @@ const Second = ({ partners, lang }: SecondProps) => {
                         </p>
                         <section>
                             {partner.tags.map((tag, k) => (
-                                <Button key={k} variant='outlineG'>{tag}</Button>
+                                <Button key={k} variant='outlineG'><RichText as="span">{tag}</RichText></Button>
                             ))}
                         </section>
                     </ProfesionalCard>
