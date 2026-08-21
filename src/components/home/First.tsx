@@ -100,11 +100,8 @@ const First = ({ hero }: FirstProps) => {
                             </ul>
                         </article>
                         <article className={`${styles.FourCard} ${styles.CardRight}`}>
-                            <header>
-                                <strong><RichText>{hero.global_delivery.title}</RichText></strong>
-                            </header>
                             <article>
-                                <section>
+                                <section className={styles.FourContent}>
                                     <div className={`${styles.mapWrapper}`}>
                                         <div className={styles.mapContainer}></div>
                                         <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
@@ -114,10 +111,11 @@ const First = ({ hero }: FirstProps) => {
                                         <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAs}`}></div>
                                         <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAu}`}></div>
                                     </div>
-                                    <span className={`${styles.TextFourCard}`}>
+                                    <div className={styles.FourTextColumn}>
+                                        <strong><RichText>{hero.global_delivery.title}</RichText></strong>
                                         <p><RichText>{hero.global_delivery.text}</RichText></p>
                                         <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
-                                    </span>
+                                    </div>
                                 </section>
                             </article>
                         </article>

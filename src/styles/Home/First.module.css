@@ -5,7 +5,7 @@
     flex: 1;
     min-height: 0;
     gap: clamp(2rem, 3vw, 3.5rem);
-    padding-inline: 1.3rem;
+    padding-top: var(--hero-top-padding);
 }
 
 .Left {
@@ -31,7 +31,7 @@
 
     h1 {
         flex-direction: column;
-        font-size: clamp(2.6rem, 4vw, 3.65rem);
+        font-size: var(--hero-title-size);
         font-weight: bolder;
         line-height: 1.08;
         display: flex;
@@ -54,13 +54,13 @@
 
 .Buttons {
     display: flex;
-
+    margin-top: var(--cta-top-gap);
     gap: 1.2rem;
 }
 
 .Left footer {
     gap: 1rem;
-    margin-top: clamp(1.5rem, 3dvh, 2.5rem);
+    margin-top: var(--cta-bottom-gap);
     display: flex;
     
 }
@@ -79,7 +79,7 @@
 
         section {
             display: flex;
-            gap: .8rem;
+            gap: var(--hero-card-gap);
         }
     }
 }
@@ -139,8 +139,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    gap: .8rem;
+    gap: .5rem;
     width: 100%;
+    height: 100%;
     background: var(--card-bg-gradient);
     border: 2px solid var(--color-bg-secondary);
     animation: desaparecer 10s infinite;
@@ -153,19 +154,29 @@
     ul {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: .4rem;
+        grid-auto-rows: auto;
+        gap: var(--core-focus-row-gap) var(--core-focus-col-gap);
 
         li {
             display: flex;
             align-items: center;
-            gap: .8rem;
+            gap: .5rem;
 
             span {
-                padding: .3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: var(--core-focus-icon-size);
+                height: var(--core-focus-icon-size);
+                min-width: var(--core-focus-icon-size);
+                background: rgba(30, 49, 76, 0.8);
+                border-radius: 50%;
             }
 
             strong {
-                font-size: .85rem;
+                font-size: var(--core-focus-text-size);
+                font-weight: 500;
+                line-height: 1.2;
             }
         }
     }
@@ -188,6 +199,8 @@
     top: 0;
     left: 0;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
     background: var(--card-bg-gradient);
     border: 2px solid var(--color-bg-secondary);
     opacity: 0;
@@ -197,22 +210,33 @@
     article {
         display: flex;
         flex-direction: row;
+        gap: 1rem;
 
-        section {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .TextFourCard {
+        .FourContent {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            gap: 1rem;
             width: 100%;
-            height: 100%;
+        }
 
-            font-size: .72rem;
+        .mapWrapper {
+            flex: 0 0 62%;
+        }
+
+        .FourTextColumn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+            gap: 0.5rem;
+
+            strong {
+                font-size: .85rem;
+                font-weight: bold;
+            }
 
             p {
+                font-size: .72rem;
                 display: flex;
             }
 
@@ -220,6 +244,7 @@
                 display: flex;
                 align-items: center;
                 gap: .2rem;
+                font-size: .72rem;
             }
 
             a:hover {
@@ -277,7 +302,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 22.5rem;
+    height: var(--lower-right-card-height);
 }
 
 .chartContainer {
@@ -345,7 +370,7 @@
 /* Contenedor principal del mapa */
 .mapContainer {
     position: relative;
-    width: 100%;
+    width: var(--map-size);
     max-width: 800px;
     aspect-ratio: 2 / 1;
     /* Aquí puedes usar una imagen de un mapa de puntos o cuadrícula */
@@ -363,7 +388,8 @@
     position: relative;
     width: 100%;
     max-width: 800px;
-    aspect-ratio: 2 / 1;
+    display: flex;
+    justify-content: center;
 }
 
 .mapWrapper::before {
@@ -461,7 +487,7 @@
 
 @media (max-width: 768px) {
     .Left header h1 {
-        font-size: 2rem;
+        font-size: 32px;
     }
 
     .Left header p {
@@ -497,7 +523,16 @@
         gap: 1rem;
     }
 
-    .FourCard article .TextFourCard {
+    .FourCard article .FourContent {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .FourCard article .FourContent .mapWrapper {
+        flex: 0 0 auto;
+    }
+
+    .FourCard article .FourContent .FourTextColumn {
         width: 100%;
     }
 }

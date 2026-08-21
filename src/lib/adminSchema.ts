@@ -74,10 +74,11 @@ export function isUsedSection(collection: string, keyname: string): boolean {
 export const ELEMENT_TEMPLATES: Record<string, Record<string, unknown>> = {
   "home:hero:info_cards": { title: "", text: "" },
   "home:partners:items": { name: "", slug: "", logo: "", description: [""], tags: [""] },
-  "home:partners:cards": { title: "", text: "", items: [""] },
+  "home:partners:cards": { title: "", text: "", image: "", items: [""] },
   "home:partners:stats": { icon: "", value: "", label: "" },
   "home:global_reach:features": { icon: "", title: "", text: "" },
   "home:global_reach:stats": { icon: "", value: "", label: "", text: "" },
+  "home:global_reach:nodes": { country: "", label: "", x: 50, y: 50, client: "", description: "", logo: "" },
   "home:roles:features": { icon: "", title: "" },
   "home:roles:items": { title: "", text: "" },
   "home:roles:stats": { icon: "", value: "", label: "", text: "" },

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import styles from '@/styles/ui/Navbar.module.css'
-import { FaChevronDown } from 'react-icons/fa'
+import { FaChevronDown, FaArrowRight } from 'react-icons/fa'
 import { LOCALES } from '@/lib/data'
 import type { Lang, NavItem } from '@/lib/supabase/types'
 
@@ -49,7 +49,7 @@ const Navbar = ({ lang, items }: NavbarProps) => {
                 </select>
                 {contact && (
                     <Link className={styles.ContactBtn} href={`/${lang}${contact.href}`}>
-                        {contact.label}
+                        {contact.label} <FaArrowRight className={styles.ContactArrow} />
                     </Link>
                 )}
             </section>

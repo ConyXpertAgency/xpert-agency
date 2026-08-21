@@ -1,13 +1,12 @@
 .Card {
     display: flex;
     flex-direction: column;
-    gap: .4rem;
+    gap: var(--expert-card-text-gap);
     background: var(--card-bg-gradient);
     border: 2px solid var(--color-bg-secondary);
-    border: 2px solid var(--color-bg-secondary);
-    padding: .8rem;
+    padding: var(--expert-card-padding);
     border-radius: var(--radius-xl);
-    width: 23dvw;
+    min-width: 0;
     box-shadow: -5px 6px 20px 1px var(--color-bg-secondary);
     height: 100%;
     justify-content: space-between;
@@ -17,14 +16,19 @@
         background-size: cover;
         background-position: center;
         border-radius: var(--radius-lg);
+        margin-bottom: var(--expert-card-image-gap);
     }
     header {
         h1 {
             font-size: 1.4rem;
             font-weight: bolder;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         strong {
             font-size: 1.1rem;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
     }
     footer {
@@ -32,33 +36,31 @@
         flex-direction: column;
         gap: .8rem;
         width: 100%;
+        min-width: 0;
         p {
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
         section {
             display: grid;
-            grid-template-columns: repeat(2,1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: .4rem;
-        }
-        button {
-            width: 8rem;
-            font-size: .72rem;
-            border-radius: 2rem;
-            text-wrap: wrap;
-            padding: .6rem .3rem;
-
+            button {
+                min-width: 0;
+                width: 100%;
+                font-size: .72rem;
+                border-radius: 2rem;
+                text-wrap: wrap;
+                padding: .6rem .3rem;
+            }
         }
     }
 }
 
 /* ─── Responsive ──────────────────────────────────── */
 @media (max-width: 768px) {
-    .Card {
-        width: 100%;
-    }
-
-    .Card footer button {
+    .Card footer section button {
         width: 100%;
     }
 }

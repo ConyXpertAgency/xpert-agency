@@ -3,6 +3,7 @@ import styles from '@/styles/Home/Third.module.css'
 import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
 import Button from '../ui/Button'
+import GlobalReachMap from './GlobalReachMap'
 import { getIcon } from '@/lib/supabase/icons'
 import type { HomeGlobalReach } from '@/lib/supabase/types'
 
@@ -39,30 +40,7 @@ const Third = ({ globalReach }: ThirdProps) => {
                         ))}
                     </ul>
                 </article>
-                <div className={styles.mapWrapper}>
-                    <div className={styles.mapContainer}></div>
-                    <svg className={styles.curvesLayer} viewBox="0 0 800 400">
-                        <defs>
-                            <filter id="glow-line" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
-                        <path className={styles.curveLine} d="M 160,140 Q 300,60 408,112" />
-                        <path className={styles.curveLine} d="M 408,112 Q 520,60 600,140" />
-                        <path className={styles.curveLine} d="M 240,260 Q 350,300 424,220" />
-                        <path className={styles.curveLine} d="M 600,140 Q 680,200 656,280" />
-                    </svg>
-                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
-                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointSa}`}></div>
-                    <div className={`${styles.hotspot} ${styles.pointEu}`} style={{ top: '28%', left: '51%' }}></div>
-                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAf}`}></div>
-                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAs}`}></div>
-                    <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAu}`}></div>
-                </div>
+                <GlobalReachMap nodes={globalReach.nodes} />
             </header>
             <ul className={`${styles.List}`}>
                 {globalReach.stats.map((stat, i) => (

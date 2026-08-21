@@ -1,5 +1,5 @@
 .Second {
-    margin-top: 6rem;
+    margin-top: var(--expert-section-top-gap);
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -40,50 +40,122 @@
     }
 }
 
+/* ─── Mission / Vision / Values ──────────────────── */
 .ListCard {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
+    align-items: stretch;
+}
 
-    .Card {
-        background: var(--card-bg-gradient);
-        border-radius: var(--radius-md);
-        flex-direction: column;
-        gap: .6rem;
-        padding: 1.2rem;
+/* Mission (1st) */
+.ListCard > li:first-child .EditorialText {
+    transform: translateY(var(--mission-content-offset));
+}
+
+/* Vision (2nd) */
+.ListCard > li:nth-child(2) .EditorialText {
+    transform: translateY(var(--vision-content-offset));
+}
+
+/* Values (3rd) */
+.ListCard > li:nth-child(3) .ValuesContent {
+    transform: translateY(var(--values-content-offset));
+}
+
+.EditorialCard {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    padding: 1.5rem;
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    height: 100%;
+}
+
+.EditorialReversed {
+    /* reserved for future image layout */
+}
+
+.EditorialImage {
+    /* reserved for future image layout */
+}
+
+.EditorialText {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+
+    strong {
+        color: var(--color-success);
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        font-size: .75rem;
+    }
+
+    p {
+        opacity: .8;
+        font-size: .85rem;
+        line-height: 1.5;
+    }
+}
+
+/* ─── Values (clean list) ────────────────────────── */
+.ValuesCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.5rem;
+    background: var(--card-bg-gradient);
+    border: 2px solid var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    height: 100%;
+    overflow: hidden;
+
+    strong {
+        color: var(--color-success);
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        font-size: .75rem;
+    }
+
+    ul {
         display: flex;
+        flex-direction: column;
+        gap: .8rem;
+        list-style-type: none;
 
-        strong {
-            color: var(--color-success);
-            text-transform: uppercase;
-            letter-spacing: .05em;
-            font-size: .75rem;
-        }
-
-        p {
-            opacity: .8;
-            font-size: .85rem;
-            line-height: 1.5;
-        }
-        ul {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            list-style-type: none;
-            gap: .4rem;
-            li {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: .2rem;
-                font-size: .72rem;
-                text-align: center;
-                border-radius: var(--radius-sm);
-                background: var(--card-bg-gradient);
-            }
+        li {
+            display: flex;
+            align-items: flex-start;
+            gap: .8rem;
         }
     }
 }
 
+.ValuesContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.ValuesBullet {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success);
+    margin-top: 6px;
+}
+
+.ValuesCard p {
+    opacity: .8;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+/* ─── Footer ─────────────────────────────────────── */
 .Footer {
     display: flex;
     justify-content: center;
@@ -100,6 +172,7 @@
     }
 }
 
+/* ─── Header ─────────────────────────────────────── */
 .Header {
     display: flex;
     justify-content: space-between;
@@ -109,26 +182,26 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: .8rem;
+        gap: var(--expert-eyebrow-to-title-gap);
 
         h1 {
             font-size: 3rem;
             font-weight: bolder;
-
+            line-height: var(--expert-title-line-height);
         }
     }
 
     p {
         width: 60%;
+        transform: translateY(var(--expert-description-offset));
     }
 }
 
+/* ─── Content (Expert cards grid) ────────────────── */
 .Content {
     display: grid;
-    gap: 1rem;
-    justify-content: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-
+    gap: var(--expert-card-gap);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     align-items: start;
 }
 
@@ -142,6 +215,14 @@
 
     .Second ul li:nth-child(-n +3) {
         border-right: none;
+    }
+
+    .Content {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ListCard {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -160,7 +241,11 @@
     }
 
     .Content {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ListCard {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -169,7 +254,16 @@
         grid-template-columns: 1fr;
     }
 
+    .ListCard {
+        grid-template-columns: 1fr;
+    }
+
     .Second ul li {
         width: 100%;
+    }
+
+    .EditorialCard,
+    .ValuesCard {
+        padding: 1.2rem;
     }
 }

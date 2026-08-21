@@ -48,6 +48,7 @@ export interface Partner {
 export interface HomeListCard {
   title: string;
   text?: string;
+  image?: string;
   items?: string[];
 }
 
@@ -61,6 +62,16 @@ export interface HomePartners {
   footer: { text: string; cta: string };
 }
 
+export interface GlobalReachNode {
+  country: string;
+  label: string;
+  x: number;
+  y: number;
+  client?: string;
+  description?: string;
+  logo?: string;
+}
+
 export interface HomeGlobalReach {
   badge: string;
   title: string;
@@ -68,6 +79,7 @@ export interface HomeGlobalReach {
   features: TextItem[];
   stats: TextItem[];
   cta: string;
+  nodes?: GlobalReachNode[];
 }
 
 export interface HomeRoles {

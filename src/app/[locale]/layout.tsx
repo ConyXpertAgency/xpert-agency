@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { locale } from "next/root-params";
 import "@/styles/globals.css";
 import Navbar from "@/components/ui/Navbar";
+import DevPanel from "@/components/ui/DevPanel";
 import { getNav, LOCALES } from "@/lib/data";
 import type { Lang } from "@/lib/supabase/types";
 
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="min-h-full flex flex-col">
         <Navbar lang={lang} items={nav} />
         {children}
+        <DevPanel />
       </body>
     </html>
   );

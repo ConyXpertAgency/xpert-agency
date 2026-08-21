@@ -142,6 +142,61 @@
   --z-tooltip: 1040;
   --z-toast: 1050;
 
+  /* ─── Layout (dev panel sliders) ────────────────── */
+  --site-max-width: 1240px;
+  --side-padding: 56px;
+  --hero-top-padding: 96px;
+  --hero-title-size: 52px;
+  --hero-card-gap: 24px;
+  --lower-right-card-height: 260px;
+  --nav-menu-gap: 24px;
+  --eyebrow-size: 14px;
+  --cta-top-gap: 12px;
+  --cta-bottom-gap: 24px;
+  --map-size: 100%;
+
+  /* ─── Expert Section (dev panel sliders) ────────── */
+  --expert-section-top-gap: 6rem;
+  --expert-eyebrow-to-title-gap: 0.8rem;
+  --expert-title-line-height: 1;
+  --expert-description-offset: 0px;
+  --expert-card-gap: 1rem;
+  --expert-card-padding: 0.8rem;
+  --expert-card-image-gap: 0.4rem;
+  --expert-card-text-gap: 0.4rem;
+
+  /* ─── Mission / Vision / Values (dev panel sliders) ── */
+  --mission-content-offset: 0px;
+  --vision-content-offset: 0px;
+  --values-content-offset: 0px;
+
+  /* ─── Global Reach (dev panel sliders) ──────────── */
+  --gr-heading-size: 3rem;
+  --gr-heading-line-height: 1;
+  --gr-title-gap: 1.2rem;
+  --gr-description-gap: 1.2rem;
+  --gr-benefit-gap: 1rem;
+  --gr-map-height: 400px;
+  --gr-map-top: 0px;
+  --gr-benefit-title-size: 1.2rem;
+  --gr-benefit-text-size: 0.9rem;
+  --gr-stat-number-size: 2rem;
+
+  /* ─── Roles & Capabilities (dev panel sliders) ─── */
+  --roles-left-x: 0px;
+  --roles-left-y: 0px;
+  --roles-right-x: 0px;
+  --roles-right-y: 0px;
+  --roles-right-width: 80%;
+  --roles-header-gap: 0px;
+  --roles-eyebrow-gap: 2rem;
+
+  /* ─── Core Focus Areas (dev panel sliders) ─────── */
+  --core-focus-icon-size: 14px;
+  --core-focus-text-size: 0.8rem;
+  --core-focus-col-gap: 0.8rem;
+  --core-focus-row-gap: 0.4rem;
+
   /* ─── Breakpoints ─────────────────────────────── */
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -185,12 +240,14 @@ main {
 .details {
   color: var(--color-success);
   font-weight: var(--font-weight-regular);
+  font-size: var(--eyebrow-size);
 }
 
 .AppShell {
-  max-width: 100dvw;
+  max-width: var(--site-max-width);
+  margin-inline: auto;
   overflow-x: hidden;
-  padding: 1.2rem;
+  padding: 1.2rem var(--side-padding);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -224,7 +281,7 @@ span {
   }
 
   .AppShell {
-    padding: .8rem;
+    padding: .8rem 16px;
     gap: 1.5rem;
   }
 }

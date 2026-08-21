@@ -41,21 +41,49 @@ const Second = ({ partners, lang }: SecondProps) => {
                 ))}
             </section>
             <ul className={styles.ListCard}>
-                {partners.cards.map((card, i) => (
-                    <li className={styles.Card} key={i}>
-                        <strong><RichText>{card.title}</RichText></strong>
-                        {card.text && <p><RichText>{card.text}</RichText></p>}
-                        {card.items && card.items.length > 0 && (
-                            <ul>
-                                {card.items.map((item, j) => (
-                                    <li key={j}>
-                                        <p><RichText>{item}</RichText></p>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                ))}
+                {partners.cards.map((card, i) => {
+                    const hasImage = Boolean(card.image)
+                    const isVision = i === 1 && hasImage
+
+                    if (card.items && card.items.length > 0) {
+                        return (
+                            <li className={styles.ValuesCard} key={i}>
+                                <div className={styles.ValuesContent}>
+                                    <strong><RichText>{card.title}</RichText></strong>
+                                    <ul>
+                                        {card.items.map((item, j) => (
+                                            <li key={j}>
+                                                <span className={styles.ValuesBullet} />
+                                                <p><RichText>{item}</RichText></p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </li>
+                        )
+                    }
+
+                    return (
+                        <li
+                            className={`${styles.EditorialCard} ${isVision ? styles.EditorialReversed : ''}`}
+                            key={i}
+                        >
+                            {hasImage && (
+                                <div className={styles.EditorialImage}>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={resolveStorageUrl(card.image) ?? ''}
+                                        alt={card.title}
+                                    />
+                                </div>
+                            )}
+                            <div className={styles.EditorialText}>
+                                <strong><RichText>{card.title}</RichText></strong>
+                                {card.text && <p><RichText>{card.text}</RichText></p>}
+                            </div>
+                        </li>
+                    )
+                })}
             </ul>
             <ul className={styles.DataList}>
                 {partners.stats.map((stat, i) => (
