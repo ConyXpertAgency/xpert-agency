@@ -4,6 +4,7 @@ import RichText from '../ui/RichText'
 import { getIcon } from '@/lib/supabase/icons'
 import styles from '@/styles/rbe/Third.module.css'
 import type { RbeThird } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface ThirdProps {
     third: RbeThird
@@ -11,7 +12,7 @@ interface ThirdProps {
 
 const Third = ({ third }: ThirdProps) => {
     return (
-        <section className={styles.Third}>
+        <section className={`${styles.Third} ${sectionBgClass(third)}`} style={sectionBgStyle(third)}>
             <header className={styles.Header}>
                 <h1><RichText>{third.title}</RichText></h1>
                 <p><RichText>{third.subtitle}</RichText></p>

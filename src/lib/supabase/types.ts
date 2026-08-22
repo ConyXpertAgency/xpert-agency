@@ -19,9 +19,16 @@ export interface TextItem {
   bullets?: string[];
 }
 
+/* Apartados con imagen de fondo configurable desde el admin */
+export interface SectionBackground {
+  background_image?: string;
+  /** 0–1: capa oscura sobre la imagen de fondo para legibilidad. */
+  background_overlay?: number;
+}
+
 /* ───────────────────────────── Home ───────────────────────────── */
 
-export interface HomeHero {
+export interface HomeHero extends SectionBackground {
   badge: string;
   title: string[];
   subtitle: string;
@@ -52,7 +59,7 @@ export interface HomeListCard {
   items?: string[];
 }
 
-export interface HomePartners {
+export interface HomePartners extends SectionBackground {
   badge: string;
   title: string;
   description: string[];
@@ -72,7 +79,7 @@ export interface GlobalReachNode {
   logo?: string;
 }
 
-export interface HomeGlobalReach {
+export interface HomeGlobalReach extends SectionBackground {
   badge: string;
   title: string;
   description: string[];
@@ -82,7 +89,7 @@ export interface HomeGlobalReach {
   nodes?: GlobalReachNode[];
 }
 
-export interface HomeRoles {
+export interface HomeRoles extends SectionBackground {
   badge: string;
   title: string;
   description: string[];
@@ -93,7 +100,7 @@ export interface HomeRoles {
 
 /* ───────────────────────────── About ───────────────────────────── */
 
-export interface AboutFirst {
+export interface AboutFirst extends SectionBackground {
   badge: string;
   title: string;
   heading: string[];
@@ -111,7 +118,7 @@ export interface AboutStep {
   bullets: string[];
 }
 
-export interface AboutSecond {
+export interface AboutSecond extends SectionBackground {
   badge: string;
   title: string[];
   text: string[];
@@ -123,7 +130,7 @@ export interface AboutSecond {
 
 /* ───────────────────────────── Services ───────────────────────────── */
 
-export interface ServicesPage {
+export interface ServicesPage extends SectionBackground {
   badge: string;
   title: string;
   subtitle: string;
@@ -134,7 +141,7 @@ export interface ServicesPage {
 
 /* ───────────────────────────── Industries ───────────────────────────── */
 
-export interface IndustriesPage {
+export interface IndustriesPage extends SectionBackground {
   badge: string;
   title: string;
   subtitle: string;
@@ -152,7 +159,7 @@ export interface CaseItem {
   stats: TextItem[];
 }
 
-export interface CasesPage {
+export interface CasesPage extends SectionBackground {
   header: { badge: string; title: string; text: string };
   items: CaseItem[];
 }
@@ -167,7 +174,7 @@ export interface ContactMethod {
   href: string;
 }
 
-export interface ContactPage {
+export interface ContactPage extends SectionBackground {
   badge: string;
   title: string;
   subtitle: string;
@@ -194,7 +201,7 @@ export interface ContactPage {
 
 /* ───────────────────────────── RBE ───────────────────────────── */
 
-export interface RbeFirst {
+export interface RbeFirst extends SectionBackground {
   badge: string;
   title: string[];
   subtitle: string;
@@ -207,7 +214,7 @@ export interface RbeFirst {
   cards: TextItem[];
 }
 
-export interface RbeSecond {
+export interface RbeSecond extends SectionBackground {
   badge: string;
   title: string;
   text: string;
@@ -224,7 +231,7 @@ export interface RbePhase {
   items: string[];
 }
 
-export interface RbeThird {
+export interface RbeThird extends SectionBackground {
   title: string;
   subtitle: string;
   phases: RbePhase[];
@@ -239,7 +246,7 @@ export interface RbeElement {
   text: string;
 }
 
-export interface RbeFour {
+export interface RbeFour extends SectionBackground {
   title: string;
   subtitle: string;
   left: RbeElement[];
@@ -254,7 +261,7 @@ export interface RbeLetter {
   text: string;
 }
 
-export interface RbeFive {
+export interface RbeFive extends SectionBackground {
   title: string;
   subtitle: string;
   image: string;
@@ -262,7 +269,7 @@ export interface RbeFive {
   footer_text: string;
 }
 
-export interface RbeFooter {
+export interface RbeFooter extends SectionBackground {
   title: string;
   text: string;
   contact_name: string;

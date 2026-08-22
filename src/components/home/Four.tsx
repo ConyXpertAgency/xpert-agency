@@ -5,6 +5,7 @@ import styles from '@/styles/Home/Four.module.css'
 import { OperationsCard } from './index'
 import { getIcon } from '@/lib/supabase/icons'
 import type { HomeRoles } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface FourProps {
     roles: HomeRoles
@@ -12,7 +13,7 @@ interface FourProps {
 
 const Four = ({ roles }: FourProps) => {
     return (
-        <section className={styles.Four}>
+        <section className={`${styles.Four} ${sectionBgClass(roles)}`} style={sectionBgStyle(roles)}>
             <header className={styles.Header}>
                 <span className={styles.Hleft}>
                     <strong className='details'><RichText>{roles.badge}</RichText></strong>

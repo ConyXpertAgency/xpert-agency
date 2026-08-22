@@ -18,6 +18,10 @@ const isImageValue = (v: unknown): boolean =>
     IMAGE_RE.test(v) ||
     (/^https?:\/\//.test(v) && IMAGE_RE.test(v)));
 
+// Claves que representan una imagen: siempre se muestran con la UI de imagen,
+// aunque estén vacías, y abren el modal de imágenes al añadir un elemento nuevo.
+const IMAGE_FIELD_KEYS = new Set(["logo", "image", "img", "background_image", "focus_image"]);
+
 const roleFor = (key: string): Role => {
   if (key === "badge") return "badge";
   if (/href|url|link/.test(key)) return "link";
@@ -96,9 +100,22 @@ const VisualEditor = ({
 
   const label = (path: string[]): string => fieldLabel(collection, keyname, path) ?? path[path.length - 1];
 
+  // Añade un elemento nuevo con su plantilla y, si tiene campo de imagen
+  // (p. ej. el logo de una card de partners), abre el modal de imágenes.
+  const addArrayItem = (path: string[]) => {
+    const arr = getAtPath(value, path);
+    if (!Array.isArray(arr)) return;
+    const template = getElementTemplate(collection, keyname, path);
+    const item = { ...(template ?? {}) };
+    patch(path, [...arr, item]);
+    const imageKey = Object.keys(item).find(
+      (k) => IMAGE_FIELD_KEYS.has(k) && typeof item[k] === "string"
+    );
+    if (imageKey) onUploadImage([...path, String(arr.length), imageKey]);
+  };
+
   const renderArray = (arr: unknown[], key: string, path: string[]) => {
     const allStrings = arr.every((v) => typeof v === "string");
-    const template = getElementTemplate(collection, keyname, path);
     return (
       <div className={styles.VArray}>
         <span className={styles.VKey}>
@@ -190,7 +207,7 @@ const VisualEditor = ({
             })}
             <button
               className={styles.AddBtn}
-              onClick={() => patch(path, [...arr, { ...(template ?? {}) }])}
+              onClick={() => addArrayItem(path)}
             >
               + añadir elemento
             </button>
@@ -201,6 +218,41 @@ const VisualEditor = ({
   };
 
   const renderLeaf = (key: string, val: unknown, path: string[]): React.ReactNode => {
+    if (typeof val === "string" && key !== "icon" && (IMAGE_FIELD_KEYS.has(key) || isImageValue(val))) {
+      const url = resolveStorageUrl(val);
+      const emptyLabel = key === "background_image" ? "sin imagen de fondo" : "sin imagen";
+      const actionLabel =
+        key === "background_image"
+          ? val
+            ? "Cambiar imagen de fondo"
+            : "Subir imagen de fondo"
+          : val
+            ? "Cambiar imagen"
+            : "Seleccionar imagen";
+      return (
+        <div className={styles.VField}>
+          <span className={styles.VKey}>{label(path)}</span>
+          <div className={styles.ImgField}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {url ? <img src={url} alt={label(path)} /> : <span className={styles.Muted}>{emptyLabel}</span>}
+            <div>
+              {val && <span className={styles.Muted}>{val}</span>}
+              <button
+                className={`${styles.AddBtn} ${styles.ImageBtn}`}
+                onClick={() => onUploadImage(path)}
+              >
+                🖼 {actionLabel}
+              </button>
+              {val && (
+                <button className={styles.MiniBtn} onClick={() => patch(path, "")} title="Quitar imagen">
+                  ✕ Quitar
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
     if (typeof val === "string") {
       if (key === "icon") {
         const Icon = getIcon(val);
@@ -211,24 +263,6 @@ const VisualEditor = ({
               <Icon size={22} />
               <span>{val}</span>
             </button>
-          </div>
-        );
-      }
-      if (isImageValue(val)) {
-        const url = resolveStorageUrl(val);
-        return (
-          <div className={styles.VField}>
-            <span className={styles.VKey}>{label(path)}</span>
-            <div className={styles.ImgField}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              {url ? <img src={url} alt={label(path)} /> : <span className={styles.Muted}>sin imagen</span>}
-              <div>
-                <span className={styles.Muted}>{val}</span>
-                <button className={styles.AddBtn} onClick={() => onUploadImage(path)}>
-                  🖼 Cambiar imagen
-                </button>
-              </div>
-            </div>
           </div>
         );
       }

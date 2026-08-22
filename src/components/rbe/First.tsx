@@ -6,6 +6,7 @@ import { getIcon } from '@/lib/supabase/icons'
 import styles from '@/styles/rbe/First.module.css'
 import Link from 'next/link'
 import type { RbeFirst } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface FirstProps {
     first: RbeFirst
@@ -13,7 +14,7 @@ interface FirstProps {
 
 const First = ({ first }: FirstProps) => {
     return (
-        <header className={styles.First}>
+        <header className={`${styles.First} ${sectionBgClass(first)}`} style={sectionBgStyle(first)}>
             <section className={styles.Left}>
                 <section className={styles.Fleft}>
                     <article className={styles.TextLeft}>

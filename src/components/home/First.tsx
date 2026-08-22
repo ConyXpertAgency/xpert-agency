@@ -11,6 +11,7 @@ import RichText from '../ui/RichText'
 import { FaArrowRight, FaCogs, FaProjectDiagram, FaTruckMoving } from 'react-icons/fa'
 import type { IconType } from 'react-icons'
 import type { HomeHero } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 const infoCardIcons: IconType[] = [IoShieldCheckmarkOutline, CiGlobe, GiChart]
 const coreAreaIcons: IconType[] = [FaCogs, GiRobotGrab, FaTruckMoving, FaProjectDiagram]
@@ -22,7 +23,7 @@ interface FirstProps {
 const First = ({ hero }: FirstProps) => {
     const lines = hero.title.length > 0 ? hero.title : ['Xpert.agency']
     return (
-        <header className={styles.First}>
+        <header className={`${styles.First} ${sectionBgClass(hero)}`} style={sectionBgStyle(hero)}>
             <section className={styles.Left}>
                 <div className={styles.LeftMain}>
                     <strong className="details"><RichText>{hero.badge}</RichText></strong>

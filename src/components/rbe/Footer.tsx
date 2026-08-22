@@ -7,6 +7,7 @@ import { IoCallOutline } from 'react-icons/io5'
 import Link from 'next/link'
 import styles from '@/styles/rbe/Footer.module.css'
 import type { RbeFooter } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface FooterProps {
     footer: RbeFooter
@@ -14,7 +15,7 @@ interface FooterProps {
 
 const Footer = ({ footer }: FooterProps) => {
     return (
-        <footer className={styles.Footer}>
+        <footer className={`${styles.Footer} ${sectionBgClass(footer)}`} style={sectionBgStyle(footer)}>
             <article className={styles.ContactCard}>
                 <header className={styles.TextCC}>
                     <PictureSvg icon={SlTarget} size={32}/>

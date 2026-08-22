@@ -7,6 +7,7 @@ import styles from '@/styles/about/Second.module.css'
 import { TfiReload } from 'react-icons/tfi'
 import { getIcon } from '@/lib/supabase/icons'
 import type { AboutSecond } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface SecondProps {
     second: AboutSecond
@@ -14,7 +15,7 @@ interface SecondProps {
 
 const Second = ({ second }: SecondProps) => {
     return (
-        <section className={styles.Second}>
+        <section className={`${styles.Second} ${sectionBgClass(second)}`} style={sectionBgStyle(second)}>
             <header className={styles.Header}>
                 <span className={styles.TextH}>
                     <strong className='details'><RichText>{second.badge}</RichText></strong>

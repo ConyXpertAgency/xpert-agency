@@ -5,6 +5,7 @@ import RichText from '@/components/ui/RichText'
 import Button from '@/components/ui/Button'
 import { getIcon } from '@/lib/supabase/icons'
 import { getServicesPage } from "@/lib/data";
+import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import type { Lang } from "@/lib/supabase/types";
 
 const page = async () => {
@@ -12,7 +13,7 @@ const page = async () => {
     const data = await getServicesPage(lang);
 
     return (
-        <main className='AppShell'>
+        <main className={`AppShell ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
             <header className={styles.Header}>
                 <article>
                     <strong className='details'><RichText>{data.badge}</RichText></strong>

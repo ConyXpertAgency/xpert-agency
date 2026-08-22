@@ -5,7 +5,7 @@ import styles from "@/styles/admin/Admin.module.css";
 import { getAdminClient, getAccessToken } from "@/lib/supabase/admin";
 import { updatePath } from "@/lib/dataPath";
 import { insertAtSelection, wrapActiveSelection } from "@/lib/adminFormat";
-import { COLLECTION_LABELS, LANGS, SECTION_LABELS, SECTION_ORDER, USED_SECTIONS, isUsedSection } from "@/lib/adminSchema";
+import { COLLECTION_LABELS, LANGS, SECTION_LABELS, SECTION_ORDER, USED_SECTIONS, isUsedSection, supportsBackground } from "@/lib/adminSchema";
 import type { Lang, ContentRow } from "@/lib/supabase/types";
 import IconPickerModal from "./IconPickerModal";
 import ImageUploadModal from "./ImageUploadModal";
@@ -186,6 +186,17 @@ export default function AdminApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows]);
 
+  // Garantiza que el campo de imagen de fondo exista en apartados compatibles,
+  // aunque la fila guardada sea anterior a esta función.
+  const normalizeSectionData = (
+    collection: string,
+    keyname: string,
+    raw: Record<string, unknown>
+  ): Record<string, unknown> =>
+    supportsBackground(collection, keyname)
+      ? { background_image: "", background_overlay: 0, ...raw }
+      : raw;
+
   const selectSection = (collection: string, keyname: string, lang?: Lang) => {
     const targetLang = lang ?? "en";
     const row = rows.find(
@@ -194,7 +205,7 @@ export default function AdminApp() {
     setSelected({ collection, keyname, lang: targetLang });
 
     if (row) {
-      setData(row.data as Record<string, unknown>);
+      setData(normalizeSectionData(collection, keyname, row.data as Record<string, unknown>));
       setCopiedFrom(null);
     } else {
       // El apartado no existe en este idioma: lo creamos copiando los datos
@@ -206,10 +217,16 @@ export default function AdminApp() {
           return (rank[a.lang] ?? 9) - (rank[b.lang] ?? 9);
         })[0];
       if (source) {
-        setData(JSON.parse(JSON.stringify(source.data)) as Record<string, unknown>);
+        setData(
+          normalizeSectionData(
+            collection,
+            keyname,
+            JSON.parse(JSON.stringify(source.data)) as Record<string, unknown>
+          )
+        );
         setCopiedFrom(source.lang);
       } else {
-        setData({});
+        setData(normalizeSectionData(collection, keyname, {}));
         setCopiedFrom(null);
       }
     }
@@ -617,6 +634,17 @@ export default function AdminApp() {
                 </div>
               )}
 
+              {!isUsedSection(selected.collection, selected.keyname) && (
+                <div className={styles.NewBanner}>
+                  <strong>⚠ Apartado sin uso</strong>
+                  <span>
+                    Este apartado es contenido antiguo: <b>el sitio ya no lo muestra</b>. Los
+                    cambios que hagas aquí (incluida la imagen de fondo) no se verán en el
+                    front-end. Edita los apartados actuales de la barra lateral.
+                  </span>
+                </div>
+              )}
+
               <div className={styles.Toolbar}>
                 <button title="Negrita" onClick={() => wrapActiveSelection("<strong>", "</strong>")}>
                   <b>B</b>
@@ -674,6 +702,7 @@ export default function AdminApp() {
                 </button>
                 <button
                   title="Subir imagen"
+                  className={styles.ImageBtn}
                   onClick={() => {
                     setImageTarget(null);
                     setModal("image");

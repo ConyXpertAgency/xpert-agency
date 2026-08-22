@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { getIcon } from '@/lib/supabase/icons'
 import { resolveStorageUrl } from '@/lib/supabase/client'
 import type { HomePartners } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface SecondProps {
     partners: HomePartners
@@ -16,7 +17,7 @@ interface SecondProps {
 
 const Second = ({ partners, lang }: SecondProps) => {
     return (
-        <section className={styles.Second}>
+        <section className={`${styles.Second} ${sectionBgClass(partners)}`} style={sectionBgStyle(partners)}>
             <header className={`${styles.Header}`}>
                 <article>
                     <strong className='details'><RichText>{partners.badge}</RichText></strong>

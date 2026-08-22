@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { LuPencilLine, LuUsersRound } from 'react-icons/lu'
 import { getIcon } from '@/lib/supabase/icons'
 import { getContactPage } from "@/lib/data";
+import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import ContactForm from '@/components/contact/ContactForm'
 import type { Lang } from "@/lib/supabase/types";
 
@@ -15,7 +16,7 @@ const page = async () => {
     const data = await getContactPage(lang);
 
     return (
-        <main className='AppShell'>
+        <main className={`AppShell ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
             <section className={styles.Content}>
                 <article className={styles.Left}>
                     <header>

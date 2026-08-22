@@ -158,11 +158,8 @@ function clampPos(top: number, left: number): { top: number; left: number } {
 
 export default function DevPanel() {
   const [open, setOpen] = useState(false)
-  const [values, setValues] = useState<Record<string, number>>(() => {
-    const saved = loadSaved()
-    return saved ?? getDefaults()
-  })
-  const [groups, setGroups] = useState<Record<string, boolean>>(() => loadGroupState())
+  const [values, setValues] = useState<Record<string, number>>(getDefaults)
+  const [groups, setGroups] = useState<Record<string, boolean>>({})
   const [pos, setPos] = useState<{ top: number; left: number }>({ top: 100, left: 16 })
 
   const dragging = useRef(false)
@@ -208,9 +205,14 @@ export default function DevPanel() {
   }, [values])
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    const saved = loadSaved()
+    if (saved) setValues((prev) => ({ ...prev, ...saved }))
+    setGroups(loadGroupState())
     for (const s of sliders) {
-      applyVar(s.cssVar, values[s.cssVar], s.unit)
+      applyVar(s.cssVar, saved?.[s.cssVar] ?? values[s.cssVar], s.unit)
     }
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

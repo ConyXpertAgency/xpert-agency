@@ -4,6 +4,7 @@ import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
 import { getIcon } from '@/lib/supabase/icons'
 import type { AboutFirst } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface FirstProps {
     first: AboutFirst
@@ -11,7 +12,7 @@ interface FirstProps {
 
 const First = ({ first }: FirstProps) => {
     return (
-        <header className={styles.First}>
+        <header className={`${styles.First} ${sectionBgClass(first)}`} style={sectionBgStyle(first)}>
             <section className={styles.Left}>
                 <header>
                     <strong className='details'><RichText>{first.badge}</RichText></strong>

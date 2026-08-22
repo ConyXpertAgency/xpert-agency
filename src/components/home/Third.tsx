@@ -6,6 +6,7 @@ import Button from '../ui/Button'
 import GlobalReachMap from './GlobalReachMap'
 import { getIcon } from '@/lib/supabase/icons'
 import type { HomeGlobalReach } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface ThirdProps {
     globalReach: HomeGlobalReach
@@ -13,7 +14,7 @@ interface ThirdProps {
 
 const Third = ({ globalReach }: ThirdProps) => {
     return (
-        <section className={styles.Third}>
+        <section className={`${styles.Third} ${sectionBgClass(globalReach)}`} style={sectionBgStyle(globalReach)}>
             <header className={styles.Header}>
                 <article>
                     <header>

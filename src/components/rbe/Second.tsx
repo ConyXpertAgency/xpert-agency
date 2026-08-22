@@ -3,6 +3,7 @@ import styles from '@/styles/rbe/Second.module.css'
 import Image from 'next/image'
 import RichText from '../ui/RichText'
 import type { RbeSecond } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface SecondProps {
     second: RbeSecond
@@ -10,7 +11,7 @@ interface SecondProps {
 
 const Second = ({ second }: SecondProps) => {
     return (
-        <section className={styles.Second}>
+        <section className={`${styles.Second} ${sectionBgClass(second)}`} style={sectionBgStyle(second)}>
             <Image src={second.image} alt='need rbe' width={620} height={620} />
             <article className={styles.Right}>
                 <strong className='details'><RichText>{second.badge}</RichText></strong>

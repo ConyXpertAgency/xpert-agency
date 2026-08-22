@@ -5,6 +5,32 @@ function tokenOf(request: NextRequest) {
   return request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ?? "";
 }
 
+const IMAGE_RE = /\.(png|jpe?g|gif|svg|webp|avif|bmp)$/i;
+
+// Lista todas las imágenes subidas al bucket "uploads" (más recientes primero)
+// para la galería del modal de imágenes del panel admin.
+export async function GET(request: NextRequest) {
+  const admin = await requireAdmin(request);
+  if (!admin) return Response.json({ error: "forbidden" }, { status: 403 });
+
+  const client = serviceClient() ?? adminClient(tokenOf(request));
+  const { data, error } = await client.storage
+    .from("uploads")
+    .list("", { limit: 300, sortBy: { column: "created_at", order: "desc" } });
+
+  if (error) return Response.json({ error: error.message }, { status: 500 });
+
+  const images = (data ?? [])
+    .filter((file) => file.name && !file.name.endsWith("/") && IMAGE_RE.test(file.name))
+    .map((file) => ({
+      name: file.name,
+      path: `/uploads/${file.name}`,
+      url: client.storage.from("uploads").getPublicUrl(file.name).data.publicUrl,
+    }));
+
+  return Response.json({ images });
+}
+
 export async function POST(request: NextRequest) {
   const admin = await requireAdmin(request);
   if (!admin) return Response.json({ error: "forbidden" }, { status: 403 });

@@ -8,6 +8,7 @@ import { GrGroup } from 'react-icons/gr'
 import { FaArrowRight } from 'react-icons/fa'
 import { getIcon } from '@/lib/supabase/icons'
 import { getIndustriesPage } from "@/lib/data";
+import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import type { Lang } from "@/lib/supabase/types";
 
 const page = async () => {
@@ -15,7 +16,7 @@ const page = async () => {
     const data = await getIndustriesPage(lang);
 
     return (
-        <main className='AppShell'>
+        <main className={`AppShell ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
             <header className={styles.Header}>
                 <strong className="details"><RichText>{data.badge}</RichText></strong>
                 <h1><RichText>{data.title}</RichText></h1>

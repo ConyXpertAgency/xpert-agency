@@ -6,6 +6,7 @@ import RichText from '../ui/RichText'
 import { SlTarget } from 'react-icons/sl'
 import { getIcon } from '@/lib/supabase/icons'
 import type { RbeFive } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface FiveProps {
     five: RbeFive
@@ -13,7 +14,7 @@ interface FiveProps {
 
 const Five = ({ five }: FiveProps) => {
     return (
-        <section className={styles.Five}>
+        <section className={`${styles.Five} ${sectionBgClass(five)}`} style={sectionBgStyle(five)}>
             <header className={styles.Header}>
                 <h1><RichText>{five.title}</RichText></h1>
                 <p><RichText>{five.subtitle}</RichText></p>

@@ -114,6 +114,30 @@ export function getElementTemplate(
   return ELEMENT_TEMPLATES[key];
 }
 
+// Apartados que admiten imagen de fondo configurable desde el admin.
+const BACKGROUND_SECTIONS = new Set([
+  "home:hero",
+  "home:partners",
+  "home:global_reach",
+  "home:roles",
+  "about:first",
+  "about:second",
+  "services:page",
+  "industries:page",
+  "cases:page",
+  "contact:page",
+  "rbe:first",
+  "rbe:second",
+  "rbe:third",
+  "rbe:four",
+  "rbe:five",
+  "rbe:footer",
+]);
+
+export function supportsBackground(collection: string, keyname: string): boolean {
+  return BACKGROUND_SECTIONS.has(`${collection}:${keyname}`);
+}
+
 export interface FieldGroup {
   label: string;
   fields: string[];
@@ -233,6 +257,8 @@ const KEY_LABELS: Record<string, string> = {
   logo: "Logo / imagen",
   img: "Imagen",
   image: "Imagen",
+  background_image: "Imagen de fondo",
+  background_overlay: "Oscurecimiento del fondo (0–1)",
   href: "Enlace (URL)",
   url: "URL",
   link: "Enlace",
@@ -344,7 +370,14 @@ const PATH_LABELS: Record<string, string> = {
 };
 
 export function getGroups(collection: string, keyname: string): FieldGroup[] | undefined {
-  return GROUP_SCHEMAS[`${collection}:${keyname}`];
+  const base = GROUP_SCHEMAS[`${collection}:${keyname}`];
+  if (supportsBackground(collection, keyname)) {
+    return [
+      { label: "Fondo", fields: ["background_image", "background_overlay"] },
+      ...(base ?? []),
+    ];
+  }
+  return base;
 }
 
 // Etiquetas para campos dentro de arrays (los índices se sustituyen por "*").

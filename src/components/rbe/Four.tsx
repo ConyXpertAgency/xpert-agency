@@ -5,6 +5,7 @@ import RichText from '../ui/RichText'
 import { FaChartLine, FaChevronRight } from 'react-icons/fa'
 import { getIcon } from '@/lib/supabase/icons'
 import type { RbeFour } from '@/lib/supabase/types'
+import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface FourProps {
     four: RbeFour
@@ -12,7 +13,7 @@ interface FourProps {
 
 const Four = ({ four }: FourProps) => {
     return (
-        <section className={styles.Four}>
+        <section className={`${styles.Four} ${sectionBgClass(four)}`} style={sectionBgStyle(four)}>
             <header className={styles.Header}>
                 <h1><RichText>{four.title}</RichText></h1>
                 <p><RichText>{four.subtitle}</RichText></p>
