@@ -1,4 +1,6 @@
-export type Lang = "en" | "es" | "de";
+// Idiomas base del sitio. Se mantiene la unión literal para autocomplete,
+// pero se acepta cualquier código nuevo creado desde el admin (fr, pt, ...).
+export type Lang = "en" | "es" | "de" | (string & {});
 
 export interface ContentRow {
   collection: string;

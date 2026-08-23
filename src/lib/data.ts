@@ -26,6 +26,22 @@ import type {
 export const FALLBACK_LANG: Lang = "en";
 export const LOCALES: Lang[] = ["en", "es", "de"];
 
+// Idiomas disponibles en la web: los base + cualquiera que ya tenga contenido
+// creado desde el admin. El navbar y generateStaticParams los consumen, así
+// que un idioma nuevo se vuelve seleccionable apenas tiene un apartado.
+export const getAvailableLangs = cache(async (): Promise<Lang[]> => {
+  try {
+    const client = getSupabase();
+    const { data } = await client.from("content").select("lang");
+    const extra = [...new Set((data ?? []).map((r) => String(r.lang)))].filter(
+      (l) => l && !LOCALES.includes(l)
+    );
+    return [...LOCALES, ...(extra.sort() as Lang[])];
+  } catch {
+    return [...LOCALES];
+  }
+});
+
 async function getRow(
   collection: string,
   keyname: string,

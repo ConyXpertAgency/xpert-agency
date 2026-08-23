@@ -351,6 +351,23 @@
   color: #fbbf24;
 }
 
+/* ── Añadir idioma ───────────────────────────────────── */
+.NewLangRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.NewLangInput {
+  width: 70px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #262e45;
+  background: #0e1424;
+  color: inherit;
+  font-size: .8rem;
+}
+
 /* ── Secciones del editor visual ─────────────────────── */
 .VSection {
   border: 1px solid #262e45;

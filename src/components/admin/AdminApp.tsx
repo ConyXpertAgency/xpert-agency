@@ -46,6 +46,10 @@ export default function AdminApp() {
   const [opacity, setOpacity] = useState("0.6");
   const [color, setColor] = useState("#05154B");
 
+  const [showNewLang, setShowNewLang] = useState(false);
+  const [newLangCode, setNewLangCode] = useState("");
+  const [langNotice, setLangNotice] = useState<string | null>(null);
+
   const loadRows = async () => {
     const token = await getAccessToken();
     if (!token) return;
@@ -163,12 +167,18 @@ export default function AdminApp() {
           .map(({ keyname, langs }) => ({
             keyname,
             label: SECTION_LABELS[collection]?.[keyname] ?? keyname,
-            langs: LANGS.filter((l) => langs.has(l)),
+            langs: allLangs.filter((l) => langs.has(l)),
           })),
       });
     }
     return out;
   };
+
+  // Idiomas base + cualquier idioma extra que ya tenga contenido creado.
+  const extraLangs = [...new Set(rows.map((r) => r.lang))]
+    .filter((l) => !(LANGS as readonly string[]).includes(l))
+    .sort();
+  const allLangs = [...LANGS, ...extraLangs];
 
   const sidebar = useMemo(() => {
     const used = new Set<string>();
@@ -246,6 +256,65 @@ export default function AdminApp() {
   const switchLang = (lang: Lang) => {
     if (!selected) return;
     selectSection(selected.collection, selected.keyname, lang);
+  };
+
+  const addLanguage = async () => {
+    if (!selected || busy) return;
+    const code = newLangCode.trim().toLowerCase();
+    if (!/^[a-z]{2,3}(-[a-z]{2})?$/.test(code)) {
+      setError("Código de idioma inválido. Usa 2 letras, ej: fr, pt, it.");
+      return;
+    }
+    const exists = rows.some(
+      (r) =>
+        r.collection === selected.collection &&
+        r.keyname === selected.keyname &&
+        r.lang === code
+    );
+    if (exists) {
+      setError(`Este apartado ya existe en "${code.toUpperCase()}".`);
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      const token = await getAccessToken();
+      const res = await fetch("/api/admin/content", {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          collection: selected.collection,
+          keyname: selected.keyname,
+          lang: code,
+          data,
+          order_index: 0,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Error al crear el idioma");
+      setRows((prev) => [
+        ...prev,
+        {
+          collection: selected.collection,
+          keyname: selected.keyname,
+          lang: code as Lang,
+          data: data as Record<string, unknown>,
+          order_index: 0,
+        },
+      ]);
+      setSelected({ ...selected, lang: code });
+      setShowNewLang(false);
+      setNewLangCode("");
+      setSavedAt(new Date().toLocaleTimeString());
+      setLangNotice(
+        `Idioma "${code}" añadido a este apartado como copia del contenido actual. Tradúcelo y guarda. ` +
+        `Para que sea seleccionable en la web, actualiza el selector de idiomas del navbar si aún no aparece.`
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al crear el idioma");
+    } finally {
+      setBusy(false);
+    }
   };
 
   const patchPath = (path: string[], next: unknown) => {
@@ -478,7 +547,7 @@ export default function AdminApp() {
                             {k.label}
                           </button>
                           <div className={styles.LangBadges}>
-                            {LANGS.map((l) => {
+                            {allLangs.map((l) => {
                               const exists = k.langs.includes(l);
                               const isActive = active && selected.lang === l;
                               return (
@@ -531,7 +600,7 @@ export default function AdminApp() {
                           {k.label}
                         </button>
                         <div className={styles.LangBadges}>
-                          {LANGS.map((l) => {
+                          {allLangs.map((l) => {
                             const exists = k.langs.includes(l);
                             const isActive = active && selected.lang === l;
                             return (
@@ -580,7 +649,7 @@ export default function AdminApp() {
                 </div>
                 <div className={styles.EditorHeaderActions}>
                   <div className={styles.LangSwitch}>
-                    {LANGS.map((l) => {
+                    {allLangs.map((l) => {
                       const exists = rows.some(
                         (r) =>
                           r.collection === selected.collection &&
@@ -599,6 +668,36 @@ export default function AdminApp() {
                         </button>
                       );
                     })}
+                    {showNewLang ? (
+                      <span className={styles.NewLangRow}>
+                        <input
+                          autoFocus
+                          className={styles.NewLangInput}
+                          placeholder="ej: fr"
+                          maxLength={7}
+                          value={newLangCode}
+                          onChange={(e) => setNewLangCode(e.target.value.toLowerCase())}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") addLanguage();
+                            if (e.key === "Escape") setShowNewLang(false);
+                          }}
+                        />
+                        <button className={styles.MiniBtn} onClick={addLanguage} disabled={busy}>
+                          Crear
+                        </button>
+                        <button className={styles.MiniBtn} onClick={() => setShowNewLang(false)}>
+                          ✕
+                        </button>
+                      </span>
+                    ) : (
+                      <button
+                        className={styles.LangSwitchBtn}
+                        title="Añadir un nuevo idioma para este apartado"
+                        onClick={() => setShowNewLang(true)}
+                      >
+                        🌐+
+                      </button>
+                    )}
                   </div>
                   <div className={styles.SizeRow}>
                     <label>
@@ -637,6 +736,16 @@ export default function AdminApp() {
                     <b>{copiedFrom.toUpperCase()}</b>. Edita lo que necesites y pulsa{" "}
                     <b>Guardar</b> para crearlo.
                   </span>
+                </div>
+              )}
+
+              {langNotice && (
+                <div className={styles.NewBanner}>
+                  <strong>🌐 Idioma añadido</strong>
+                  <span>{langNotice}</span>
+                  <button className={styles.MiniBtn} onClick={() => setLangNotice(null)}>
+                    Entendido
+                  </button>
                 </div>
               )}
 

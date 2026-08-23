@@ -11,9 +11,10 @@ import type { Lang, NavItem } from '@/lib/supabase/types'
 interface NavbarProps {
     lang: Lang
     items: NavItem[]
+    langs?: Lang[]
 }
 
-const Navbar = ({ lang, items }: NavbarProps) => {
+const Navbar = ({ lang, items, langs }: NavbarProps) => {
     const pathname = usePathname()
     const router = useRouter()
 
@@ -43,7 +44,7 @@ const Navbar = ({ lang, items }: NavbarProps) => {
             </ul>
             <section>
                 <select id="lang" value={lang} onChange={(e) => onLangChange(e.target.value)}>
-                    {LOCALES.map((l) => (
+                    {(langs ?? LOCALES).map((l) => (
                         <option key={l} value={l}>{l.toUpperCase()}</option>
                     ))}
                 </select>
