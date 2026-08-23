@@ -103,7 +103,7 @@
 
 @media (max-width: 576px) {
     .Navbar {
-        padding: .8rem var(--side-padding);
+        padding: .8rem ;
     }
 
     .Navbar img {
@@ -112,6 +112,7 @@
 
     .Navbar ul {
         gap: .6rem;
+        overflow-x: auto;
     }
 
     .Navbar section {

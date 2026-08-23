@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "@/styles/admin/Admin.module.css";
 import Editable from "./Editable";
+import MapNodesEditor, { type MapNodeItem } from "./MapNodesEditor";
 import { getIcon } from "@/lib/supabase/icons";
 import { resolveStorageUrl } from "@/lib/supabase/client";
 import { getAtPath, removeAtPath, updatePath } from "@/lib/dataPath";
@@ -218,6 +219,18 @@ const VisualEditor = ({
   };
 
   const renderLeaf = (key: string, val: unknown, path: string[]): React.ReactNode => {
+    if (collection === "home" && keyname === "global_reach" && key === "nodes" && Array.isArray(val)) {
+      return (
+        <div className={styles.VField}>
+          <span className={styles.VKey}>{label(path)}</span>
+          <MapNodesEditor
+            nodes={val as MapNodeItem[]}
+            onChange={(next) => patch(path, next)}
+            onUploadLogo={(index) => onUploadImage([...path, String(index), "logo"])}
+          />
+        </div>
+      );
+    }
     if (typeof val === "string" && key !== "icon" && (IMAGE_FIELD_KEYS.has(key) || isImageValue(val))) {
       const url = resolveStorageUrl(val);
       const emptyLabel = key === "background_image" ? "sin imagen de fondo" : "sin imagen";

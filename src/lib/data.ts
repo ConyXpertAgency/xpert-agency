@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { getSupabase } from "./supabase/client";
+import { DEFAULT_GLOBAL_REACH_NODES } from "./adminSchema";
 import type {
   AboutFirst,
   AboutSecond,
@@ -218,14 +219,7 @@ export const getHomeGlobalReach = (lang: Lang) =>
       { icon: "AiOutlineTruck", value: "100+", label: "Cross-border projects", text: "End-to-end delivery across complex global operations." },
     ],
     cta: "Explore our global capabilities",
-    nodes: [
-      { country: "United States", label: "NA", x: 8, y: 38 },
-      { country: "Mexico", label: "MX", x: 15, y: 48 },
-      { country: "Brazil", label: "BR", x: 25, y: 65 },
-      { country: "Germany", label: "DE", x: 51, y: 28 },
-      { country: "South Africa", label: "ZA", x: 55, y: 55 },
-      { country: "China", label: "CN", x: 88, y: 38 },
-    ],
+    nodes: DEFAULT_GLOBAL_REACH_NODES,
   });
 
 export const getHomeRoles = (lang: Lang) =>

@@ -19,6 +19,19 @@
     user-select: none;
 }
 
+/* ─── Map area (ratio del mapa) ───────────────────── */
+/* Caja 2:1 centrada dentro del wrapper: replica el letterbox de
+   object-fit:contain para que los % de dots y arcos queden anclados
+   al mapa sin importar el tamaño del wrapper o la pantalla. */
+.mapArea {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    aspect-ratio: 2 / 1;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 /* ─── Grid overlay ────────────────────────────────── */
 .gridOverlay {
     position: absolute;

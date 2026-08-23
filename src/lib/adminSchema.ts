@@ -164,6 +164,7 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
     { label: "Características", fields: ["features"] },
     { label: "Estadísticas", fields: ["stats"] },
     { label: "Llamada a la acción", fields: ["cta"] },
+    { label: "Puntos del mapa", fields: ["nodes"] },
   ],
   "home:roles": [
     { label: "Cabecera", fields: ["badge", "title", "description", "features"] },
@@ -324,6 +325,12 @@ const KEY_LABELS: Record<string, string> = {
   tag: "Etiqueta",
   hasDropdown: "Flecha de submenú",
   type: "Tipo",
+  nodes: "Puntos en el mapa",
+  node: "Punto del mapa",
+  country: "País",
+  client: "Cliente",
+  x: "Posición X (%)",
+  y: "Posición Y (%)",
 };
 
 const PATH_LABELS: Record<string, string> = {
@@ -398,3 +405,15 @@ export function fieldLabel(collection: string, keyname: string, path: string[]):
   const leaf = path[path.length - 1];
   return KEY_LABELS[leaf];
 }
+
+// Puntos por defecto del mapa Global Reach. El sitio los usa cuando la fila
+// de la BD no trae "nodes"; el admin los usa para que la sección "Puntos del
+// mapa" sea editable aunque la fila guardada sea anterior a este campo.
+export const DEFAULT_GLOBAL_REACH_NODES = [
+  { country: "United States", label: "NA", x: 8, y: 38 },
+  { country: "Mexico", label: "MX", x: 15, y: 48 },
+  { country: "Brazil", label: "BR", x: 25, y: 65 },
+  { country: "Germany", label: "DE", x: 51, y: 28 },
+  { country: "South Africa", label: "ZA", x: 55, y: 55 },
+  { country: "China", label: "CN", x: 88, y: 38 },
+];

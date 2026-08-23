@@ -3,8 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 1rem;
-    gap: .8rem;
-    height: 60dvh;  
+    gap: .8rem;  
     background: var(--card-bg-gradient);
     border: 2px solid var(--color-bg-hover);
     border-radius: var(--radius-xl);
@@ -68,7 +67,7 @@
     flex-direction: column;
     gap: .4rem;
     
-    height: 50%;
+    height: 100%;
     .Picture {
         position: absolute;
         width: 100%;

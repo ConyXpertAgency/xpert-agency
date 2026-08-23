@@ -5,7 +5,7 @@ import styles from "@/styles/admin/Admin.module.css";
 import { getAdminClient, getAccessToken } from "@/lib/supabase/admin";
 import { updatePath } from "@/lib/dataPath";
 import { insertAtSelection, wrapActiveSelection } from "@/lib/adminFormat";
-import { COLLECTION_LABELS, LANGS, SECTION_LABELS, SECTION_ORDER, USED_SECTIONS, isUsedSection, supportsBackground } from "@/lib/adminSchema";
+import { COLLECTION_LABELS, DEFAULT_GLOBAL_REACH_NODES, LANGS, SECTION_LABELS, SECTION_ORDER, USED_SECTIONS, isUsedSection, supportsBackground } from "@/lib/adminSchema";
 import type { Lang, ContentRow } from "@/lib/supabase/types";
 import IconPickerModal from "./IconPickerModal";
 import ImageUploadModal from "./ImageUploadModal";
@@ -186,16 +186,22 @@ export default function AdminApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows]);
 
-  // Garantiza que el campo de imagen de fondo exista en apartados compatibles,
-  // aunque la fila guardada sea anterior a esta función.
+  // Garantiza que campos añadidos después de la creación de la fila existan
+  // al editar: imagen de fondo en apartados compatibles y puntos del mapa
+  // en Global Reach (con los mismos defaults que consume el sitio).
   const normalizeSectionData = (
     collection: string,
     keyname: string,
     raw: Record<string, unknown>
-  ): Record<string, unknown> =>
-    supportsBackground(collection, keyname)
+  ): Record<string, unknown> => {
+    const base: Record<string, unknown> = supportsBackground(collection, keyname)
       ? { background_image: "", background_overlay: 0, ...raw }
-      : raw;
+      : { ...raw };
+    if (collection === "home" && keyname === "global_reach" && !Array.isArray(base.nodes)) {
+      base.nodes = JSON.parse(JSON.stringify(DEFAULT_GLOBAL_REACH_NODES));
+    }
+    return base;
+  };
 
   const selectSection = (collection: string, keyname: string, lang?: Lang) => {
     const targetLang = lang ?? "en";

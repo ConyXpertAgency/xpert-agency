@@ -1,0 +1,140 @@
+/* ─── Editor visual de puntos del mapa (Global Reach) ── */
+.Layout {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.Canvas {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    border-radius: 12px;
+    border: 1px solid rgba(34, 197, 94, .25);
+    background: #0f172a url("/map-world.svg") center / contain no-repeat;
+    cursor: crosshair;
+    touch-action: none;
+    overflow: hidden;
+    user-select: none;
+}
+
+.Dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px 2px rgba(34, 197, 94, .6);
+    pointer-events: none;
+    transition: width .15s ease, height .15s ease;
+}
+
+.Dot.Active {
+    width: 15px;
+    height: 15px;
+    outline: 2px solid rgba(255, 255, 255, .35);
+    z-index: 2;
+}
+
+.Hint {
+    margin: 0;
+    font-size: .75rem;
+    opacity: .65;
+}
+
+.Chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem;
+}
+
+.Chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .22rem .6rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    border: 1px solid rgba(34, 197, 94, .25);
+    background: rgba(30, 49, 76, .5);
+}
+
+.Chip button {
+    all: unset;
+    cursor: pointer;
+}
+
+.Chip.Active {
+    border-color: #22c55e;
+    color: #22c55e;
+}
+
+.RemoveBtn {
+    opacity: .5;
+    font-size: .7rem;
+}
+
+.RemoveBtn:hover {
+    opacity: 1;
+    color: #f87171;
+}
+
+.Coords {
+    display: flex;
+    gap: .75rem;
+}
+
+.FieldsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .5rem .75rem;
+}
+
+.Field {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    font-size: .75rem;
+    opacity: .9;
+}
+
+.Field input {
+    padding: .3rem .5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    background: rgba(30, 49, 76, .6);
+    color: inherit;
+    font-size: .78rem;
+}
+
+.LogoRow {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.LogoPreview {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(34, 197, 94, .4);
+}
+
+.CoordField {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .78rem;
+}
+
+.CoordField input {
+    width: 5.5rem;
+    padding: .3rem .5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    background: rgba(30, 49, 76, .6);
+    color: inherit;
+}

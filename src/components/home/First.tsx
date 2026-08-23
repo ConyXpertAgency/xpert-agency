@@ -3,18 +3,16 @@ import React from 'react'
 import Button from '../ui/Button'
 import { IoShieldCheckmarkOutline } from 'react-icons/io5'
 import { CiGlobe } from 'react-icons/ci'
-import { GiChart, GiRobotGrab } from 'react-icons/gi'
+import { GiChart } from 'react-icons/gi'
 import styles from '@/styles/Home/First.module.css'
 import { InformationCard } from './index'
-import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
-import { FaArrowRight, FaCogs, FaProjectDiagram, FaTruckMoving } from 'react-icons/fa'
+import AnimationCards from './AnimationCards'
 import type { IconType } from 'react-icons'
 import type { HomeHero } from '@/lib/supabase/types'
 import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 const infoCardIcons: IconType[] = [IoShieldCheckmarkOutline, CiGlobe, GiChart]
-const coreAreaIcons: IconType[] = [FaCogs, GiRobotGrab, FaTruckMoving, FaProjectDiagram]
 
 interface FirstProps {
     hero: HomeHero
@@ -88,39 +86,7 @@ const First = ({ hero }: FirstProps) => {
                             <p><span><RichText>{hero.stat_success.label}</RichText></span></p>
                         </article>
                     </section>
-                    <section className={styles.AnimationCards}>
-                        <article className={`${styles.SecondCard} ${styles.CardRight}`}>
-                            <h1><RichText>{hero.core_areas_title}</RichText></h1>
-                            <ul>
-                                {hero.core_areas.map((area, i) => (
-                                    <li key={i}>
-                                        <PictureSvg variant='full' width={2.5} height={2.5} size={14} icon={coreAreaIcons[i] ?? coreAreaIcons[0]} />
-                                        <strong><RichText>{area}</RichText></strong>
-                                    </li>
-                                ))}
-                            </ul>
-                        </article>
-                        <article className={`${styles.FourCard} ${styles.CardRight}`}>
-                            <article>
-                                <section className={styles.FourContent}>
-                                    <div className={`${styles.mapWrapper}`}>
-                                        <div className={styles.mapContainer}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointNa}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointSa}`}></div>
-                                        <div className={`${styles.hotspot} ${styles.pointEu}`} style={{ top: '28%', left: '51%' }}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAf}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAs}`}></div>
-                                        <div className={`${styles.hotspotCluster} ${styles.hotspot} ${styles.pointAu}`}></div>
-                                    </div>
-                                    <div className={styles.FourTextColumn}>
-                                        <strong><RichText>{hero.global_delivery.title}</RichText></strong>
-                                        <p><RichText>{hero.global_delivery.text}</RichText></p>
-                                        <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
-                                    </div>
-                                </section>
-                            </article>
-                        </article>
-                    </section>
+                    <AnimationCards hero={hero} />
                 </article>
             </section>
         </header>

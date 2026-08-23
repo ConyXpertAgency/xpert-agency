@@ -8,7 +8,6 @@
         padding: 1rem;
         margin-top: 2rem;
         display: flex;
-        height: 20dvh;
         background: var(--card-bg-gradient);
         border: 2px solid var(--color-bg-secondary);
         border-radius: var(--radius-lg);
