@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { locale } from "next/root-params";
 import "@/styles/globals.css";
 import Navbar from "@/components/ui/Navbar";
-import { getNav, getAvailableLangs } from "@/lib/data";
+import PublicFooter from "@/components/ui/PublicFooter";
+import { getNav, getAvailableLangs, getSettings } from "@/lib/data";
 import type { Lang } from "@/lib/supabase/types";
 
 const geistSans = Geist({
@@ -46,7 +47,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const lang = (await locale()) as Lang;
-  const [nav, langs] = await Promise.all([getNav(lang), getAvailableLangs()]);
+  const [nav, langs, settings] = await Promise.all([
+    getNav(lang),
+    getAvailableLangs(),
+    getSettings(lang),
+  ]);
   return (
     <html
       lang={lang}
@@ -55,6 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="min-h-full flex flex-col">
         <Navbar lang={lang} items={nav} langs={langs} />
         {children}
+        <PublicFooter lang={lang} nav={nav} settings={settings} />
       </body>
     </html>
   );

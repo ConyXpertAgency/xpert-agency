@@ -9,45 +9,57 @@ interface CardContentProps extends React.HTMLAttributes<HTMLElement> {
     title?: string;
     slug?: string;
     img?: string;
+    logo?: string;
     description?: string;
     reference?: string;
     children?: React.ReactNode;
 }
 
-const CardContent = ({ 
-    title = 'test', 
-    slug = 'test', 
-    style, 
-    img = 'hero-bg-20260205-153144-4f8569.jpg', 
-    description = 'test', 
-    reference = '/cases', 
+const CardContent = ({
+    title = '',
+    slug,
+    style,
+    img,
+    logo,
+    description = '',
+    reference,
     children,
-    ...rest 
+    ...rest
 }: CardContentProps) => {
-    
+
     const inlineStyle: React.CSSProperties = {
         ...style,
         backgroundImage: img ? `url(${resolveStorageUrl(img) ?? img})` : undefined,
     };
+    const logoSrc = resolveStorageUrl(logo) ?? logo;
 
     return (
         <article className={styles.Card} {...rest}>
             <header className={styles.Header} style={inlineStyle}>
                 <div className={styles.Picture}></div>
                 <div className={styles.TitleContainer}>
+                    {logoSrc && (
+                        <div className={styles.LogoWrap}>
+                            <img className={styles.Logo} src={logoSrc} alt={title} />
+                        </div>
+                    )}
                     <h1><RichText>{title}</RichText></h1>
-                    <span><RichText>{slug}</RichText></span>
+                    {slug && <span><RichText>{slug}</RichText></span>}
                 </div>
-                <p>
-                    <RichText>{description}</RichText>
-                </p>
+                {description && (
+                    <p>
+                        <RichText>{description}</RichText>
+                    </p>
+                )}
             </header>
             <ul>
                 {children}
             </ul>
-            <Link href={reference}>
-                View Project <FaArrowRight />
-            </Link>
+            {reference && (
+                <Link href={reference}>
+                    View Project <FaArrowRight />
+                </Link>
+            )}
         </article>
     );
 };

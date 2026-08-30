@@ -32,7 +32,9 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
 
     return (
         <nav className={styles.Navbar}>
-            <Image src={"/logo_largo_blanco2.webp"} alt='' width={500} height={50} />
+            <Link href={`/${lang}`}>
+                <Image src={"/logo_largo_blanco2.webp"} alt='' width={500} height={50} />
+            </Link>
             <ul>
                 {links.map(({ href, label, hasDropdown }) => (
                     <Link key={href} href={`/${lang}${href}`}>

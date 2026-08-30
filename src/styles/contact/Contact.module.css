@@ -1,210 +1,457 @@
-.Content {
-    display: flex;
-    justify-content: space-between;
-    gap: 1.2rem;
+.ContactPage {
+    --contact-sticky-top: 1rem;
+
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: var(--surface-bg);
+    color: var(--surface-text);
 }
-.Left {
+
+.ContactPage p,
+.ContactPage span {
+    opacity: 1;
+}
+
+.ContactContent {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: transparent;
+}
+
+.Experience {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    header {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-        ul {
-            display: flex;
-            li {
-                display: flex;
-                align-items: start;
-                gap: .8rem;
-                flex: 1;
-                svg {
-                    color: var(--color-success);
-                }
-                span {
-                    display: flex;
-                    flex-direction: column;
-                    gap: .4rem;
-                    strong {
-                        width: 70%;
-                    } 
-                    
-                    p {
-                        font-size: .9rem;
-                        width: 90%;
-                    }
-                }
-            }
-        }
-    }
-    .SecL {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-        ul {
-            display: flex;
-            flex-direction: column;
-            gap: .8rem;
-            padding: .8rem;
-            li {
-                display: flex;
-                justify-content: space-between;
-                padding: .8rem;
-                border-bottom: 2px solid var(--color-bg-hover);
-                article {
-                    display: flex;
-                    gap: .4rem;
-                    h1 {
-                        font-size: 1.2rem;
-                        font-weight: bold;
-                    }
-                    .PictureL {
-                        background: var(--card-bg-gradient-alt);
-                    }
-                }
-                button {
-                    border-radius: 2rem;
-                    display: flex;
-                    align-items: center;
-                    font-size: .95rem;
-                }
-            }
-        }
-        footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            background: var(--card-bg-gradient);
-            height: 20dvh;
-            border-radius: var(--radius-md);
-            .PictureFL {
-                color: var(--color-success);
-            }
-            section {
-                display: flex;
-                gap: .8rem;
-            }
-            p {
-                text-align: start;
-                width: 80%;
-                font-size: .9rem;
-            }
-            picture {
-                display: flex;
-                gap: .2rem;
-                span {
-                    background: var(--card-bg-gradient-alt);
-                }
-            }
-        }
-    }
+}
+
+.Hero {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+}
+
+.Hero :global(.details) {
+    color: var(--surface-accent);
 }
 
 .TextH {
     display: flex;
     flex-direction: column;
+    gap: .45rem;
+}
+
+.TextH h1 {
+    font-size: 3rem;
+    line-height: 1.05;
+    font-weight: bolder;
+    color: var(--surface-text);
+}
+
+.TextH p {
+    width: min(60%, 46rem);
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
+.FeatureList {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: .8rem;
-    h1 {
-        font-size: 3rem;
-        font-weight: bolder;
-    }
-    p {
-        width: 60%;
-    }
+}
+
+.FeatureList li {
+    display: flex;
+    align-items: flex-start;
+    gap: .65rem;
+    min-width: 0;
+    padding: .9rem;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+}
+
+.FeatureList svg {
+    flex: 0 0 auto;
+    color: var(--surface-accent);
+}
+
+.FeatureList span {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    min-width: 0;
+}
+
+.FeatureList strong {
+    color: var(--surface-text);
+}
+
+.FeatureList p {
+    width: 100%;
+    font-size: .9rem;
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
+.ContactGrid {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+    gap: 1.2rem;
+    align-items: stretch;
+    justify-items: stretch;
+}
+
+.Directory,
+.Right {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-xl);
+    background: var(--surface-card);
+    box-shadow: var(--surface-shadow);
+}
+
+.Directory {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    height: 100%;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+.Directory header {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+}
+
+.Directory header p {
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
+.DirectoryList {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.ContactList {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+}
+
+.RegionGroup {
+    width: 100%;
+    min-width: 0;
+}
+
+.RegionGroup > ul {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+}
+
+.RegionHeading {
+    display: block;
+    margin-bottom: .45rem;
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--surface-accent);
+}
+
+.ContactList li,
+.RegionGroup li {
+    width: 100%;
+    min-width: 0;
+}
+
+.ContactCard {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: .85rem;
+    padding: .9rem;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card-soft);
+    color: var(--surface-text);
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.ContactCard:hover,
+.ContactCard:focus-visible,
+.ContactCardActive {
+    border-color: var(--surface-border-hover);
+    background: var(--surface-card);
+    box-shadow: 0 12px 26px rgba(4, 23, 50, 0.08);
+}
+
+.ContactCard:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--surface-accent) 45%, transparent);
+    outline-offset: 2px;
+}
+
+.ContactPhoto {
+    display: block;
+    flex: 0 0 4.2rem;
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--surface-border);
+    background: var(--surface-card);
+}
+
+.ContactPhoto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ContactBody {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    min-width: 0;
+}
+
+.ContactName,
+.ContactMeta,
+.Region {
+    display: block;
+}
+
+.Region {
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--surface-accent);
+}
+
+.ContactName {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--surface-text);
+}
+
+.ContactMeta,
+.AddressList {
+    font-size: .88rem;
+    line-height: 1.35;
+    color: var(--surface-muted);
+}
+
+.AddressList {
+    display: flex;
+    flex-direction: column;
+    gap: .12rem;
 }
 
 .Right {
-    width: 60%;
-    background: var(--card-bg-gradient-alt);
-    padding: 1.4rem 1rem;
-    border-radius: var(--radius-xl);
+    position: sticky;
+    top: var(--contact-sticky-top);
+    align-self: start;
     display: flex;
     flex-direction: column;
     height: fit-content;
-    header {
-        display: flex;
-        gap: .8rem;
-        height: 10%;
-        align-items: center;
-        span:first-child {
-            background: var(--card-bg-gradient);
-        }
-        span:last-child {
-            h1 {
-                font-size: 1.2rem;
-                font-weight: bold
-            }
-            p {
-                font-size: .95rem;
-            }
-        }
-    }
-    label {
-        display: flex;
-        flex-direction: column;
-        gap: .4rem;
-        flex: 1;
-        span {
-            font-weight: bold;
-            font-size: .95rem;
-        }
-    }
-    input, select, textarea {
-        width: 100%;
-        padding: .6rem;
-        border-radius: var(--radius-md);
-        border: 2px solid var(--color-bg-hover);
-    }
-    textarea {
-        resize: vertical;
-        min-height: 8rem;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-        gap: .8rem;
-        margin-top: 1rem;
-        article {
-            display: flex;
-            gap: .4rem;
-        }
-        p {
-            display: flex;
-            flex-direction: row;
-            gap: .8rem;
-        }
-    }
-    footer {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 1.2rem;
-        section {
-            display: flex;
-            gap: .8rem;
-            button {
-                flex: 1;
-            }
-        }
-        p {
-            flex-direction: row;
-            gap: .8rem;
-            svg {
-                color: var(--color-success);
-            }
-        }
-    }
+    padding: 1.1rem 1rem;
 }
 
-/* ─── Responsive ──────────────────────────────────── */
+.Right header {
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+}
+
+.Right header span:first-child {
+    background: var(--surface-card-soft);
+    border: 1px solid var(--surface-border);
+    color: var(--surface-accent);
+}
+
+.Right header span:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.Right header span:last-child h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--surface-text);
+}
+
+.Right header span:last-child p {
+    font-size: .95rem;
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
+.Right label {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    flex: 1;
+}
+
+.Right label span {
+    display: block;
+    font-weight: bold;
+    font-size: .95rem;
+    color: var(--surface-text);
+}
+
+.Right input,
+.Right select,
+.Right textarea {
+    width: 100%;
+    padding: .6rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--surface-border);
+    background: var(--surface-card-soft);
+    color: var(--surface-text);
+}
+
+.Right input::placeholder,
+.Right textarea::placeholder {
+    color: var(--surface-muted);
+}
+
+.Right input:focus,
+.Right select:focus,
+.Right textarea:focus {
+    border-color: var(--surface-accent);
+    outline: 2px solid color-mix(in srgb, var(--surface-accent) 45%, transparent);
+    outline-offset: 2px;
+}
+
+.Right select option {
+    background: var(--color-surface);
+    color: var(--color-text-inverse);
+}
+
+.Right select option:first-child {
+    color: var(--surface-muted);
+}
+
+.Right textarea {
+    resize: vertical;
+    min-height: 6.8rem;
+}
+
+.Right form {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: .65rem;
+    margin-top: .75rem;
+}
+
+.Right form article {
+    display: flex;
+    gap: .4rem;
+}
+
+.Right form p {
+    display: flex;
+    flex-direction: row;
+    gap: .8rem;
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
+.Right footer {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    margin-top: .85rem;
+}
+
+.Right footer section {
+    display: flex;
+    gap: .8rem;
+}
+
+.Right footer section button {
+    flex: 1;
+}
+
+.Right footer section button:last-child {
+    background: var(--surface-card);
+    border-color: var(--surface-border-hover);
+    color: var(--surface-text);
+}
+
+.Right footer section button:last-child:hover:not(:disabled) {
+    background: var(--surface-card-soft);
+    color: var(--surface-text);
+    opacity: 1;
+    text-shadow: none;
+    box-shadow: 0 8px 18px rgba(4, 23, 50, 0.08);
+}
+
+.Right footer section button:last-child svg {
+    color: currentColor;
+}
+
+.Right footer p {
+    display: flex;
+    flex-direction: row;
+    gap: .8rem;
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
+.Right footer p svg,
+.Right form p svg {
+    color: var(--surface-accent);
+}
+
 @media (max-width: 992px) {
-    .Content {
-        flex-direction: column;
+    .ContactGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .Directory {
+        height: auto;
+        overflow: visible;
+    }
+
+    .DirectoryList {
+        overflow: visible;
+    }
+
+    .ContactList {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .Right {
+        position: static;
         width: 100%;
     }
 }
@@ -218,27 +465,16 @@
         width: 100%;
     }
 
-    .Left header ul li {
-        flex-wrap: wrap;
+    .FeatureList,
+    .ContactList {
+        grid-template-columns: 1fr;
     }
 
-    .SecL ul li {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: .8rem;
-    }
-
-    .SecL footer {
-        flex-direction: column;
-        height: auto;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-
-    .Right form article {
+    .ContactCard {
         flex-direction: column;
     }
 
+    .Right form article,
     .Right footer section {
         flex-direction: column;
     }

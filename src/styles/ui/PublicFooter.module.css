@@ -1,0 +1,122 @@
+.PublicFooter {
+    width: 100%;
+    padding: 2rem var(--side-padding) 1.2rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-success) 18%, var(--color-border));
+    background:
+        radial-gradient(circle at top left, rgba(130, 171, 74, .08), transparent 34rem),
+        linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+    color: var(--color-text-primary);
+}
+
+.Inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, .75fr));
+    gap: 1.8rem;
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin-inline: auto;
+}
+
+.Brand {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    max-width: 24rem;
+}
+
+.Brand img {
+    width: auto;
+    height: 3.2rem;
+}
+
+.Brand p,
+.Bottom span {
+    color: var(--color-text-secondary);
+    opacity: 1;
+    line-height: 1.5;
+}
+
+.Group {
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    min-width: 0;
+}
+
+.Group strong {
+    color: var(--color-success);
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.Group ul {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.Group a {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    width: fit-content;
+    color: var(--color-text-secondary);
+    opacity: 1;
+}
+
+.Group a:hover,
+.ContactLink:hover {
+    color: var(--color-success);
+}
+
+.ContactLink {
+    color: var(--color-text-primary) !important;
+    font-weight: 700;
+}
+
+.Socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem .85rem;
+    padding-top: .2rem;
+}
+
+.Bottom {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin: 1.6rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
+}
+
+@media (max-width: 992px) {
+    .PublicFooter {
+        padding: 1.6rem var(--side-padding) 1rem;
+    }
+
+    .Inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .PublicFooter {
+        padding: 1.4rem 16px 1rem;
+    }
+
+    .Inner {
+        grid-template-columns: 1fr;
+    }
+
+    .Brand img {
+        height: auto;
+        width: 65%;
+        max-width: 16rem;
+    }
+}

@@ -1,13 +1,20 @@
 import { cache } from "react";
 import { getSupabase } from "./supabase/client";
 import { DEFAULT_GLOBAL_REACH_NODES } from "./adminSchema";
+import { expertiseGroups } from "./expertiseGroups";
+import { serviceGroups } from "./serviceGroups";
 import type {
   AboutFirst,
   AboutSecond,
+  CasesClients,
   CasesPage,
+  CasesStudies,
+  CaseStudy,
   ContactPage,
+  ContactTeams,
   HomeGlobalReach,
   HomeHero,
+  HomeFinalCta,
   HomePartners,
   HomeRoles,
   IndustriesPage,
@@ -129,6 +136,10 @@ export const getHomePartners = (lang: Lang) =>
       "Our network of senior specialists combines deep industry experience with a hands-on approach to deliver measurable results.",
       "Trusted advisors. Proven operators. Real impact.",
     ],
+    purpose: {
+      badge: "OUR PURPOSE",
+      title: ["Mission, Vision", "and Values"],
+    },
     items: [
       {
         name: "Elmar A. Beckord",
@@ -260,11 +271,20 @@ export const getHomeRoles = (lang: Lang) =>
       { title: "Supply Chain Consulting", text: "Optimize end-to-end supply chains for resilience, visibility and cost efficiency." },
       { title: "Change Management", text: "Guide people through change and ensure adoption for lasting business results." },
     ],
+    groups: expertiseGroups,
     stats: [
       { icon: "GrGroup", value: "500+", label: "Vetted experts", text: "Senior professionals with real-world industrial experience." },
       { icon: "BiTargetLock", value: "Tailored matching", label: "Right expert for your challenge", text: "We match expertise to your industry, context and goals." },
       { icon: "IoRocketOutline", value: "Measurable impact", label: "Results that move the needle", text: "Experts focused on delivering outcomes that matter." },
     ],
+  });
+
+export const getHomeFinalCta = (lang: Lang) =>
+  getTyped<HomeFinalCta>("home", "final_cta", lang, {
+    title: "Let's create impact together",
+    text: "Partner with us to transform your engineering and operations.",
+    cta: "Contact us",
+    href: "/contact",
   });
 
 export const getAboutFirst = (lang: Lang) =>
@@ -342,6 +362,13 @@ export const getAboutSecond = (lang: Lang) =>
       title: "Continuous improvement cycle",
       text: "We learn, adapt and evolve — driving sustained impact across your organization.",
     },
+    rbe_bar: {
+      icon: "BiSolidShield",
+      title: "RBE™ — Ramp-up & Risk Mitigation",
+      text: "Explore our approach to managing critical ramp-up phases, project risks and operational transitions.",
+      cta: "Explore RBE™",
+      href: "/rbe",
+    },
     stats: [
       { icon: "IoShieldCheckmarkOutline", value: "45+ years", label: "Of combined experience delivering results" },
       { icon: "CiGlobe", value: "Global perspective", label: "Projects across Europe, Americas & Asia" },
@@ -372,6 +399,7 @@ export const getServicesPage = (lang: Lang) =>
       { icon: "IoBarChartOutline", title: "KPI Development", text: "Define and track the metrics that drive meaningful results." },
       { icon: "IoShieldCheckmarkOutline", title: "Solution Validation", text: "Test, validate, and ensure solutions deliver real-world impact." },
     ],
+    groups: serviceGroups,
     footer: {
       title: "Need a tailored approach?",
       text: "Let's discuss how our experts can help you achieve your goals.",
@@ -401,10 +429,74 @@ export const getIndustriesPage = (lang: Lang) =>
     },
   });
 
+const CASE_STUDY_IDS_BY_TITLE: Record<string, string> = {
+  "Pistor AG - Swiss (CH).": "pistor-ag-swiss",
+  "Almarai - KSA.": "almarai-ksa",
+  "FENIX Outdoor Supply": "fenix-outdoor-supply",
+  "Schuh Schmid": "schuh-schmid",
+  "Birkenstock e-commerce hub.": "birkenstock-ecommerce-hub",
+  "Landmark channel distribution": "landmark-channel-distribution",
+  "Landmark channel distribution.": "landmark-channel-distribution",
+  "HYMMEN flooring": "hymmen-flooring",
+  "HYMMEN Flooring": "hymmen-flooring",
+  "XOX Snacks": "xox-snacks",
+  "Giesecke+Devrient (G+D)": "giesecke-devrient-gd",
+  "Zeitfracht Medien": "zeitfracht-medien",
+  "Weig-Karton": "weig-karton",
+  "Kymmene Papier": "kymmene-papier",
+};
+
+const toCaseStudyId = (title: string, index: number) =>
+  CASE_STUDY_IDS_BY_TITLE[title] ??
+  (title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "") || "case-study-" + (index + 1));
+
+const adaptLegacyCaseStudy = (item: Record<string, unknown>, index: number): CaseStudy => {
+  const title = typeof item.title === "string" ? item.title : "Case study " + (index + 1);
+  const project = typeof item.project === "string" ? item.project : undefined;
+  return {
+    id: toCaseStudyId(title, index),
+    client: typeof item.company === "string" ? item.company : title,
+    title,
+    industry: typeof item.industry === "string" ? item.industry : undefined,
+    summary: project,
+    description: project,
+    logo: typeof item.image === "string" ? item.image : undefined,
+    project,
+    knowhow: typeof item.knowhow === "string" ? item.knowhow : undefined,
+    bullets: Array.isArray(item.bullets) ? item.bullets.filter((entry): entry is string => typeof entry === "string") : undefined,
+    results: Array.isArray(item.results) ? item.results.filter((entry): entry is string => typeof entry === "string") : undefined,
+  };
+};
+
+export const getCasesStudies = async (lang: Lang): Promise<CasesStudies> => {
+  const studies = await getContent("cases", "studies", lang);
+  if (studies && Array.isArray(studies.items)) return studies as unknown as CasesStudies;
+
+  const legacy = await getContent("cases", "items", lang);
+  if (legacy && Array.isArray(legacy.items)) {
+    return {
+      items: legacy.items
+        .filter((item): item is Record<string, unknown> => item !== null && typeof item === "object" && !Array.isArray(item))
+        .map(adaptLegacyCaseStudy),
+    };
+  }
+
+  return { items: [] };
+};
+
+export const getCasesClients = (lang: Lang) =>
+  getTyped<CasesClients>("cases", "clients", lang, { items: [] });
+
 export const getCasesPage = (lang: Lang) =>
   getTyped<CasesPage>("cases", "page", lang, {
     header: {
-      badge: "CASE STUDIES",
+      badge: "CASES",
       title: "Proven impact across industries and challenges.",
       text: "We partner with organizations worldwide to solve complex operational challenges through integrated improvement, automation, and logistics solutions.",
     },
@@ -511,6 +603,67 @@ export const getContactPage = (lang: Lang) =>
       trust: "We respect your time. No spam, ever.",
     },
   });
+
+const isRegionalContact = (value: unknown): value is ContactTeams["items"][number]["contacts"][number] =>
+  Boolean(
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value) &&
+    typeof (value as { id?: unknown }).id === "string" &&
+    typeof (value as { name?: unknown }).name === "string"
+  );
+
+const normalizeContactTeams = (value: unknown): ContactTeams | undefined => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const items = (value as { items?: unknown }).items;
+  if (!Array.isArray(items)) return undefined;
+
+  const title = typeof (value as { title?: unknown }).title === "string" ? (value as { title: string }).title : undefined;
+  const isGrouped = items.every(
+    (item) =>
+      item &&
+      typeof item === "object" &&
+      !Array.isArray(item) &&
+      typeof (item as { id?: unknown }).id === "string" &&
+      typeof (item as { region?: unknown }).region === "string" &&
+      Array.isArray((item as { contacts?: unknown }).contacts) &&
+      (item as { contacts: unknown[] }).contacts.every(isRegionalContact)
+  );
+
+  if (isGrouped) return { title, items: items as ContactTeams["items"] };
+
+  const isLegacyFlat = items.every(
+    (item) =>
+      isRegionalContact(item) &&
+      typeof (item as { region?: unknown }).region === "string"
+  );
+  if (!isLegacyFlat) return undefined;
+
+  const groups = new Map<string, ContactTeams["items"][number]>();
+  (items as Array<ContactTeams["items"][number]["contacts"][number] & { region: string }>).forEach((contact) => {
+    const regionId = contact.recipientKey || contact.region.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const group = groups.get(regionId) ?? { id: regionId, region: contact.region, contacts: [] };
+    const { region: _region, ...contactWithoutRegion } = contact;
+    group.contacts.push(contactWithoutRegion);
+    groups.set(regionId, group);
+  });
+
+  return { title, items: Array.from(groups.values()) };
+};
+
+export const getContactTeams = async (lang: Lang): Promise<ContactTeams> => {
+  const teams = await getContent("contact", "teams", lang);
+  const normalizedTeams = normalizeContactTeams(teams);
+  if (normalizedTeams) return normalizedTeams;
+
+  if (lang !== FALLBACK_LANG) {
+    const fallback = await getContent("contact", "teams", FALLBACK_LANG);
+    const normalizedFallback = normalizeContactTeams(fallback);
+    if (normalizedFallback) return normalizedFallback;
+  }
+
+  return { items: [] };
+};
 
 export const getRbeFirst = (lang: Lang) =>
   getTyped<RbeFirst>("rbe", "first", lang, {

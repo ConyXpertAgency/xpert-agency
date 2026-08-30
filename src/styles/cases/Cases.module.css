@@ -1,20 +1,38 @@
+.CasesPage {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface-bg);
+    color: var(--surface-text);
+}
+
+.CasesContent {
+    color: var(--surface-text);
+}
+
 .Header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 1.2rem;
     article {
         display: flex;
         flex-direction: column;
         width: 60%;
-        gap: 1.2rem;
+        gap: .45rem;
         h1 {
             font-size: 3rem;
             font-weight: bolder;
+            line-height: 1;
+            color: var(--surface-text);
         }
     }
     p {
         width: 40%;
+        margin-top: 1.6rem;
+        color: var(--surface-muted);
+        opacity: 1;
     }
 }
 .Content {
@@ -46,6 +64,7 @@
 
     .Header p {
         width: 100%;
+        margin-top: 0;
     }
 
     .Content {

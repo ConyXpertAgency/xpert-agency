@@ -12,7 +12,7 @@ const page = async () => {
   return (
     <main className='AppShell'>
         <First first={first} />
-        <Second second={second} />
+        <Second second={second} heroStats={first.stats} lang={lang} />
     </main>
   )
 }

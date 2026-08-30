@@ -1,0 +1,105 @@
+.ListLeft {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    gap: 0;
+    align-items: stretch;
+    width: 100%;
+    box-shadow: none;
+}
+.HCardF {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-width: 0;
+    min-height: auto;
+    background: none;
+    border-radius: 0;
+    padding: 0.55rem 1rem;
+    color: var(--surface-text, var(--color-text-inverse));
+}
+
+.HCardF svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    color: var(--surface-accent, var(--color-success));
+}
+.TextCardH {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    h1 {
+        display: block;
+        font-size: clamp(2rem, 2.4vw, 2.55rem);
+        color: var(--surface-accent, var(--color-success));
+        font-weight: 800;
+        line-height: 1;
+    }
+    strong {
+        display: block;
+        color: var(--surface-text, var(--color-text-inverse));
+        font-weight: 600;
+        font-size: 0.88rem;
+        line-height: 1.25;
+        opacity: 1;
+    }
+}
+.ListLeft li:nth-child(-n + 3) {
+    border-right: 1px solid var(--surface-border, color-mix(in srgb, var(--color-text-inverse) 14%, transparent));
+}
+
+@media (max-width: 992px) {
+    .ListLeft {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ListLeft li:nth-child(-n + 3) {
+        border-right: none;
+    }
+
+    .ListLeft li:nth-child(odd) {
+        border-right: 1px solid var(--surface-border, color-mix(in srgb, var(--color-text-inverse) 14%, transparent));
+    }
+
+    .ListLeft li:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--surface-border, color-mix(in srgb, var(--color-text-inverse) 14%, transparent));
+    }
+}
+
+@media (max-width: 768px) {
+    .ListLeft {
+        padding: 0.6rem;
+    }
+
+    .HCardF {
+        min-width: 140px;
+        justify-content: flex-start;
+        padding: 0.75rem 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .ListLeft {
+        grid-template-columns: 1fr;
+        padding: 0.5rem;
+    }
+
+    .ListLeft li:nth-child(odd),
+    .ListLeft li:nth-child(-n + 3) {
+        border-right: none;
+    }
+
+    .ListLeft li {
+        border-bottom: 1px solid var(--surface-border, color-mix(in srgb, var(--color-text-inverse) 14%, transparent));
+        padding-bottom: 0.6rem;
+    }
+
+    .ListLeft li:last-child {
+        border-bottom: none;
+    }
+}

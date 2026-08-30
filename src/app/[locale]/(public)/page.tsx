@@ -1,16 +1,18 @@
 import { locale } from "next/root-params";
-import { First, Four, Second, Third } from "@/components/home";
-import { getHomeGlobalReach, getHomeHero, getHomePartners, getHomeRoles } from "@/lib/data";
+import { First, Four, HomeFinalCta, Second, Third } from "@/components/home";
+import { getHomeFinalCta, getHomeGlobalReach, getHomeHero, getHomePartners, getHomeRoles } from "@/lib/data";
+import { expertiseGroups } from "@/lib/expertiseGroups";
 import type { Lang } from "@/lib/supabase/types";
 
 export default async function Home() {
   const lang = (await locale()) as Lang;
 
-  const [hero, partners, globalReach, roles] = await Promise.all([
+  const [hero, partners, globalReach, roles, finalCta] = await Promise.all([
     getHomeHero(lang),
     getHomePartners(lang),
     getHomeGlobalReach(lang),
     getHomeRoles(lang),
+    getHomeFinalCta(lang),
   ]);
 
   return (
@@ -18,7 +20,8 @@ export default async function Home() {
       <First hero={hero} />
       <Second partners={partners} lang={lang} />
       <Third globalReach={globalReach} />
-      <Four roles={roles} />
+      <Four roles={roles} groups={roles.groups ?? expertiseGroups} lang={lang} />
+      <HomeFinalCta lang={lang} data={finalCta} />
     </main>
   );
 }

@@ -10,7 +10,12 @@ interface FirstProps {
     first: AboutFirst
 }
 
+const normalizeInlineSpace = (value: string) =>
+    value.replace(/(&nbsp;|&#160;|\u00a0)/g, ' ').replace(/\s+/g, ' ').trim()
+
 const First = ({ first }: FirstProps) => {
+    const heading = normalizeInlineSpace(first.heading.join(' '))
+
     return (
         <header className={`${styles.First} ${sectionBgClass(first)}`} style={sectionBgStyle(first)}>
             <section className={styles.Left}>
@@ -18,7 +23,7 @@ const First = ({ first }: FirstProps) => {
                     <strong className='details'><RichText>{first.badge}</RichText></strong>
                     <h1><RichText>{first.title}</RichText></h1>
                     <h2>
-                        {first.heading.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}
+                        <RichText>{heading}</RichText>
                     </h2>
                     <p>
                         {first.text.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}
@@ -37,34 +42,19 @@ const First = ({ first }: FirstProps) => {
                         ))}
                     </ul>
                 </header>
-                <ul className={styles.ListLeft}>
-                    {first.stats.map((stat, i) => (
-                        <li key={i} className={`${styles.HCardF}`}>
-                            <PictureSvg className='details' size={32} width={4} height={4} icon={getIcon(stat.icon)} />
-                            <span className={`${styles.TextCardH}`}>
-                                <h1><RichText>{stat.value}</RichText></h1>
-                                <strong><RichText>{stat.label}</RichText></strong>
-                                <p>
-                                    <RichText>{stat.text}</RichText>
-                                </p>
-                            </span>
-                        </li>
-                    ))}
-                </ul>
-
             </section>
             <section className={styles.Right}>
                 <article className={`${styles.PictureCard}`}>
-                    <section>
-                        <PictureSvg variant='full' radius='var(--radius-md)' size={32} icon={getIcon('CiGlobe')} />
-                        <span className={styles.Text}>
+                    <section className={styles.LeftCol}>
+                        <div className={styles.Row1}>
+                            <PictureSvg variant='full' radius='var(--radius-md)' size={32} icon={getIcon('CiGlobe')} />
                             <h1>
                                 {first.right_card.title.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}
                             </h1>
-                            <p>
-                                <RichText>{first.right_card.text}</RichText>
-                            </p>
-                        </span>
+                        </div>
+                        <p className={styles.Desc}>
+                            <RichText>{first.right_card.text}</RichText>
+                        </p>
                     </section>
                     <div className={`${styles.mapWrapper}`}>
                         <div className={styles.mapContainer}></div>

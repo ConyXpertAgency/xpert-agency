@@ -11,8 +11,26 @@ interface ContactBody {
 
 const REQUIRED = ["name", "cname", "email", "message"] as const;
 
+const escapeHtml = (value?: string) =>
+  (value || "-").replace(/[&<>"']/g, (char) => {
+    switch (char) {
+      case "&":
+        return "&amp;";
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case '"':
+        return "&quot;";
+      case "'":
+        return "&#39;";
+      default:
+        return char;
+    }
+  });
+
 const renderValue = (label: string, value?: string) =>
-  `<p style="margin:0 0 12px;color:#333;"><strong style="display:inline-block;min-width:110px;">${label}:</strong>${value || "—"}</p>`;
+  `<p style="margin:0 0 12px;color:#333;"><strong style="display:inline-block;min-width:110px;">${label}:</strong>${escapeHtml(value)}</p>`;
 
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as ContactBody | null;
@@ -49,7 +67,7 @@ export async function POST(request: NextRequest) {
     ${renderValue("Correo", body.email)}
     ${renderValue("Interés", body.topic)}
     <p style="margin:16px 0 4px;color:#333;"><strong>Mensaje</strong></p>
-    <p style="margin:0;padding:12px;background:#f5f5f5;border-radius:8px;color:#333;white-space:pre-wrap;">${body.message}</p>
+    <p style="margin:0;padding:12px;background:#f5f5f5;border-radius:8px;color:#333;white-space:pre-wrap;">${escapeHtml(body.message)}</p>
   `;
 
   try {

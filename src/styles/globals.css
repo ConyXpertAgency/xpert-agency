@@ -189,7 +189,7 @@
   --roles-right-y: 0px;
   --roles-right-width: 80%;
   --roles-header-gap: 0px;
-  --roles-eyebrow-gap: 2rem;
+  --roles-eyebrow-gap: 1rem;
 
   /* ─── Core Focus Areas (dev panel sliders) ─────── */
   --core-focus-icon-size: 14px;

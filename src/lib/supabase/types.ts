@@ -1,3 +1,6 @@
+import type { ServiceGroup } from "../serviceGroups";
+import type { ExpertiseGroup } from "../expertiseGroups";
+
 // Idiomas base del sitio. Se mantiene la unión literal para autocomplete,
 // pero se acepta cualquier código nuevo creado desde el admin (fr, pt, ...).
 export type Lang = "en" | "es" | "de" | (string & {});
@@ -65,6 +68,10 @@ export interface HomePartners extends SectionBackground {
   badge: string;
   title: string;
   description: string[];
+  purpose?: {
+    badge: string;
+    title: string[];
+  };
   items: Partner[];
   cards: HomeListCard[];
   stats: TextItem[];
@@ -97,7 +104,15 @@ export interface HomeRoles extends SectionBackground {
   description: string[];
   features: TextItem[];
   items: TextItem[];
+  groups?: ExpertiseGroup[];
   stats: TextItem[];
+}
+
+export interface HomeFinalCta {
+  title: string;
+  text: string;
+  cta: string;
+  href: string;
 }
 
 /* ───────────────────────────── About ───────────────────────────── */
@@ -127,6 +142,13 @@ export interface AboutSecond extends SectionBackground {
   quote: { lines: string[]; author: string; sub: string };
   steps: AboutStep[];
   footer_card: { title: string; text: string };
+  rbe_bar?: {
+    icon?: string;
+    title: string;
+    text: string;
+    cta: string;
+    href: string;
+  };
   stats: TextItem[];
 }
 
@@ -138,6 +160,7 @@ export interface ServicesPage extends SectionBackground {
   subtitle: string;
   intro: { title: string; text: string };
   areas: TextItem[];
+  groups?: ServiceGroup[];
   footer: { title: string; text: string; cta: string };
 }
 
@@ -153,6 +176,12 @@ export interface IndustriesPage extends SectionBackground {
 
 /* ───────────────────────────── Cases ───────────────────────────── */
 
+export interface CaseStat {
+  icon?: string;
+  value?: string;
+  text: string;
+}
+
 export interface CaseItem {
   title: string;
   slug: string;
@@ -161,8 +190,54 @@ export interface CaseItem {
   stats: TextItem[];
 }
 
+export interface CaseStudy {
+  id: string;
+  slug?: string;
+  featured?: boolean;
+  client: string;
+  title: string;
+  industry?: string;
+  country?: string;
+  summary?: string;
+  description?: string;
+  logo?: string;
+  image?: string;
+  project?: string;
+  knowhow?: string;
+  bullets?: string[];
+  results?: string[];
+  stats?: CaseStat[];
+  href?: string;
+}
+
+export interface CasesStudies {
+  items: CaseStudy[];
+}
+
+export interface ClientItem {
+  id: string;
+  name: string;
+  logo?: string;
+  industry?: string;
+  country?: string;
+  locations?: string[];
+  type?: "client" | "project" | "partner" | "experience";
+  featured?: boolean;
+  note?: string;
+}
+
+export interface CasesClients {
+  items: ClientItem[];
+}
+
 export interface CasesPage extends SectionBackground {
   header: { badge: string; title: string; text: string };
+  featured_title?: string;
+  studies_title?: string;
+  clients_title?: string;
+  view_all_label?: string;
+  view_less_label?: string;
+  /** Legacy/fallback: visible grid still reads this field during the transition. */
   items: CaseItem[];
 }
 
@@ -174,6 +249,32 @@ export interface ContactMethod {
   value: string;
   cta: string;
   href: string;
+}
+
+export interface RegionalContact {
+  id: string;
+  region?: string;
+  name: string;
+  role?: string;
+  organization?: string;
+  photo?: string;
+  countries?: string[];
+  addresses?: string[];
+  phones?: string[];
+  publicEmail?: string;
+  website?: string;
+  recipientKey?: string;
+}
+
+export interface ContactRegion {
+  id: string;
+  region: string;
+  contacts: RegionalContact[];
+}
+
+export interface ContactTeams {
+  title?: string;
+  items: ContactRegion[];
 }
 
 export interface ContactPage extends SectionBackground {

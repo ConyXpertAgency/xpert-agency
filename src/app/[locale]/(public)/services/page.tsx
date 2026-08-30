@@ -1,5 +1,7 @@
 import { locale } from "next/root-params";
+import Link from 'next/link'
 import styles from '@/styles/services/Services.module.css'
+import theme from '@/styles/theme/SurfaceThemes.module.css'
 import PictureSvg from '@/components/ui/PictureSvg'
 import RichText from '@/components/ui/RichText'
 import Button from '@/components/ui/Button'
@@ -7,14 +9,17 @@ import { getIcon } from '@/lib/supabase/icons'
 import { getServicesPage } from "@/lib/data";
 import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import type { Lang } from "@/lib/supabase/types";
+import ServicesExplorer from '@/components/services/ServicesExplorer'
+import { serviceGroups } from '@/lib/serviceGroups'
 
 const page = async () => {
     const lang = (await locale()) as Lang;
     const data = await getServicesPage(lang);
 
     return (
-        <main className={`AppShell ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
-            <header className={styles.Header}>
+        <main className={`${styles.ServicesPage} ${theme.LightSurface} ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
+            <div className={`AppShell ${styles.ServicesContent}`}>
+                <header className={styles.Header}>
                 <article>
                     <strong className='details'><RichText>{data.badge}</RichText></strong>
                     <h1>
@@ -29,18 +34,8 @@ const page = async () => {
                     </p>
                 </article>
             </header>
-            <ul className={styles.Content}>
-                {data.areas.map((area, i) => (
-                    <li key={i}>
-                        <PictureSvg size={32} className={styles.Picture} icon={getIcon(area.icon)} variant='full' width={4.5} height={4.5} />
-                        <span className={styles.TextCardC}>
-                            <h1><RichText>{area.title}</RichText></h1>
-                            <p><RichText>{area.text}</RichText></p>
-                        </span>
-                    </li>
-                ))}
-            </ul>
-            <article className={styles.FooterCard}>
+                <ServicesExplorer groups={data.groups ?? serviceGroups} />
+                <article className={styles.FooterCard}>
                 <header>
                     <PictureSvg variant='full' width={5} height={5} size={32} icon={getIcon('FaRegUser')} />
                     <span>
@@ -48,8 +43,11 @@ const page = async () => {
                         <p><RichText>{data.footer.text}</RichText></p>
                     </span>
                 </header>
-                <Button variant='full' arrow={true}><RichText>{data.footer.cta}</RichText></Button>
-            </article>
+                <Link href={`/${lang}/contact`}>
+                    <Button variant='full' arrow={true}><RichText>{data.footer.cta}</RichText></Button>
+                </Link>
+                </article>
+            </div>
         </main>
     )
 }

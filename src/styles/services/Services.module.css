@@ -1,3 +1,25 @@
+.ServicesPage {
+    --surface-card-soft: var(--color-surface-hover);
+    --surface-muted: color-mix(in srgb, var(--surface-text) 68%, transparent);
+    --surface-border-hover: color-mix(in srgb, var(--surface-accent) 55%, transparent);
+    --surface-shadow: 0 12px 28px color-mix(in srgb, var(--surface-text) 10%, transparent);
+    --services-accent-text: color-mix(in srgb, var(--surface-accent) 72%, var(--surface-text));
+
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 5rem);
+    margin: 0;
+    padding: 0;
+    background: var(--surface-bg);
+    color: var(--surface-text);
+    border-radius: 0;
+}
+
+.ServicesContent {
+    color: var(--surface-text);
+}
+
+
 .Header {
     display: flex;
     justify-content: space-between;
@@ -5,16 +27,19 @@
     article:first-child {
         display: flex;
         flex-direction: column;
-        gap: .4rem;
+        gap: .2rem;
 
         h1 {
             font-weight: bolder;
             font-size: 3rem;
+            line-height: 1;
         }
 
         p {
             max-width: 60%;
+            margin-top: .15rem;
             opacity: 90%;
+            color: var(--surface-muted);
         }
     }
 
@@ -26,8 +51,17 @@
         width: 35%;
     }
 
+    article:last-child p {
+        color: var(--surface-muted);
+    }
+
     strong {
         opacity: 100% !important;
+    }
+
+    .details,
+    strong.details {
+        color: var(--services-accent-text);
     }
 }
 
@@ -39,13 +73,15 @@
     li {
         display: flex;
         gap: .8rem;
-        background-color: var(--color-surface);
+        background: var(--surface-card);
         padding: 1rem;
         border-radius: var(--radius-md);
+        border: 1px solid var(--surface-border);
+        box-shadow: var(--surface-shadow);
 
         svg,
         span {
-            color: var(--color-text-inverse);
+            color: var(--surface-text);
         }
 
         .TextCardC {
@@ -57,29 +93,150 @@
         }
 
         .Picture {
-            background-color: var(--color-surface-hover);
+            background: var(--surface-card-soft);
         }
         cursor: pointer;
     }
     li:hover {
-        opacity: 80%;
+        border-color: var(--surface-border-hover);
+        box-shadow: var(--surface-shadow);
         transform: translateY(-.4rem);
     }
 }
 
+.CategoryGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .8rem;
+}
+
+.CategoryCard {
+    display: flex;
+    gap: .8rem;
+    background: var(--surface-card);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--surface-border);
+    box-shadow: var(--surface-shadow);
+    align-items: center;
+    cursor: pointer;
+    transition: opacity .2s, transform .2s;
+
+    svg,
+    span {
+        color: var(--surface-text);
+    }
+
+    .TextCardC {
+        width: 80%;
+        h1 { font-weight: bold; }
+        p { color: var(--surface-muted); opacity: 1; font-size: .85rem; }
+    }
+
+    .Picture {
+        background: var(--surface-card-soft);
+    }
+}
+
+.CategoryCard:hover {
+    border-color: var(--surface-border-hover);
+    box-shadow: var(--surface-shadow);
+    transform: translateY(-.3rem);
+}
+
+.CategoryArrow {
+    margin-left: auto;
+    color: var(--surface-text);
+    opacity: .6;
+    flex-shrink: 0;
+}
+
+.CategoryCard:hover .CategoryArrow {
+    transform: translateX(.3rem);
+    opacity: 1;
+}
+
+.Explorer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ExplorerHeader {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+}
+
+.BackBtn {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--surface-border);
+    color: var(--surface-text);
+    padding: .45rem .9rem;
+    border-radius: 2rem;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.BackBtn:hover {
+    background: var(--surface-card);
+    border-color: var(--surface-border-hover);
+    box-shadow: var(--surface-shadow);
+}
+
+.ActiveTitle {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--surface-text);
+}
+
+.Count {
+    margin-left: .4rem;
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
 .FooterCard {
     display: flex;
-    background: var(--card-bg-gradient);
+    background: var(--surface-card-soft);
     border-radius: var(--radius-xl);
-    border: 2px solid var(--color-bg-hover);
+    border: 1px solid var(--surface-border);
+    box-shadow: var(--surface-shadow);
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    color: var(--surface-text);
 
     header {
         display: flex;
         gap: .8rem;
         align-items: center;
+    }
+
+    header > span:first-child {
+        background: var(--surface-card);
+        border: 1px solid var(--surface-border);
+        color: var(--surface-accent);
+
+        svg {
+            color: var(--surface-accent);
+        }
+    }
+
+    strong {
+        color: var(--surface-text);
+    }
+
+    p {
+        color: var(--surface-muted);
+        opacity: 1;
     }
 
     button {
@@ -111,6 +268,10 @@
         grid-template-columns: 1fr 1fr;
     }
 
+    .CategoryGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .FooterCard {
         flex-direction: column;
         gap: 1rem;
@@ -124,6 +285,10 @@
     }
 
     .Content {
+        grid-template-columns: 1fr;
+    }
+
+    .CategoryGrid {
         grid-template-columns: 1fr;
     }
 }

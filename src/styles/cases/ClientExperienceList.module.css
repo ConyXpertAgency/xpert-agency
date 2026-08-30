@@ -1,0 +1,243 @@
+.Section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+}
+
+.Header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.Header span,
+.Header h2 {
+    display: block;
+}
+
+.Header h2 {
+    margin: 0;
+    color: var(--surface-text, var(--color-text-primary));
+    font-size: 1.45rem;
+    line-height: 1.15;
+}
+
+.List {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem 0.7rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.Item {
+    position: relative;
+    min-width: 0;
+}
+
+.Trigger {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 0;
+    gap: 0.6rem;
+    padding: 0.62rem 0;
+    border: 0;
+    border-bottom: 1px solid var(--surface-border, color-mix(in srgb, var(--color-bg-hover) 70%, transparent));
+    background: transparent;
+    color: var(--surface-text, var(--color-text-primary));
+    font: inherit;
+    font-size: 0.92rem;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+    transition: color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-normal);
+}
+
+.Trigger span {
+    display: block;
+    min-width: 0;
+}
+
+.Trigger:hover,
+.Trigger:focus-visible,
+.Active .Trigger {
+    border-color: var(--surface-border-hover, color-mix(in srgb, var(--color-success) 72%, var(--color-bg-hover)));
+    color: var(--color-success);
+}
+
+.Trigger:hover,
+.Active .Trigger {
+    transform: translateX(0.12rem);
+}
+
+.Trigger:focus-visible {
+    outline: 2px solid var(--color-success);
+    outline-offset: 3px;
+}
+
+.Indicator {
+    flex-shrink: 0;
+    color: var(--color-success);
+    opacity: 0.78;
+}
+
+.Popover {
+    position: absolute;
+    z-index: var(--z-tooltip);
+    left: 50%;
+    width: min(18rem, calc(100vw - 2rem));
+    padding: 0.85rem;
+    border: 1px solid var(--surface-border-hover, color-mix(in srgb, var(--color-success) 30%, var(--color-bg-hover)));
+    border-radius: var(--radius-md);
+    background: var(--surface-card, var(--card-bg-gradient));
+    color: var(--surface-text, var(--color-text-primary));
+    box-shadow: var(--surface-shadow, var(--shadow-lg));
+    transform: translateX(-50%);
+}
+
+.PopoverBottom {
+    top: calc(100% + 0.55rem);
+    bottom: auto;
+}
+
+.PopoverTop {
+    top: auto;
+    bottom: calc(100% + 0.55rem);
+}
+
+.Popover::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 0.72rem;
+    height: 0.72rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-success) 30%, var(--color-bg-hover));
+    border-left: 1px solid color-mix(in srgb, var(--color-success) 30%, var(--color-bg-hover));
+    background: var(--surface-card, #112c4d);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.PopoverBottom::before {
+    top: -0.36rem;
+    bottom: auto;
+    border-top: 1px solid color-mix(in srgb, var(--color-success) 30%, var(--color-bg-hover));
+    border-bottom: 0;
+}
+
+.PopoverTop::before {
+    top: auto;
+    bottom: -0.36rem;
+    border-top: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-success) 30%, var(--color-bg-hover));
+}
+
+.Popover strong,
+.Popover p,
+.Popover span {
+    display: block;
+}
+
+.Popover strong {
+    color: var(--surface-text, var(--color-text-primary));
+    font-size: 0.98rem;
+    line-height: 1.2;
+}
+
+.Popover p {
+    margin: 0.45rem 0 0;
+    color: var(--surface-muted, var(--color-text-secondary));
+    font-size: 0.86rem;
+    line-height: 1.4;
+}
+
+.Popover span {
+    width: fit-content;
+    margin-top: 0.65rem;
+    color: var(--color-success);
+    font-size: 0.76rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.LeftColumn .Popover {
+    left: 0;
+    transform: none;
+}
+
+.LeftColumn .Popover::before {
+    left: 1rem;
+    transform: rotate(45deg);
+}
+
+.RightColumn .Popover {
+    right: 0;
+    left: auto;
+    transform: none;
+}
+
+.RightColumn .Popover::before {
+    right: 1rem;
+    left: auto;
+    transform: rotate(45deg);
+}
+
+@media (max-width: 992px) {
+    .List {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .Popover {
+        right: auto;
+        left: 0;
+        transform: none;
+    }
+
+    .Popover::before {
+        right: auto;
+        left: 1rem;
+        transform: rotate(45deg);
+    }
+}
+
+@media (min-width: 769px), (hover: hover) {
+    .Item {
+        position: relative;
+    }
+
+    .Popover {
+        position: absolute;
+    }
+}
+
+@media (max-width: 768px) and (hover: none) {
+    .List {
+        grid-template-columns: 1fr;
+    }
+
+    .Item {
+        position: static;
+    }
+
+    .Trigger {
+        padding: 0.72rem 0;
+    }
+
+    .Popover {
+        position: static;
+        width: 100%;
+        margin-top: 0.55rem;
+        transform: none;
+        inset: auto;
+    }
+
+    .Popover::before {
+        display: none;
+    }
+}

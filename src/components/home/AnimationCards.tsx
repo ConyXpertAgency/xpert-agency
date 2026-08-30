@@ -22,9 +22,18 @@ const AnimationCards = ({ hero }: AnimationCardsProps) => {
     const [showFour, setShowFour] = useState(false)
     const [mounted, setMounted] = useState(false)
     const [height, setHeight] = useState<number>()
+    const [isDesktop, setIsDesktop] = useState(false)
     const secondRef = useRef<HTMLElement | null>(null)
     const fourRef = useRef<HTMLElement | null>(null)
     const frameRef = useRef(0)
+
+    useEffect(() => {
+        const m = window.matchMedia('(min-width: 993px)')
+        const update = () => setIsDesktop(m.matches)
+        update()
+        m.addEventListener('change', update)
+        return () => m.removeEventListener('change', update)
+    }, [])
 
     // El contenedor reserva siempre el alto de la card más alta: al cambiar
     // de card la página no se mueve, solo hay crossfade dentro del hueco.
@@ -70,7 +79,7 @@ const AnimationCards = ({ hero }: AnimationCardsProps) => {
     return (
         <section
             className={`${styles.AnimationCards} ${mounted ? styles.Mounted : ''}`}
-            style={height !== undefined ? { height: `${height}px`, transition: 'height .45s ease' } : undefined}
+            style={height !== undefined && !isDesktop ? { height: `${height}px`, transition: 'height .45s ease' } : undefined}
         >
             <article
                 ref={secondRef}
