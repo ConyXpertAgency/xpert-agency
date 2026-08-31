@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "@/styles/admin/Admin.module.css";
 import { getAdminClient, getAccessToken } from "@/lib/supabase/admin";
 import { updatePath } from "@/lib/dataPath";
@@ -16,6 +16,19 @@ interface Selection {
   collection: string;
   keyname: string;
   lang: Lang;
+}
+
+const SECTION_ID_SEP = ".";
+const STORAGE_KEY = "admin_last_section";
+
+function encodeSectionId(collection: string, keyname: string, lang: string): string {
+  return `${collection}${SECTION_ID_SEP}${keyname}${SECTION_ID_SEP}${lang}`;
+}
+
+function decodeSectionId(id: string): { collection: string; keyname: string; lang: string } | null {
+  const parts = id.split(SECTION_ID_SEP);
+  if (parts.length !== 3 || !parts[0] || !parts[1] || !parts[2]) return null;
+  return { collection: parts[0], keyname: parts[1], lang: parts[2] };
 }
 
 export default function AdminApp() {
@@ -49,6 +62,18 @@ export default function AdminApp() {
   const [showNewLang, setShowNewLang] = useState(false);
   const [newLangCode, setNewLangCode] = useState("");
   const [langNotice, setLangNotice] = useState<string | null>(null);
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [editorLoading, setEditorLoading] = useState(false);
+  const loadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const loadRows = async () => {
     const token = await getAccessToken();
@@ -100,6 +125,33 @@ export default function AdminApp() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const restoredRef = useRef(false);
+
+  useEffect(() => {
+    if (restoredRef.current || rows.length === 0) return;
+    restoredRef.current = true;
+
+    const hash = window.location.hash.slice(1);
+    const saved = hash || localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+
+    const parsed = decodeSectionId(saved);
+    if (!parsed) return;
+
+    const exists = rows.some(
+      (r) => r.collection === parsed.collection && r.keyname === parsed.keyname && r.lang === parsed.lang
+    );
+    if (exists) {
+      selectSection(parsed.collection, parsed.keyname, parsed.lang);
+    } else {
+      const altExists = rows.some(
+        (r) => r.collection === parsed.collection && r.keyname === parsed.keyname
+      );
+      if (altExists) selectSection(parsed.collection, parsed.keyname);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows]);
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -214,11 +266,20 @@ export default function AdminApp() {
   };
 
   const selectSection = (collection: string, keyname: string, lang?: Lang) => {
+    if (loadTimerRef.current) clearTimeout(loadTimerRef.current);
+    setEditorLoading(true);
+
     const targetLang = lang ?? "en";
     const row = rows.find(
       (r) => r.collection === collection && r.keyname === keyname && r.lang === targetLang
     );
     setSelected({ collection, keyname, lang: targetLang });
+
+    const sectionId = encodeSectionId(collection, keyname, targetLang);
+    window.location.hash = sectionId;
+    try { localStorage.setItem(STORAGE_KEY, sectionId); } catch {}
+    
+    if (isMobile) setSidebarOpen(false);
 
     if (row) {
       setData(normalizeSectionData(collection, keyname, row.data as Record<string, unknown>));
@@ -251,6 +312,8 @@ export default function AdminApp() {
     setSavedAt(null);
     setError(null);
     setConfirmDelete(false);
+
+    loadTimerRef.current = setTimeout(() => setEditorLoading(false), 350);
   };
 
   const switchLang = (lang: Lang) => {
@@ -498,6 +561,11 @@ export default function AdminApp() {
   return (
     <div className={styles.Shell}>
       <header className={styles.Topbar}>
+        {isMobile && (
+          <button className={styles.MenuBtn} onClick={() => setSidebarOpen(!sidebarOpen)}>
+            {sidebarOpen ? "✕" : "☰"}
+          </button>
+        )}
         <div>
           <strong>Xpert.agency — Admin</strong>
           <span className={styles.Muted}>{user.email ?? ""}</span>
@@ -516,7 +584,8 @@ export default function AdminApp() {
       </header>
 
       <div className={styles.Main}>
-        <aside className={styles.Sidebar}>
+        {isMobile && sidebarOpen && <div className={styles.Overlay} onClick={() => setSidebarOpen(false)} />}
+        <aside className={`${styles.Sidebar} ${isMobile && !sidebarOpen ? styles.SidebarClosed : ""}`}>
           <h3>Apartados</h3>
           {sidebar.used.length === 0 && sidebar.deprecated.length === 0 && (
             <p className={styles.Muted}>Sin contenido todavía.</p>
@@ -631,6 +700,7 @@ export default function AdminApp() {
         </aside>
 
         <section className={styles.Editor}>
+          {editorLoading && <div className={styles.EditorLoader}><div className={styles.EditorSpinner} /></div>}
           {!selected ? (
             <div className={styles.EmptyState}>
               <p>Selecciona un apartado de la izquierda para editarlo.</p>

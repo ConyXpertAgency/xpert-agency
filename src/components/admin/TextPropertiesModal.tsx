@@ -100,6 +100,11 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
   const [selectedProp, setSelectedProp] = useState<string | null>(null);
   const [selectionProps, setSelectionProps] = useState<Record<string, string>>({});
   const [hasSelection, setHasSelection] = useState(false);
+  const [expandedCats, setExpandedCats] = useState<Record<string, boolean>>({});
+
+  const toggleCategory = (cat: string) => {
+    setExpandedCats((prev) => ({ ...prev, [cat]: !prev[cat] }));
+  };
 
   const editorRef = useRef<HTMLDivElement>(null);
   const savedRange = useRef<Range | null>(null);
@@ -242,10 +247,18 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
         <div className={styles.SettingsBody}>
           {/* Col 1: Property list — preventDefault on mousedown to keep editor selection */}
           <div className={styles.SettingsPropList} onMouseDown={stopFocusSteal}>
-            {CATEGORIES.map((cat) => (
+            {CATEGORIES.map((cat) => {
+              const expanded = expandedCats[cat] ?? false;
+              return (
               <div key={cat} className={styles.SettingsPropGroup}>
-                <div className={styles.SettingsPropGroupTitle}>{cat}</div>
-                {ALL_PROPS.filter((p) => PROPS[p].category === cat).map((p) => {
+                <button
+                  className={`${styles.SettingsPropGroupTitle} ${expanded ? styles.SettingsPropGroupOpen : ""}`}
+                  onClick={() => toggleCategory(cat)}
+                >
+                  <span>{cat}</span>
+                  <span className={styles.SettingsPropCaret}>{expanded ? "▾" : "▸"}</span>
+                </button>
+                {expanded && ALL_PROPS.filter((p) => PROPS[p].category === cat).map((p) => {
                   const val = hasSelection ? selectionProps[p] : undefined;
                   const isActive = selectedProp === p;
                   return (
@@ -262,7 +275,8 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
                   );
                 })}
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Col 2: Property detail — preventDefault on mousedown */}
