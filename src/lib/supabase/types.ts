@@ -315,6 +315,7 @@ export interface RbeFirst extends SectionBackground {
   cta_secondary_href: string;
   list: TextItem[];
   cards: TextItem[];
+  image: string;
 }
 
 export interface RbeSecond extends SectionBackground {
@@ -338,6 +339,7 @@ export interface RbeThird extends SectionBackground {
   title: string;
   subtitle: string;
   phases: RbePhase[];
+  image: string;
   footer_title: string;
   footer_text: string;
 }
@@ -354,6 +356,7 @@ export interface RbeFour extends SectionBackground {
   subtitle: string;
   left: RbeElement[];
   right: RbeElement[];
+  image: string;
   extra: { number: string; title: string; text: string };
 }
 

@@ -1,16 +1,62 @@
 .Third {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-    margin-top: 5rem;
+    gap: 1.6rem;
+    padding: 2.5rem 0;
 }
+
 .Header {
-    h1 {
-        font-weight: bolder;
-        font-size: 2.2rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    .HeaderText {
+        display: flex;
+        flex-direction: column;
+        gap: .4rem;
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 800;
+        }
+
+        p {
+            display: block;
+            color: var(--rbe-muted, #5b667a);
+            font-size: 1.05rem;
+        }
     }
-    p {
-        font-size: .8rem;
+}
+
+.Chips {
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+
+    .Chip {
+        padding: .4rem 1.1rem;
+        border-radius: 999px;
+        border: 2px solid var(--rbe-primary, #05154B);
+        color: var(--rbe-primary, #05154B);
+        font-weight: 800;
+        font-size: .85rem;
+        background: var(--rbe-surface, #ffffff);
+    }
+}
+
+.Panel {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+
+    .PanelImg {
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        object-fit: contain;
+        border-radius: 16px;
     }
 }
 
@@ -18,40 +64,37 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
+
     .CardContent {
-        padding: 2rem;
-        background: var(--card-bg-gradient);
-        border-radius: var(--radius-md);
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 1.2rem;
-        header {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            gap: .8rem;
-            padding: .8rem;
-            border-bottom: 2px solid var(--color-success);
-            svg {
-                color: var(--color-success);
-            }
-            h1 {
-                font-size: 1.2rem;
-                font-weight: bold;
-            }
-            p {
-                font-size: .8rem;
-                opacity: .8;
-            }
+        gap: 1rem;
+        padding: 1.5rem;
+        background: var(--rbe-surface, #ffffff);
+        border: 1px solid var(--rbe-border, rgba(5, 21, 75, .10));
+        border-radius: var(--rbe-radius, 18px);
+        box-shadow: var(--rbe-shadow-sm, 0 6px 18px rgba(5, 21, 75, .12));
 
+        header {
+            h1 {
+                font-size: 1.15rem;
+                font-weight: 800;
+                color: var(--rbe-primary, #05154B);
+            }
         }
+
         .ListCard {
             display: flex;
             flex-direction: column;
-            gap: .8rem;
-            list-style-type: disc;
-            font-size: .8rem;
+            gap: .45rem;
+            padding-left: 1rem;
+
+            li {
+                list-style: disc;
+                color: var(--rbe-muted, #5b667a);
+                font-size: .92rem;
+                line-height: 1.5;
+            }
         }
     }
 }
@@ -59,17 +102,25 @@
 .Footer {
     display: flex;
     gap: 1rem;
-    background: transparent;
-    border: 2px solid var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-    padding: 1rem;
     align-items: center;
+    padding: 1.2rem 1.5rem;
+    background: var(--rbe-surface, #ffffff);
+    border: 1px solid var(--rbe-border, rgba(5, 21, 75, .10));
+    border-radius: var(--rbe-radius, 18px);
+    box-shadow: var(--rbe-shadow-sm, 0 6px 18px rgba(5, 21, 75, .12));
+
     h1 {
-        color: var(--color-success);
-        font-weight: 400;
-        font-size: 1.2rem;
-        width: 20%;
-        margin-right: 1rem;
+        flex-shrink: 0;
+        color: var(--rbe-accent, #8BC540);
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: .03em;
+    }
+
+    p {
+        display: block;
+        color: var(--rbe-text, #0b1220);
+        line-height: 1.55;
     }
 }
 
@@ -78,30 +129,22 @@
     .Content {
         grid-template-columns: repeat(2, 1fr);
     }
-    .Footer h1 {
-        width: auto;
-    }
 }
 
 @media (max-width: 768px) {
-    .Header h1 {
-        font-size: 1.8rem;
+    .Header {
+        flex-direction: column;
+        align-items: flex-start;
     }
+
     .Content {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 576px) {
-    .CardContent {
-        padding: 1.5rem;
-    }
     .Footer {
         flex-direction: column;
         text-align: center;
-        h1 {
-            width: 100%;
-            margin-right: 0;
-        }
     }
 }

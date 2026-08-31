@@ -668,43 +668,32 @@ export const getContactTeams = async (lang: Lang): Promise<ContactTeams> => {
 export const getRbeFirst = (lang: Lang) =>
   getTyped<RbeFirst>("rbe", "first", lang, {
     badge: "Interim Management",
-    title: ["Rapid Business", "Elevating <strong>RBE™</strong>"],
+    title: ["Rapid Business Elevating <strong>RBE™</strong>"],
     subtitle: "Interim Management, elevate performance safe and quickly.",
     text: "RBE™ is Xpert.agency's proprietary framework for rapid ramp-up and business process elevation. We step in, stabilize operations, protect value and drive measurable performance improvement fast, safe and sustainable.",
     cta_primary: "See the approach",
-    cta_primary_href: "/rbe",
+    cta_primary_href: "/rbe#rbe-expectations",
     cta_secondary: "Explore the framework",
     cta_secondary_href: "/rbe",
     list: [
-      {
-        icon: "IoShieldCheckmarkOutline",
-        title: "Rapid ramp-up",
-        text: "Speed up operations to achieve expected results.",
-      },
-      {
-        icon: "SlTarget",
-        title: "Process elevation",
-        text: "Strengthen people, skills and systems.",
-      },
-      {
-        icon: "LuChartNoAxesCombined",
-        title: "Measurable impact",
-        text: "Elevate performance to best level - fast.",
-      },
+      { title: "Rapid ramp-up", text: "" },
+      { title: "Business processes", text: "" },
+      { title: "Elevating performance", text: "" },
     ],
     cards: [
       { number: "01", title: "PREPARING", text: "Plan and prepare for corrective actions." },
       { number: "02", title: "SAFEGUARDING", text: "Stabilize operations and protect value." },
       { number: "03", title: "PREFORMING", text: "Execute improvements and elevate performance." },
     ],
+    image: "/panel_1.png",
   });
 
 export const getRbeSecond = (lang: Lang) =>
   getTyped<RbeSecond>("rbe", "second", lang, {
     badge: "THE CHALLENGE",
     title: "What are we talking about?",
-    text: "Every investor, responsible manager and entrepreneur world-wide is knowing and fearing the difficulties in projects, when business processes are going to change and performance is expected quickly.",
-    image: "/need_RBE.png",
+    text: "Every investor, responsible manager and entrepreneur world-wide is knowing and fearing the difficulties in projects, when business processes are going to change:",
+    image: "/panel_2.png",
     list: [
       {
         number: "01",
@@ -730,7 +719,7 @@ export const getRbeSecond = (lang: Lang) =>
 
 export const getRbeThird = (lang: Lang) =>
   getTyped<RbeThird>("rbe", "third", lang, {
-    title: "What can you expect from RBE Interim Management",
+    title: "What can you expect from RBE Interim Management?",
     subtitle: "A well-structured, systematic management approach to success.",
     phases: [
       {
@@ -739,11 +728,17 @@ export const getRbeThird = (lang: Lang) =>
         subtitle: ["Build clarity, assess risks and", "prepare the operation for ramp-up."],
         items: [
           "Check data and processes",
-          "Check rampup plan",
+          "Check manpower plan",
           "Identify risks",
           "Calculate RBE proposal",
+          "Settle the RBE team",
+          "Perform “What-if” analysis and quantify risks",
           "Define and execute preventing actions",
+          "Install alert system for corrective actions",
+          "Evaluate supplier contracts regarding claims",
+          "Check training, documentation, and plan",
           "Evaluate management training and plan",
+          "Perform trainings (etc.)",
         ],
       },
       {
@@ -754,9 +749,13 @@ export const getRbeThird = (lang: Lang) =>
           "Check & monitor KPI",
           "Check alert system",
           "Execute corrective actions",
+          "On-the-job training & coaching on all workstations",
+          "Extend “What-if” analysis",
           "Adapt corrective actions",
+          "Provide a comprehensive table to develop basis tool for improving processes and the system",
           "Develop strategies to improve operations and system",
-          "Do process mining to measure progress",
+          "Settle gamification",
+          "Do process mining to measure progress (etc.)",
         ],
       },
       {
@@ -764,15 +763,19 @@ export const getRbeThird = (lang: Lang) =>
         title: "Performing phase",
         subtitle: ["Drive improvement waves, train teams", "and prepare long-term handover."],
         items: [
-          "Define waves",
+          "Check comprehensive table to define waves",
           "Establish improvement waves",
           "Provide collaborative team games",
-          "Establish progress visualization & reporting",
-          "Train-the-trainer coaching",
+          "Establish Progress visualization & reporting",
+          "Train-the-trainer for on-the-job coaching",
+          "Actualize improvement wave concept",
+          "Train management to take over the wave concept",
+          "Inform management permanently",
           "Handover to executives",
         ],
       },
     ],
+    image: "/panel_3.png",
     footer_title: "RBE 3-PHASE MODEL",
     footer_text:
       "A structured management approach that drives rapid ramp-up, protects value, and delivers measurable impact - fast, safe and sustainable.",
@@ -785,22 +788,23 @@ export const getRbeFour = (lang: Lang) =>
       "A practical toolkit to stabilize operations fast, manage risks, and drive measurable performance improvements.",
     left: [
       { icon: "FaRegUser", number: "01", title: "RBE Survey", text: "Shaping individual concepts" },
-      { icon: "LuUsers", number: "03", title: "Interim Management Team", text: "Core team Specialists" },
-      { icon: "IoShieldCheckmarkOutline", number: "05", title: "FMEA/What-If Analysis", text: "Described risks. Preventives Correctives" },
-      { icon: "FiTool", number: "07", title: "Embedded Tools", text: "Process mining Gamification. Tutorials" },
-      { icon: "IoSchoolOutline", number: "09", title: "Operations Training", text: "Shop floor based Skill training • Skill coaching" },
+      { icon: "LuUsers", number: "03", title: "Interim Management Team", text: "Core team • Specialists" },
+      { icon: "IoShieldCheckmarkOutline", number: "05", title: "FMEA / What-If Analysis", text: "Described risks • Preventives • Correctives" },
+      { icon: "FiTool", number: "07", title: "Embedded Tools", text: "Process mining • Gamification • Tutorials" },
+      { icon: "IoSchoolOutline", number: "09", title: "Operations Training", text: "Shop floor based • Skill training • Skill coaching" },
     ],
     right: [
-      { icon: "FaRegUser", number: "02", title: "Three Phase Model", text: "Preparing Safeguarding Performing" },
-      { icon: "IoShieldCheckmarkOutline", number: "04", title: "Claim Management", text: "Requirements Set claims Defend claims" },
-      { icon: "IoIosPulse", number: "06", title: "Comprehensive Tests", text: "Flow exerciser System exerciser etc." },
-      { icon: "LuBrainCog", number: "08", title: "Systems Training", text: "Systems thinking LEAN training. Coaching" },
-      { icon: "BsBarChartLine", number: "10", title: "Visualization & Reporting", text: "KPI tracking Gemba walks. Standard reports" },
+      { icon: "FaRegUser", number: "02", title: "Three Phase Model", text: "Preparing • Safeguarding • Performing" },
+      { icon: "IoShieldCheckmarkOutline", number: "04", title: "Claim Management", text: "Requirements • Set claims • Defend claims" },
+      { icon: "IoIosPulse", number: "06", title: "Comprehensive Tests", text: "Flow exerciser • System exerciser • etc." },
+      { icon: "LuBrainCog", number: "08", title: "Systems Training", text: "Systems thinking • LEAN training • Coaching" },
+      { icon: "BsBarChartLine", number: "10", title: "Visualization & Reporting", text: "KPI tracking • Gemba walks • Standard reports" },
     ],
+    image: "/panel_4.png",
     extra: {
       number: "+1",
       title: "Improvement Waves",
-      text: "Exec-program Agile projects. Progress awards",
+      text: "Exec-program • Agile projects • Progress awards",
     },
   });
 

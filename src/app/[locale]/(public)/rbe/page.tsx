@@ -19,13 +19,13 @@ const page = async () => {
     getRbeFooter(lang),
   ]);
   return (
-    <main className='AppShell'>
-        <First first={first} />
+    <main className='AppShell RbePage'>
+        <First first={first} lang={lang} />
         <Second second={second} />
         <Third third={third} />
         <Four four={four} />
         <Five five={five} />
-        <Footer footer={footer} />
+        <Footer footer={footer} lang={lang} />
     </main>
   )
 }

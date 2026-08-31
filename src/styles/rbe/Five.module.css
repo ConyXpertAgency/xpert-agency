@@ -1,51 +1,88 @@
 .Five {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.6rem;
+    padding: 2.5rem 0;
 }
 
 .Header {
     display: flex;
     flex-direction: column;
-    gap: .8rem;
+    gap: .4rem;
+
     h1 {
-        font-size: 3rem;
-        font-weight: bolder;
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        font-weight: 800;
+    }
+
+    p {
+        display: block;
+        color: var(--rbe-muted, #5b667a);
+        font-size: 1.02rem;
     }
 }
+
 .Content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
     gap: 2rem;
+    align-items: center;
+
     picture {
-        padding: 1rem;
-        border-radius: var(--radius-lg);
-        border: 2px solid var(--color-bg-secondary);
-        width: 60%;
-        background: var(--card-bg-gradient);
+        display: flex;
+        justify-content: center;
+
+        img {
+            width: 100%;
+            max-width: 460px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, .12);
+        }
     }
+
     ul {
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        width: 40%;
+
         li {
             display: flex;
-            justify-content: space-between;
+            gap: 1.1rem;
             align-items: center;
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            background: var(--card-bg-gradient);
-            span:nth-child(2) {
-                width: 60%;
+            padding: 1.2rem;
+            background: var(--rbe-surface, #ffffff);
+            border: 1px solid var(--rbe-border, rgba(5, 21, 75, .10));
+            border-radius: var(--rbe-radius, 18px);
+            box-shadow: var(--rbe-shadow-sm, 0 6px 18px rgba(5, 21, 75, .12));
+
+            .CardTxt {
+                display: flex;
+                flex-direction: column;
+                gap: .3rem;
+                flex: 1;
+
                 h1 {
-                    font-size: 1.2rem;
-                    font-weight: bold;   
+                    font-size: 1.1rem;
+                    font-weight: 800;
+                    color: var(--rbe-primary, #05154B);
+                }
+
+                p {
+                    display: block;
+                    color: var(--rbe-muted, #5b667a);
+                    font-size: .95rem;
+                    line-height: 1.5;
                 }
             }
-            div {
-                font-size: 5rem;
-                font-weight: bold;
-                opacity: .4;
+
+            & > div:last-child {
+                font-size: 3.4rem;
+                font-weight: 800;
+                line-height: 1;
+                color: var(--rbe-accent, #8BC540);
+                opacity: .5;
             }
         }
     }
@@ -53,50 +90,40 @@
 
 .Footer {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    gap: 1rem;
-    border-radius: var(--radius-lg);
-    padding: 1rem;
-    background: var(--card-bg-gradient);
+    gap: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--rbe-surface, #ffffff);
+    border: 1px solid var(--rbe-border, rgba(5, 21, 75, .10));
+    border-radius: var(--rbe-radius, 18px);
+    box-shadow: var(--rbe-shadow-sm, 0 6px 18px rgba(5, 21, 75, .12));
+
+    strong {
+        color: var(--rbe-primary, #05154B);
+        font-size: .95rem;
+        text-align: right;
+    }
 }
 
 /* ─── Responsive ──────────────────────────────────── */
 @media (max-width: 992px) {
     .Content {
-        flex-direction: column;
-    }
-    .Content picture {
-        width: 100%;
-    }
-    .Content picture img {
-        width: 100%;
-        height: auto;
-    }
-    .Content ul {
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .Header h1 {
-        font-size: 2.2rem;
-    }
-    .Content ul li div {
-        font-size: 3.5rem;
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 576px) {
     .Content ul li {
         flex-wrap: wrap;
-        span:nth-child(2) {
-            width: 100%;
-        }
     }
+
     .Footer {
         flex-direction: column;
         text-align: center;
+
+        strong {
+            text-align: center;
+        }
     }
 }

@@ -11,9 +11,10 @@ import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface FooterProps {
     footer: RbeFooter
+    lang?: string
 }
 
-const Footer = ({ footer }: FooterProps) => {
+const Footer = ({ footer, lang = "" }: FooterProps) => {
     return (
         <footer className={`${styles.Footer} ${sectionBgClass(footer)}`} style={sectionBgStyle(footer)}>
             <article className={styles.ContactCard}>
@@ -32,7 +33,7 @@ const Footer = ({ footer }: FooterProps) => {
                             <p><RichText>{footer.contact_phone}</RichText></p>
                         </span>
                     </article>
-                    <Link href={'/contact'}>
+                    <Link href={`${lang}/contact`}>
                         <Button arrow={true} variant='outlineG'><RichText>{footer.cta}</RichText></Button>
                     </Link>
                 </section>
@@ -40,7 +41,6 @@ const Footer = ({ footer }: FooterProps) => {
             <article className={styles.Details}>
                 <p><RichText>{footer.year}</RichText></p>
                 <div></div>
-                <strong className='details'>Admin</strong>
             </article>
         </footer>
     )

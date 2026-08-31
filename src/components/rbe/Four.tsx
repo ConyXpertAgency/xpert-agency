@@ -1,9 +1,7 @@
 import React from 'react'
 import styles from '@/styles/rbe/Four.module.css'
-import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
-import { FaChartLine, FaChevronRight } from 'react-icons/fa'
-import { getIcon } from '@/lib/supabase/icons'
+import Image from 'next/image'
 import type { RbeFour } from '@/lib/supabase/types'
 import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
@@ -12,6 +10,13 @@ interface FourProps {
 }
 
 const Four = ({ four }: FourProps) => {
+    const elements = [...four.left, ...four.right, {
+        number: four.extra.number,
+        title: four.extra.title,
+        text: four.extra.text,
+        icon: '',
+    }];
+
     return (
         <section className={`${styles.Four} ${sectionBgClass(four)}`} style={sectionBgStyle(four)}>
             <header className={styles.Header}>
@@ -19,41 +24,22 @@ const Four = ({ four }: FourProps) => {
                 <p><RichText>{four.subtitle}</RichText></p>
             </header>
             <article className={styles.Content}>
-                <ul className={styles.ListLeft}>
-                    {four.left.map((item, i) => (
-                        <li key={i}>
-                            <PictureSvg variant='full' icon={getIcon(item.icon)} />
-                            <div><RichText>{item.number}</RichText></div>
-                            <span>
-                                <strong><RichText>{item.title}</RichText></strong>
-                                <p><RichText>{item.text}</RichText></p>
-                            </span>
-                        </li>
+                <div className={styles.Grid}>
+                    {elements.map((item, i) => (
+                        <div key={i} className={styles.Card}>
+                            <span className={styles.Number}><RichText>{item.number}</RichText></span>
+                            <div className={styles.CardTxt}>
+                                <div className={styles.Smallcaps}><RichText>{item.title}</RichText></div>
+                                <div className={styles.CardDesc}><RichText>{item.text}</RichText></div>
+                            </div>
+                        </div>
                     ))}
-                </ul>
-                <ul className={styles.ListRight}>
-                    {four.right.map((item, i) => (
-                        <li key={i}>
-                            <PictureSvg variant='full' icon={getIcon(item.icon)} />
-                            <div><RichText>{item.number}</RichText></div>
-                            <span>
-                                <strong><RichText>{item.title}</RichText></strong>
-                                <p><RichText>{item.text}</RichText></p>
-                            </span>
-                        </li>
-                    ))}
-                </ul>
-            </article>
-            <article className={styles.LastCard}>
-                <header>
-                <PictureSvg variant='full' icon={FaChartLine} size={38} width={5} height={5}/>
-                    <h1><RichText>{four.extra.number}</RichText></h1>
-                </header>
-                <section>
-                    <h1><RichText>{four.extra.title}</RichText></h1>
-                    <p><RichText>{four.extra.text}</RichText></p>
-                </section>
-                <PictureSvg className={styles.PictureLC} icon={FaChevronRight}/>
+                </div>
+                <div className={styles.Image}>
+                    {four.image && (
+                        <Image src={four.image} alt="Elements panel" width={420} height={420} className={styles.ImgContain} />
+                    )}
+                </div>
             </article>
         </section>
     )

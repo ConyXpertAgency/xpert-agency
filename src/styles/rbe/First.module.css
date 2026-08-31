@@ -1,131 +1,118 @@
-.First {
-    display: flex;
-    justify-content: space-between;
+.Hero {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 2.5rem;
+    align-items: center;
+    padding: 4rem 0 2rem;
 }
-.Left {
+
+.HeroText {
     display: flex;
     flex-direction: column;
-    gap: .8rem;
-    width: 60%;
-}
-.Fleft {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
-.TextLeft {
-    display: flex;
-    flex-direction: column;
-    gap: .8rem;
+    gap: 1.1rem;
+
     h1 {
-        display: inline;
-        width: 80%;
-        font-size: 3rem;
-        font-weight: bolder;
+        display: block;
+        font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        color: var(--rbe-primary, #05154B);
+
         strong {
-            color: var(--color-success);
+            color: var(--rbe-accent, #8BC540);
         }
-    }
-}
-.ButtonsLeft {
-    display: flex;
-    gap: .8rem;
-    a:first-child {
-        button {
-            color: var(--color-text-inverse);
-            border-radius: var(--radius-md);
-        }
-        
-    }
-    button:last-child {
-        border-bottom: 2px solid var(--color-success);
-        border-radius: 0;
-        color: var(--color-text);
     }
 }
 
-.ListLeft {
+.Lead {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 500;
+    opacity: 1;
+    color: var(--rbe-muted, #5b667a);
+    max-width: 32rem;
+}
+
+.Kpis {
     display: flex;
-    background: var(--card-bg-gradient);
-    justify-content: space-between;
-    padding: 1rem;
-    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin: .2rem 0;
+
     li {
-        display: flex;
-        gap: .8rem;
-        svg {
-            color: var(--color-success);
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .4rem 1rem;
+        background: var(--brand-surface, #ffffff);
+        border: 1px solid rgba(5, 21, 75, .10);
+        border-radius: 999px;
+        box-shadow: 0 6px 18px rgba(5, 21, 75, .10);
+        font-weight: 600;
+        font-size: .9rem;
+        color: var(--rbe-text, #0b1220);
+
+        span {
+            display: inline-flex;
+            width: .55rem;
+            height: .55rem;
+            border-radius: 999px;
+            background: var(--rbe-accent, #8BC540);
+            flex-shrink: 0;
         }
     }
 }
-.Right {
+
+.Cta {
     display: flex;
-    flex-direction: column;
-    gap: .8rem;
-    justify-content: space-between;
+    margin-top: .4rem;
+
+    button {
+        border-radius: 999px;
+        padding: .75rem 1.6rem;
+        font-weight: 800;
+        font-size: 1rem;
+        background: var(--rbe-primary, #05154B);
+        border-color: var(--rbe-primary, #05154B);
+        color: #fff;
+    }
+
+    button svg {
+        color: #fff;
+    }
 }
-.Card {
-    background: var(--card-bg-gradient);
-    padding: 1.5rem;
-    border-radius: var(--radius-lg);
-    div {
-        width: 4rem;
-        height: 4rem;
-        margin: 0 auto;
-        background: var(--card-bg-gradient);
+
+.HeroImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ImgWrap {
         display: flex;
-        justify-content: center;
         align-items: center;
-        font-size: 1.5rem;
-        color: var(--color-success);
-        font-weight: bold;
-        border-radius: var(--radius-full);
-        margin-top: -3rem;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .ImgContain {
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        object-fit: contain;
+        border-radius: 16px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, .12);
     }
 }
 
 /* ─── Responsive ──────────────────────────────────── */
 @media (max-width: 992px) {
-    .First {
-        flex-direction: column;
-    }
-    .Left {
-        width: 100%;
-    }
-    .Right {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-    }
-    .Card div {
-        margin-top: -2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .TextLeft h1 {
-        width: 100%;
-        font-size: 2.2rem;
-    }
-    .ListLeft {
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .Right {
+    .Hero {
         grid-template-columns: 1fr;
+        padding: 2.5rem 0 1.5rem;
     }
-    .ButtonsLeft {
-        flex-direction: column;
-        align-items: stretch;
-        a,
-        button {
-            width: 100%;
-        }
-    }
-    .ListLeft {
-        flex-direction: column;
+
+    .HeroImage {
+        order: -1;
     }
 }

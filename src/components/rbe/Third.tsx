@@ -1,8 +1,7 @@
 import React from 'react'
-import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
-import { getIcon } from '@/lib/supabase/icons'
 import styles from '@/styles/rbe/Third.module.css'
+import Image from 'next/image'
 import type { RbeThird } from '@/lib/supabase/types'
 import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
@@ -12,20 +11,32 @@ interface ThirdProps {
 
 const Third = ({ third }: ThirdProps) => {
     return (
-        <section className={`${styles.Third} ${sectionBgClass(third)}`} style={sectionBgStyle(third)}>
+        <section id="rbe-expectations" className={`${styles.Third} ${sectionBgClass(third)}`} style={sectionBgStyle(third)}>
             <header className={styles.Header}>
-                <h1><RichText>{third.title}</RichText></h1>
-                <p><RichText>{third.subtitle}</RichText></p>
+                <div className={styles.HeaderText}>
+                    <h1><RichText>{third.title}</RichText></h1>
+                    <p><RichText>{third.subtitle}</RichText></p>
+                </div>
+                <div className={styles.Chips}>
+                    {third.phases.map((phase, i) => (
+                        <span key={i} className={styles.Chip}>
+                            <RichText>{phase.title.replace(/\s+phase$/i, '')}</RichText>
+                        </span>
+                    ))}
+                </div>
             </header>
+
+            <div className={styles.Panel}>
+                {third.image && (
+                    <Image src={third.image} alt="Three phase model panel" width={900} height={220} className={styles.PanelImg} />
+                )}
+            </div>
+
             <ul className={styles.Content}>
                 {third.phases.map((phase, i) => (
                     <li key={i} className={styles.CardContent}>
                         <header>
-                            <PictureSvg icon={getIcon(phase.icon)} size={68} variant='ghost' />
                             <h1><RichText>{phase.title}</RichText></h1>
-                            <p>
-                                {phase.subtitle.map((line, j) => <RichText as="span" key={j}>{line}</RichText>)}
-                            </p>
                         </header>
                         <ul className={styles.ListCard}>
                             {phase.items.map((item, j) => (
@@ -35,6 +46,7 @@ const Third = ({ third }: ThirdProps) => {
                     </li>
                 ))}
             </ul>
+
             <footer className={styles.Footer}>
                 <h1><RichText>{third.footer_title}</RichText></h1>
                 <p><RichText>{third.footer_text}</RichText></p>

@@ -2,94 +2,125 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    padding: 2rem 0 .5rem;
 }
 
 .ContactCard {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    background: var(--card-bg-gradient);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-success);
-    box-shadow: 0 0 10px 2px var(--color-success);
+    gap: 1.4rem;
     padding: 2rem;
+    background: var(--rbe-surface, #ffffff);
+    border: 1px solid var(--rbe-border, rgba(5, 21, 75, .10));
+    border-radius: var(--rbe-radius, 18px);
+    box-shadow: var(--rbe-shadow-sm, 0 6px 18px rgba(5, 21, 75, .12));
+
     svg {
-        color: var(--color-success);
+        color: var(--rbe-accent, #8BC540);
     }
 }
+
 .TextCC {
     display: flex;
     gap: 1rem;
     align-items: center;
-    h1 {
-        font-size: 2.2rem;
-        font-weight: bold;
-    }
-    p {
-        padding-bottom: 1rem;
-        border-bottom: 2px solid var(--color-success);
 
+    span {
+        display: flex;
+        flex-direction: column;
+        gap: .2rem;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--rbe-primary, #05154B);
+    }
+
+    p {
+        display: block;
+        color: var(--rbe-muted, #5b667a);
     }
 }
+
 .ActionCC {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+
     article {
         display: flex;
         gap: 1rem;
-    }
-    button {
-        color: var(--color-success);
-        border-radius: var(--radius-lg);
-        box-shadow: 0 0 10px 2px var(--color-success);
-    }
-    button:hover {
-        color: var(--color-text);
-        svg {
-            color: var(--color-text);
+        align-items: center;
+
+        span {
+            display: flex;
+            flex-direction: column;
+            gap: .1rem;
         }
+
+        h1 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--rbe-primary, #05154B);
+        }
+
+        p {
+            display: block;
+            color: var(--rbe-muted, #5b667a);
+        }
+    }
+
+    button {
+        border-radius: 999px;
+        padding: .65rem 1.4rem;
+        font-weight: 800;
+        background: var(--rbe-primary, #05154B);
+        border-color: var(--rbe-primary, #05154B);
+        color: #fff;
+    }
+
+    button svg {
+        color: #fff;
     }
 }
 
 .Details {
     display: flex;
-    background: var(--card-bg-gradient);
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 3rem;
-    gap: .8rem;
-    border-radius: var(--radius-lg);
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--rbe-surface, #ffffff);
+    border: 1px solid var(--rbe-border, rgba(5, 21, 75, .10));
+    border-radius: var(--rbe-radius, 18px);
+
+    p {
+        display: block;
+        color: var(--rbe-muted, #5b667a);
+    }
+
     div {
-        width: 80%;
+        flex: 1;
         height: 1px;
-        background-color: var(--color-success);
+        background: var(--rbe-border, rgba(5, 21, 75, .10));
+    }
+
+    strong {
+        color: var(--rbe-primary, #05154B);
     }
 }
 
 /* ─── Responsive ──────────────────────────────────── */
-@media (max-width: 768px) {
-    .TextCC h1 {
-        font-size: 1.8rem;
-    }
+@media (max-width: 576px) {
     .ActionCC {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
     }
-    .Details {
-        padding: 1rem;
-    }
-}
 
-@media (max-width: 576px) {
     .TextCC {
-        flex-direction: column;
         align-items: flex-start;
-    }
-    .ContactCard {
-        padding: 1.5rem;
-    }
-    .Details div {
-        width: 60%;
     }
 }
