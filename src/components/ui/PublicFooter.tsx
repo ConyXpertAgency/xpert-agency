@@ -90,6 +90,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
 
       <div className={styles.Bottom}>
         <span>© {new Date().getFullYear()} Xpert Agency</span>
+        <span className={styles.AiDisclosure}>{copy.aiDisclosure}</span>
       </div>
     </footer>
   );

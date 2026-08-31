@@ -49,3 +49,30 @@
     }
 }
 
+@media (max-width: 576px) {
+    .Card {
+        height: auto;
+        min-height: 8.75rem;
+        padding: .8rem;
+        gap: 1.15rem;
+    }
+
+    .Card .TextCard {
+        gap: .35rem;
+    }
+
+    .Card .TextCard h1 {
+        font-size: 1.05rem;
+        line-height: 1.15;
+    }
+
+    .Card .TextCard p {
+        line-height: 1.4;
+    }
+
+    .Card header span {
+        width: 3.1rem !important;
+        height: 3.1rem !important;
+    }
+}
+

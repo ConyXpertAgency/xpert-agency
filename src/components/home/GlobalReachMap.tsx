@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styles from '@/styles/Home/GlobalReachMap.module.css'
 import { resolveStorageUrl } from '@/lib/supabase/client'
@@ -25,6 +25,17 @@ const SHIFT_X = 0
 const GlobalReachMap = ({ nodes }: GlobalReachMapProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
+  const [isCompactViewport, setIsCompactViewport] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 576px)')
+    const updateViewport = () => setIsCompactViewport(media.matches)
+
+    updateViewport()
+    media.addEventListener('change', updateViewport)
+
+    return () => media.removeEventListener('change', updateViewport)
+  }, [])
 
   if (!nodes || nodes.length === 0) return null
 
@@ -39,6 +50,11 @@ const GlobalReachMap = ({ nodes }: GlobalReachMapProps) => {
 
   const handleMouseLeave = () => {
     setHoveredIndex(null)
+  }
+
+  const handleNodeClick = (index: number, e: React.MouseEvent) => {
+    setHoveredIndex((current) => current === index ? null : index)
+    setTooltipPos({ x: e.clientX, y: e.clientY })
   }
 
   const hoveredNode = hoveredIndex !== null ? nodes[hoveredIndex] : null
@@ -97,6 +113,20 @@ const GlobalReachMap = ({ nodes }: GlobalReachMapProps) => {
             onMouseEnter={(e) => handleMouseEnter(i, e)}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onClick={(e) => handleNodeClick(i, e)}
+            role="button"
+            tabIndex={0}
+            aria-label={`${node.country}${node.client ? `: ${node.client}` : ''}`}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setHoveredIndex((current) => current === i ? null : i)
+                setTooltipPos({ x: window.innerWidth / 2, y: window.innerHeight - 120 })
+              }
+              if (e.key === 'Escape') {
+                setHoveredIndex(null)
+              }
+            }}
           >
             <span className={styles.nodePulse}></span>
             <span className={styles.nodeDot}></span>
@@ -115,7 +145,7 @@ const GlobalReachMap = ({ nodes }: GlobalReachMapProps) => {
       {hoveredNode && (
         <div
           className={styles.tooltip}
-          style={{
+          style={isCompactViewport ? undefined : {
             left: tooltipPos.x,
             top: tooltipPos.y,
           }}

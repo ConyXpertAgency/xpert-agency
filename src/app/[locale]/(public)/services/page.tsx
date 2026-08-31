@@ -34,7 +34,7 @@ const page = async () => {
                     </p>
                 </article>
             </header>
-                <ServicesExplorer groups={data.groups ?? serviceGroups} />
+                <ServicesExplorer groups={data.groups ?? serviceGroups} lang={lang} />
                 <article className={styles.FooterCard}>
                 <header>
                     <PictureSvg variant='full' width={5} height={5} size={32} icon={getIcon('FaRegUser')} />

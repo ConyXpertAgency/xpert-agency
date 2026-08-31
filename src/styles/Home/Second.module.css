@@ -558,7 +558,25 @@
 
 @media (max-width: 576px) {
     .Content {
-        grid-template-columns: 1fr;
+        grid-auto-columns: minmax(16rem, 86vw);
+        grid-auto-flow: column;
+        grid-template-columns: none;
+        gap: .85rem;
+        margin-inline: -16px;
+        padding-inline: 16px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-padding-inline: 16px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .Content::-webkit-scrollbar {
+        display: none;
+    }
+
+    .Content > * {
+        scroll-snap-align: start;
     }
 
     .ListCard {
@@ -570,11 +588,12 @@
     }
 
     .Second .DataList {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0;
     }
 
     .Second .DataList h1 {
-        font-size: 2rem;
+        font-size: 1.95rem;
     }
 
     .Second .DataList li:nth-child(odd),
@@ -583,12 +602,97 @@
         border-bottom: none;
     }
 
-    .Second .DataList li:not(:last-child) {
+    .Second .DataList li {
+        align-items: flex-start;
+        gap: .55rem;
+        padding: .85rem .75rem;
+    }
+
+    .Second .DataList li:nth-child(odd) {
+        border-right: 1px solid var(--expert-border);
+    }
+
+    .Second .DataList li:nth-child(-n +2) {
         border-bottom: 1px solid var(--expert-border);
+    }
+
+    .Second .DataList li svg {
+        width: 1.35rem;
+        height: 1.35rem;
+        margin-top: .2rem;
+    }
+
+    .Second .DataList li p {
+        font-size: .82rem;
+        overflow-wrap: anywhere;
     }
 
     .EditorialCard,
     .ValuesCard {
-        padding: 1.2rem;
+        height: auto;
+        gap: .75rem;
+        padding: 1rem;
+    }
+
+    .PurposeSection {
+        padding: 2.35rem 16px;
+    }
+
+    .PurposeInner {
+        gap: 1.25rem;
+    }
+
+    .PurposeIntro {
+        gap: .55rem;
+    }
+
+    .PurposeIntro h2 {
+        font-size: 1.85rem;
+        line-height: 1;
+    }
+
+    .PurposeIntro p {
+        font-size: .92rem;
+        line-height: 1.42;
+    }
+
+    .ListCard {
+        gap: .75rem;
+    }
+
+    .ListCard > li:first-child .EditorialText,
+    .ListCard > li:nth-child(2) .EditorialText,
+    .ListCard > li:nth-child(3) .ValuesContent {
+        transform: none;
+    }
+
+    .EditorialText,
+    .ValuesContent {
+        grid-template-rows: auto auto auto;
+        gap: .65rem;
+    }
+
+    .PurposeIcon {
+        width: 1.85rem;
+        height: 1.85rem;
+    }
+
+    .EditorialText p,
+    .ValuesCard p {
+        font-size: .82rem;
+        line-height: 1.4;
+    }
+
+    .ValuesCard ul {
+        gap: .55rem;
+    }
+
+    .ValuesCard ul li {
+        gap: .55rem;
+    }
+
+    .EditorialImage {
+        aspect-ratio: 2 / 1;
+        margin-top: .15rem;
     }
 }

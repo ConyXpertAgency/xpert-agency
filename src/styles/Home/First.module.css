@@ -546,3 +546,127 @@
         padding-top: 0;
     }
 }
+
+@media (max-width: 576px) {
+    .First {
+        gap: 1.1rem;
+    }
+
+    .Left {
+        min-height: 0;
+        gap: .95rem;
+    }
+
+    .LeftMain {
+        gap: .35rem;
+    }
+
+    .Left header {
+        gap: .45rem;
+    }
+
+    .Left header h1 {
+        font-size: 29px;
+        line-height: 1.04;
+    }
+
+    .Left header p {
+        font-size: .95rem;
+        line-height: 1.38;
+    }
+
+    .Buttons {
+        margin-top: .55rem;
+        gap: .65rem;
+    }
+
+    .Left footer {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: .45rem;
+        margin-top: .55rem;
+    }
+
+    .Left footer article {
+        min-width: 0;
+        padding: .55rem .45rem;
+        gap: .28rem;
+        border: 1px solid color-mix(in srgb, var(--color-surface) 12%, transparent);
+        border-radius: var(--radius-lg);
+        background: color-mix(in srgb, var(--color-bg-secondary) 58%, transparent);
+    }
+
+    .Left footer article > span:first-child {
+        transform: scale(.82);
+        transform-origin: left top;
+        margin-bottom: -.25rem;
+    }
+
+    .Left footer article h1 {
+        font-size: .74rem;
+        line-height: 1.12;
+    }
+
+    .Left footer article p {
+        font-size: .66rem;
+        line-height: 1.28;
+        opacity: .78;
+    }
+
+    .Right article {
+        gap: .75rem;
+    }
+
+    .Right article section {
+        gap: .65rem;
+    }
+
+    .CardRight {
+        padding: .65rem;
+        border-radius: var(--radius-lg);
+    }
+
+    .FirstCard article {
+        gap: .55rem;
+    }
+
+    .FirstCard span h1 {
+        font-size: 1.85rem;
+    }
+
+    .ThirdCard {
+        gap: .45rem;
+    }
+
+    .circularProgress {
+        width: 112px;
+        height: 112px;
+    }
+
+    .circularProgress::before {
+        width: 88px;
+        height: 88px;
+    }
+
+    .progressValue {
+        font-size: 1.55rem;
+    }
+
+    .SecondCard ul {
+        gap: .6rem;
+    }
+
+    .SecondCard ul li {
+        gap: .45rem;
+    }
+}
+
+@media (max-width: 340px) {
+    .Left footer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .Left footer article:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+}

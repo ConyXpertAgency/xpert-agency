@@ -199,3 +199,22 @@
         width: 100%;
     }
 }
+
+@media (max-width: 576px) {
+    .Card {
+        height: 100%;
+    }
+
+    .DescriptionPopover {
+        position: fixed;
+        inset: auto 16px 1rem;
+        width: auto;
+        max-height: min(50dvh, 22rem);
+        overflow-y: auto;
+        z-index: var(--z-modal);
+    }
+
+    .DescriptionPopover::before {
+        display: none;
+    }
+}

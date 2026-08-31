@@ -85,8 +85,8 @@
 
 @media (max-width: 576px) {
     .ListLeft {
-        grid-template-columns: 1fr;
-        padding: 0.5rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 0.35rem;
     }
 
     .ListLeft li:nth-child(odd),
@@ -94,12 +94,50 @@
         border-right: none;
     }
 
-    .ListLeft li {
+    .ListLeft li:nth-child(odd) {
+        border-right: 1px solid var(--surface-border, color-mix(in srgb, var(--color-text-inverse) 14%, transparent));
+    }
+
+    .ListLeft li:nth-child(-n + 2) {
         border-bottom: 1px solid var(--surface-border, color-mix(in srgb, var(--color-text-inverse) 14%, transparent));
-        padding-bottom: 0.6rem;
+    }
+
+    .ListLeft li {
+        min-width: 0;
+        border-bottom: none;
+        padding: 0.65rem 0.55rem;
+    }
+
+    .ListLeft li:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        border-right: none;
     }
 
     .ListLeft li:last-child {
         border-bottom: none;
+    }
+
+    .HCardF {
+        min-width: 0;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: .55rem;
+    }
+
+    .HCardF svg {
+        width: 1.45rem;
+        height: 1.45rem;
+        margin-top: .15rem;
+        flex-shrink: 0;
+    }
+
+    .TextCardH h1 {
+        font-size: 1.85rem;
+    }
+
+    .TextCardH strong {
+        font-size: .78rem;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
     }
 }

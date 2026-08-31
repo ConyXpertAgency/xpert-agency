@@ -24,14 +24,12 @@ const page = async () => {
             </header>
             <ul className={styles.Content}>
                 {data.items.map((item, i) => (
-                    <Link key={i} href={`/${lang}/industrie`}>
-                        <li>
-                            <IndustrieCard icon={getIcon(item.icon)}>
-                                <h1><RichText>{item.title}</RichText></h1>
-                                <p><RichText>{item.text}</RichText></p>
-                            </IndustrieCard>
-                        </li>
-                    </Link>
+                    <li key={i}>
+                        <IndustrieCard icon={getIcon(item.icon)}>
+                            <h1><RichText>{item.title}</RichText></h1>
+                            <p><RichText>{item.text}</RichText></p>
+                        </IndustrieCard>
+                    </li>
                 ))}
             </ul>
             <article className={`${styles.InfoCard}`}>

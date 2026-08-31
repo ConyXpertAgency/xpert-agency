@@ -292,3 +292,182 @@
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 576px) {
+    .ServicesContent {
+        gap: 1.2rem;
+    }
+
+    .Header {
+        gap: .75rem;
+    }
+
+    .Header article:first-child {
+        gap: .25rem;
+    }
+
+    .Header article:first-child h1 {
+        font-size: clamp(1.85rem, 11vw, 2rem);
+        line-height: 1.02;
+    }
+
+    .Header article:first-child p,
+    .Header article:last-child p {
+        font-size: .92rem;
+        line-height: 1.42;
+    }
+
+    .CategoryGrid {
+        gap: .7rem;
+    }
+
+    .CategoryCard {
+        gap: .7rem;
+        padding: .75rem;
+        align-items: center;
+        box-shadow: 0 8px 18px color-mix(in srgb, var(--surface-text) 8%, transparent);
+    }
+
+    .CategoryCard .Picture {
+        flex: 0 0 3.25rem;
+        transform: scale(.72);
+        transform-origin: center;
+    }
+
+    .CategoryCard .TextCardC {
+        width: auto;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .CategoryCard .TextCardC h1 {
+        font-size: .98rem;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    .CategoryCard .TextCardC p {
+        font-size: .78rem;
+        line-height: 1.2;
+    }
+
+    .Explorer {
+        gap: .85rem;
+    }
+
+    .ExplorerHeader {
+        gap: .45rem;
+    }
+
+    .BackBtn {
+        padding: .4rem .75rem;
+        font-size: .8rem;
+        min-height: 2.35rem;
+    }
+
+    .ActiveTitle {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: .35rem .55rem;
+        font-size: 1.12rem;
+        line-height: 1.18;
+        min-width: 0;
+    }
+
+    .ActiveTitle > span:first-child {
+        grid-row: 1 / span 2;
+        align-self: start;
+        margin-top: .05rem;
+    }
+
+    .Count {
+        grid-column: 2;
+        margin-left: 0;
+        font-size: .78rem;
+        line-height: 1.2;
+    }
+
+    .Content {
+        gap: .7rem;
+    }
+
+    .Content li {
+        gap: .7rem;
+        padding: .75rem;
+        align-items: flex-start;
+        box-shadow: 0 8px 18px color-mix(in srgb, var(--surface-text) 8%, transparent);
+    }
+
+    .Content li .Picture {
+        flex: 0 0 3.25rem;
+        transform: scale(.72);
+        transform-origin: top center;
+    }
+
+    .Content li .TextCardC {
+        width: auto;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .Content li .TextCardC h1 {
+        font-size: .98rem;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    .Content li .TextCardC p {
+        font-size: .84rem;
+        line-height: 1.38;
+        overflow-wrap: anywhere;
+    }
+
+    .FooterCard {
+        gap: .85rem;
+        padding: .85rem;
+        align-items: stretch;
+    }
+
+    .FooterCard header {
+        align-items: flex-start;
+        gap: .7rem;
+        text-align: left;
+        width: 100%;
+    }
+
+    .FooterCard header > span:first-child {
+        flex: 0 0 3.25rem;
+        transform: scale(.78);
+        transform-origin: top left;
+    }
+
+    .FooterCard header > span:last-child {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .FooterCard strong,
+    .FooterCard p {
+        overflow-wrap: anywhere;
+    }
+
+    .FooterCard p {
+        font-size: .9rem;
+        line-height: 1.4;
+    }
+
+    .FooterCard a {
+        width: 100%;
+    }
+
+    .FooterCard button {
+        width: 100%;
+        min-height: 2.75rem;
+        height: auto;
+        justify-content: center;
+        text-align: center;
+        white-space: normal;
+        line-height: 1.2;
+    }
+}

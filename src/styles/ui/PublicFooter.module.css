@@ -87,12 +87,21 @@
 
 .Bottom {
     display: flex;
+    flex-direction: column;
+    gap: .35rem;
     justify-content: space-between;
     width: 100%;
     max-width: var(--site-max-width);
     margin: 1.6rem auto 0;
     padding-top: 1rem;
     border-top: 1px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
+}
+
+.AiDisclosure {
+    max-width: 34rem;
+    font-size: .76rem;
+    line-height: 1.45;
+    opacity: .68;
 }
 
 @media (max-width: 992px) {
@@ -111,12 +120,46 @@
     }
 
     .Inner {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem 1rem;
+    }
+
+    .Brand,
+    .Group:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .Brand {
+        gap: .7rem;
+    }
+
+    .Group {
+        gap: .55rem;
+    }
+
+    .Group ul {
+        gap: .45rem;
+    }
+
+    .Group a {
+        line-height: 1.35;
+        overflow-wrap: anywhere;
     }
 
     .Brand img {
         height: auto;
         width: 65%;
         max-width: 16rem;
+    }
+
+    .Bottom {
+        margin-top: 1rem;
+        padding-top: .85rem;
+    }
+
+    .AiDisclosure {
+        max-width: 100%;
+        font-size: .73rem;
+        overflow-wrap: anywhere;
     }
 }

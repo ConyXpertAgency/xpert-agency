@@ -532,28 +532,92 @@
 }
 
 @media (max-width: 576px) {
+    .Four {
+        gap: 1.35rem;
+        padding-block: 2.35rem;
+    }
+
+    .Four .Header {
+        gap: 1rem;
+    }
+
+    .Hleft {
+        gap: .45rem;
+    }
+
+    .Hleft h1 {
+        font-size: 1.85rem;
+        line-height: 1.02;
+    }
+
+    .Hright {
+        gap: .85rem;
+    }
+
+    .Hright p {
+        font-size: .92rem;
+        line-height: 1.4;
+    }
+
+    .Hright ul {
+        gap: .45rem;
+    }
+
+    .Hright ul li {
+        width: 100%;
+        padding: .55rem .65rem;
+        border: 1px solid var(--surface-border);
+        border-radius: var(--radius-md);
+        background: var(--surface-card-soft);
+    }
+
     .Content {
         grid-template-columns: 1fr;
     }
 
     .HubWrap {
-        padding-top: 0.4rem;
+        padding-top: 0;
     }
 
     .HubGrid {
         grid-template-columns: 1fr;
-        gap: 0.75rem;
+        gap: 0.55rem;
     }
 
     .Hub {
         grid-column: 1;
         min-height: auto;
+        align-items: flex-start;
+        text-align: left;
         flex-direction: column;
-        padding: 1rem;
+        gap: .2rem;
+        padding: .85rem .9rem;
+        border-radius: var(--radius-lg);
+    }
+
+    .HubTitle {
+        font-size: 1.35rem;
+    }
+
+    .HubTitleActive {
+        max-width: none;
+        text-align: left;
+        font-size: 1.2rem;
+    }
+
+    .HubSub {
+        font-size: .76rem;
     }
 
     .HubRing {
         display: none;
+    }
+
+    .BackBtn {
+        position: static;
+        order: -1;
+        margin-bottom: .35rem;
+        width: fit-content;
     }
 
     .HubGrid .Node:nth-of-type(n) {
@@ -562,11 +626,95 @@
     }
 
     .Node {
-        padding: 0.85rem 0.9rem;
+        padding: 0.75rem 0.85rem;
+        border-radius: var(--radius-md);
+    }
+
+    .CategoryNode {
+        align-items: stretch;
+        justify-content: flex-start;
+        text-align: left;
+        min-height: 0;
+    }
+
+    .CategoryNode .NodeTitle {
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .CategoryNode .NodeMeta {
+        text-align: left;
+    }
+
+    .NodeTitle {
+        font-size: .92rem;
+    }
+
+    .NodeMeta {
+        font-size: .68rem;
     }
 
     .CapabilityNode {
-        min-height: 72px;
-        padding: 0.7rem 0.8rem;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+        min-height: 0;
+        padding: 0.72rem 0.8rem;
+    }
+
+    .CapabilityNode .NodeTitle {
+        justify-content: flex-start;
+        text-align: left;
+        font-size: .84rem;
+    }
+
+    .Four .List {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0;
+        padding-top: .25rem;
+    }
+
+    .Four .List li {
+        gap: .55rem;
+        padding: .75rem .65rem;
+        border-bottom: 1px solid var(--surface-border);
+    }
+
+    .Four .List li:nth-child(odd) {
+        border-right: 1px solid var(--surface-border);
+    }
+
+    .Four .List li:nth-child(even) {
+        border-right: none;
+    }
+
+    .Four .List li:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        border-right: none;
+    }
+
+    .Four .List li > span:first-child {
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    .Four .List li .ListText {
+        width: 100%;
+        gap: .2rem;
+    }
+
+    .Four .List li .ListText h1 {
+        font-size: 1.05rem;
+        line-height: 1;
+    }
+
+    .Four .List li .ListText strong {
+        font-size: .78rem;
+        line-height: 1.2;
+    }
+
+    .Four .List li .ListText p {
+        font-size: .72rem;
+        line-height: 1.3;
     }
 }

@@ -15,11 +15,19 @@ type FooterCopy = {
   contact: string;
   whatsapp: string;
   homeAria: string;
+  aiDisclosure: string;
+};
+
+type ServicesCopy = {
+  allServices: string;
+  service: string;
+  services: string;
 };
 
 export type UiCopy = {
   roles: RolesCopy;
   footer: FooterCopy;
+  services: ServicesCopy;
 };
 
 export const uiCopy = {
@@ -40,6 +48,12 @@ export const uiCopy = {
       contact: "Contact",
       whatsapp: "WhatsApp",
       homeAria: "Xpert Agency home",
+      aiDisclosure: "Developed with AI-assisted tools and human review.",
+    },
+    services: {
+      allServices: "All services",
+      service: "service",
+      services: "services",
     },
   },
   es: {
@@ -59,6 +73,12 @@ export const uiCopy = {
       contact: "Contacto",
       whatsapp: "WhatsApp",
       homeAria: "Inicio de Xpert Agency",
+      aiDisclosure: "Desarrollado con herramientas asistidas por IA y revisión humana.",
+    },
+    services: {
+      allServices: "Todos los servicios",
+      service: "servicio",
+      services: "servicios",
     },
   },
   de: {
@@ -78,6 +98,12 @@ export const uiCopy = {
       contact: "Kontakt",
       whatsapp: "WhatsApp",
       homeAria: "Xpert Agency Startseite",
+      aiDisclosure: "Mit KI-gestützten Werkzeugen entwickelt und menschlich überprüft.",
+    },
+    services: {
+      allServices: "Alle Leistungen",
+      service: "Leistung",
+      services: "Leistungen",
     },
   },
 } as const satisfies Record<string, UiCopy>;

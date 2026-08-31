@@ -133,3 +133,101 @@
         border-bottom: 2px solid var(--color-bg-secondary);
     }
 }
+
+@media (max-width: 576px) {
+    .Third {
+        gap: 1.25rem;
+        padding: 1.45rem 16px;
+    }
+
+    .Third::before {
+        top: -1.5rem;
+    }
+
+    .Third .Header {
+        gap: 1.2rem;
+    }
+
+    .Third .Header article {
+        gap: 1rem;
+    }
+
+    .Third .Header article header {
+        gap: .6rem;
+    }
+
+    .Third .Header article header h1 {
+        font-size: 1.8rem;
+        line-height: 1.04;
+    }
+
+    .Third .Header article header p {
+        font-size: .92rem;
+        line-height: 1.4;
+    }
+
+    .Third .Header article ul {
+        gap: .65rem;
+    }
+
+    .Third .Header article ul li {
+        align-items: flex-start;
+        gap: .65rem;
+    }
+
+    .Third .Header article ul li svg {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+    .List {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0;
+        padding: .75rem;
+    }
+
+    .List li {
+        width: 100%;
+        min-width: 0;
+        padding: .75rem .55rem;
+    }
+
+    .List li:nth-child(-n +3) {
+        border-right: none;
+        border-bottom: none;
+    }
+
+    .List li:nth-child(odd) {
+        border-right: 1px solid var(--color-bg-secondary);
+    }
+
+    .List li:nth-child(-n +2) {
+        border-bottom: 1px solid var(--color-bg-secondary);
+    }
+
+    .List li svg {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+    .List li h1 {
+        font-size: 1.65rem;
+        line-height: 1;
+    }
+
+    .List li strong {
+        font-size: .78rem;
+        line-height: 1.2;
+    }
+
+    .List li p {
+        font-size: .72rem;
+        line-height: 1.3;
+    }
+
+    .Third button {
+        width: 100%;
+        justify-content: center;
+    }
+}

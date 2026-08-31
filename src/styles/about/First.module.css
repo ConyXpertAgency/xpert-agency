@@ -191,13 +191,57 @@
 }
 
 @media (max-width: 576px) {
+    .First {
+        gap: 1rem;
+    }
+
+    .Left {
+        gap: .75rem;
+    }
+
+    .Left header {
+        gap: .45rem;
+    }
+
+    .ListLeftH {
+        gap: .25rem;
+    }
+
+    .ListLeftH li {
+        gap: .55rem;
+        padding: .25rem 0;
+    }
+
+    .Right {
+        height: auto;
+        min-height: 0;
+        padding: .75rem;
+    }
+
     .PictureCard {
         grid-template-columns: 1fr;
         height: auto;
-        gap: 0.8rem;
+        gap: 0.65rem;
+        padding: .8rem;
     }
+
     .Row1 h1 {
         font-size: 0.95rem;
+    }
+
+    .Desc {
+        font-size: .84rem;
+        line-height: 1.42;
+    }
+
+    .mapWrapper {
+        scale: 1;
+        width: 82%;
+        margin: -.35rem -4% -.35rem auto;
+    }
+
+    .mapContainer {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
     }
 }
 

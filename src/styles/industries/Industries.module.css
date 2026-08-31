@@ -112,3 +112,52 @@
         white-space: normal;
     }
 }
+
+@media (max-width: 576px) {
+    .Header {
+        gap: .65rem;
+    }
+
+    .Header h1 {
+        font-size: clamp(1.75rem, 10vw, 2rem);
+        line-height: 1.05;
+    }
+
+    .Header p {
+        line-height: 1.45;
+    }
+
+    .Content {
+        gap: .65rem;
+    }
+
+    .InfoCard {
+        gap: .75rem;
+        padding: .8rem;
+    }
+
+    .InfoCard header {
+        align-items: flex-start;
+        gap: .65rem;
+    }
+
+    .InfoCard .Text {
+        gap: .2rem;
+    }
+
+    .InfoCard .Text h1 {
+        line-height: 1.12;
+    }
+
+    .InfoCard .Text p {
+        line-height: 1.4;
+    }
+
+    .InfoCard a {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        min-height: 2.75rem;
+        box-sizing: border-box;
+    }
+}

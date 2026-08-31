@@ -84,6 +84,12 @@
     justify-content: center;
 }
 
+.node:focus-visible {
+    outline: 2px solid #22c55e;
+    outline-offset: 6px;
+    border-radius: 999px;
+}
+
 /* ─── Node dot ────────────────────────────────────── */
 .nodeDot {
     width: 10px;
@@ -231,29 +237,66 @@
 }
 
 @media (max-width: 576px) {
+    .mapWrapper {
+        aspect-ratio: 2.2 / 1;
+        max-height: 10.5rem;
+    }
+
+    .mapBase {
+        opacity: .42;
+    }
+
+    .gridOverlay {
+        background-size: 28px 28px;
+        opacity: .65;
+    }
+
+    .arc {
+        stroke-width: .24;
+    }
+
     .nodeDot {
         width: 8px;
         height: 8px;
+        box-shadow:
+            0 0 6px 1px rgba(34, 197, 94, 0.5),
+            0 0 14px 3px rgba(34, 197, 94, 0.22);
     }
 
     .nodePulse {
         width: 8px;
         height: 8px;
+        animation: none;
+        opacity: .35;
     }
 
     .nodeLogo {
-        width: 20px;
-        height: 20px;
+        display: none;
     }
 
     .tooltip {
-        min-width: 150px;
-        max-width: 200px;
-        padding: 8px 12px;
+        left: 16px;
+        right: 16px;
+        top: auto;
+        bottom: 1rem;
+        transform: none;
+        min-width: 0;
+        max-width: none;
+        padding: 10px 12px;
+        pointer-events: auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .42);
     }
 
     .tooltipCountry {
         font-size: 12px;
+    }
+
+    .tooltipHeader {
+        flex-wrap: wrap;
+    }
+
+    .tooltipLabel {
+        margin-left: 0;
     }
 
     .tooltipClient {
