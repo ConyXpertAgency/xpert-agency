@@ -1,19 +1,32 @@
 import React from 'react'
 import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
-import { BiSolidQuoteAltLeft } from 'react-icons/bi'
+import { BiSolidQuoteAltLeft, BiSolidShield } from 'react-icons/bi'
 import { FaRegUser } from 'react-icons/fa'
 import styles from '@/styles/about/Second.module.css'
 import { TfiReload } from 'react-icons/tfi'
 import { getIcon } from '@/lib/supabase/icons'
-import type { AboutSecond } from '@/lib/supabase/types'
+import type { AboutSecond, TextItem } from '@/lib/supabase/types'
+import AboutStatsBar from './AboutStatsBar'
 import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
 
 interface SecondProps {
     second: AboutSecond
+    heroStats: TextItem[]
+    lang: string
 }
 
-const Second = ({ second }: SecondProps) => {
+const Second = ({ second, heroStats, lang }: SecondProps) => {
+    const rbeBar = second.rbe_bar ?? {
+        icon: 'BiSolidShield',
+        title: 'RBE™ — Ramp-up & Risk Mitigation',
+        text: 'Explore our approach to managing critical ramp-up phases, project risks and operational transitions.',
+        cta: 'Explore RBE™',
+        href: '/rbe',
+    }
+    const normalizedRbeHref = rbeBar.href.startsWith('/') ? rbeBar.href : `/${rbeBar.href}`
+    const RbeIcon = rbeBar.icon === 'BiSolidShield' ? BiSolidShield : getIcon(rbeBar.icon)
+
     return (
         <section className={`${styles.Second} ${sectionBgClass(second)}`} style={sectionBgStyle(second)}>
             <header className={styles.Header}>
@@ -77,17 +90,21 @@ const Second = ({ second }: SecondProps) => {
                 </span>
                 <div></div>
             </article>
-            <ul className={styles.List}>
-                {second.stats.map((stat, i) => (
-                    <li key={i}>
-                        <PictureSvg size={32} icon={getIcon(stat.icon)} variant='full' width={4.5} height={4.5} />
-                        <span>
-                            <h1><RichText>{stat.value}</RichText></h1>
-                            <p><RichText>{stat.label}</RichText></p>
-                        </span>
-                    </li>
-                ))}
-            </ul>
+            <div className={styles.StatsBand}>
+                <div className={styles.StatsInner}>
+                    <AboutStatsBar stats={heroStats} />
+                    <article className={styles.RbeBar}>
+                        <PictureSvg icon={RbeIcon} size={32} className={styles.RbeIcon} />
+                        <div className={styles.RbeContent}>
+                            <strong><RichText>{rbeBar.title}</RichText></strong>
+                            <p><RichText>{rbeBar.text}</RichText></p>
+                        </div>
+                        <a href={`/${lang}${normalizedRbeHref}`} className={styles.RbeCTA}>
+                            <RichText>{rbeBar.cta}</RichText>
+                        </a>
+                    </article>
+                </div>
+            </div>
         </section>
     )
 }

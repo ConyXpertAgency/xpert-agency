@@ -1,0 +1,176 @@
+.HomeFinalCta {
+    position: relative;
+    isolation: isolate;
+    left: 50%;
+    width: 100dvw;
+    margin-left: -50dvw;
+    margin-top: -2rem;
+    padding: 2.4rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding))) 3rem;
+    overflow: hidden;
+    background: var(--surface-bg);
+    color: var(--surface-text);
+    box-sizing: border-box;
+}
+
+.HomeFinalCta::before {
+    content: "";
+    position: absolute;
+    inset: -1.5rem;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url('/hero-bg-20260205-153144-4f8569.jpg');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+    opacity: .09;
+    filter: blur(7px);
+    transform: scale(1.04);
+}
+
+.HomeFinalCta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, var(--surface-bg) 0%, color-mix(in srgb, var(--surface-bg) 84%, transparent) 52%, color-mix(in srgb, var(--surface-bg) 68%, transparent) 100%),
+        linear-gradient(180deg, var(--surface-bg) 0%, color-mix(in srgb, var(--surface-bg) 72%, transparent) 46%, var(--surface-bg) 100%);
+}
+
+.HomeFinalCtaInner {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin-inline: auto;
+    padding: 1.2rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--surface-border);
+    background: var(--surface-card-soft);
+    box-shadow: var(--surface-shadow);
+    color: var(--surface-text);
+    overflow: hidden;
+}
+
+.HomeFinalCtaInner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url('/fondo.png');
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+    opacity: .9;
+    filter: saturate(.95) brightness(1.08);
+}
+
+.HomeFinalCtaInner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            90deg,
+            var(--surface-card-soft) 0%,
+            var(--surface-card-soft) 42%,
+            color-mix(in srgb, var(--surface-card-soft) 72%, transparent) 58%,
+            color-mix(in srgb, var(--surface-card-soft) 8%, transparent) 100%
+        ),
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--surface-card-soft) 92%, transparent) 0%,
+            color-mix(in srgb, var(--surface-card-soft) 58%, transparent) 100%
+        );
+}
+
+.HomeFinalCtaInner > * {
+    position: relative;
+    z-index: 1;
+}
+
+.HomeFinalCtaInner div {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    min-width: 0;
+}
+
+.HomeFinalCta strong {
+    color: var(--surface-text);
+    font-size: 1.35rem;
+    line-height: 1.1;
+}
+
+.HomeFinalCta p {
+    margin: 0;
+    color: var(--surface-muted);
+    opacity: 1;
+}
+
+.HomeFinalCta a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    flex-shrink: 0;
+    padding: .85rem 1.25rem;
+    border-radius: 999px;
+    background: var(--surface-accent);
+    color: var(--color-text-inverse);
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.HomeFinalCta a:hover {
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--surface-accent) 30%, transparent);
+    transform: translateY(-.12rem);
+}
+
+@media (min-width: 993px) and (hover: hover) {
+    .HomeFinalCta::before {
+        background-attachment: fixed;
+    }
+}
+
+@media (max-width: 768px) {
+    .HomeFinalCta {
+        margin-top: -1.5rem;
+        padding: 2rem 16px;
+    }
+
+    .HomeFinalCta::before {
+        opacity: .06;
+        filter: blur(9px);
+    }
+
+    .HomeFinalCtaInner {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .HomeFinalCtaInner::before {
+        opacity: .2;
+        background-position: right bottom;
+    }
+
+    .HomeFinalCtaInner::after {
+        background:
+            linear-gradient(
+                180deg,
+                var(--surface-card-soft) 0%,
+                color-mix(in srgb, var(--surface-card-soft) 92%, transparent) 72%,
+                color-mix(in srgb, var(--surface-card-soft) 82%, transparent) 100%
+            );
+    }
+}

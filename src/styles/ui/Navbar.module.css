@@ -4,6 +4,9 @@
     justify-content: space-between;
     padding: 1.2rem var(--side-padding);
     width: 100%;
+    max-width: var(--site-max-width);
+    margin-inline: auto;
+    box-sizing: border-box;
     border-bottom: 1px solid var(--color-border);
     -webkit-backdrop-filter: blur(10px);
     background: #011d45c7;
@@ -103,7 +106,7 @@
 
 @media (max-width: 576px) {
     .Navbar {
-        padding: .8rem ;
+        padding: .8rem 16px;
     }
 
     .Navbar img {

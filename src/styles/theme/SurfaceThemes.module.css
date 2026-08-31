@@ -1,0 +1,27 @@
+.LightSurface {
+    --surface-bg: var(--color-surface);
+    --surface-card: #fff;
+    --surface-card-soft: color-mix(in srgb, var(--color-surface) 84%, #fff);
+    --surface-text: var(--color-text-inverse);
+    --surface-muted: color-mix(in srgb, var(--color-text-inverse) 68%, #fff);
+    --surface-border: color-mix(in srgb, var(--color-text-inverse) 14%, transparent);
+    --surface-border-hover: color-mix(
+        in srgb,
+        var(--color-success) 55%,
+        var(--surface-border)
+    );
+    --surface-accent: var(--color-success);
+    --surface-shadow: 0 14px 34px rgba(4, 23, 50, 0.1);
+}
+
+.DarkSurface {
+    --surface-bg: var(--color-bg-primary);
+    --surface-card: var(--color-bg-secondary);
+    --surface-card-soft: var(--color-bg-tertiary);
+    --surface-text: var(--color-text-primary);
+    --surface-muted: var(--color-text-secondary);
+    --surface-border: var(--color-border);
+    --surface-border-hover: var(--color-border-strong);
+    --surface-accent: var(--color-success);
+    --surface-shadow: var(--shadow-lg);
+}
