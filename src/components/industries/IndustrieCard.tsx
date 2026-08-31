@@ -9,7 +9,7 @@ interface IndustrieCardProps extends React.HTMLAttributes<HTMLElement> {
     icon: IconType
 }
 
-const IndustrieCard = ({ img = 'hero-bg-20260205-153144-4f8569.jpg', style, className, children, icon }: IndustrieCardProps) => {
+const IndustrieCard = ({ img = '/hero-bg-20260205-153144-4f8569.jpg', style, className, children, icon }: IndustrieCardProps) => {
     const inlineStyle = {
         ...style,
         backgroundImage: img ? `url(${resolveStorageUrl(img) ?? img})` : undefined,

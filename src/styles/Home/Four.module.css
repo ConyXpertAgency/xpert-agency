@@ -45,48 +45,64 @@
 }
 
 .Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: var(--roles-header-gap);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "heading"
+        "description"
+        "proof";
+    justify-items: center;
+    align-items: center;
+    gap: 1rem;
     width: 100%;
     max-width: var(--site-max-width);
     margin-inline: auto;
+    text-align: center;
 }
 
 .Hleft {
+    grid-area: heading;
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: var(--roles-eyebrow-gap);
-    transform: translate(var(--roles-left-x), var(--roles-left-y));
+    transform: none;
 
     h1 {
         display: flex;
         flex-direction: column;
         font-size: 3rem;
         font-weight: bolder;
-        line-height: 1;
+        line-height: 1.02;
         color: var(--surface-text);
+        max-width: 16ch;
+        text-align: center;
     }
 }
 
 .Hright {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: space-between;
-    width: var(--roles-right-width);
-    transform: translate(var(--roles-right-x), var(--roles-right-y));
-    p {
+    display: contents;
+    transform: none;
+
+    .Description {
+        grid-area: description;
         display: flex;
         flex-direction: column;
+        justify-self: center;
+        width: min(100%, 66ch);
         color: var(--surface-muted);
         opacity: 1;
+        text-align: center;
    }
 
-    ul {
+    .ProofPoints {
+        grid-area: proof;
         display: flex;
-        gap: .8rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: .75rem .9rem;
+        width: min(100%, 44rem);
+        margin-inline: auto;
 
         svg {
             color: var(--color-success);
@@ -115,10 +131,28 @@
 /* ─── Hub & Spoke ────────────────────────────────── */
 .HubWrap {
     position: relative;
-    padding: 0.8rem 0 0.4rem;
+    padding: 0.25rem 0 0.4rem;
     width: 100%;
     max-width: var(--site-max-width);
     margin-inline: auto;
+}
+
+.InteractionHint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    margin: 0 0 1.5rem;
+    color: var(--surface-muted);
+    font-size: .82rem;
+    line-height: 1.35;
+    letter-spacing: .01em;
+    text-align: center;
+    opacity: .92;
+}
+
+.InteractionHint::after {
+    content: none;
 }
 
 .HubGrid {
@@ -444,7 +478,13 @@
 /* ─── Responsive ──────────────────────────────────── */
 @media (max-width: 992px) {
     .Four .Header {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "heading"
+            "description"
+            "proof";
+        align-items: center;
+        justify-items: center;
     }
 
     .Hleft,
@@ -452,9 +492,15 @@
         transform: none;
     }
 
-    .Hright {
+    .Hright .Description {
         width: 100%;
-        justify-content: flex-start;
+        justify-self: center;
+    }
+
+    .Hright .ProofPoints {
+        justify-content: center;
+        width: 100%;
+        margin-inline: auto;
     }
 
     .HubGrid {
@@ -503,6 +549,7 @@
     }
 
     .Hright ul {
+        justify-content: center;
         flex-wrap: wrap;
     }
 
@@ -554,21 +601,28 @@
         gap: .85rem;
     }
 
-    .Hright p {
+    .Hright .Description {
         font-size: .92rem;
         line-height: 1.4;
     }
 
-    .Hright ul {
+    .Hright .ProofPoints {
         gap: .45rem;
     }
 
-    .Hright ul li {
-        width: 100%;
+    .Hright .ProofPoints li {
+        width: auto;
+        min-width: min(100%, 11rem);
+        justify-content: center;
         padding: .55rem .65rem;
         border: 1px solid var(--surface-border);
         border-radius: var(--radius-md);
         background: var(--surface-card-soft);
+    }
+
+    .InteractionHint {
+        margin-bottom: .85rem;
+        font-size: .78rem;
     }
 
     .Content {

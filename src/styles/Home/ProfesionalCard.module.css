@@ -85,17 +85,24 @@
         section {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: .4rem;
+            gap: .45rem;
             align-self: end;
             button {
                 min-width: 0;
                 width: 100%;
+                min-height: 2.55rem;
+                padding: .5rem .55rem;
+                border-radius: var(--radius-sm);
                 font-size: .72rem;
-                border-radius: 2rem;
-                text-wrap: wrap;
-                padding: .5rem .3rem;
+                line-height: 1.15;
+                text-align: center;
+                white-space: normal;
+                text-wrap: balance;
+                overflow-wrap: normal;
                 color: var(--expert-accent, var(--color-success));
-                border-color: var(--expert-border-hover, var(--color-success));
+                border-color: color-mix(in srgb, var(--expert-accent, var(--color-success)) 42%, transparent);
+                background: color-mix(in srgb, var(--expert-card, #fff) 82%, transparent);
+                cursor: default;
             }
 
             button:hover {

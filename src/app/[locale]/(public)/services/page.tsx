@@ -1,4 +1,5 @@
 import { locale } from "next/root-params";
+import type { CSSProperties } from "react";
 import Link from 'next/link'
 import styles from '@/styles/services/Services.module.css'
 import theme from '@/styles/theme/SurfaceThemes.module.css'
@@ -7,7 +8,7 @@ import RichText from '@/components/ui/RichText'
 import Button from '@/components/ui/Button'
 import { getIcon } from '@/lib/supabase/icons'
 import { getServicesPage } from "@/lib/data";
-import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
+import { resolveStorageUrl } from "@/lib/supabase/client";
 import type { Lang } from "@/lib/supabase/types";
 import ServicesExplorer from '@/components/services/ServicesExplorer'
 import { serviceGroups } from '@/lib/serviceGroups'
@@ -15,9 +16,13 @@ import { serviceGroups } from '@/lib/serviceGroups'
 const page = async () => {
     const lang = (await locale()) as Lang;
     const data = await getServicesPage(lang);
+    const ambientImage = resolveStorageUrl(data.background_image || "/uploads/fondo4.png");
+    const ambientStyle = ambientImage
+        ? ({ "--services-ambient-image": `url("${ambientImage}")` } as CSSProperties)
+        : undefined;
 
     return (
-        <main className={`${styles.ServicesPage} ${theme.LightSurface} ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
+        <main className={`${styles.ServicesPage} ${theme.LightSurface}`} style={ambientStyle}>
             <div className={`AppShell ${styles.ServicesContent}`}>
                 <header className={styles.Header}>
                 <article>

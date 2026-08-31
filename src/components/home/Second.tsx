@@ -130,7 +130,7 @@ const Second = ({ partners, lang }: SecondProps) => {
                 <footer className={`${styles.Footer}`}>
                     <strong><RichText>{partners.footer.text}</RichText></strong>
                     <Link href={`/${lang}/contact`}>
-                        <Button variant='outlineG'><RichText>{partners.footer.cta}</RichText></Button>
+                        <Button variant='full' arrow={true}><RichText>{partners.footer.cta}</RichText></Button>
                     </Link>
                 </footer>
             </section>

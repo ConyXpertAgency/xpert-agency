@@ -24,6 +24,10 @@ export interface TextItem {
   bullets?: string[];
 }
 
+export interface IndustryItem extends TextItem {
+  image?: string;
+}
+
 /* Apartados con imagen de fondo configurable desde el admin */
 export interface SectionBackground {
   background_image?: string;
@@ -170,7 +174,7 @@ export interface IndustriesPage extends SectionBackground {
   badge: string;
   title: string;
   subtitle: string;
-  items: TextItem[];
+  items: IndustryItem[];
   info_card: { title: string; text: string; cta: string; cta_href: string };
 }
 

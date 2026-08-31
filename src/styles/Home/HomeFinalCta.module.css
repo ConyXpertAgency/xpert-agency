@@ -121,20 +121,34 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: .45rem;
+    gap: .5rem;
     flex-shrink: 0;
-    padding: .85rem 1.25rem;
-    border-radius: 999px;
+    min-height: 52px;
+    box-sizing: border-box;
+    padding: 1rem 1.6rem;
+    border-radius: var(--radius-md);
     background: var(--surface-accent);
     color: var(--color-text-inverse);
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
     white-space: nowrap;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        box-shadow 180ms ease;
 }
 
 .HomeFinalCta a:hover {
-    box-shadow: 0 8px 20px color-mix(in srgb, var(--surface-accent) 30%, transparent);
-    transform: translateY(-.12rem);
+    background: color-mix(in srgb, var(--surface-accent) 90%, black);
+    box-shadow: 0 8px 18px rgba(4, 23, 50, .14);
+}
+
+.HomeFinalCta a svg {
+    transition: transform 180ms ease;
+}
+
+.HomeFinalCta a:hover svg {
+    transform: translateX(2px);
 }
 
 @media (min-width: 993px) and (hover: hover) {

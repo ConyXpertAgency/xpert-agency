@@ -10,12 +10,56 @@
     min-height: calc(100dvh - 5rem);
     margin: 0;
     padding: 0;
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
     background: var(--surface-bg);
     color: var(--surface-text);
     border-radius: 0;
 }
 
+.ServicesPage::before,
+.ServicesPage::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto auto;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.ServicesPage::before {
+    width: min(54rem, 58vw);
+    height: clamp(22rem, 42vw, 34rem);
+    background-image: var(--services-ambient-image, none);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center right;
+    opacity: .86;
+}
+
+.ServicesPage::after {
+    width: min(64rem, 68vw);
+    height: clamp(24rem, 48vw, 38rem);
+    background:
+        linear-gradient(
+            to right,
+            var(--surface-bg) 0%,
+            color-mix(in srgb, var(--surface-bg) 96%, transparent) 24%,
+            color-mix(in srgb, var(--surface-bg) 72%, transparent) 46%,
+            color-mix(in srgb, var(--surface-bg) 28%, transparent) 68%,
+            color-mix(in srgb, var(--surface-bg) 8%, transparent) 100%
+        ),
+        linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--surface-bg) 10%, transparent) 0%,
+            color-mix(in srgb, var(--surface-bg) 35%, transparent) 48%,
+            var(--surface-bg) 100%
+        );
+}
+
 .ServicesContent {
+    position: relative;
+    z-index: 1;
     color: var(--surface-text);
 }
 
@@ -251,6 +295,17 @@
 
 /* ─── Responsive ──────────────────────────────────── */
 @media (max-width: 992px) {
+    .ServicesPage::before {
+        width: min(42rem, 70vw);
+        height: 24rem;
+        opacity: .58;
+    }
+
+    .ServicesPage::after {
+        width: min(48rem, 82vw);
+        height: 27rem;
+    }
+
     .Header {
         flex-direction: column;
         gap: 1rem;
@@ -294,6 +349,32 @@
 }
 
 @media (max-width: 576px) {
+    .ServicesPage::before {
+        width: 100%;
+        height: clamp(15rem, 58vw, 20rem);
+        background-position: 65% center;
+        opacity: .42;
+    }
+
+    .ServicesPage::after {
+        width: 100%;
+        height: clamp(18rem, 70vw, 23rem);
+        background:
+            linear-gradient(
+                to bottom,
+                color-mix(in srgb, var(--surface-bg) 30%, transparent) 0%,
+                color-mix(in srgb, var(--surface-bg) 82%, transparent) 58%,
+                var(--surface-bg) 100%
+            ),
+            linear-gradient(
+                to right,
+                var(--surface-bg) 0%,
+                color-mix(in srgb, var(--surface-bg) 94%, transparent) 24%,
+                color-mix(in srgb, var(--surface-bg) 72%, transparent) 58%,
+                color-mix(in srgb, var(--surface-bg) 38%, transparent) 100%
+            );
+    }
+
     .ServicesContent {
         gap: 1.2rem;
     }

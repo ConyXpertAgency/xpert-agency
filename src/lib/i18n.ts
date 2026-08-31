@@ -1,4 +1,6 @@
 type RolesCopy = {
+  headingBadge: string;
+  headingTitle: string;
   allExpertise: string;
   backToAllExpertise: string;
   capabilities: string;
@@ -7,6 +9,7 @@ type RolesCopy = {
   collective: string;
   expertise: string;
   viewGroup: string;
+  interactionHint: string;
 };
 
 type FooterCopy = {
@@ -33,6 +36,8 @@ export type UiCopy = {
 export const uiCopy = {
   en: {
     roles: {
+      headingBadge: "Roles and Responsibilities",
+      headingTitle: "Expertise, Processes and Context",
       allExpertise: "All expertise",
       backToAllExpertise: "Back to all expertise",
       capabilities: "capabilities",
@@ -41,6 +46,7 @@ export const uiCopy = {
       collective: "Collective",
       expertise: "Expertise",
       viewGroup: "View {title}",
+      interactionHint: "Select a category to explore its capabilities",
     },
     footer: {
       navigation: "Navigation",
@@ -58,6 +64,8 @@ export const uiCopy = {
   },
   es: {
     roles: {
+      headingBadge: "Roles y responsabilidades",
+      headingTitle: "Experiencia, procesos y contexto",
       allExpertise: "Toda la experiencia",
       backToAllExpertise: "Volver a toda la experiencia",
       capabilities: "capacidades",
@@ -66,6 +74,7 @@ export const uiCopy = {
       collective: "Colectivo",
       expertise: "Experiencia",
       viewGroup: "Ver {title}",
+      interactionHint: "Selecciona una categoría para explorar sus capacidades",
     },
     footer: {
       navigation: "Navegación",
@@ -83,6 +92,8 @@ export const uiCopy = {
   },
   de: {
     roles: {
+      headingBadge: "Rollen und Verantwortlichkeiten",
+      headingTitle: "Expertise, Prozesse und Kontext",
       allExpertise: "Gesamte Expertise",
       backToAllExpertise: "Zurück zur gesamten Expertise",
       capabilities: "Kompetenzen",
@@ -91,6 +102,7 @@ export const uiCopy = {
       collective: "Kollektiv",
       expertise: "Expertise",
       viewGroup: "{title} ansehen",
+      interactionHint: "Kategorie auswählen, um Kompetenzen zu entdecken",
     },
     footer: {
       navigation: "Navigation",

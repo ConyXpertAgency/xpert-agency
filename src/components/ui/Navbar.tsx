@@ -46,7 +46,7 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
     }, [isOpen])
 
     return (
-        <nav className={styles.Navbar} data-open={isOpen}>
+        <nav className={styles.Navbar} data-open={isOpen} data-home={localePath === '/'}>
             <Link className={styles.LogoLink} href={`/${lang}`} aria-label="Xpert Agency home">
                 <Image src={"/logo_largo_blanco2.webp"} alt='' width={500} height={50} />
             </Link>

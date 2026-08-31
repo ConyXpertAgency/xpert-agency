@@ -391,14 +391,6 @@
         color: var(--expert-text);
     }
 
-    button {
-        color: var(--color-success);
-        font-weight: bold;
-    }
-
-    button:hover {
-        color: var(--color-surface);
-    }
 }
 
 /* ─── Header ─────────────────────────────────────── */

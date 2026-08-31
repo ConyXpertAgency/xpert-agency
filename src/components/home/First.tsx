@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import type { CSSProperties } from 'react'
 import React from 'react'
 import Button from '../ui/Button'
 import { IoShieldCheckmarkOutline } from 'react-icons/io5'
@@ -10,7 +11,7 @@ import RichText from '../ui/RichText'
 import AnimationCards from './AnimationCards'
 import type { IconType } from 'react-icons'
 import type { HomeHero } from '@/lib/supabase/types'
-import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
+import { resolveStorageUrl } from '@/lib/supabase/client'
 
 const infoCardIcons: IconType[] = [IoShieldCheckmarkOutline, CiGlobe, GiChart]
 
@@ -20,8 +21,13 @@ interface FirstProps {
 
 const First = ({ hero }: FirstProps) => {
     const lines = hero.title.length > 0 ? hero.title : ['Xpert.agency']
+    const heroImage = resolveStorageUrl(hero.background_image)
+    const heroStyle = heroImage
+        ? ({ "--hero-bg-image": `url("${heroImage}")` } as CSSProperties)
+        : undefined
+
     return (
-        <header className={`${styles.First} ${sectionBgClass(hero)}`} style={sectionBgStyle(hero)}>
+        <header className={styles.First} style={heroStyle}>
             <section className={styles.Left}>
                 <div className={styles.LeftMain}>
                     <strong className="details"><RichText>{hero.badge}</RichText></strong>

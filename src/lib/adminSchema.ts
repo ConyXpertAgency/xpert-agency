@@ -92,7 +92,7 @@ export const ELEMENT_TEMPLATES: Record<string, Record<string, unknown>> = {
   "services:page:areas": { icon: "", title: "", text: "" },
   "services:page:groups": { id: "", title: "", icon: "", services: [] },
   "services:page:groups.*.services": { icon: "", title: "", text: "" },
-  "industries:page:items": { icon: "", title: "", text: "" },
+  "industries:page:items": { icon: "", title: "", text: "", image: "" },
   "cases:page:items": { title: "", slug: "", description: "", stats: [] },
   "cases:page:items.*.stats": { icon: "", value: "", text: "" },
   "cases:studies:items": {

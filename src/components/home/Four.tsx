@@ -73,16 +73,16 @@ const Four = ({ roles, groups, lang }: FourProps) => {
         <section className={`${styles.Four} ${theme.LightSurface} ${sectionBgClass(roles)}`} style={sectionBgStyle(roles)}>
             <header className={styles.Header}>
                 <span className={styles.Hleft}>
-                    <strong className='details'><RichText>{roles.badge}</RichText></strong>
+                    <strong className='details'><RichText>{copy.headingBadge}</RichText></strong>
                     <h1>
-                        <span><RichText>{roles.title}</RichText></span>
+                        <span><RichText>{copy.headingTitle}</RichText></span>
                     </h1>
                 </span>
                 <span className={styles.Hright}>
-                    <p>
+                    <p className={styles.Description}>
                         {roles.description.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}
                     </p>
-                    <ul>
+                    <ul className={styles.ProofPoints}>
                         {roles.features.map((feature, i) => (
                             <li key={i}>
                                 <PictureSvg icon={getIcon(feature.icon)} />
@@ -93,6 +93,7 @@ const Four = ({ roles, groups, lang }: FourProps) => {
                 </span>
             </header>
             <section className={styles.HubWrap} aria-label={copy.expertiseMap}>
+                <p className={styles.InteractionHint}>{copy.interactionHint}</p>
                 <div
                     key={activeGroup ?? 'collective'}
                     className={`${styles.HubGrid} ${active ? styles.HubGridActive : ''}`}

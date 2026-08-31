@@ -12,6 +12,29 @@
     background: #011d45c7;
 }
 
+.Navbar[data-home="true"] {
+    position: relative;
+    z-index: 3;
+    border-bottom-color: transparent;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+.Navbar[data-home="true"]::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: calc(50% - 50dvw);
+    width: 100dvw;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-surface) 14%, transparent);
+    background: color-mix(in srgb, var(--color-bg-primary) 34%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+    z-index: -1;
+}
+
 .Navbar img {
     width: auto;
     height: 3.5rem;
@@ -76,15 +99,31 @@
 
 .Navbar section a {
     border: 2px solid var(--color-success);
-    padding: .75rem 1.4rem;
-    font-size: .9rem;
+    min-height: 52px;
+    box-sizing: border-box;
+    padding: 1rem 1.6rem;
+    background: var(--color-success);
+    color: white;
+    font-size: 1rem;
     font-weight: 600;
-    border-radius: 4rem;
+    line-height: 1;
+    border-radius: var(--radius-md);
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        box-shadow 180ms ease;
 }
 
 .Navbar section a:hover {
-    background-color: var(--color-success);
-    box-shadow: 0 1px 5px 2px var(--color-success);
+    background-color: color-mix(in srgb, var(--color-success) 90%, black);
+    border-color: color-mix(in srgb, var(--color-success) 90%, black);
+    box-shadow: 0 8px 18px rgba(4, 23, 50, .14);
+}
+
+.Navbar section a:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-success) 70%, var(--color-surface));
+    outline-offset: 3px;
 }
 
 .MenuButton {
@@ -117,6 +156,14 @@
         position: relative;
         flex-wrap: nowrap;
         gap: .75rem;
+    }
+
+    .Navbar[data-home="true"] {
+        background: transparent;
+    }
+
+    .Navbar[data-home="true"]::before {
+        background: color-mix(in srgb, var(--color-bg-primary) 46%, transparent);
     }
 
     .Navbar img {
@@ -194,6 +241,14 @@
         padding: .8rem 16px;
     }
 
+    .Navbar[data-home="true"] {
+        background: transparent;
+    }
+
+    .Navbar[data-home="true"]::before {
+        background: color-mix(in srgb, var(--color-bg-primary) 58%, transparent);
+    }
+
     .Navbar img {
         max-width: 9.25rem;
         height: 2.55rem;
@@ -232,9 +287,9 @@
 }
 
 .ContactBtn:hover .ContactArrow {
-    transform: translateX(.2rem);
+    transform: translateX(2px);
 }
 
 .ContactArrow {
-    transition: transform 0.2s ease;
+    transition: transform 180ms ease;
 }
