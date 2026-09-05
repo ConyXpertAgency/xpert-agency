@@ -12,6 +12,7 @@ import type {
   CaseStudy,
   ContactPage,
   ContactTeams,
+  FillingPackagingPage,
   HomeGlobalReach,
   HomeHero,
   HomeFinalCta,
@@ -194,6 +195,7 @@ export const getHomePartners = (lang: Lang) =>
       {
         title: "vision",
         text: "Guide our clients toward a successful future through our passion for process automation.",
+        image: "/showroom.webp",
       },
       {
         title: "values",
@@ -845,6 +847,180 @@ export const getRbeFooter = (lang: Lang) =>
     contact_phone: "+49 171 889 2788",
     cta: "Back to site",
     year: "2026 RBE",
+  });
+
+export const getFillingPackagingPage = (lang: Lang) =>
+  getTyped<FillingPackagingPage>("filling_packaging", "page", lang, {
+    hero: {
+      badge: "FILLING & PACKAGING",
+      title: "Filling & Packaging Technologies",
+      subtitle: "Field-proven expertise across installation, commissioning, modernization and production performance.",
+      ctaPrimary: "Explore capabilities",
+      ctaPrimaryHref: "#capabilities",
+      ctaSecondary: "View project experience",
+      ctaSecondaryHref: "#projects",
+      facts: [
+        { value: "12 Years", label: "Field Experience" },
+        { value: "8", label: "Documented Project Clusters" },
+      ],
+      image: "",
+    },
+    glance: {
+      badge: "EXPERIENCE AT A GLANCE",
+      title: "Proven field experience, now advisory",
+      metrics: [
+        { value: "12", label: "Years in Installation & Service" },
+        { value: "8", label: "Documented Project Clusters" },
+        { value: "4", label: "Southeast Asian Markets" },
+      ],
+      timeline: {
+        left: {
+          range: "2008 – 2020",
+          title: "Installation & Service",
+          text: "Installation and service expertise at a global leader in filling and packaging technology.",
+        },
+        right: {
+          range: "Since 2020",
+          title: "Technical advisory",
+          text: "Technical advisory and interim assignments in beverage and liquid-food production and supply chain.",
+        },
+      },
+    },
+    capabilities: {
+      badge: "PROVEN SITE CAPABILITIES",
+      title: "Field expertise across the production lifecycle",
+      subtitle: "From installation and commissioning to ramp-up, performance improvement and downtime prevention.",
+      steps: [
+        { number: "01", title: "INSTALL", icon: "FiTool" },
+        { number: "02", title: "COMMISSION", icon: "FiClipboard" },
+        { number: "03", title: "RAMP UP", icon: "HiOutlineCog6Tooth" },
+        { number: "04", title: "IMPROVE OEE", icon: "GrLineChart" },
+        { number: "05", title: "PREVENT DOWNTIME", icon: "IoShieldCheckmarkOutline" },
+      ],
+      supporting: ["Construction", "Commissioning", "Modernization", "Quality", "Improvement"],
+    },
+    foundation: {
+      badge: "EXPERIENCE FOUNDATION",
+      title: "Experienced where line performance is won",
+      left: { value: "12 YEARS", text: "Installation and service expertise at a global leader in filling and packaging technology." },
+      right: { value: "SINCE 2020", text: "Technical advisory across beverages, liquid foods, production and supply chain." },
+    },
+    international: {
+      badge: "SELECTED INTERNATIONAL EXPERIENCE",
+      title: "Portfolio across greenfield, modernization and performance recovery",
+      stats: [
+        { value: "8", label: "Project Clusters" },
+        { value: "5", label: "Regions" },
+        { value: "10", label: "Year Portfolio Excerpt" },
+      ],
+      industries: ["Beverages", "Water", "Liquid Foods", "Pharma Labelling"],
+      regions: ["South Africa", "Europe", "North America", "Saudi Arabia", "Southeast Asia"],
+      nodes: [
+        { country: "South Africa", label: "ZA", x: 55, y: 68, description: "South Africa" },
+        { country: "Europe", label: "EU", x: 51, y: 28, description: "Europe" },
+        { country: "North America", label: "NA", x: 14, y: 38, description: "North America" },
+        { country: "Saudi Arabia", label: "SA", x: 66, y: 44, description: "Saudi Arabia" },
+        { country: "Southeast Asia", label: "SEA", x: 88, y: 52, description: "Southeast Asia" },
+      ],
+    },
+    cases: [
+      {
+        id: "heineken-za-01",
+        number: "01",
+        client: "Heineken",
+        location: "South Africa",
+        title: "GREENFIELD BREWERY CONSTRUCTION & COMMISSIONING",
+        scope: "Supporting the construction, installation and commissioning of a new brewery plant with four production lines.",
+        outcomes: [
+          "Equipment delivered and incorporated from KRONES manufacturing (Germany); go-live and ramp-up aligned with client quality, safety and performance requirements.",
+          "OEE improvement supported across all production lines.",
+        ],
+      },
+      {
+        id: "diageo-scotland-02",
+        number: "02",
+        client: "Diageo",
+        location: "Scotland",
+        title: "PRODUCTION EQUIPMENT REPLACEMENT & OEE IMPROVEMENT",
+        scope: "On-site management services for replacement of equipment, commissioning and performance ramp-up.",
+        outcomes: [
+          "Equipment change delivered and new products launched successfully.",
+          "Overall Equipment Effectiveness (OEE) improved by 10%.",
+        ],
+      },
+      {
+        id: "nestle-us-03",
+        number: "03",
+        client: "Nestlé",
+        location: "United States",
+        title: "QUALITY IMPROVEMENT & ROOT-CAUSE RESOLUTION",
+        scope: "Production quality issues resolution.",
+        outcomes: ["Quality issues identified and eliminated.", "Non-conforming goods output reduced by 20%."],
+      },
+      {
+        id: "nova-ksa-04",
+        number: "04",
+        client: "Nova Water KSA",
+        location: "Saudi Arabia",
+        title: "NEW PRODUCTION LINE INSTALLATION & COMMISSIONING",
+        scope: "New production line installation and production ramp-up services.",
+        outcomes: [
+          "Complete installation and go-live of all equipment in accordance with client specifications.",
+          "Overall Equipment Effectiveness (OEE) improved by 10%.",
+        ],
+      },
+      {
+        id: "bayer-de-05",
+        number: "05",
+        client: "Bayer",
+        location: "Germany",
+        title: "PHARMACEUTICAL LABELLING ADAPTATION TO PRODUCTION LINE",
+        scope: "Labelling equipment conversion to support a new product and label format.",
+        outcomes: ["Labelling equipment replaced and production ramp-up supported in compliance with pharmaceutical quality requirements."],
+      },
+      {
+        id: "abinbev-ru-06",
+        number: "06",
+        client: "Anheuser-Busch InBev",
+        location: "Russia",
+        title: "PRODUCTION LINE MODERNIZATION & CAPACITY EXPANSION",
+        scope: "Removal of 30% of existing equipment during production operations, followed by installation and commissioning of reengineered lines.",
+        outcomes: ["Managed and improved OEE by 10%.", "Expanded the product portfolio."],
+      },
+      {
+        id: "heineken-sea-07",
+        number: "07",
+        client: "Heineken",
+        location: "Malaysia, Thailand, Vietnam and Myanmar",
+        title: "SOUTHEAST ASIA EQUIPMENT MODERNIZATION PROGRAM",
+        scope: "Replacement of several machines across multiple production sites in Southeast Asia.",
+        outcomes: [
+          "Project management delivered on site with OEE focus.",
+          "Production facilities modernized and expanded.",
+          "Several new products enabled.",
+        ],
+      },
+      {
+        id: "predictive-08",
+        number: "08",
+        client: "Multiple clients",
+        location: "Multiple countries",
+        title: "PREDICTIVE MAINTENANCE DATA ANALYTICS",
+        scope: "Data analytics with an internally developed tool to evaluate performance and quality issues using historical data and production-machinery interface messages.",
+        outcomes: [
+          "Maintenance needs and principal failure sources identified at machine, line and plant level.",
+          "Production interruptions and plant or line downtime avoided.",
+          "Improvement foundations provided with minimized effort.",
+          "Incremental OEE improvements delivered.",
+        ],
+      },
+    ],
+    finalCta: {
+      title: "Let’s build the next line.",
+      text: "Bring proven filling, packaging and production-performance expertise to your next project.",
+      cta: "Start a conversation",
+      href: "/contact",
+    },
   });
 
 export const getNav = (lang: Lang) =>

@@ -1,0 +1,1236 @@
+.Page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== ALS FIDELITY P01-P05 — Xpert skin, PDF composition ===== */
+
+/* P01 HERO — gran visual 90-94% con contenido superpuesto centrado */
+.HeroAls {
+  position: relative;
+  padding: 1.2rem var(--side-padding) 1.6rem;
+  background: #f8fafc;
+  color: var(--surface-text);
+  box-sizing: border-box;
+}
+
+.HeroAlsFrame {
+  position: relative;
+  width: 92%;
+  max-width: calc(var(--site-max-width) * 0.94);
+  margin: 0 auto;
+  aspect-ratio: 16 / 7.2;
+  min-height: 420px;
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0f2a4a url('/filling-packaging/p01-hero-temp.webp') center / cover no-repeat;
+  box-shadow: 0 18px 50px rgba(4,23,50,0.12);
+}
+
+.HeroAlsOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.45) 36%, rgba(255,255,255,0.12) 100%);
+  z-index: 1;
+}
+
+.HeroAlsContent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 0.9rem;
+  padding: 2rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.HeroAlsEyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--surface-muted);
+}
+
+.HeroAlsContent h1 {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 0.98;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text-inverse);
+}
+
+.HeroAlsContent h1 span {
+  display: block;
+}
+
+.HeroAlsSubtitle {
+  color: var(--surface-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.HeroAlsCta {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  background: var(--surface-accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.HeroAlsOutside {
+  display: none;
+}
+
+/* P02 GLANCE — 58/42 */
+.GlanceAls {
+  position: relative;
+  padding: 3rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding))) 2.5rem;
+  background: #fff;
+  color: var(--color-text-inverse);
+  box-sizing: border-box;
+}
+
+.GlanceAlsInner {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  gap: 2.5rem;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  align-items: start;
+}
+
+.GlanceLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.GlanceLeft h2 {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  line-height: 0.98;
+  font-weight: 800;
+  color: var(--color-text-inverse);
+}
+
+.GlanceTimelineHighlight {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.GlanceTimelineHighlight span:first-child {
+  color: var(--surface-accent);
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.GlanceTimelineHighlight strong {
+  color: var(--surface-accent);
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.GlanceTimelineHighlight small {
+  color: var(--surface-muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.GlanceRightStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+}
+
+.GlanceMetricCard {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.1rem 1rem;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, #f0f9ff 92%, white);
+  border: 1px solid color-mix(in srgb, var(--surface-accent) 12%, transparent);
+}
+
+.GlanceMetricValue {
+  color: var(--surface-accent);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.GlanceMetricLabel {
+  color: var(--color-text-inverse);
+  font-weight: 700;
+  font-size: 0.88rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* P03 CAPABILITIES — centered */
+.CapabilitiesAls {
+  position: relative;
+  padding: 3rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding))) 2.5rem;
+  background: #f8fafc;
+  color: var(--color-text-inverse);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.CapabilitiesAlsInner {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.CapabilitiesAlsHeader h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.CapabilitiesAsset {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--surface-border);
+  padding: 1rem;
+  box-shadow: var(--surface-shadow);
+}
+
+.CapabilitiesWorkflow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 1rem;
+  list-style: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--surface-accent);
+  align-items: center;
+}
+
+.WorkflowSep {
+  color: var(--surface-muted);
+  font-weight: 400;
+}
+
+/* P04 FOUNDATION — 35/65 */
+.FoundationAls {
+  position: relative;
+  padding: 3rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding))) 2.5rem;
+  background: #fff;
+  color: var(--color-text-inverse);
+  box-sizing: border-box;
+}
+
+.FoundationAlsInner {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.FoundationAlsInner > header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.FoundationAlsGrid {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  gap: 1rem;
+}
+
+.FoundationAlsCard {
+  padding: 1.5rem 1.2rem;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, #f0f9ff 88%, white);
+  border: 1px solid color-mix(in srgb, var(--surface-accent) 14%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.FoundationAlsCard span:first-child {
+  color: var(--surface-accent);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.FoundationAlsCard span:first-child em {
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-style: normal;
+  line-height: 1;
+}
+
+.FoundationBar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, #f0f9ff 88%, white);
+  border: 1px solid var(--surface-border);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--surface-accent);
+  text-align: center;
+}
+
+/* P05 INTERNATIONAL — 48/52 with globe */
+.InternationalAls {
+  position: relative;
+  padding: 3rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding))) 2.5rem;
+  background: linear-gradient(90deg, #ffffff 0%, #f8fafc 48%, #0f2a4a 48%);
+  color: var(--color-text-inverse);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.InternationalAlsInner {
+  display: grid;
+  grid-template-columns: 48% 52%;
+  gap: 2rem;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  align-items: center;
+}
+
+.InternationalLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.InternationalLeft h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.InternationalStatsInline {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.InternationalStatsInline li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.InternationalStatsInline strong {
+  color: var(--surface-accent);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.InternationalRight {
+  position: relative;
+  height: 520px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #0f2a4a;
+  display: grid;
+  place-items: center;
+}
+
+.InternationalRight img {
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+@media (max-width: 992px) {
+  .GlanceAlsInner { grid-template-columns: 1fr; }
+  .CapabilitiesAlsInner { gap: 1.2rem; }
+  .FoundationAlsGrid { grid-template-columns: 1fr; }
+  .InternationalAlsInner { grid-template-columns: 1fr; }
+  .InternationalRight { height: 380px; }
+}
+
+@media (max-width: 768px) {
+  .HeroAlsFrame { aspect-ratio: 16 / 10; width: 96%; }
+  .GlanceAls { padding: 2.25rem 16px; }
+  .CapabilitiesAls { padding: 2.25rem 16px; }
+  .FoundationAls { padding: 2.25rem 16px; }
+  .InternationalAls { padding: 2.25rem 16px; background: #fff; }
+  .InternationalRight { height: 320px; }
+}
+
+@media (max-width: 576px) {
+  .HeroAlsContent h1 { font-size: 1.9rem; }
+  .GlanceAlsInner { gap: 1.2rem; }
+  .InternationalRight { height: 280px; }
+}
+
+/* Legacy pilot styles below — keep for Cases/CTA */
+
+/* HERO — DarkSurface full-bleed, reuses First pattern but minimal */
+.Hero {
+  position: relative;
+  left: 50%;
+  width: 100dvw;
+  margin-left: -50dvw;
+  padding: 3.5rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding))) 3rem;
+  background: var(--surface-bg);
+  color: var(--surface-text);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.HeroInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 2.5rem;
+  align-items: center;
+  max-width: var(--site-max-width);
+  margin-inline: auto;
+}
+
+.HeroCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.HeroCopy h1 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--surface-text);
+}
+
+.HeroSubtitle {
+  color: var(--surface-muted);
+  line-height: 1.5;
+  max-width: 36rem;
+}
+
+.HeroCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.HeroFacts {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+  list-style: none;
+}
+
+.HeroFacts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.HeroFacts strong {
+  color: var(--surface-accent);
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.HeroFacts span {
+  color: var(--surface-muted);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.HeroVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 360px;
+}
+
+.HeroPlaceholder {
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 3 / 2;
+  display: grid;
+  place-content: center;
+  gap: 0.35rem;
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px dashed color-mix(in srgb, var(--surface-border) 70%, transparent);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--surface-card) 42%, transparent);
+  color: var(--surface-muted);
+}
+
+.HeroPlaceholder span {
+  font-weight: 700;
+  color: var(--surface-text);
+}
+
+.HeroPlaceholder small {
+  font-size: 0.76rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* GLANCE — LightSurface */
+.Glance {
+  position: relative;
+  left: 50%;
+  width: 100dvw;
+  margin-left: -50dvw;
+  padding: 3rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding)));
+  background: var(--surface-bg);
+  color: var(--surface-text);
+  box-sizing: border-box;
+}
+
+.GlanceInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: var(--site-max-width);
+  margin-inline: auto;
+}
+
+.GlanceHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.GlanceHeader h2 {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--surface-text);
+}
+
+.Metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.MetricCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.25rem 1.1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--surface-shadow);
+}
+
+.MetricValue {
+  color: var(--surface-accent);
+  font-size: clamp(2.4rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.MetricLabel {
+  color: var(--surface-text);
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.Timeline {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.TimelineCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card-soft);
+}
+
+.TimelineRange {
+  color: var(--surface-accent);
+  font-weight: 800;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+}
+
+.TimelineCard h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--surface-text);
+  line-height: 1.2;
+}
+
+.TimelineCard p {
+  color: var(--surface-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.TimelineFooter {
+  text-align: center;
+  color: var(--surface-muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--surface-border);
+  margin-top: 0.25rem;
+}
+
+/* CAPABILITIES — LightSurface, ProcessSteps horizontal */
+.Capabilities {
+  position: relative;
+  left: 50%;
+  width: 100dvw;
+  margin-left: -50dvw;
+  padding: 3rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding)));
+  background: var(--surface-bg);
+  color: var(--surface-text);
+  box-sizing: border-box;
+}
+
+.CapabilitiesInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: var(--site-max-width);
+  margin-inline: auto;
+}
+
+.SectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.SectionHeader h2 {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--surface-text);
+}
+
+.SectionSubtitle {
+  color: var(--surface-muted);
+  line-height: 1.5;
+  max-width: 42rem;
+}
+
+/* ProcessSteps — generic, reusable */
+.ProcessSteps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+  position: relative;
+}
+
+.ProcessStep {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.45rem;
+  padding: 1.1rem 0.9rem 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--surface-shadow);
+  min-height: 0;
+}
+
+.ProcessStep::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -0.5rem;
+  width: 1rem;
+  height: 2px;
+  background: var(--surface-border);
+  transform: translateY(-50%);
+}
+
+.ProcessStep:last-child::after {
+  display: none;
+}
+
+.StepNumber {
+  color: var(--surface-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.StepIcon {
+  color: var(--surface-accent);
+}
+
+.StepTitle {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--surface-text);
+}
+
+.StepText {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--surface-muted);
+}
+
+.SupportingCapabilities {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card-soft);
+  font-size: 0.84rem;
+}
+
+.SupportingCapabilities span:first-child {
+  font-weight: 700;
+  color: var(--surface-text);
+}
+
+.SupportingCapabilities ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.SupportingCapabilities li {
+  padding: 0.32rem 0.65rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: var(--surface-card);
+  font-size: 0.78rem;
+  color: var(--surface-text);
+}
+
+.CapabilitiesNote {
+  font-size: 0.76rem;
+  color: var(--surface-muted);
+  font-style: italic;
+  border-left: 2px solid var(--surface-border);
+  padding-left: 0.75rem;
+}
+
+/* FOUNDATION + INTERNATIONAL — combined, DarkSurface for map impact */
+.FoundationInternational {
+  position: relative;
+  left: 50%;
+  width: 100dvw;
+  margin-left: -50dvw;
+  padding: 2.5rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding)));
+  background: var(--surface-bg);
+  color: var(--surface-text);
+  box-sizing: border-box;
+  --gr-map-height: 330px;
+  --gr-map-top: 0px;
+}
+
+.FoundationInternationalInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: var(--site-max-width);
+  margin-inline: auto;
+}
+
+.FoundationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.FoundationCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card-soft);
+}
+
+.FoundationValue {
+  color: var(--surface-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.FoundationCard p {
+  color: var(--surface-text);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.FoundationFooter {
+  text-align: center;
+  color: var(--surface-muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--surface-border);
+}
+
+.InternationalBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--surface-border);
+}
+
+.InternationalStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.InternationalStats li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  text-align: center;
+}
+
+.InternationalStats strong {
+  color: var(--surface-accent);
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.InternationalStats span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--surface-text);
+}
+
+.IndustryTags,
+.RegionTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.IndustryTag,
+.RegionTag {
+  padding: 0.38rem 0.7rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: var(--surface-card);
+  font-size: 0.78rem;
+  color: var(--surface-text);
+}
+
+.RegionTag {
+  background: var(--surface-card-soft);
+}
+
+.MapWrapper {
+  margin-top: 0.5rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-card);
+}
+
+/* Local override: GlobalReachMap uses #22c55e, Xpert uses #82ab4a (var(--surface-accent)) — scoped to this page only */
+.MapWrapper :global([class*="gridOverlay"]) {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--surface-accent) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--surface-accent) 3%, transparent) 1px, transparent 1px) !important;
+}
+.MapWrapper :global([class*="nodeDot"]) {
+  background: var(--surface-accent) !important;
+  box-shadow:
+    0 0 8px 2px color-mix(in srgb, var(--surface-accent) 60%, transparent),
+    0 0 20px 4px color-mix(in srgb, var(--surface-accent) 30%, transparent) !important;
+}
+.MapWrapper :global([class*="nodePulse"]) {
+  background: color-mix(in srgb, var(--surface-accent) 40%, transparent) !important;
+}
+.MapWrapper :global([class*="node"]:focus-visible) {
+  outline-color: var(--surface-accent) !important;
+}
+.MapWrapper :global([class*="tooltip"]) {
+  border-color: color-mix(in srgb, var(--surface-accent) 30%, transparent) !important;
+}
+.MapWrapper :global([class*="tooltipLabel"]),
+.MapWrapper :global([class*="tooltipClient"]) {
+  color: var(--surface-accent) !important;
+}
+.MapWrapper :global(#arc-gradient) stop {
+  stop-color: var(--surface-accent) !important;
+}
+
+/* CASES — LightSurface, grid compact + dialog */
+.Cases {
+  position: relative;
+  left: 50%;
+  width: 100dvw;
+  margin-left: -50dvw;
+  padding: 3rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding)));
+  background: var(--surface-bg);
+  color: var(--surface-text);
+  box-sizing: border-box;
+}
+
+.CasesInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: var(--site-max-width);
+  margin-inline: auto;
+}
+
+.CasesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.CaseCard {
+  height: 100%;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--surface-shadow);
+  overflow: hidden;
+}
+
+.CaseTrigger {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1rem;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+}
+
+.CaseTrigger:focus-visible {
+  outline: 2px solid var(--surface-accent);
+  outline-offset: 2px;
+}
+
+.CaseNumber {
+  color: var(--surface-accent);
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+
+.CaseClient {
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: var(--surface-text);
+}
+
+.CaseLocation {
+  font-size: 0.78rem;
+  color: var(--surface-muted);
+}
+
+.CaseTitle {
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--surface-text);
+  margin-top: 0.25rem;
+}
+
+.CaseScope {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--surface-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.CaseLogoSlot {
+  margin-top: auto;
+  width: 100%;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface-card-soft) 60%, var(--surface-card));
+  color: var(--surface-muted);
+  font-weight: 800;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+}
+
+.CaseMore {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--surface-accent);
+}
+
+.CaseDialog {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: min(560px, calc(100vw - 32px));
+  width: 100%;
+}
+
+.CaseDialog::backdrop {
+  background: rgba(4, 23, 50, 0.52);
+  backdrop-filter: blur(4px);
+}
+
+.CaseDialogInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+  color: var(--surface-text);
+  box-shadow: var(--surface-shadow);
+  max-height: min(86vh, 720px);
+  overflow: auto;
+}
+
+.CaseDialogHeader {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.CaseDialogHeader div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.CaseDialogHeader strong {
+  font-size: 0.95rem;
+  color: var(--surface-text);
+}
+
+.CaseDialogHeader span {
+  font-size: 0.82rem;
+  color: var(--surface-muted);
+}
+
+.CaseClose {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-card-soft);
+  color: var(--surface-text);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.CaseDialogTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--surface-text);
+}
+
+.CaseDialogSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.CaseDialogSection strong {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--surface-accent);
+}
+
+.CaseDialogSection p {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--surface-text);
+}
+
+.CaseDialogSection ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 1.1rem;
+  list-style: disc;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--surface-text);
+}
+
+.CaseDialogFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--surface-border);
+  font-size: 0.78rem;
+  color: var(--surface-muted);
+}
+
+.CaseCloseText {
+  border: 1px solid var(--surface-border);
+  background: var(--surface-card-soft);
+  color: var(--surface-text);
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+/* Responsive — same breakpoints as proyecto */
+@media (max-width: 992px) {
+  .HeroInner {
+    grid-template-columns: 1fr;
+  }
+  .HeroVisual {
+    order: -1;
+    min-height: 260px;
+  }
+  .Metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ProcessSteps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .CasesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .Capabilities,
+  .FoundationInternational,
+  .Cases {
+    padding: 2.5rem 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Hero {
+    padding: 2.25rem 16px 2rem;
+  }
+  .Glance {
+    padding: 2.25rem 16px;
+  }
+  .HeroFacts {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ProcessSteps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .FoundationGrid {
+    grid-template-columns: 1fr;
+  }
+  .InternationalStats {
+    grid-template-columns: 1fr;
+  }
+  .Capabilities,
+  .FoundationInternational,
+  .Cases {
+    padding: 2.25rem 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .HeroCopy h1 {
+    font-size: 1.95rem;
+  }
+  .Metrics {
+    grid-template-columns: 1fr;
+  }
+  .Timeline {
+    grid-template-columns: 1fr;
+  }
+  .HeroPlaceholder {
+    aspect-ratio: 16 / 10;
+  }
+  .ProcessSteps {
+    grid-template-columns: 1fr;
+  }
+  .ProcessStep::after {
+    top: auto;
+    bottom: -0.5rem;
+    left: 50%;
+    right: auto;
+    width: 2px;
+    height: 1rem;
+    transform: translateX(-50%);
+  }
+  .CasesGrid {
+    grid-template-columns: 1fr;
+  }
+  .CaseDialog {
+    max-width: calc(100vw - 16px);
+  }
+}

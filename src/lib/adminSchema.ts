@@ -10,6 +10,7 @@ export const COLLECTION_LABELS: Record<string, string> = {
   cases: "📁 Cases",
   contact: "✉️ Contact",
   rbe: "⚡ RBE",
+  filling_packaging: "🏭 Filling & Packaging",
   nav: "🧭 Navigation",
   settings: "⚙️ Settings",
 };
@@ -35,6 +36,7 @@ export const SECTION_LABELS: Record<string, Record<string, string>> = {
     five: "What does RBE mean?",
     footer: "Contact / footer",
   },
+  filling_packaging: { page: "Filling & Packaging Page" },
   nav: { items: "Navigation" },
   settings: { general: "General settings" },
 };
@@ -47,6 +49,7 @@ export const SECTION_ORDER = [
   "cases",
   "contact",
   "rbe",
+  "filling_packaging",
   "nav",
   "settings",
 ];
@@ -62,6 +65,7 @@ export const USED_SECTIONS: Record<string, string[]> = {
   cases: ["page", "studies", "clients"],
   contact: ["page", "teams"],
   rbe: ["first", "second", "third", "four", "five", "footer"],
+  filling_packaging: ["page"],
   nav: ["items"],
   settings: ["general"],
 };
@@ -155,6 +159,21 @@ export const ELEMENT_TEMPLATES: Record<string, Record<string, unknown>> = {
   "rbe:four:left": { icon: "", number: "", title: "", text: "" },
   "rbe:four:right": { icon: "", number: "", title: "", text: "" },
   "rbe:five:items": { icon: "", letter: "", title: "", text: "" },
+  "filling_packaging:page:hero.facts": { value: "", label: "" },
+  "filling_packaging:page:glance.metrics": { value: "", label: "" },
+  "filling_packaging:page:capabilities.steps": { number: "", title: "", icon: "" },
+  "filling_packaging:page:international.stats": { value: "", label: "" },
+  "filling_packaging:page:international.nodes": { country: "", label: "", x: 50, y: 50, description: "" },
+  "filling_packaging:page:cases": {
+    id: "",
+    number: "",
+    client: "",
+    location: "",
+    title: "",
+    scope: "",
+    outcomes: [""],
+    logo: "",
+  },
   "nav:items": { href: "/", label: "" },
 };
 
@@ -186,6 +205,7 @@ const BACKGROUND_SECTIONS = new Set([
   "rbe:four",
   "rbe:five",
   "rbe:footer",
+  "filling_packaging:page",
 ]);
 
 export function supportsBackground(collection: string, keyname: string): boolean {
@@ -308,6 +328,15 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
     { label: "Contacto", fields: ["contact_name", "contact_phone"] },
     { label: "Botones", fields: ["cta"] },
     { label: "Pie", fields: ["year"] },
+  ],
+  "filling_packaging:page": [
+    { label: "Hero", fields: ["hero"] },
+    { label: "Experience at a Glance", fields: ["glance"] },
+    { label: "Capabilities", fields: ["capabilities"] },
+    { label: "Experience Foundation", fields: ["foundation"] },
+    { label: "International Experience", fields: ["international"] },
+    { label: "Project Experience", fields: ["cases"] },
+    { label: "Final CTA", fields: ["finalCta"] },
   ],
 };
 

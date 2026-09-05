@@ -388,6 +388,65 @@ export interface RbeFooter extends SectionBackground {
   year: string;
 }
 
+/* ───────────────────────────── Filling & Packaging ───────────────────────────── */
+
+export interface FillingPackagingCase {
+  id: string;
+  number: string;
+  client: string;
+  location: string;
+  title: string;
+  scope: string;
+  outcomes: string[];
+  logo?: string;
+}
+
+export interface FillingPackagingPage extends SectionBackground {
+  hero: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    ctaPrimary: string;
+    ctaPrimaryHref: string;
+    ctaSecondary: string;
+    ctaSecondaryHref: string;
+    facts: TextItem[];
+    image?: string;
+  };
+  glance: {
+    badge: string;
+    title: string;
+    metrics: TextItem[];
+    timeline: {
+      left: { range: string; title: string; text: string };
+      right: { range: string; title: string; text: string };
+    };
+  };
+  capabilities: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    steps: TextItem[];
+    supporting: string[];
+  };
+  foundation: {
+    badge: string;
+    title: string;
+    left: { value: string; text: string };
+    right: { value: string; text: string };
+  };
+  international: {
+    badge: string;
+    title: string;
+    stats: TextItem[];
+    industries: string[];
+    regions: string[];
+    nodes?: GlobalReachNode[];
+  };
+  cases: FillingPackagingCase[];
+  finalCta: HomeFinalCta;
+}
+
 /* ───────────────────────────── Nav / Settings ───────────────────────────── */
 
 export interface NavItem {
