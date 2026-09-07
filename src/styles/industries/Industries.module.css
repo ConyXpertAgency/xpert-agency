@@ -1,14 +1,32 @@
-.Header {
-    display: flex;
-    flex-direction: column;
+.Page {
     gap: 1rem;
+    padding-top: 0.35rem;
+    padding-bottom: 0.9rem;
+}
+
+.Header {
+    display: grid;
+    grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
+    gap: 1rem 2rem;
+    align-items: stretch;
+    margin: 0;
     h1 {
         font-size: 3rem;
         font-weight: bolder;
+        line-height: 1;
     }
     p {
-        width: 35%;
+        width: 100%;
+        max-width: 42ch;
     }
+}
+
+.HeaderText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-width: 0;
+    justify-content: center;
 }
 .Content {
     display: grid;
@@ -79,6 +97,10 @@
 
 /* ─── Responsive ──────────────────────────────────── */
 @media (max-width: 992px) {
+    .Header {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
     .Content {
         grid-template-columns: 1fr 1fr;
     }

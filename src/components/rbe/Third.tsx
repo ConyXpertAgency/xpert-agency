@@ -26,26 +26,36 @@ const Third = ({ third }: ThirdProps) => {
                 </div>
             </header>
 
-            <div className={styles.Panel}>
-                {third.image && (
-                    <Image src={third.image} alt="Three phase model panel" width={900} height={220} className={styles.PanelImg} />
-                )}
-            </div>
-
-            <ul className={styles.Content}>
+            <div className={styles.PhaseGrid}>
                 {third.phases.map((phase, i) => (
-                    <li key={i} className={styles.CardContent}>
-                        <header>
-                            <h1><RichText>{phase.title}</RichText></h1>
-                        </header>
-                        <ul className={styles.ListCard}>
-                            {phase.items.map((item, j) => (
-                                <li key={j}><RichText>{item}</RichText></li>
-                            ))}
-                        </ul>
-                    </li>
+                    <article key={i} className={styles.Phase}>
+                        <div className={styles.PhaseImage}>
+                            {third.image && (
+                                <Image
+                                    src={third.image}
+                                    alt=""
+                                    width={900}
+                                    height={220}
+                                    className={styles.PhaseImageImg}
+                                    style={{
+                                        objectPosition: i === 0 ? "left center" : i === 1 ? "center center" : "right center",
+                                    }}
+                                />
+                            )}
+                        </div>
+                        <div className={styles.CardContent}>
+                            <header>
+                                <h1><RichText>{phase.title}</RichText></h1>
+                            </header>
+                            <ul className={styles.ListCard}>
+                                {phase.items.map((item, j) => (
+                                    <li key={j}><RichText>{item}</RichText></li>
+                                ))}
+                            </ul>
+                        </div>
+                    </article>
                 ))}
-            </ul>
+            </div>
 
             <footer className={styles.Footer}>
                 <h1><RichText>{third.footer_title}</RichText></h1>

@@ -1,15 +1,16 @@
 .Hero {
     display: grid;
     grid-template-columns: 7fr 5fr;
-    gap: 2.5rem;
-    align-items: center;
-    padding: 4rem 0 2rem;
+    gap: 2rem;
+    align-items: start;
+    padding: 1.6rem 0 1rem;
 }
 
 .HeroText {
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    gap: 0.85rem;
+    padding-top: 0.15rem;
 
     h1 {
         display: block;
@@ -27,52 +28,63 @@
 
 .Lead {
     display: block;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     font-weight: 500;
     opacity: 1;
     color: var(--rbe-muted, #5b667a);
     max-width: 32rem;
+    line-height: 1.45;
 }
 
 .Kpis {
     display: flex;
-    flex-wrap: wrap;
-    gap: .6rem;
-    margin: .2rem 0;
+    flex-wrap: nowrap;
+    gap: .5rem;
+    margin: .15rem 0;
+    overflow: visible;
 
     li {
         display: inline-flex;
         align-items: center;
-        gap: .5rem;
-        padding: .4rem 1rem;
+        justify-content: center;
+        gap: .45rem;
+        padding: .38rem .85rem;
         background: var(--brand-surface, #ffffff);
         border: 1px solid rgba(5, 21, 75, .10);
         border-radius: 999px;
         box-shadow: 0 6px 18px rgba(5, 21, 75, .10);
         font-weight: 600;
-        font-size: .9rem;
+        font-size: .84rem;
         color: var(--rbe-text, #0b1220);
-
-        span {
-            display: inline-flex;
-            width: .55rem;
-            height: .55rem;
-            border-radius: 999px;
-            background: var(--rbe-accent, #8BC540);
-            flex-shrink: 0;
-        }
+        white-space: nowrap;
+        flex: 0 0 auto;
+        line-height: 1;
     }
+}
+
+.Kpis li :global(.rt) {
+    display: inline !important;
+}
+
+.KpiDot {
+    display: inline-flex;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 999px;
+    background: var(--rbe-accent, #8BC540);
+    flex-shrink: 0;
 }
 
 .Cta {
     display: flex;
-    margin-top: .4rem;
+    margin-top: .25rem;
+    margin-bottom: .2rem;
 
     button {
         border-radius: 999px;
-        padding: .75rem 1.6rem;
+        padding: .7rem 1.5rem;
         font-weight: 800;
-        font-size: 1rem;
+        font-size: .95rem;
         background: var(--rbe-primary, #05154B);
         border-color: var(--rbe-primary, #05154B);
         color: #fff;
@@ -83,23 +95,42 @@
     }
 }
 
+.RbeLogo {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0.1rem;
+    line-height: 0;
+}
+
+.RbeLogoImg {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(5, 21, 75, 0.12));
+}
+
 .HeroImage {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    align-self: start;
 
     .ImgWrap {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
         overflow: hidden;
+        width: 100%;
     }
 
     .ImgContain {
         width: 100%;
         max-width: 420px;
+        max-height: 440px;
         height: auto;
-        object-fit: contain;
+        object-fit: cover;
+        object-position: top center;
         border-radius: 16px;
         box-shadow: 0 18px 45px rgba(0, 0, 0, .12);
     }
@@ -109,10 +140,26 @@
 @media (max-width: 992px) {
     .Hero {
         grid-template-columns: 1fr;
-        padding: 2.5rem 0 1.5rem;
+        padding: 1.8rem 0 1.2rem;
     }
 
     .HeroImage {
         order: -1;
+    }
+
+    .HeroImage .ImgContain {
+        max-height: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .Kpis {
+        flex-wrap: wrap;
+    }
+
+    .HeroImage .ImgContain {
+        max-height: 360px;
+        object-fit: contain;
+        object-position: center;
     }
 }

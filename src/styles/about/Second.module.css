@@ -5,6 +5,80 @@
     gap: 2rem;
 }
 
+/* Contenedor de la zona oscura: aquí vive el pattern y su recorte.
+   StatsBand queda FUERA para conservar su sangrado full-bleed
+   (un overflow:hidden en .Second lo recortaría a la caja de la sección). */
+.BodyWrap {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Watermark editorial (mismo lenguaje que Expertise): logo Xpert repetido
+   en filas staggered sobre canvas sobredimensionado rotado 24deg.
+   La banda clara (.StatsBand) tiene fondo propio opaco y lo tapa donde corresponde.
+   Si el CMS trae background_image (.SectionBackdrop), la foto manda y el pattern se oculta. */
+.LogoPattern {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 180%;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 55px;
+    transform: translate(-50%, -50%) rotate(24deg);
+    opacity: 0.22;
+    pointer-events: none;
+    user-select: none;
+}
+
+.LogoPatternRow {
+    display: flex;
+    align-items: center;
+    gap: 65px;
+    width: max-content;
+}
+
+.LogoPatternRow:nth-child(even) {
+    transform: translateX(125px);
+}
+
+.LogoPattern img {
+    display: block;
+    width: 190px;
+    height: auto;
+}
+
+.Second:global(.SectionBackdrop) .LogoPattern {
+    display: none;
+}
+
+/* Desktop: 20 filas x 10 columnas cubren de sobra; el resto no se descarga. */
+.LogoPatternRow:nth-child(n + 21) {
+    display: none;
+}
+
+.LogoPatternRow img:nth-child(n + 11) {
+    display: none;
+}
+
+.BodyWrap > *:not(.LogoPattern) {
+    position: relative;
+    z-index: 1;
+}
+
+.BodyWrap > .LogoPattern {
+    position: absolute;
+    z-index: 0;
+}
+
 .Header {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(20rem, 28rem);
@@ -220,7 +294,8 @@
             font-size: .72rem;
             color: var(--surface-muted, color-mix(in srgb, var(--color-text-inverse) 68%, #fff));
             opacity: 1;
-            white-space: nowrap;
+            white-space: normal;
+            min-width: 0;
         }
     }
     .RbeCTA {
@@ -285,6 +360,32 @@
 
     .StatsBand {
         padding-inline: 1rem;
+    }
+
+    .LogoPattern {
+        gap: 60px;
+        opacity: 0.18;
+    }
+
+    .LogoPatternRow {
+        gap: 75px;
+    }
+
+    .LogoPatternRow:nth-child(even) {
+        transform: translateX(112px);
+    }
+
+    .LogoPattern img {
+        width: 160px;
+    }
+
+    /* ≤992: sección más alta → 26 filas x 10 columnas. */
+    .LogoPatternRow:nth-child(n + 27) {
+        display: none;
+    }
+
+    .LogoPatternRow:nth-child(n + 21):not(:nth-child(n + 27)) {
+        display: flex;
     }
 }
 
@@ -358,6 +459,23 @@
         padding-block: 2.25rem 2.5rem;
         margin-top: 0;
         margin-bottom: -.8rem;
+    }
+
+    .LogoPattern {
+        opacity: 0.11;
+    }
+
+    .LogoPattern img {
+        width: 125px;
+    }
+
+    /* ≤768: sección muy alta → se muestran las 34 filas x 11 columnas. */
+    .LogoPatternRow:nth-child(n + 21) {
+        display: flex;
+    }
+
+    .LogoPatternRow img:nth-child(n + 10):not(:nth-child(n + 12)) {
+        display: block;
     }
 }
 
@@ -469,5 +587,26 @@
         margin-left: 0;
         min-height: 2.6rem;
         text-align: center;
+    }
+
+    .LogoPattern {
+        opacity: 0.08;
+    }
+
+    .LogoPattern img {
+        width: 105px;
+    }
+
+    /* ≤576: 26 filas x 10 columnas. */
+    .LogoPatternRow:nth-child(n + 21):not(:nth-child(n + 27)) {
+        display: flex;
+    }
+
+    .LogoPatternRow:nth-child(n + 27) {
+        display: none;
+    }
+
+    .LogoPatternRow img:nth-child(n + 11):not(:nth-child(n + 99)) {
+        display: none;
     }
 }

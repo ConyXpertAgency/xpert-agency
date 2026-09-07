@@ -12,7 +12,9 @@ interface SecondProps {
 const Second = ({ second }: SecondProps) => {
     return (
         <section className={`${styles.Second} ${sectionBgClass(second)}`} style={sectionBgStyle(second)}>
-            <Image src={second.image} alt='need rbe' width={620} height={620} />
+            <div className={styles.SecondImageWrap}>
+                <Image src={second.image} alt='need rbe' width={620} height={620} />
+            </div>
             <article className={styles.Right}>
                 <strong className='details'><RichText>{second.badge}</RichText></strong>
                 <header className={styles.Text}>

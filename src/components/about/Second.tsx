@@ -27,8 +27,27 @@ const Second = ({ second, heroStats, lang }: SecondProps) => {
     const normalizedRbeHref = rbeBar.href.startsWith('/') ? rbeBar.href : `/${rbeBar.href}`
     const RbeIcon = rbeBar.icon === 'BiSolidShield' ? BiSolidShield : getIcon(rbeBar.icon)
 
+    // Watermark editorial (mismo lenguaje que Expertise/Four): mismo logo
+    // repetido en filas staggered sobre canvas sobredimensionado y rotado.
+    // Se renderiza de más y cada breakpoint muestra lo necesario para cubrir
+    // (las ocultas con display:none ni se descargan). Secciones altas en
+    // tablet/mobile exigen muchas más filas que en desktop.
+    const patternRows = Array.from({ length: 34 }, (_, i) => i);
+    const patternCols = Array.from({ length: 12 }, (_, i) => i);
+
     return (
         <section className={`${styles.Second} ${sectionBgClass(second)}`} style={sectionBgStyle(second)}>
+            <div className={styles.BodyWrap}>
+            <div className={styles.LogoPattern} aria-hidden="true">
+                {patternRows.map((row) => (
+                    <div key={row} className={styles.LogoPatternRow}>
+                        {patternCols.map((col) => (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img key={col} src="/logo_largo_blanco2.webp" alt="" draggable={false} />
+                        ))}
+                    </div>
+                ))}
+            </div>
             <header className={styles.Header}>
                 <span className={styles.TextH}>
                     <strong className='details'><RichText>{second.badge}</RichText></strong>
@@ -90,6 +109,7 @@ const Second = ({ second, heroStats, lang }: SecondProps) => {
                 </span>
                 <div></div>
             </article>
+            </div>
             <div className={styles.StatsBand}>
                 <div className={styles.StatsInner}>
                     <AboutStatsBar stats={heroStats} />

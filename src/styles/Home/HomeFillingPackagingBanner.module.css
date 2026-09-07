@@ -1,0 +1,142 @@
+.Banner {
+  position: relative;
+  left: 50%;
+  width: 100dvw;
+  margin-left: -50dvw;
+  padding: 2.2rem max(var(--side-padding), calc((100dvw - var(--site-max-width)) / 2 + var(--side-padding))) 2.2rem;
+  background: #fff;
+  color: var(--color-text-inverse);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.Inner {
+  display: grid;
+  grid-template-columns: 46% 54%;
+  gap: 2rem;
+  align-items: center;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  min-height: 360px;
+  padding: 1.6rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card-soft);
+  box-shadow: var(--surface-shadow);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.Copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.Copy h2 {
+  font-size: clamp(1.75rem, 2.8vw, 2.4rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text-inverse);
+}
+
+.Copy p {
+  color: var(--surface-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  max-width: 42ch;
+  opacity: 1;
+}
+
+.Cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin-top: 0.35rem;
+  min-height: 46px;
+  padding: 0 1.35rem;
+  border-radius: var(--radius-md);
+  background: var(--color-success);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.Cta:hover {
+  background: color-mix(in srgb, var(--color-success) 90%, black);
+  box-shadow: 0 8px 18px rgba(4, 23, 50, 0.14);
+}
+
+.Cta svg {
+  transition: transform 180ms ease;
+}
+
+.Cta:hover svg {
+  transform: translateX(2px);
+}
+
+.Visual {
+  position: relative;
+  height: 340px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--surface-border);
+}
+
+.Visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .Inner {
+    gap: 1.5rem;
+    min-height: 340px;
+  }
+  .Visual {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Banner {
+    padding: 1.6rem 16px;
+  }
+  .Inner {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    min-height: auto;
+    padding: 1.4rem;
+  }
+  .Copy h2 {
+    font-size: 1.65rem;
+  }
+  .Cta {
+    width: 100%;
+  }
+  .Visual {
+    height: 220px;
+    order: 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .Inner {
+    padding: 1.2rem;
+  }
+  .Visual {
+    height: 200px;
+  }
+}

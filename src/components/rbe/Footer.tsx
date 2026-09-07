@@ -33,9 +33,14 @@ const Footer = ({ footer, lang = "" }: FooterProps) => {
                             <p><RichText>{footer.contact_phone}</RichText></p>
                         </span>
                     </article>
-                    <Link href={`${lang}/contact`}>
-                        <Button arrow={true} variant='outlineG'><RichText>{footer.cta}</RichText></Button>
-                    </Link>
+                    <div className={styles.FooterCtas}>
+                        <Link href={`/${lang}/contact`}>
+                            <Button arrow={true} variant='full'>Contact Marc</Button>
+                        </Link>
+                        <Link href={`/${lang}`}>
+                            <Button arrow={true} variant='outlineG'><RichText>{footer.cta}</RichText></Button>
+                        </Link>
+                    </div>
                 </section>
             </article>
             <article className={styles.Details}>

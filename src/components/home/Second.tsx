@@ -64,7 +64,7 @@ const Second = ({ partners, lang }: SecondProps) => {
                     </article>
                     <ul className={styles.ListCard}>
                         {partners.cards.map((card, i) => {
-                            const visionImage = i === 1 ? resolveStorageUrl(card.image) ?? '/hero-bg-20260205-153144-4f8569.jpg' : null
+                            const visionImage = i === 1 ? resolveStorageUrl(card.image) ?? '/showroom.webp' : null
                             const isVision = Boolean(visionImage)
                             const PurposeIcon = purposeIcons[i]
 

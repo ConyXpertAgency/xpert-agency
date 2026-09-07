@@ -1,6 +1,4 @@
 .Card {
-    background-size: cover;
-    background-position: center;
     background-color: var(--color-bg-secondary);
     border-radius: var(--radius-xl);
     border: 2px solid var(--color-bg-secondary);
@@ -10,6 +8,8 @@
     height: 35dvh;
     position: relative;
     padding: 1rem;
+    overflow: hidden;
+    isolation: isolate;
     .TextCard {
         h1 {
             font-size: 1.2rem;

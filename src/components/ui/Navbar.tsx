@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useEffect, useId, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import styles from '@/styles/ui/Navbar.module.css'
-import { FaChevronDown, FaArrowRight, FaBars, FaTimes } from 'react-icons/fa'
+import { FaArrowRight, FaBars, FaTimes } from 'react-icons/fa'
 import { LOCALES } from '@/lib/data'
 import type { Lang, NavItem } from '@/lib/supabase/types'
 
@@ -51,10 +51,10 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
                 <Image src={"/logo_largo_blanco2.webp"} alt='' width={500} height={50} />
             </Link>
             <ul id={menuId}>
-                {links.map(({ href, label, hasDropdown }) => (
+                {links.map(({ href, label }) => (
                     <Link key={href} href={`/${lang}${href}`} onClick={() => setIsOpen(false)}>
                         <li className={isActive(href) ? styles.active : undefined}>
-                            <strong>{label} {hasDropdown && <FaChevronDown size={12} />}</strong>
+                            <strong>{label}</strong>
                         </li>
                     </Link>
                 ))}

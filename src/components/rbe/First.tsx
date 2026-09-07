@@ -20,6 +20,10 @@ const First = ({ first, lang = "" }: FirstProps) => {
     return (
         <header className={`${styles.Hero} ${sectionBgClass(first)}`} style={sectionBgStyle(first)}>
             <section className={styles.HeroText}>
+                <div className={styles.RbeLogo} aria-hidden="true">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/rbe/rbe-logo.png" alt="" width={72} height={72} className={styles.RbeLogoImg} />
+                </div>
                 <strong className='details'><RichText>{first.badge}</RichText></strong>
                 <h1>
                     {first.title.map((line, i) => <RichText as="span" key={i}>{line}</RichText>)}

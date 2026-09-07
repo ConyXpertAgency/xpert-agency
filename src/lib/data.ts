@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { getSupabase } from "./supabase/client";
+import { getSupabase, resolveStorageUrl } from "./supabase/client";
 import { DEFAULT_GLOBAL_REACH_NODES } from "./adminSchema";
 import { expertiseGroups } from "./expertiseGroups";
 import { serviceGroups } from "./serviceGroups";
@@ -667,8 +667,8 @@ export const getContactTeams = async (lang: Lang): Promise<ContactTeams> => {
   return { items: [] };
 };
 
-export const getRbeFirst = (lang: Lang) =>
-  getTyped<RbeFirst>("rbe", "first", lang, {
+export const getRbeFirst = async (lang: Lang): Promise<RbeFirst> => {
+  const d = await getTyped<RbeFirst>("rbe", "first", lang, {
     badge: "Interim Management",
     title: ["Rapid Business Elevating <strong>RBE™</strong>"],
     subtitle: "Interim Management, elevate performance safe and quickly.",
@@ -687,15 +687,17 @@ export const getRbeFirst = (lang: Lang) =>
       { number: "02", title: "SAFEGUARDING", text: "Stabilize operations and protect value." },
       { number: "03", title: "PREFORMING", text: "Execute improvements and elevate performance." },
     ],
-    image: "/panel_1.png",
+    image: "/rbe/panel-1.png",
   });
+  return { ...d, image: "/rbe/panel-1.png" };
+};
 
-export const getRbeSecond = (lang: Lang) =>
-  getTyped<RbeSecond>("rbe", "second", lang, {
+export const getRbeSecond = async (lang: Lang): Promise<RbeSecond> => {
+  const d = await getTyped<RbeSecond>("rbe", "second", lang, {
     badge: "THE CHALLENGE",
     title: "What are we talking about?",
     text: "Every investor, responsible manager and entrepreneur world-wide is knowing and fearing the difficulties in projects, when business processes are going to change:",
-    image: "/panel_2.png",
+    image: "/uploads/challenge.png",
     list: [
       {
         number: "01",
@@ -718,6 +720,10 @@ export const getRbeSecond = (lang: Lang) =>
       title: "Let us talk about ramp-up with RBE - our solution for risk mitigation.",
     },
   });
+  // Resuelve rutas Storage (/uploads/…) a URL pública; lo demás pasa intacto.
+  // Ya no se pisa el valor del CMS con un asset local.
+  return { ...d, image: resolveStorageUrl(d.image) ?? d.image };
+};
 
 export const getRbeThird = (lang: Lang) =>
   getTyped<RbeThird>("rbe", "third", lang, {
@@ -783,8 +789,8 @@ export const getRbeThird = (lang: Lang) =>
       "A structured management approach that drives rapid ramp-up, protects value, and delivers measurable impact - fast, safe and sustainable.",
   });
 
-export const getRbeFour = (lang: Lang) =>
-  getTyped<RbeFour>("rbe", "four", lang, {
+export const getRbeFour = async (lang: Lang): Promise<RbeFour> => {
+  const d = await getTyped<RbeFour>("rbe", "four", lang, {
     title: "10+1 Elements for ramp-up with RBE",
     subtitle:
       "A practical toolkit to stabilize operations fast, manage risks, and drive measurable performance improvements.",
@@ -802,19 +808,21 @@ export const getRbeFour = (lang: Lang) =>
       { icon: "LuBrainCog", number: "08", title: "Systems Training", text: "Systems thinking • LEAN training • Coaching" },
       { icon: "BsBarChartLine", number: "10", title: "Visualization & Reporting", text: "KPI tracking • Gemba walks • Standard reports" },
     ],
-    image: "/panel_4.png",
+    image: "/rbe/panel-4.png",
     extra: {
       number: "+1",
       title: "Improvement Waves",
       text: "Exec-program • Agile projects • Progress awards",
     },
   });
+  return { ...d, image: "/rbe/panel-4.png" };
+};
 
-export const getRbeFive = (lang: Lang) =>
-  getTyped<RbeFive>("rbe", "five", lang, {
+export const getRbeFive = async (lang: Lang): Promise<RbeFive> => {
+  const d = await getTyped<RbeFive>("rbe", "five", lang, {
     title: "What does RBE mean?",
     subtitle: "A phased framework that stabilizes operations fast and drives measurable improvement.",
-    image: "/panel_5.png",
+    image: "/rbe/panel-5.png",
     items: [
       {
         icon: "IoRocketOutline",
@@ -838,6 +846,8 @@ export const getRbeFive = (lang: Lang) =>
     footer_text:
       "RBE closes the gap between planned performance and actual performance.",
   });
+  return { ...d, image: "/rbe/panel-5.png" };
+};
 
 export const getRbeFooter = (lang: Lang) =>
   getTyped<RbeFooter>("rbe", "footer", lang, {
@@ -1023,16 +1033,32 @@ export const getFillingPackagingPage = (lang: Lang) =>
     },
   });
 
-export const getNav = (lang: Lang) =>
-  getTyped<NavItem[]>("nav", "items", lang, [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/services", label: "Services", hasDropdown: true },
-    { href: "/industries", label: "Industries", hasDropdown: true },
-    { href: "/cases", label: "Cases" },
-    { href: "/contact", label: "Contact us" },
-    { href: "/rbe", label: "RBE" },
-  ]);
+const NAV_DEFAULTS: NavItem[] = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/industries", label: "Industries" },
+  { href: "/filling-packaging", label: "Filling & Packaging" },
+  { href: "/cases", label: "Cases" },
+  { href: "/rbe", label: "RBE" },
+  { href: "/contact", label: "Contact us" },
+];
+
+export const getNav = async (lang: Lang): Promise<NavItem[]> => {
+  const raw = await getTyped<NavItem[]>("nav", "items", lang, NAV_DEFAULTS);
+  // Supabase may contain stale nav without Filling & Packaging and with hasDropdown — enforce architecture
+  let items = Array.isArray(raw) ? [...raw] : [...NAV_DEFAULTS];
+  // strip false chevrons
+  items = items.map((it) => ({ ...it, hasDropdown: undefined } as NavItem)).filter((it) => it.href !== "/filling-packaging");
+  // re-inject at approved position: after Industries (or after Services if Industries missing)
+  const idxIndustries = items.findIndex((it) => it.href === "/industries");
+  const insertAt = idxIndustries >= 0 ? idxIndustries + 1 : items.findIndex((it) => it.href === "/cases");
+  const fp: NavItem = { href: "/filling-packaging", label: "Filling & Packaging" };
+  if (insertAt >= 0) items.splice(insertAt, 0, fp);
+  else items.splice(Math.max(0, items.length - 2), 0, fp); // before contact/rbe fallback
+  // ensure contact stays last CTA (Navbar splits it)
+  return items;
+};
 
 export const getSettings = (lang: Lang) =>
   getTyped<Settings>("settings", "general", lang, {

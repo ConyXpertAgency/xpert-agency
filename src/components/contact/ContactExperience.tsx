@@ -97,9 +97,9 @@ const ContactExperience = ({ pageData, teamsData }: Props) => {
                                                             </span>
                                                         )}
                                                         <span className={styles.ContactBody}>
-                                                            <span className={styles.ContactName}>{contact.name}</span>
-                                                            {contact.role && <span className={styles.ContactMeta}>{contact.role}</span>}
-                                                            {contact.organization && <span className={styles.ContactMeta}>{contact.organization}</span>}
+                                                            <span className={styles.ContactName}><RichText>{contact.name}</RichText></span>
+                                                            {contact.role && <span className={styles.ContactMeta}><RichText>{contact.role}</RichText></span>}
+                                                            {contact.organization && <span className={styles.ContactMeta}><RichText>{contact.organization}</RichText></span>}
                                                             {countries && <span className={styles.ContactMeta}>{countries}</span>}
                                                             {contact.addresses?.length ? (
                                                                 <span className={styles.AddressList}>

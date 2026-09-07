@@ -113,11 +113,33 @@
     }
 }
 
+.FooterCtas {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.FooterCtas a {
+    display: inline-flex;
+}
+
 /* ─── Responsive ──────────────────────────────────── */
 @media (max-width: 576px) {
     .ActionCC {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .FooterCtas {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .FooterCtas a,
+    .FooterCtas button {
+        width: 100%;
     }
 
     .TextCC {

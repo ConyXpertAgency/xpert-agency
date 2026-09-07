@@ -69,13 +69,30 @@ const Four = ({ roles, groups, lang }: FourProps) => {
     // Hub content según nivel
     const hubSub = active ? `${active.items.length} ${copy.capabilities}` : copy.expertCapabilities
 
+    // Watermark editorial: mismo logo repetido en filas staggered (las pares
+    // van desplazadas medio módulo). La rotación y opacidad viven en CSS.
+    // Canvas sobredimensionado: la capa rotada debe extender sus bordes
+    // fuera de la sección para que nunca se vea su límite.
+    const patternRows = Array.from({ length: 20 }, (_, i) => i);
+    const patternCols = Array.from({ length: 10 }, (_, i) => i);
+
     return (
-        <section className={`${styles.Four} ${theme.LightSurface} ${sectionBgClass(roles)}`} style={sectionBgStyle(roles)}>
+        <section className={`${styles.Four} ${theme.DarkSurface} ${sectionBgClass(roles)}`} style={sectionBgStyle(roles)}>
+            <div className={styles.LogoPattern} aria-hidden="true">
+                {patternRows.map((row) => (
+                    <div key={row} className={styles.LogoPatternRow}>
+                        {patternCols.map((col) => (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img key={col} src="/logo_largo_blanco2.webp" alt="" draggable={false} />
+                        ))}
+                    </div>
+                ))}
+            </div>
             <header className={styles.Header}>
                 <span className={styles.Hleft}>
-                    <strong className='details'><RichText>{copy.headingBadge}</RichText></strong>
+                    <strong className='details'><RichText>{roles.badge || copy.headingBadge}</RichText></strong>
                     <h1>
-                        <span><RichText>{copy.headingTitle}</RichText></span>
+                        <span><RichText>{roles.title || copy.headingTitle}</RichText></span>
                     </h1>
                 </span>
                 <span className={styles.Hright}>
@@ -92,6 +109,7 @@ const Four = ({ roles, groups, lang }: FourProps) => {
                     </ul>
                 </span>
             </header>
+            <div className={`${theme.LightSurface} ${styles.HubLightWrapper}`}>
             <section className={styles.HubWrap} aria-label={copy.expertiseMap}>
                 <p className={styles.InteractionHint}>{copy.interactionHint}</p>
                 <div
@@ -146,6 +164,7 @@ const Four = ({ roles, groups, lang }: FourProps) => {
                           ))}
                 </div>
             </section>
+            </div>
             <ul className={styles.List}>
                 {roles.stats.map((stat, i) => (
                     <li key={i}>

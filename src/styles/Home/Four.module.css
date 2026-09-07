@@ -15,7 +15,48 @@
     box-sizing: border-box;
 }
 
-.Four::before {
+/* Watermark editorial: pattern del logo Xpert en filas staggered, rotado 24deg.
+   Si el CMS trae background_image (.SectionBackdrop), la foto manda y el pattern se oculta. */
+.LogoPattern {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 160%;
+    height: 185%;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 55px;
+    transform: translate(-50%, -50%) rotate(24deg);
+    opacity: 0.24;
+    pointer-events: none;
+    user-select: none;
+}
+
+.LogoPatternRow {
+    display: flex;
+    align-items: center;
+    gap: 65px;
+    width: max-content;
+}
+
+.LogoPatternRow:nth-child(even) {
+    transform: translateX(125px);
+}
+
+.LogoPattern img {
+    display: block;
+    width: 200px;
+    height: auto;
+}
+
+.Four:global(.SectionBackdrop) .LogoPattern {
+    display: none;
+}
+
+.Four::after {
     content: "";
     position: absolute;
     inset: -1rem;
@@ -34,14 +75,43 @@
         56px 56px,
         56px 56px;
     background-position: center right;
-    opacity: .05;
-    filter: blur(2px);
+    opacity: .04;
+    filter: blur(1px);
     transform: scale(1.03);
 }
 
 .Four > * {
     position: relative;
     z-index: 1;
+}
+
+.Four > .LogoPattern {
+    position: absolute;
+    z-index: 0;
+}
+
+.HubLightWrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+}
+
+.HubLightWrapper .Node,
+.HubLightWrapper .Hub {
+    background: #ffffff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: var(--surface-border);
+    box-shadow: 0 8px 22px rgba(4, 23, 50, 0.08);
 }
 
 .Header {
@@ -71,12 +141,13 @@
     h1 {
         display: flex;
         flex-direction: column;
-        font-size: 3rem;
+        font-size: clamp(2rem, 3.2vw, 3rem);
         font-weight: bolder;
         line-height: 1.02;
         color: var(--surface-text);
-        max-width: 16ch;
+        max-width: none;
         text-align: center;
+        white-space: nowrap;
     }
 }
 
@@ -536,6 +607,23 @@
     .HubGrid .Node:nth-of-type(6) { grid-column: 2; grid-row: 4; }
     .HubGrid .Node:nth-of-type(7) { grid-column: 1; grid-row: 5; }
     .HubGrid .Node:nth-of-type(8) { grid-column: 2; grid-row: 5; }
+
+    .LogoPattern {
+        gap: 60px;
+        opacity: 0.2;
+    }
+
+    .LogoPatternRow {
+        gap: 70px;
+    }
+
+    .LogoPatternRow:nth-child(even) {
+        transform: translateX(120px);
+    }
+
+    .LogoPattern img {
+        width: 160px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -546,6 +634,7 @@
 
     .Hleft h1 {
         font-size: 2rem;
+        white-space: normal;
     }
 
     .Hright ul {
@@ -576,6 +665,31 @@
     .Four .List li:last-child {
         border-bottom: none;
     }
+
+    .LogoPattern {
+        gap: 65px;
+        opacity: 0.14;
+    }
+
+    .LogoPatternRow {
+        gap: 70px;
+    }
+
+    .LogoPatternRow:nth-child(even) {
+        transform: translateX(110px);
+    }
+
+    .LogoPattern img {
+        width: 130px;
+    }
+
+    .LogoPatternRow:nth-child(n + 11) {
+        display: none;
+    }
+
+    .LogoPatternRow img:nth-child(n + 11) {
+        display: none;
+    }
 }
 
 @media (max-width: 576px) {
@@ -595,6 +709,7 @@
     .Hleft h1 {
         font-size: 1.85rem;
         line-height: 1.02;
+        white-space: normal;
     }
 
     .Hright {
@@ -770,5 +885,30 @@
     .Four .List li .ListText p {
         font-size: .72rem;
         line-height: 1.3;
+    }
+
+    .LogoPattern {
+        gap: 100px;
+        opacity: 0.1;
+    }
+
+    .LogoPatternRow {
+        gap: 90px;
+    }
+
+    .LogoPatternRow:nth-child(even) {
+        transform: translateX(100px);
+    }
+
+    .LogoPattern img {
+        width: 105px;
+    }
+
+    .LogoPatternRow:nth-child(n + 9) {
+        display: none;
+    }
+
+    .LogoPatternRow img:nth-child(n + 9) {
+        display: none;
     }
 }

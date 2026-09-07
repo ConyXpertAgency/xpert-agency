@@ -5,9 +5,8 @@ import styles from "@/styles/fillingPackaging/FillingPackaging.module.css";
 import Button from "@/components/ui/Button";
 import RichText from "@/components/ui/RichText";
 import Link from "next/link";
-import ProjectCase from "@/components/fillingPackaging/ProjectCase";
-import HomeFinalCta from "@/components/home/HomeFinalCta";
-import GlobalReachMap from "@/components/home/GlobalReachMap";
+import ProjectExperienceItem from "@/components/fillingPackaging/ProjectExperienceItem";
+import P14ContactForm from "@/components/fillingPackaging/P14ContactForm";
 import { getFillingPackagingPage } from "@/lib/data";
 import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import Image from "next/image";
@@ -21,12 +20,12 @@ export default async function Page() {
       {/* P01 — HERO: gran visual 90-94% ancho, contenido superpuesto centrado, como PDF */}
       <section className={`${styles.HeroAls} ${theme.DarkSurface}`}>
         <div className={styles.HeroAlsFrame}>
-          <div className={styles.HeroAlsPlaceholder}>
-            <span>Image slot — Filling line</span>
-            <small>Recommended: 1920×850 WebP 180KB, no ALS branding — TEMP</small>
-          </div>
           <div className={styles.HeroAlsOverlay} />
           <div className={styles.HeroAlsContent}>
+            <div className={styles.HeroAlsLogo} aria-hidden="true">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/filling-packaging/als-logo.svg" alt="" width={112} height={44} />
+            </div>
             <h1>
               <span>FILLING & PACKAGING</span>
               <span>TECHNOLOGIES</span>
@@ -94,20 +93,19 @@ export default async function Page() {
             <p>Documented assignments cover beverages, liquid foods and pharma.</p>
           </header>
           <div className={styles.CapabilitiesAsset}>
-            {/* TEMP ASSET: p03-machinery-temp.webp extraído de P03 */}
-            <Image src="/filling-packaging/p03-machinery-temp.webp" alt="Filling line workstreams" width={1600} height={600} style={{ width: "100%", height: "auto" }} />
+            <Image src="/filling-packaging/linea_produccion.png" alt="Production line" width={1600} height={900} style={{ width: "100%", height: "auto" }} priority />
           </div>
-          <ol className={styles.CapabilitiesWorkflow}>
-            <li>INSTALL</li>
-            <li className={styles.WorkflowSep}>&gt;</li>
-            <li>COMMISSION</li>
-            <li className={styles.WorkflowSep}>&gt;</li>
-            <li>RAMP UP</li>
-            <li className={styles.WorkflowSep}>&gt;</li>
-            <li>IMPROVE OEE</li>
-            <li className={styles.WorkflowSep}>&gt;</li>
-            <li>PREVENT DOWNTIME</li>
-          </ol>
+          <div className={styles.CapabilitiesWorkflowInline} aria-label="Workstreams">
+            <span>INSTALL</span>
+            <span className={styles.WorkflowSep}>&gt;</span>
+            <span>COMMISSION</span>
+            <span className={styles.WorkflowSep}>&gt;</span>
+            <span>RAMP UP</span>
+            <span className={styles.WorkflowSep}>&gt;</span>
+            <span>IMPROVE OEE</span>
+            <span className={styles.WorkflowSep}>&gt;</span>
+            <span>PREVENT DOWNTIME</span>
+          </div>
         </div>
       </section>
 
@@ -126,8 +124,9 @@ export default async function Page() {
           </header>
           <div className={styles.FoundationAlsGrid}>
             <article className={styles.FoundationAlsCard}>
-              <span>12</span>
-              <strong>YEARS</strong>
+              <span>
+                <em>12</em> YEARS
+              </span>
               <p>
                 <RichText>{data.foundation.left.text}</RichText>
               </p>
@@ -188,31 +187,45 @@ export default async function Page() {
               ))}
             </div>
           </div>
-          <div className={styles.InternationalRight}>
-            <GlobalReachMap nodes={[...(data.international.nodes ?? [])]} />
+          <div className={styles.InternationalRight} aria-hidden="true">
+            <Image src="/filling-packaging/globe-wireframe.png" alt="" width={1000} height={1000} priority style={{ width: "100%", height: "auto" }} />
           </div>
         </div>
       </section>
 
-      {/* P06-P13 — Mantener temporalmente lo actual para compilar */}
-      <section className={`${styles.Cases} ${theme.LightSurface}`} id="projects">
-        <div className={styles.CasesInner}>
-          <header className={styles.SectionHeader}>
-            <strong className="details">PROJECT EXPERIENCE</strong>
-            <h2>Selected project experience</h2>
-            <p className={styles.SectionSubtitle}>Eight documented assignments across beverages, water, liquid foods and pharma — greenfield, modernization and performance recovery.</p>
-          </header>
-          <ul className={styles.CasesGrid}>
-            {data.cases.map((c) => (
-              <li key={c.id}>
-                <ProjectCase c={c} />
-              </li>
-            ))}
-          </ul>
+      {/* P06–P13 — PROJECT EXPERIENCE 01–08: mapa limpio alternando light/dark */}
+      {data.cases.map((c, i) => (
+        <ProjectExperienceItem key={c.id} c={c} variant={i % 2 === 0 ? "light" : "dark"} />
+      ))}
+
+      {/* P14 — CLOSE: full-bleed editorial con X.png + formulario */}
+      <section className={styles.CloseAls} aria-label="Close">
+        <div className={styles.CloseBg} aria-hidden="true">
+          <div className={styles.CloseOverlay} />
+        </div>
+        <div className={styles.CloseInner}>
+          <div className={styles.CloseLeft}>
+            <strong className={styles.CloseEyebrow}>FILLING & PACKAGING TECHNOLOGIES</strong>
+            <h2 className={styles.CloseTitle}>
+              <span>LET&apos;S BUILD</span>
+              <span>THE NEXT LINE</span>
+            </h2>
+            <p className={styles.CloseText}>
+              <RichText>{data.finalCta.text}</RichText>
+            </p>
+            <div className={styles.CloseCta}>
+              <Link href={`/${lang}${data.finalCta.href}`}>
+                <Button variant="full" arrow>
+                  <RichText>{data.finalCta.cta}</RichText>
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className={styles.CloseRight}>
+            <P14ContactForm />
+          </div>
         </div>
       </section>
-
-      <HomeFinalCta lang={lang} data={data.finalCta} />
     </main>
   );
 }

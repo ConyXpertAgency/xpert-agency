@@ -73,10 +73,6 @@
     gap: .4rem;
 }
 
-.Navbar ul li:hover strong svg {
-    transform: rotate(0.5turn);
-}
-
 .Navbar ul .active {
     color: var(--color-success);
     /*margin: .8rem;*/

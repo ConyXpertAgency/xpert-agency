@@ -18,7 +18,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
   const copy = getUiCopy(lang).footer;
   const contactLink = nav.find((item) => item.href === "/contact");
   const serviceLinks = nav.filter((item) =>
-    ["/services", "/industries", "/cases", "/rbe"].includes(item.href)
+    ["/services", "/industries", "/filling-packaging", "/cases", "/rbe"].includes(item.href)
   );
   const serviceHrefs = new Set(serviceLinks.map((item) => item.href));
   const primaryLinks = nav.filter(
