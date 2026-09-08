@@ -308,14 +308,14 @@
         gap: 1rem;
 
         .FourContent {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: minmax(0, 58%) minmax(0, 1fr);
             gap: 1rem;
             width: 100%;
         }
 
         .mapWrapper {
-            flex: 0 0 62%;
+            min-width: 0;
         }
 
         .FourTextColumn {
@@ -323,6 +323,7 @@
             flex-direction: column;
             justify-content: center;
             flex: 1;
+            min-width: 0;
             gap: 0.5rem;
 
             strong {
@@ -551,6 +552,22 @@
 }
 
 /* ─── Responsive ──────────────────────────────────── */
+/* ≤1200: la columna de texto del mapa (38% del card) se vuelve una tira
+   vertical ilegible; se apila mapa + texto antes de seguir comprimiendo. */
+@media (max-width: 1200px) {
+    .FourCard article .FourContent {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .FourCard article .FourContent .mapWrapper {
+        flex: 0 0 auto;
+    }
+
+    .FourCard article .FourContent .FourTextColumn {
+        width: 100%;
+    }
+}
+
 @media (max-width: 992px) {
     .First {
         flex-direction: column;
@@ -630,7 +647,7 @@
     }
 
     .FourCard article .FourContent {
-        flex-direction: column;
+        grid-template-columns: minmax(0, 1fr);
         gap: 1rem;
     }
 
