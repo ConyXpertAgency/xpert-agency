@@ -601,6 +601,9 @@
     .Left {
         width: 100%;
         height: auto;
+        /* En columna el min-height de viewport (100dvh-7rem) deja una cola
+           vacía de cientos de px: la columna debe envolver su contenido. */
+        min-height: 0;
     }
 
     .Right {
