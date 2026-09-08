@@ -44,11 +44,19 @@ type ServicesCopy = {
   services: string;
 };
 
+type ContactCopy = {
+  regionTeam: string;
+  sending: string;
+  success: string;
+  error: string;
+};
+
 export type UiCopy = {
   roles: RolesCopy;
   footer: FooterCopy;
   services: ServicesCopy;
   consent: ConsentCopy;
+  contact: ContactCopy;
 };
 
 export const uiCopy = {
@@ -95,6 +103,12 @@ export const uiCopy = {
       service: "service",
       services: "services",
     },
+    contact: {
+      regionTeam: "Region / team",
+      sending: "Sending…",
+      success: "Message sent! We'll get back to you soon.",
+      error: "Something went wrong. Please try again.",
+    },
   },
   es: {
     roles: {
@@ -139,6 +153,12 @@ export const uiCopy = {
       service: "servicio",
       services: "servicios",
     },
+    contact: {
+      regionTeam: "Región / equipo",
+      sending: "Enviando…",
+      success: "¡Mensaje enviado! Te responderemos pronto.",
+      error: "Algo salió mal. Inténtalo de nuevo.",
+    },
   },
   de: {
     roles: {
@@ -182,6 +202,12 @@ export const uiCopy = {
       allServices: "Alle Leistungen",
       service: "Leistung",
       services: "Leistungen",
+    },
+    contact: {
+      regionTeam: "Region / Team",
+      sending: "Wird gesendet…",
+      success: "Nachricht gesendet! Wir melden uns in Kürze bei Ihnen.",
+      error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
     },
   },
 } as const satisfies Record<string, UiCopy>;

@@ -10,10 +10,13 @@ export default function P14ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // React anula e.currentTarget al terminar el dispatch: se captura
+    // la referencia en síncrono para usarla después de los await.
+    const formEl = e.currentTarget;
     setStatus("sending");
     setError("");
 
-    const form = new FormData(e.currentTarget);
+    const form = new FormData(formEl);
     const payload = {
       name: String(form.get("name") || "").trim(),
       cname: String(form.get("cname") || "").trim(),
@@ -42,7 +45,7 @@ export default function P14ContactForm() {
         return;
       }
       setStatus("success");
-      e.currentTarget.reset();
+      formEl.reset();
     } catch {
       setStatus("error");
       setError("Something went wrong. Please try again.");

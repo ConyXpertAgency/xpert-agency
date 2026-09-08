@@ -9,6 +9,7 @@ import styles from '@/styles/contact/Contact.module.css'
 import { LuPencilLine } from 'react-icons/lu'
 import { MdLockOutline } from 'react-icons/md'
 import { IoShieldCheckmarkOutline } from 'react-icons/io5'
+import { getUiCopy } from "@/lib/i18n";
 import type { ContactPage, RegionalContact } from "@/lib/supabase/types";
 
 type FormData = ContactPage["form"];
@@ -32,6 +33,7 @@ const ContactForm = ({
 }: Props) => {
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
     const [error, setError] = useState("");
+    const t = getUiCopy(lang).contact;
     const isSending = status === "sending";
     // Guard síncrono: el estado tarda un render en actualizarse y dos clics
     // en el mismo tick pasarían el chequeo de arriba. El ref bloquea de inmediato.
@@ -70,7 +72,7 @@ const ContactForm = ({
 
             if (!res.ok || json?.ok !== true) {
                 setStatus("error");
-                setError(json?.error || "Something went wrong. Please try again.");
+                setError(json?.error || t.error);
                 return;
             }
 
@@ -86,7 +88,7 @@ const ContactForm = ({
             formEl.reset();
         } catch {
             setStatus("error");
-            setError("Something went wrong. Please try again.");
+            setError(t.error);
         } finally {
             sendingRef.current = false;
         }
@@ -168,7 +170,7 @@ const ContactForm = ({
             <form id="contact-form" onSubmit={handleSubmit}>
                 {contacts.length > 0 && (
                     <label>
-                        <span>Region / team</span>
+                        <span>{t.regionTeam}</span>
                         <select
                             name="contactId"
                             value={selectedContactId}
@@ -184,8 +186,8 @@ const ContactForm = ({
                 )}
                 {renderFields()}
                 <p> <PictureSvg icon={MdLockOutline} /><RichText>{data.privacy}</RichText></p>
-                {status === "sending" && <p>Enviando…</p>}
-                {status === "success" && <p>¡Mensaje enviado! Te responderemos pronto.</p>}
+                {status === "sending" && <p>{t.sending}</p>}
+                {status === "success" && <p>{t.success}</p>}
                 {status === "error" && <p>{error}</p>}
             </form>
             <footer>
