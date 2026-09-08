@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { locale } from "next/root-params";
 import { notFound } from "next/navigation";
 import "@/styles/globals.css";
@@ -84,6 +85,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <GoogleTagManager gtmId="GTM-PXH2J368" />
         <script type="application/ld+json">{JSON.stringify(organization)}</script>
         <Navbar lang={lang} items={nav} langs={langs} />
         {children}
