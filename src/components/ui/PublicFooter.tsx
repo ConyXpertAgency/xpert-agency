@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
+import CookieSettingsLink from "@/components/consent/CookieSettingsLink";
 import { getUiCopy } from "@/lib/i18n";
 import type { Lang, NavItem, Settings } from "@/lib/supabase/types";
 import styles from "@/styles/ui/PublicFooter.module.css";
@@ -91,6 +92,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
       <div className={styles.Bottom}>
         <span>© {new Date().getFullYear()} Xpert Agency</span>
         <span className={styles.AiDisclosure}>{copy.aiDisclosure}</span>
+        <CookieSettingsLink label={copy.cookieSettings} />
       </div>
     </footer>
   );

@@ -104,6 +104,25 @@
     opacity: .68;
 }
 
+.CookieBtn {
+    align-self: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: .76rem;
+    line-height: 1.45;
+    color: var(--color-text-secondary);
+    opacity: .85;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.CookieBtn:hover {
+    color: var(--color-success);
+    opacity: 1;
+}
+
 @media (max-width: 992px) {
     .PublicFooter {
         padding: 1.6rem var(--side-padding) 1rem;

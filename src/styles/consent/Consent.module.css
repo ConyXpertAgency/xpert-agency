@@ -1,0 +1,197 @@
+.Banner {
+    position: fixed;
+    z-index: var(--z-toast);
+    left: 1rem;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid color-mix(in srgb, var(--color-success) 34%, var(--color-border-strong));
+    border-radius: var(--radius-xl);
+    background: linear-gradient(215deg, #112c4d 20%, #071630 100%);
+    color: var(--color-text-primary);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .5);
+}
+
+.Copy {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    min-width: 0;
+}
+
+.Copy strong {
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.Copy p {
+    margin: 0;
+    font-size: .86rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    opacity: 1;
+}
+
+.Actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.Btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: .65rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-weight: 700;
+    font-size: .88rem;
+    line-height: 1.2;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    background: transparent;
+    overflow-wrap: anywhere;
+}
+
+.Accept {
+    background: var(--color-success);
+    color: #fff;
+}
+
+.Accept:hover {
+    background: color-mix(in srgb, var(--color-success) 88%, black);
+}
+
+.Reject {
+    border-color: var(--color-border-strong);
+}
+
+.Reject:hover {
+    border-color: var(--color-success);
+}
+
+.Custom {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.Custom:hover {
+    color: var(--color-text-primary);
+}
+
+.Panel {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+}
+
+.Row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .9rem;
+    padding: .6rem .7rem;
+    border: 1px solid color-mix(in srgb, var(--color-text-primary) 14%, transparent);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, .03);
+}
+
+.Row > div {
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+    min-width: 0;
+}
+
+.Row strong {
+    font-size: .9rem;
+}
+
+.Row p {
+    margin: 0;
+    font-size: .78rem;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    opacity: 1;
+}
+
+.Locked {
+    flex: 0 0 auto;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--color-success);
+}
+
+.Switch {
+    flex: 0 0 auto;
+    position: relative;
+    width: 2.9rem;
+    height: 1.6rem;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid var(--color-border-strong);
+    background: color-mix(in srgb, var(--color-text-primary) 16%, transparent);
+    cursor: pointer;
+}
+
+.Switch span {
+    position: absolute;
+    top: 50%;
+    left: .18rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: var(--color-text-secondary);
+    transform: translateY(-50%);
+    transition: left .18s ease, background .18s ease;
+}
+
+.Switch.On {
+    background: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.Switch.On span {
+    left: calc(100% - 1.28rem);
+    background: #fff;
+}
+
+@media (min-width: 768px) {
+    .Banner {
+        left: auto;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        width: min(26rem, calc(100vw - 3rem));
+    }
+}
+
+@media (max-width: 576px) {
+    .Banner {
+        left: .6rem;
+        right: .6rem;
+        bottom: calc(.6rem + env(safe-area-inset-bottom, 0px));
+        padding: .95rem 1rem;
+    }
+
+    .Copy strong {
+        font-size: .92rem;
+    }
+
+    .Copy p {
+        font-size: .8rem;
+    }
+
+    .Btn {
+        font-size: .82rem;
+        padding: .6rem .7rem;
+    }
+}

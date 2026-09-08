@@ -8,7 +8,17 @@ import Navbar from "@/components/ui/Navbar";
 import PublicFooter from "@/components/ui/PublicFooter";
 import { getNav, getAvailableLangs, getSettings } from "@/lib/data";
 import { SITE_URL, isValidLocale } from "@/lib/site";
+import ConsentBanner from "@/components/consent/ConsentBanner";
 import type { Lang } from "@/lib/supabase/types";
+
+// Consent Mode v2: todo denegado por defecto, antes de que GTM procese
+// ningún tag. wait_for_update da margen a aplicar la preferencia guardada.
+const CONSENT_DEFAULT_SCRIPT =
+  "window.dataLayer=window.dataLayer||[];" +
+  "window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};" +
+  "window.gtag('consent','default'," +
+  "{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied'," +
+  "ad_personalization:'denied',wait_for_update:500});";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -85,11 +95,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script dangerouslySetInnerHTML={{ __html: CONSENT_DEFAULT_SCRIPT }} />
         <GoogleTagManager gtmId="GTM-PXH2J368" />
         <script type="application/ld+json">{JSON.stringify(organization)}</script>
         <Navbar lang={lang} items={nav} langs={langs} />
         {children}
         <PublicFooter lang={lang} nav={nav} settings={settings} />
+        <ConsentBanner lang={lang} />
       </body>
     </html>
   );
