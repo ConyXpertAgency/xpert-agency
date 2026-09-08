@@ -485,34 +485,122 @@
 }
 
 @media (max-width: 768px) {
+    /* Mobile primero convierte: hero > benefits > formulario > contactos. */
+    .Experience {
+        gap: 1.25rem;
+    }
+
+    .Hero {
+        gap: .6rem;
+    }
+
+    .TextH {
+        gap: .35rem;
+    }
+
     .TextH h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.1;
     }
 
     .TextH p {
         width: 100%;
+        line-height: 1.45;
     }
 
     .FeatureList {
         grid-template-columns: 1fr;
+        gap: 0;
     }
 
     .FeatureList li {
         border-right: 0;
         border-bottom: 1px solid var(--surface-border);
-        padding: .7rem 0;
+        padding: .5rem 0;
+        gap: .55rem;
+        align-items: center;
     }
 
     .FeatureList li:last-child {
         border-bottom: 0;
     }
 
+    .FeatureList p {
+        font-size: .85rem;
+    }
+
+    /* Formulario antes que el directorio (solo visual, mismo DOM). */
+    .ContactGrid {
+        gap: 1rem;
+    }
+
+    .ContactGrid > .Right {
+        grid-row: 1;
+    }
+
+    .ContactGrid > .Directory {
+        grid-row: 2;
+    }
+
+    .Directory {
+        gap: .7rem;
+    }
+
     .ContactList {
         grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+
+    .RegionGroup > ul {
+        gap: .5rem;
+    }
+
+    .RegionHeading {
+        margin-bottom: .3rem;
     }
 
     .ContactCard {
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+        gap: .65rem;
+        padding: .6rem 0;
+    }
+
+    .ContactPhoto {
+        flex-basis: 3.2rem;
+        width: 3.2rem;
+        height: 3.2rem;
+    }
+
+    .ContactBody {
+        gap: .15rem;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .ContactName {
+        font-size: .95rem;
+    }
+
+    .ContactMeta,
+    .AddressList {
+        font-size: .82rem;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    .Right {
+        padding: 1rem .9rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .Right header span:last-child h1 {
+        font-size: 1.1rem;
+    }
+
+    .Right header span:last-child p {
+        font-size: .9rem;
     }
 
     .Right form article,
