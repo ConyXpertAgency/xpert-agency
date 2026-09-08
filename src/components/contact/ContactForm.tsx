@@ -29,9 +29,11 @@ const ContactForm = ({
 }: Props) => {
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
     const [error, setError] = useState("");
+    const isSending = status === "sending";
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (isSending) return;
         setStatus("sending");
         setError("");
 
@@ -51,11 +53,11 @@ const ContactForm = ({
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
             });
-            const json = await res.json();
+            const json = await res.json().catch(() => null);
 
-            if (!res.ok) {
+            if (!res.ok || json?.ok !== true) {
                 setStatus("error");
-                setError(json.error || "Something went wrong. Please try again.");
+                setError(json?.error || "Something went wrong. Please try again.");
                 return;
             }
 
@@ -172,6 +174,7 @@ const ContactForm = ({
                             form="contact-form"
                             variant={btn.variant as 'full' | 'outline'}
                             arrow={true}
+                            disabled={isSending}
                         >
                             <RichText>{btn.label}</RichText>
                         </Button>

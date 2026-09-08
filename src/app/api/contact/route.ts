@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
   `;
 
   try {
-    const { error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from,
       to: [recipient],
       replyTo: body.email,
@@ -79,12 +79,15 @@ export async function POST(request: NextRequest) {
       html,
     });
 
-    if (error) {
-      console.error("Resend error:", error);
+    // Éxito solo con receipt explícito de Resend (data.id). Sin id no hay
+    // confirmación de envío, aunque no haya error: se reporta fallo para
+    // no mostrar un éxito falso en la UI.
+    if (error || !data?.id) {
+      console.error("Resend error:", error ?? "missing receipt id");
       return Response.json({ ok: false, error: "Failed to send email" }, { status: 500 });
     }
 
-    return Response.json({ ok: true });
+    return Response.json({ ok: true, id: data.id });
   } catch (err) {
     console.error("Contact route error:", err);
     return Response.json({ ok: false, error: "Failed to send email" }, { status: 500 });
