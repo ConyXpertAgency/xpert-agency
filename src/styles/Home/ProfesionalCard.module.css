@@ -98,7 +98,10 @@
                 text-align: center;
                 white-space: normal;
                 text-wrap: balance;
-                overflow-wrap: normal;
+                /* Compuestos largos (DE: Prozessengineering…) deben partirse
+                   dentro de la celda: sin esto desbordan el grid de 2 cols. */
+                overflow-wrap: anywhere;
+                hyphens: auto;
                 color: var(--expert-accent, var(--color-success));
                 border-color: color-mix(in srgb, var(--expert-accent, var(--color-success)) 42%, transparent);
                 background: color-mix(in srgb, var(--expert-card, #fff) 82%, transparent);

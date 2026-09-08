@@ -508,25 +508,42 @@
         line-height: 1.45;
     }
 
+    /* Trust badges: siempre en una fila (icono + título). */
     .FeatureList {
-        grid-template-columns: 1fr;
-        gap: 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: .6rem;
     }
 
     .FeatureList li {
-        border-right: 0;
-        border-bottom: 1px solid var(--surface-border);
-        padding: .5rem 0;
-        gap: .55rem;
-        align-items: center;
+        border: 0;
+        border-right: 1px solid var(--surface-border);
+        padding: .4rem .6rem .4rem 0;
+        gap: .5rem;
+        align-items: flex-start;
     }
 
     .FeatureList li:last-child {
-        border-bottom: 0;
+        border-right: 0;
+        padding-right: 0;
+    }
+
+    .FeatureList strong {
+        font-size: .82rem;
+        line-height: 1.25;
     }
 
     .FeatureList p {
-        font-size: .85rem;
+        font-size: .78rem;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .FeatureList svg {
+        width: 1.15rem;
+        height: 1.15rem;
     }
 
     /* Formulario antes que el directorio (solo visual, mismo DOM). */
@@ -606,5 +623,30 @@
     .Right form article,
     .Right footer section {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    /* En pantallas pequeñas solo cabe icono + título por badge. */
+    .FeatureList {
+        gap: .4rem;
+    }
+
+    .FeatureList li {
+        padding: .35rem .4rem .35rem 0;
+        gap: .4rem;
+    }
+
+    .FeatureList strong {
+        font-size: .76rem;
+    }
+
+    .FeatureList p {
+        display: none;
+    }
+
+    .FeatureList svg {
+        width: 1rem;
+        height: 1rem;
     }
 }
