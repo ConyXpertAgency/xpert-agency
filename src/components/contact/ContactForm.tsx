@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { sendGTMEvent } from "@next/third-parties/google";
 import Button from '@/components/ui/Button'
 import PictureSvg from '@/components/ui/PictureSvg'
 import RichText from '@/components/ui/RichText'
@@ -74,6 +75,14 @@ const ContactForm = ({
             }
 
             setStatus("success");
+            // Conversión real: solo aquí el API confirmó 200 + { ok: true }.
+            // Sin PII: únicamente nombre del formulario, idioma y región pública.
+            sendGTMEvent({
+                event: "contact_form_submit",
+                form_name: "contact",
+                language: lang,
+                contact_region: selected?.region ?? "",
+            });
             formEl.reset();
         } catch {
             setStatus("error");
