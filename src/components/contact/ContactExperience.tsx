@@ -12,13 +12,14 @@ import type { ContactPage, ContactTeams, RegionalContact } from "@/lib/supabase/
 interface Props {
     pageData: ContactPage;
     teamsData: ContactTeams;
+    lang?: string;
 }
 
 const formatList = (items?: string[]) => items?.filter(Boolean).join(" · ");
 
 const contactLabel = (contact: RegionalContact) => `${contact.region} — ${contact.name}`;
 
-const ContactExperience = ({ pageData, teamsData }: Props) => {
+const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
     const contactGroups = useMemo(
         () => teamsData.items.filter((group) => group.id && group.region && group.contacts.length > 0),
         [teamsData.items]
@@ -129,6 +130,7 @@ const ContactExperience = ({ pageData, teamsData }: Props) => {
                     selectedContactId={selectedContact?.id ?? selectedContactId}
                     onSelectedContactChange={selectContact}
                     getContactLabel={contactLabel}
+                    lang={lang}
                 />
             </section>
         </section>

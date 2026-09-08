@@ -16,7 +16,7 @@ const page = async () => {
     return (
         <main className={`${styles.ContactPage} ${theme.DarkSurface} ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
             <div className={`AppShell ${styles.ContactContent}`}>
-                <ContactExperience pageData={data} teamsData={teams} />
+                <ContactExperience pageData={data} teamsData={teams} lang={lang} />
             </div>
         </main>
     )

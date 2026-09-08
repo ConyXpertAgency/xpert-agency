@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from '@/components/ui/Button'
 import PictureSvg from '@/components/ui/PictureSvg'
 import RichText from '@/components/ui/RichText'
@@ -18,6 +18,7 @@ interface Props {
     selectedContactId?: string;
     onSelectedContactChange?: (contactId: string) => void;
     getContactLabel?: (contact: RegionalContact) => string;
+    lang?: string;
 }
 
 const ContactForm = ({
@@ -26,20 +27,28 @@ const ContactForm = ({
     selectedContactId = "",
     onSelectedContactChange,
     getContactLabel = (contact) => `${contact.region} — ${contact.name}`,
+    lang = "en",
 }: Props) => {
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
     const [error, setError] = useState("");
     const isSending = status === "sending";
+    // Guard síncrono: el estado tarda un render en actualizarse y dos clics
+    // en el mismo tick pasarían el chequeo de arriba. El ref bloquea de inmediato.
+    const sendingRef = useRef(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (isSending) return;
+        if (isSending || sendingRef.current) return;
+        sendingRef.current = true;
         setStatus("sending");
         setError("");
 
         const form = new FormData(e.currentTarget);
+        const selected = contacts.find((c) => c.id === selectedContactId);
         const payload = {
             contactId: form.get("contactId"),
+            contactLabel: selected ? getContactLabel(selected) : "",
+            lang,
             name: form.get("name"),
             cname: form.get("cname"),
             email: form.get("email"),
@@ -66,6 +75,8 @@ const ContactForm = ({
         } catch {
             setStatus("error");
             setError("Something went wrong. Please try again.");
+        } finally {
+            sendingRef.current = false;
         }
     };
 
@@ -167,18 +178,25 @@ const ContactForm = ({
             </form>
             <footer>
                 <section>
-                    {data.buttons.map((btn, i) => (
-                        <Button
-                            key={i}
-                            type="submit"
-                            form="contact-form"
-                            variant={btn.variant as 'full' | 'outline'}
-                            arrow={true}
-                            disabled={isSending}
-                        >
-                            <RichText>{btn.label}</RichText>
-                        </Button>
-                    ))}
+                    {(() => {
+                        // TEMPORAL: un solo submit. "Book a consultation" queda oculto
+                        // hasta tener URL real de booking (no existe en repo ni CMS:
+                        // los botones solo traen {label, variant}). Se renderiza el
+                        // último botón del CMS ("Send message" en en/es/de).
+                        const btn = data.buttons[data.buttons.length - 1];
+                        if (!btn) return null;
+                        return (
+                            <Button
+                                type="submit"
+                                form="contact-form"
+                                variant={btn.variant as 'full' | 'outline'}
+                                arrow={true}
+                                disabled={isSending}
+                            >
+                                <RichText>{btn.label}</RichText>
+                            </Button>
+                        );
+                    })()}
                 </section>
                 <p><PictureSvg icon={IoShieldCheckmarkOutline} /><RichText>{data.trust}</RichText></p>
             </footer>
