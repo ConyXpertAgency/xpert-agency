@@ -16,6 +16,19 @@ export const DEFAULT_LOCALE: SiteLocale = "en";
 
 export const SITE_NAME = "Xpert Agency";
 
+/** Rutas solo en inglés: ES/DE redirigen (308) y los enlaces apuntan a EN. */
+export const ENGLISH_ONLY_PATHS = ["/rbe", "/filling-packaging"] as const;
+
+const isEnglishOnlyPath = (path: string): boolean =>
+  (ENGLISH_ONLY_PATHS as readonly string[]).includes(path);
+
+/** Ruta localizada; las english-only siempre resuelven a /en/... */
+export function localizedPath(lang: string, path: string): string {
+  if (isEnglishOnlyPath(path)) return `/en${path}`;
+  const locale: SiteLocale = isValidLocale(lang) ? lang : DEFAULT_LOCALE;
+  return `/${locale}${path}`;
+}
+
 /** Imagen Open Graph global (1200×630). */
 export const OG_IMAGE_URL = `${SITE_URL}/og/xpert-agency.jpg`;
 export const OG_IMAGE_WIDTH = 1200;
@@ -30,28 +43,33 @@ interface PageMetadataInput {
   path: string;
   title?: string;
   description?: string;
+  /** Solo EN: canonical a sí misma, hreflang en + x-default (sin es/de). */
+  englishOnly?: boolean;
 }
 
 /**
  * Canonical + hreflang EN/ES/DE + x-default y OG básico para una página
  * pública. Todas las URLs salen de SITE_URL (dominio público real).
  */
-export function pageMetadata({ lang, path, title, description }: PageMetadataInput): Metadata {
+export function pageMetadata({ lang, path, title, description, englishOnly }: PageMetadataInput): Metadata {
   const locale: SiteLocale = isValidLocale(lang) ? lang : DEFAULT_LOCALE;
-  const canonical = `${SITE_URL}/${locale}${path}`;
+  const canonical = englishOnly ? `${SITE_URL}/en${path}` : `${SITE_URL}/${locale}${path}`;
   const urlFor = (l: SiteLocale) => `${SITE_URL}/${l}${path}`;
+  const languages = englishOnly
+    ? { en: urlFor("en"), "x-default": urlFor(DEFAULT_LOCALE) }
+    : {
+        en: urlFor("en"),
+        es: urlFor("es"),
+        de: urlFor("de"),
+        "x-default": urlFor(DEFAULT_LOCALE),
+      };
 
   return {
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
     alternates: {
       canonical,
-      languages: {
-        en: urlFor("en"),
-        es: urlFor("es"),
-        de: urlFor("de"),
-        "x-default": urlFor(DEFAULT_LOCALE),
-      },
+      languages,
     },
     openGraph: {
       ...(title ? { title } : {}),

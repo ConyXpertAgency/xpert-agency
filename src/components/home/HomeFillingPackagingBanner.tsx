@@ -3,11 +3,7 @@ import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
 import styles from "@/styles/Home/HomeFillingPackagingBanner.module.css";
 
-interface Props {
-  lang: string;
-}
-
-const HomeFillingPackagingBanner = ({ lang }: Props) => (
+const HomeFillingPackagingBanner = () => (
   <section className={styles.Banner} aria-label="Filling & Packaging">
     <div className={styles.Inner}>
       <div className={styles.Copy}>
@@ -16,7 +12,7 @@ const HomeFillingPackagingBanner = ({ lang }: Props) => (
         <p>
           Explore experience across installation, commissioning, ramp-up, modernization and production performance.
         </p>
-        <Link href={`/${lang}/filling-packaging`} className={styles.Cta}>
+        <Link href="/en/filling-packaging" className={styles.Cta}>
           Explore Filling &amp; Packaging <FaArrowRight />
         </Link>
       </div>

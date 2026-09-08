@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const raw = (await locale()) as string;
   const lang = isValidLocale(raw) ? raw : "en";
   const t = META[lang];
-  return pageMetadata({ lang, path: "/filling-packaging", title: t.title, description: t.description });
+    return pageMetadata({ lang, path: "/filling-packaging", title: t.title, description: t.description, englishOnly: true });
 }
 
 export default async function Page() {
@@ -61,7 +61,7 @@ export default async function Page() {
               <RichText>{data.hero.subtitle}</RichText>
             </p>
             <div className={styles.HeroAlsCta}>
-              <Link href={`/${lang}/filling-packaging#capabilities`}>
+              <Link href="/en/filling-packaging#capabilities">
                 <Button variant="full" arrow>
                   <RichText>{data.hero.ctaPrimary}</RichText>
                 </Button>

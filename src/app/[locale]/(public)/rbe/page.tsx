@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const raw = (await locale()) as string;
   const lang = isValidLocale(raw) ? raw : "en";
   const t = META[lang];
-  return pageMetadata({ lang, path: "/rbe", title: t.title, description: t.description });
+    return pageMetadata({ lang, path: "/rbe", title: t.title, description: t.description, englishOnly: true });
 }
 
 const page = async () => {

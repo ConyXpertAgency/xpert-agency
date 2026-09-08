@@ -45,7 +45,7 @@ export default async function Home() {
       <Second partners={partners} lang={lang} />
       <Third globalReach={globalReach} />
       <Four roles={roles} groups={roles.groups ?? expertiseGroups} lang={lang} />
-      <HomeFillingPackagingBanner lang={lang} />
+      <HomeFillingPackagingBanner />
       <HomeFinalCta lang={lang} data={finalCta} />
     </main>
   );

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import CookieSettingsLink from "@/components/consent/CookieSettingsLink";
 import { getUiCopy } from "@/lib/i18n";
+import { localizedPath } from "@/lib/site";
 import type { Lang, NavItem, Settings } from "@/lib/supabase/types";
 import styles from "@/styles/ui/PublicFooter.module.css";
 
@@ -47,7 +48,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
           <ul>
             {primaryLinks.map((item) => (
               <li key={item.href}>
-                <Link href={`/${lang}${item.href}`}>{item.label}</Link>
+                <Link href={localizedPath(lang, item.href)}>{item.label}</Link>
               </li>
             ))}
           </ul>
@@ -59,7 +60,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
             <ul>
               {serviceLinks.map((item) => (
                 <li key={item.href}>
-                  <Link href={`/${lang}${item.href}`}>{item.label}</Link>
+                  <Link href={localizedPath(lang, item.href)}>{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -69,7 +70,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
         <section className={styles.Group}>
           <strong>{copy.contact}</strong>
           {contactLink && (
-            <Link className={styles.ContactLink} href={`/${lang}${contactLink.href}`}>
+            <Link className={styles.ContactLink} href={localizedPath(lang, contactLink.href)}>
               {contactLink.label} <FaArrowRight />
             </Link>
           )}

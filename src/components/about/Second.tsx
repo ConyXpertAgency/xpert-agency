@@ -1,6 +1,7 @@
 import React from 'react'
 import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
+import { localizedPath } from '@/lib/site'
 import { BiSolidQuoteAltLeft, BiSolidShield } from 'react-icons/bi'
 import { FaRegUser } from 'react-icons/fa'
 import styles from '@/styles/about/Second.module.css'
@@ -25,6 +26,7 @@ const Second = ({ second, heroStats, lang }: SecondProps) => {
         href: '/rbe',
     }
     const normalizedRbeHref = rbeBar.href.startsWith('/') ? rbeBar.href : `/${rbeBar.href}`
+    const rbeHref = normalizedRbeHref.startsWith('/en/') ? normalizedRbeHref : localizedPath(lang, normalizedRbeHref)
     const RbeIcon = rbeBar.icon === 'BiSolidShield' ? BiSolidShield : getIcon(rbeBar.icon)
 
     // Watermark editorial (mismo lenguaje que Expertise/Four): mismo logo
@@ -119,7 +121,7 @@ const Second = ({ second, heroStats, lang }: SecondProps) => {
                             <strong><RichText>{rbeBar.title}</RichText></strong>
                             <p><RichText>{rbeBar.text}</RichText></p>
                         </div>
-                        <a href={`/${lang}${normalizedRbeHref}`} className={styles.RbeCTA}>
+                        <a href={rbeHref} className={styles.RbeCTA}>
                             <RichText>{rbeBar.cta}</RichText>
                         </a>
                     </article>

@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import styles from '@/styles/ui/Navbar.module.css'
 import { FaArrowRight, FaBars, FaTimes } from 'react-icons/fa'
 import { LOCALES } from '@/lib/data'
+import { localizedPath } from '@/lib/site'
 import type { Lang, NavItem } from '@/lib/supabase/types'
 
 interface NavbarProps {
@@ -52,7 +53,7 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
             </Link>
             <ul id={menuId}>
                 {links.map(({ href, label }) => (
-                    <Link key={href} href={`/${lang}${href}`} onClick={() => setIsOpen(false)}>
+                    <Link key={href} href={localizedPath(lang, href)} onClick={() => setIsOpen(false)}>
                         <li className={isActive(href) ? styles.active : undefined}>
                             <strong>{label}</strong>
                         </li>
