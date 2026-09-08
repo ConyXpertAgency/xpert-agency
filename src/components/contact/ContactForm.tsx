@@ -38,12 +38,15 @@ const ContactForm = ({
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // React anula e.currentTarget al terminar el dispatch: se captura
+        // la referencia en síncrono para usarla después de los await.
+        const formEl = e.currentTarget;
         if (isSending || sendingRef.current) return;
         sendingRef.current = true;
         setStatus("sending");
         setError("");
 
-        const form = new FormData(e.currentTarget);
+        const form = new FormData(formEl);
         const selected = contacts.find((c) => c.id === selectedContactId);
         const payload = {
             contactId: form.get("contactId"),
@@ -71,7 +74,7 @@ const ContactForm = ({
             }
 
             setStatus("success");
-            e.currentTarget.reset();
+            formEl.reset();
         } catch {
             setStatus("error");
             setError("Something went wrong. Please try again.");
