@@ -1,5 +1,7 @@
 import { locale } from "next/root-params";
+import type { Metadata } from "next";
 import type { Lang } from "@/lib/supabase/types";
+import { isValidLocale, pageMetadata } from "@/lib/site";
 import theme from "@/styles/theme/SurfaceThemes.module.css";
 import styles from "@/styles/fillingPackaging/FillingPackaging.module.css";
 import Button from "@/components/ui/Button";
@@ -10,6 +12,31 @@ import P14ContactForm from "@/components/fillingPackaging/P14ContactForm";
 import { getFillingPackagingPage } from "@/lib/data";
 import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import Image from "next/image";
+
+const META = {
+  en: {
+    title: "Filling & Packaging Technologies",
+    description:
+      "Filling and packaging line performance: quality, output and ramp-up support for production operations.",
+  },
+  es: {
+    title: "Tecnologías de llenado y empaque",
+    description:
+      "Rendimiento de líneas de llenado y empaque: calidad, producción y acompañamiento en arranque.",
+  },
+  de: {
+    title: "Abfüll- und Verpackungstechnologien",
+    description:
+      "Leistung von Abfüll- und Verpackungslinien: Qualität, Output und Ramp-up-Begleitung.",
+  },
+} as const;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const raw = (await locale()) as string;
+  const lang = isValidLocale(raw) ? raw : "en";
+  const t = META[lang];
+  return pageMetadata({ lang, path: "/filling-packaging", title: t.title, description: t.description });
+}
 
 export default async function Page() {
   const lang = (await locale()) as Lang;

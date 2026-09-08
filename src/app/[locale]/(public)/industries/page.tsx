@@ -1,4 +1,5 @@
 import { locale } from "next/root-params";
+import type { Metadata } from "next";
 import styles from '@/styles/industries/Industries.module.css'
 import PictureSvg from '@/components/ui/PictureSvg'
 import RichText from '@/components/ui/RichText'
@@ -8,8 +9,34 @@ import { GrGroup } from 'react-icons/gr'
 import { FaArrowRight } from 'react-icons/fa'
 import { getIcon } from '@/lib/supabase/icons'
 import { getCasesStudies, getIndustriesPage } from "@/lib/data";
+import { isValidLocale, pageMetadata } from "@/lib/site";
 import type { Lang } from "@/lib/supabase/types";
 import LogoMarquee from "@/components/ui/LogoMarquee";
+
+const META = {
+  en: {
+    title: "Industries",
+    description:
+      "Manufacturing, food & beverage, retail, warehousing & logistics, consumer goods and industrial operations.",
+  },
+  es: {
+    title: "Industrias",
+    description:
+      "Manufactura, alimentos y bebidas, retail, almacenaje y logística, bienes de consumo y operaciones industriales.",
+  },
+  de: {
+    title: "Branchen",
+    description:
+      "Fertigung, Lebensmittel, Handel, Lager & Logistik, Konsumgüter und industrieller Betrieb.",
+  },
+} as const;
+
+export async function generateMetadata(): Promise<Metadata> {
+    const raw = (await locale()) as string;
+    const lang = isValidLocale(raw) ? raw : "en";
+    const t = META[lang];
+    return pageMetadata({ lang, path: "/industries", title: t.title, description: t.description });
+}
 
 const page = async () => {
     const lang = (await locale()) as Lang;

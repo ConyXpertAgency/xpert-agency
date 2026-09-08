@@ -8,10 +8,37 @@ import RichText from '@/components/ui/RichText'
 import Button from '@/components/ui/Button'
 import { getIcon } from '@/lib/supabase/icons'
 import { getServicesPage } from "@/lib/data";
+import { isValidLocale, pageMetadata } from "@/lib/site";
 import { resolveStorageUrl } from "@/lib/supabase/client";
 import type { Lang } from "@/lib/supabase/types";
+import type { Metadata } from "next";
 import ServicesExplorer from '@/components/services/ServicesExplorer'
 import { serviceGroups } from '@/lib/serviceGroups'
+
+const META = {
+  en: {
+    title: "Services",
+    description:
+      "Expert-led transformation: process optimization, automation, project and interim management, lean, supply chain and systems integration.",
+  },
+  es: {
+    title: "Servicios",
+    description:
+      "Transformación liderada por expertos: optimización de procesos, automatización, gestión de proyectos e interina, lean y cadena de suministro.",
+  },
+  de: {
+    title: "Leistungen",
+    description:
+      "Expertengestützte Transformation: Prozessoptimierung, Automatisierung, Projekt- und Interim-Management, Lean und Supply Chain.",
+  },
+} as const;
+
+export async function generateMetadata(): Promise<Metadata> {
+    const raw = (await locale()) as string;
+    const lang = isValidLocale(raw) ? raw : "en";
+    const t = META[lang];
+    return pageMetadata({ lang, path: "/services", title: t.title, description: t.description });
+}
 
 const page = async () => {
     const lang = (await locale()) as Lang;

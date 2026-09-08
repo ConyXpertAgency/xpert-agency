@@ -1,4 +1,5 @@
 import { locale } from "next/root-params";
+import type { Metadata } from "next";
 import CardContent from '@/components/cases/CardContent'
 import CaseStudyList from '@/components/cases/CaseStudyList'
 import ClientExperienceList from '@/components/cases/ClientExperienceList'
@@ -8,8 +9,34 @@ import styles from '@/styles/cases/Cases.module.css'
 import theme from '@/styles/theme/SurfaceThemes.module.css'
 import { getIcon } from '@/lib/supabase/icons'
 import { getCasesClients, getCasesPage, getCasesStudies } from "@/lib/data";
+import { isValidLocale, pageMetadata } from "@/lib/site";
 import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import type { Lang } from "@/lib/supabase/types";
+
+const META = {
+  en: {
+    title: "Cases",
+    description:
+      "Proven impact across industries and challenges: manufacturing and logistics results delivered with our clients.",
+  },
+  es: {
+    title: "Casos",
+    description:
+      "Impacto probado en industrias y retos: resultados en manufactura y logística junto a nuestros clientes.",
+  },
+  de: {
+    title: "Referenzen",
+    description:
+      "Nachgewiesene Wirkung über Branchen und Herausforderungen: Ergebnisse in Fertigung und Logistik.",
+  },
+} as const;
+
+export async function generateMetadata(): Promise<Metadata> {
+    const raw = (await locale()) as string;
+    const lang = isValidLocale(raw) ? raw : "en";
+    const t = META[lang];
+    return pageMetadata({ lang, path: "/cases", title: t.title, description: t.description });
+}
 
 const page = async () => {
     const lang = (await locale()) as Lang;

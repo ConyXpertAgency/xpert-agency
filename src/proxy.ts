@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { LOCALES } from "@/lib/site";
 
-// Cualquier código de locale válido (en, es, de, fr, pt-BR, ...). Los idiomas
-// nuevos creados desde el admin funcionan sin tocar este archivo.
-const LOCALE_RE = /^[a-z]{2,3}(-[a-z]{2})?$/i;
-
+// Idiomas públicos válidos (centralizado en lib/site). Cualquier otro
+// segmento se redirige a /en/... y termina en 404 si la ruta no existe.
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const pathLang = pathname.split("/")[1];
-  if (pathLang && LOCALE_RE.test(pathLang)) {
+  if (pathLang && (LOCALES as readonly string[]).includes(pathLang)) {
     return NextResponse.next();
   }
 
@@ -19,5 +18,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|favicon.ico|api|admin|.*\\..*).*)"],
+  matcher: ["/((?!_next|favicon.ico|robots.txt|sitemap.xml|icon.png|apple-icon.png|manifest.webmanifest|api|admin|.*\\..*).*)"],
 };
