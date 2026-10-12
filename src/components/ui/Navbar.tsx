@@ -49,7 +49,7 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
     return (
         <nav className={styles.Navbar} data-open={isOpen} data-home={localePath === '/'}>
             <Link className={styles.LogoLink} href={`/${lang}`} aria-label="Xpert Agency home">
-                <Image src={"/logo_largo_blanco2.webp"} alt='' width={500} height={50} />
+                <Image src={"/logo_largo_blanco2.webp"} alt='' width={568} height={190} sizes="167px" loading="eager" />
             </Link>
             <ul id={menuId}>
                 {links.map(({ href, label }) => (

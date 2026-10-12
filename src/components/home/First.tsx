@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import type { CSSProperties } from 'react'
+import Image from 'next/image'
+import heroPreview from '@/assets/home-hero-preview.webp'
+import internationalHeroPreview from '@/assets/home-hero-preview-international.webp'
 import React from 'react'
 import Button from '../ui/Button'
 import { IoShieldCheckmarkOutline } from 'react-icons/io5'
@@ -22,12 +24,28 @@ interface FirstProps {
 const First = ({ hero }: FirstProps) => {
     const lines = hero.title.length > 0 ? hero.title : ['Xpert.agency']
     const heroImage = resolveStorageUrl(hero.background_image)
-    const heroStyle = heroImage
-        ? ({ "--hero-bg-image": `url("${heroImage}")` } as CSSProperties)
-        : undefined
+    // This preview belongs only to the approved asset, never to a new CMS image.
+    const preview = heroImage?.endsWith("/uploads/fondo6.png") ? heroPreview
+        : heroImage?.endsWith("/uploads/fondo.png") ? internationalHeroPreview : undefined
 
     return (
-        <header className={styles.First} style={heroStyle}>
+        <header className={styles.First}>
+            {heroImage && (
+                <div className={styles.HeroBackground} aria-hidden="true">
+                    <Image
+                        src={heroImage}
+                        alt=""
+                        fill
+                        // On mobile, cover scales the wide image to the tall hero,
+                        // so its rendered width is larger than the viewport.
+                        sizes="(max-width: 992px) 1800px, 100vw"
+                        preload
+                        fetchPriority="high"
+                        placeholder={preview ? 'blur' : 'empty'}
+                        blurDataURL={preview?.blurDataURL}
+                    />
+                </div>
+            )}
             <section className={styles.Left}>
                 <div className={styles.LeftMain}>
                     <strong className="details"><RichText>{hero.badge}</RichText></strong>

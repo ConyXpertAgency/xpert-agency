@@ -102,6 +102,8 @@ const Second = ({ partners, lang }: SecondProps) => {
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img
                                                 src={visionImage}
+                                                loading="lazy"
+                                                decoding="async"
                                                 alt=""
                                                 aria-hidden="true"
                                             />

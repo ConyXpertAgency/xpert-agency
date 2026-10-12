@@ -83,7 +83,7 @@ const Four = ({ roles, groups, lang }: FourProps) => {
                     <div key={row} className={styles.LogoPatternRow}>
                         {patternCols.map((col) => (
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img key={col} src="/logo_largo_blanco2.webp" alt="" draggable={false} />
+                            <img key={col} src="/logo_largo_blanco2.webp" alt="" width={568} height={190} loading="lazy" decoding="async" draggable={false} />
                         ))}
                     </div>
                 ))}

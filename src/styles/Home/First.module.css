@@ -18,7 +18,7 @@
     overflow: visible;
 }
 
-.First::before,
+.HeroBackground,
 .First::after {
     content: "";
     position: absolute;
@@ -31,11 +31,8 @@
     z-index: -1;
 }
 
-.First::before {
-    background-image: var(--hero-bg-image, none);
-    background-position: center right;
-    background-size: cover;
-    background-repeat: no-repeat;
+.HeroBackground {
+    overflow: hidden;
     filter: saturate(1.02) brightness(1.04);
 }
 
@@ -363,8 +360,7 @@
     pointer-events: none;
 }
 
-/* Both alternating panels occupy the same grid cell. The tallest content
-   reserves space before hydration and during every transition. */
+/* Desktop: both panels share a grid cell and reserve the tallest height. */
 .Right > article > .AnimationCards {
     display: grid;
     position: relative;
@@ -572,13 +568,12 @@
         flex-direction: column;
     }
 
-    .First::before,
+    .HeroBackground,
     .First::after {
         top: -6.7rem;
     }
 
-    .First::before {
-        background-position: center top;
+    .HeroBackground {
         filter: saturate(1.02) brightness(1.03);
     }
 
@@ -673,7 +668,7 @@
         padding-top: 0;
     }
 
-    .First::before,
+    .HeroBackground,
     .First::after {
         top: -5.5rem;
         bottom: -.75rem;
@@ -818,5 +813,88 @@
 
     .Left footer article:nth-child(3) {
         grid-column: 1 / -1;
+    }
+}
+
+.HeroBackground img {
+    object-fit: cover;
+    object-position: center right;
+}
+
+@media (max-width: 992px) {
+    .HeroBackground img { object-position: center top; }
+}
+
+/* Stacked columns: Core focus areas stays in flow and defines the compact
+   shared height, even while transparent. Delivery fills that same space;
+   only opacity changes when the panels alternate. */
+@media (max-width: 992px) {
+    .Right > article > .AnimationCards {
+        display: block;
+        min-height: 0;
+        height: auto;
+        overflow: visible;
+    }
+
+    .Right > article > .AnimationCards > .SecondCard {
+        position: relative;
+        inset: auto;
+        min-height: 0;
+        height: auto;
+        flex: none;
+    }
+
+    .Right > article > .AnimationCards > .FourCard {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        min-height: 0;
+        justify-content: center;
+    }
+
+    .Right > article > .AnimationCards > .FourCard > article {
+        flex: none;
+        min-height: 0;
+        height: auto;
+    }
+
+    .Right > article > .AnimationCards > .FourCard .FourContent {
+        display: grid;
+        grid-template-columns: clamp(104px, 25vw, 160px) minmax(0, 1fr);
+        align-items: center;
+        gap: .75rem;
+    }
+
+    .Right > article > .AnimationCards > .FourCard .mapWrapper {
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 2 / 1;
+        align-self: center;
+    }
+
+    .Right > article > .AnimationCards > .FourCard .mapContainer {
+        width: 100%;
+        aspect-ratio: 2 / 1;
+    }
+
+    .Right > article > .AnimationCards > .FourCard .FourTextColumn {
+        gap: .35rem;
+        min-width: 0;
+    }
+
+    .Right > article > .AnimationCards > .FourCard .FourTextColumn p,
+    .Right > article > .AnimationCards > .FourCard .FourTextColumn a {
+        font-size: .8rem;
+        line-height: 1.35;
+    }
+
+    .Right > article > .AnimationCards > .FourCard .hotspot {
+        width: 6px;
+        height: 6px;
+        box-shadow: 0 0 8px 2px #a3e635;
+    }
+
+    .Right > article > .AnimationCards > .FourCard .mapWrapper::before {
+        background-size: 8px 8px;
     }
 }

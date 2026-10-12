@@ -28,8 +28,11 @@ const AnimationCards = ({ hero }: AnimationCardsProps) => {
     return (
         <section
             className={styles.AnimationCards}
+            data-panel={showFour ? 'delivery' : 'focus'}
         >
             <article
+                aria-hidden={showFour}
+                inert={showFour}
                 className={`${styles.SecondCard} ${showFour ? styles.CardHidden : ''} ${styles.CardRight}`}
             >
                 <h1><RichText>{hero.core_areas_title}</RichText></h1>
@@ -43,6 +46,8 @@ const AnimationCards = ({ hero }: AnimationCardsProps) => {
                 </ul>
             </article>
             <article
+                aria-hidden={!showFour}
+                inert={!showFour}
                 className={`${styles.FourCard} ${showFour ? '' : styles.CardHidden} ${styles.CardRight}`}
             >
                 <article>
