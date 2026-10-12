@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { FaArrowRight, FaCogs, FaProjectDiagram, FaTruckMoving } from 'react-icons/fa'
 import { GiRobotGrab } from 'react-icons/gi'
@@ -20,57 +20,6 @@ interface AnimationCardsProps {
 
 const AnimationCards = ({ hero }: AnimationCardsProps) => {
     const [showFour, setShowFour] = useState(false)
-    const [mounted, setMounted] = useState(false)
-    const [height, setHeight] = useState<number>()
-    const [isDesktop, setIsDesktop] = useState(false)
-    const secondRef = useRef<HTMLElement | null>(null)
-    const fourRef = useRef<HTMLElement | null>(null)
-    const frameRef = useRef(0)
-
-    useEffect(() => {
-        const m = window.matchMedia('(min-width: 993px)')
-        const update = () => setIsDesktop(m.matches)
-        update()
-        m.addEventListener('change', update)
-        return () => m.removeEventListener('change', update)
-    }, [])
-
-    // El contenedor reserva siempre el alto de la card más alta: al cambiar
-    // de card la página no se mueve, solo hay crossfade dentro del hueco.
-    const syncHeight = useCallback(() => {
-        const second = secondRef.current
-        const four = fourRef.current
-        if (!second || !four) return
-        const max = Math.max(
-            second.getBoundingClientRect().height,
-            four.getBoundingClientRect().height,
-        )
-        setHeight(Math.ceil(max))
-    }, [])
-
-    useEffect(() => {
-        const second = secondRef.current
-        const four = fourRef.current
-        if (!second || !four) return
-
-        const observer = new ResizeObserver(syncHeight)
-        observer.observe(second)
-        observer.observe(four)
-
-        return () => observer.disconnect()
-    }, [syncHeight])
-
-    useEffect(() => {
-        const outer = requestAnimationFrame(() => {
-            frameRef.current = requestAnimationFrame(() => {
-                syncHeight()
-                setMounted(true)
-            })
-        })
-        frameRef.current = outer
-        return () => cancelAnimationFrame(frameRef.current)
-    }, [syncHeight])
-
     useEffect(() => {
         const id = window.setInterval(() => setShowFour(value => !value), SWAP_INTERVAL_MS)
         return () => window.clearInterval(id)
@@ -78,11 +27,9 @@ const AnimationCards = ({ hero }: AnimationCardsProps) => {
 
     return (
         <section
-            className={`${styles.AnimationCards} ${mounted ? styles.Mounted : ''}`}
-            style={height !== undefined && !isDesktop ? { height: `${height}px`, transition: 'height .45s ease' } : undefined}
+            className={styles.AnimationCards}
         >
             <article
-                ref={secondRef}
                 className={`${styles.SecondCard} ${showFour ? styles.CardHidden : ''} ${styles.CardRight}`}
             >
                 <h1><RichText>{hero.core_areas_title}</RichText></h1>
@@ -96,7 +43,6 @@ const AnimationCards = ({ hero }: AnimationCardsProps) => {
                 </ul>
             </article>
             <article
-                ref={fourRef}
                 className={`${styles.FourCard} ${showFour ? '' : styles.CardHidden} ${styles.CardRight}`}
             >
                 <article>

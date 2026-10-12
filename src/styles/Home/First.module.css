@@ -11,6 +11,7 @@
     min-height: 0;
     gap: clamp(2rem, 3vw, 3.5rem);
     padding-top: 2.5rem;
+    padding-bottom: 1.5rem;
     align-items: stretch;
     position: relative;
     isolation: isolate;
@@ -54,16 +55,10 @@
     display: flex;
     flex-direction: column;
     width: 52%;
-    gap: .5rem;
-    min-width: 0;
-    flex-direction: column;
-    justify-content: flex-start;
     gap: 1.4rem;
     min-width: 0;
-    min-height: calc(100dvh - 7rem);
-    display: flex;
-    height: max-content;
-
+    min-height: 0;
+    align-self: stretch;
 }
 
 .Left header {
@@ -102,7 +97,8 @@
 
 .Left footer {
     gap: 1rem;
-    margin-top: var(--cta-bottom-gap);
+    margin-top: auto;
+    padding-top: var(--cta-bottom-gap);
     display: flex;
     
 }
@@ -367,24 +363,27 @@
     pointer-events: none;
 }
 
-/* Pre-hidratación la SecondCard define el alto natural (SSR sin saltos).
-   Tras montar, AnimationCards mide la card activa y ambas se superponen
-   con el alto del contenedor animado por inline style. */
-.Mounted .SecondCard,
-.Mounted .FourCard {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-}
-
-.AnimationCards {
+/* Both alternating panels occupy the same grid cell. The tallest content
+   reserves space before hydration and during every transition. */
+.Right > article > .AnimationCards {
+    display: grid;
     position: relative;
     overflow: hidden;
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+.Right > article > .AnimationCards > article {
+    grid-area: 1 / 1;
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    height: auto;
+    flex: none;
+}
+
+.Right > article > section:not(.AnimationCards) {
     flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
 }
 
 .chartContainer {
@@ -596,6 +595,15 @@
     .FirstCard,
     .ThirdCard {
         background: var(--hero-glass-bg-strong);
+    }
+
+    .Left footer {
+        margin-top: var(--cta-bottom-gap);
+        padding-top: 0;
+    }
+
+    .Right > article > section:not(.AnimationCards) {
+        flex: none;
     }
 
     .Left {
