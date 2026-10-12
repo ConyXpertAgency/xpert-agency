@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import CookieSettingsLink from "@/components/consent/CookieSettingsLink";
 import { getUiCopy } from "@/lib/i18n";
-import { localizedPath } from "@/lib/site";
+import { ELMAR_LINKEDIN_URL, localizedPath } from "@/lib/site";
 import type { Lang, NavItem, Settings } from "@/lib/supabase/types";
 import styles from "@/styles/ui/PublicFooter.module.css";
 
@@ -26,12 +26,27 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
   const primaryLinks = nav.filter(
     (item) => item.href !== "/contact" && !serviceHrefs.has(item.href)
   );
-  const socialLinks = [
+  const baseSocialLinks = [
     { label: "LinkedIn", href: settings.linkedin },
     { label: "Facebook", href: settings.facebook },
     { label: "Instagram", href: settings.instagram },
     { label: "Twitter", href: settings.twitter },
   ].filter((item): item is { label: string; href: string } => Boolean(item.href));
+  // Asegurar enlace al LinkedIn de Elmar aunque el CMS no lo tenga configurado.
+  const hasElmarLinkedIn = baseSocialLinks.some((item) =>
+    item.href.includes("linkedin.com/in/elmar-beckord")
+  );
+  const socialLinks = hasElmarLinkedIn
+    ? baseSocialLinks
+    : [
+        ...baseSocialLinks,
+        {
+          label: baseSocialLinks.some((s) => s.label === "LinkedIn")
+            ? "LinkedIn Elmar Beckord"
+            : "LinkedIn",
+          href: ELMAR_LINKEDIN_URL,
+        },
+      ];
 
   return (
     <footer className={styles.PublicFooter}>

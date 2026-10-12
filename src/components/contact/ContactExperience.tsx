@@ -6,6 +6,7 @@ import RichText from "@/components/ui/RichText";
 import ContactForm from "@/components/contact/ContactForm";
 import styles from "@/styles/contact/Contact.module.css";
 import { resolveStorageUrl } from "@/lib/supabase/client";
+import { ELMAR_LINKEDIN_URL } from "@/lib/site";
 import { getIcon } from "@/lib/supabase/icons";
 import type { ContactPage, ContactTeams, RegionalContact } from "@/lib/supabase/types";
 
@@ -16,6 +17,14 @@ interface Props {
 }
 
 const formatList = (items?: string[]) => items?.filter(Boolean).join(" · ");
+
+const getContactLinkedIn = (contact: RegionalContact): string | undefined => {
+    const explicit = contact.linkedin?.trim();
+    if (explicit) return explicit;
+    // Fallback: ficha de Elmar aunque el CMS aún no tenga el campo cargado.
+    if (contact.name.toLowerCase().includes("elmar")) return ELMAR_LINKEDIN_URL;
+    return undefined;
+};
 
 const contactLabel = (contact: RegionalContact) => `${contact.region} — ${contact.name}`;
 
@@ -81,6 +90,7 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                                             const countries = formatList(contact.countries);
                                             const phones = formatList(contact.phones);
                                             const photoSrc = resolveStorageUrl(contact.photo);
+                                            const linkedinUrl = getContactLinkedIn(contact);
 
                                             return (
                                                 <li key={contact.id}>
@@ -112,8 +122,19 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                                                             {phones && <span className={styles.ContactMeta}>{phones}</span>}
                                                             {contact.publicEmail && <span className={styles.ContactMeta}>{contact.publicEmail}</span>}
                                                             {contact.website && <span className={styles.ContactMeta}>{contact.website}</span>}
+
                                                         </span>
                                                     </button>
+                                                            {linkedinUrl && (
+                                                                <a
+                                                                    className={`${styles.ContactMeta} ${styles.ContactLink}`}
+                                                                    href={linkedinUrl}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                >
+                                                                    LinkedIn
+                                                                </a>
+                                                            )}
                                                 </li>
                                             );
                                         })}

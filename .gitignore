@@ -49,3 +49,7 @@ next-env.d.ts
 /public/uploads/*
 *.sql
 generate-redesign-migration.mjs
+
+# Local references, credentials exports, and archived work
+/.local-archive/
+/env.download

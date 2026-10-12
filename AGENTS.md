@@ -7,3 +7,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# Xpert Agency
+
+- Este repositorio pertenece a Xpert Agency, no a Santiago Gym. Contexto: docs/PROJECT.md.
+- Al retomar mantenimiento o preparar una publicación, leer .agents/skills/xpert-maintenance/SKILL.md.
+- Aplicar skills disponibles según la tarea: Supabase para datos/auth/storage; email-best-practices para cambios de correo; OpenAI Docs para configuración de Codex.
+- Mantener EN/ES/DE; /rbe y /filling-packaging son solo EN.
+- No publicar exports de variables, notas ajenas, referencias temporales ni previews de trabajo.

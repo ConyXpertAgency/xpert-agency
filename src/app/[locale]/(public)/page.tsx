@@ -1,8 +1,10 @@
 import { locale } from "next/root-params";
 import type { Metadata } from "next";
 import { First, Four, HomeFinalCta, Second, Third } from "@/components/home";
+import TrustBand from "@/components/home/TrustBand";
 import HomeFillingPackagingBanner from "@/components/home/HomeFillingPackagingBanner";
 import { getHomeFinalCta, getHomeGlobalReach, getHomeHero, getHomePartners, getHomeRoles } from "@/lib/data";
+import { getTrustBandLogos } from "@/lib/industryLogos";
 import { isValidLocale, pageMetadata } from "@/lib/site";
 import { expertiseGroups } from "@/lib/expertiseGroups";
 import type { Lang } from "@/lib/supabase/types";
@@ -22,6 +24,11 @@ const META = {
   },
 } as const;
 
+const TRUST_CAPTION: Record<string, string> = {
+  en: "Trusted across industries",
+  es: "Confianza en distintas industrias",
+  de: "Branchenübergreifendes Vertrauen",
+};
 export async function generateMetadata(): Promise<Metadata> {
   const raw = (await locale()) as string;
   const lang = isValidLocale(raw) ? raw : "en";
@@ -31,17 +38,19 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const lang = (await locale()) as Lang;
 
-  const [hero, partners, globalReach, roles, finalCta] = await Promise.all([
+  const [hero, partners, globalReach, roles, finalCta, trustLogos] = await Promise.all([
     getHomeHero(lang),
     getHomePartners(lang),
     getHomeGlobalReach(lang),
     getHomeRoles(lang),
     getHomeFinalCta(lang),
+    getTrustBandLogos(lang),
   ]);
 
   return (
     <main className="AppShell">
       <First hero={hero} />
+      <TrustBand logos={trustLogos} caption={TRUST_CAPTION[lang] ?? TRUST_CAPTION.en} />
       <Second partners={partners} lang={lang} />
       <Third globalReach={globalReach} />
       <Four roles={roles} groups={roles.groups ?? expertiseGroups} lang={lang} />

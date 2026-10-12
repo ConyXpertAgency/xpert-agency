@@ -128,30 +128,7 @@ export default function AdminApp() {
 
   const restoredRef = useRef(false);
 
-  useEffect(() => {
-    if (restoredRef.current || rows.length === 0) return;
-    restoredRef.current = true;
 
-    const hash = window.location.hash.slice(1);
-    const saved = hash || localStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
-
-    const parsed = decodeSectionId(saved);
-    if (!parsed) return;
-
-    const exists = rows.some(
-      (r) => r.collection === parsed.collection && r.keyname === parsed.keyname && r.lang === parsed.lang
-    );
-    if (exists) {
-      selectSection(parsed.collection, parsed.keyname, parsed.lang);
-    } else {
-      const altExists = rows.some(
-        (r) => r.collection === parsed.collection && r.keyname === parsed.keyname
-      );
-      if (altExists) selectSection(parsed.collection, parsed.keyname);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows]);
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -315,6 +292,37 @@ export default function AdminApp() {
 
     loadTimerRef.current = setTimeout(() => setEditorLoading(false), 350);
   };
+
+  useEffect(() => {
+    if (restoredRef.current || rows.length === 0) return;
+    restoredRef.current = true;
+
+    const hash = window.location.hash.slice(1);
+    const saved = hash || localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+
+    const parsed = decodeSectionId(saved);
+    if (!parsed) return;
+
+    const exists = rows.some(
+      (r) => r.collection === parsed.collection && r.keyname === parsed.keyname && r.lang === parsed.lang
+    );
+    const frame = requestAnimationFrame(() => {
+    if (exists) {
+      selectSection(parsed.collection, parsed.keyname, parsed.lang);
+    } else {
+      const altExists = rows.some(
+        (r) => r.collection === parsed.collection && r.keyname === parsed.keyname
+      );
+      if (altExists) selectSection(parsed.collection, parsed.keyname);
+    }
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      restoredRef.current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows]);
 
   const switchLang = (lang: Lang) => {
     if (!selected) return;

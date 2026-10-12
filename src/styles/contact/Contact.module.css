@@ -294,6 +294,18 @@
     color: var(--surface-muted);
 }
 
+a.ContactLink {
+    color: var(--surface-accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    width: fit-content;
+}
+
+a.ContactLink:hover {
+    opacity: .85;
+}
+
 .AddressList {
     display: flex;
     flex-direction: column;

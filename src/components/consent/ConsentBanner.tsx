@@ -29,7 +29,8 @@ const ConsentBanner = ({ lang }: { lang: string }) => {
       pushConsentUpdate(stored);
       return;
     }
-    setView("banner");
+    const frame = requestAnimationFrame(() => setView("banner"));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   // "Cookie settings" del footer reabre el panel.

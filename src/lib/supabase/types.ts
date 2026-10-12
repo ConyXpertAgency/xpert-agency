@@ -267,6 +267,7 @@ export interface RegionalContact {
   phones?: string[];
   publicEmail?: string;
   website?: string;
+  linkedin?: string;
   recipientKey?: string;
 }
 

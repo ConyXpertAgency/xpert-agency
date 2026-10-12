@@ -446,6 +446,9 @@ const CASE_STUDY_IDS_BY_TITLE: Record<string, string> = {
   "Zeitfracht Medien": "zeitfracht-medien",
   "Weig-Karton": "weig-karton",
   "Kymmene Papier": "kymmene-papier",
+  "Semiconductor - Logistics 2030": "infineon-logistics-2030",
+  "Car Electronics Manufacturing Supply": "continental-car-electronics-supply",
+  "Semiconductor Manufacturing Supply": "rohde-schwarz-semiconductor-supply",
 };
 
 const toCaseStudyId = (title: string, index: number) =>
@@ -476,20 +479,185 @@ const adaptLegacyCaseStudy = (item: Record<string, unknown>, index: number): Cas
   };
 };
 
+/* Casos destacados de Elmar (SELECTED PROJECT EXPERIENCE).
+ * Van debajo de los featured existentes. Logos placeholder en /public/logos/
+ * hasta que Cony pase los oficiales. Trilingüe EN/ES/DE. */
+const ELMAR_FEATURED_CASES: Record<Lang, CaseStudy[]> = {
+  en: [
+    {
+      id: "infineon-logistics-2030",
+      client: "Infineon",
+      title: "Semiconductor - Logistics 2030",
+      industry: "Semiconductor Logistics",
+      country: "Germany · Austria · China (D-A-CN)",
+      logo: "/logos/infineon.webp",
+      project:
+        "Developing logistics concept for inbound & outbound automation, mandatory for all location developments in Europe and China.",
+      results: [
+        "Inbound material handling from reception to warehouse",
+        "Production supply from warehouse to cleanroom manufacturing",
+        "Outbound from cleanroom to shipping buffer",
+      ],
+      featured: true,
+    },
+    {
+      id: "continental-car-electronics-supply",
+      client: "Continental Automotive",
+      title: "Car Electronics Manufacturing Supply",
+      industry: "Automotive Electronics Manufacturing",
+      country: "Regensburg DE · Toulouse FR",
+      logo: "/logos/continental.webp",
+      project:
+        "Developing & realization of automated factory material supply — 2 manufacturing centers / 2 concepts. Planning & project management.",
+      results: [
+        "Fully automated warehouse Regensburg with direct connection to production floors, line supply < 30' from order to launch, return flows included",
+        "Central warehouse Toulouse supplying 3 surrounding plants, direct connection to material buffer (pick to drawer)",
+      ],
+      featured: true,
+    },
+    {
+      id: "rohde-schwarz-semiconductor-supply",
+      client: "Rohde & Schwarz",
+      title: "Semiconductor Manufacturing Supply",
+      industry: "Semiconductor Manufacturing Supply",
+      country: "Memmingen DE",
+      logo: "/logos/rohde-schwarz.svg",
+      project:
+        "Developing & realization of automated factory material supply, new factory automatization concept. Planning & project management.",
+      results: [
+        "Material handover to small bin carousel storage",
+        "Overhead connection to satellite buffers and manufacturing/testing lines",
+        "SMD lines and testing stations supplied directly from buffers",
+      ],
+      featured: true,
+    },
+  ],
+  es: [
+    {
+      id: "infineon-logistics-2030",
+      client: "Infineon",
+      title: "Semiconductores - Logística 2030",
+      industry: "Logística de semiconductores",
+      country: "Alemania · Austria · China (D-A-CN)",
+      logo: "/logos/infineon.webp",
+      project:
+        "Desarrollo del concepto logístico para automatización inbound y outbound, obligatorio para todos los desarrollos de planta en Europa y China.",
+      results: [
+        "Manejo de material inbound desde recepción hasta almacén",
+        "Abastecimiento a producción desde almacén hasta manufactura en sala limpia",
+        "Salida desde sala limpia hasta buffer de embarque",
+      ],
+      featured: true,
+    },
+    {
+      id: "continental-car-electronics-supply",
+      client: "Continental Automotive",
+      title: "Suministro para manufactura de electrónica automotriz",
+      industry: "Manufactura de electrónica automotriz",
+      country: "Regensburg DE · Toulouse FR",
+      logo: "/logos/continental.webp",
+      project:
+        "Desarrollo y realización del suministro automatizado de material a fábrica — 2 centros / 2 conceptos. Planeación y gerencia de proyecto.",
+      results: [
+        "Almacén totalmente automatizado en Regensburg con conexión directa a pisos de producción, suministro a línea < 30' del pedido al lanzamiento, con retornos incluidos",
+        "Almacén central en Toulouse que abastece a 3 plantas cercanas, conexión directa al buffer de material (pick to drawer)",
+      ],
+      featured: true,
+    },
+    {
+      id: "rohde-schwarz-semiconductor-supply",
+      client: "Rohde & Schwarz",
+      title: "Suministro para manufactura de semiconductores",
+      industry: "Suministro para manufactura de semiconductores",
+      country: "Memmingen DE",
+      logo: "/logos/rohde-schwarz.svg",
+      project:
+        "Desarrollo y realización del suministro automatizado de material a fábrica, nuevo concepto de automatización. Planeación y gerencia de proyecto.",
+      results: [
+        "Entrega de material a almacén carrusel de contenedores pequeños",
+        "Conexión elevada a buffers satélite y líneas de manufactura/pruebas",
+        "Líneas SMD y estaciones de prueba abastecidas directo desde buffers",
+      ],
+      featured: true,
+    },
+  ],
+  de: [
+    {
+      id: "infineon-logistics-2030",
+      client: "Infineon",
+      title: "Halbleiter – Logistik 2030",
+      industry: "Halbleiter-Logistik",
+      country: "Deutschland · Österreich · China (D-A-CN)",
+      logo: "/logos/infineon.webp",
+      project:
+        "Entwicklung des Logistikkonzepts für Inbound- und Outbound-Automatisierung, verbindlich für alle Standortentwicklungen in Europa und China.",
+      results: [
+        "Wareneingang und Materialhandling bis zum Lager",
+        "Produktionsversorgung vom Lager bis zur Reinraumfertigung",
+        "Ausgang vom Reinraum bis zum Versandpuffer",
+      ],
+      featured: true,
+    },
+    {
+      id: "continental-car-electronics-supply",
+      client: "Continental Automotive",
+      title: "Materialversorgung Kfz-Elektronikfertigung",
+      industry: "Automobilelektronik-Fertigung",
+      country: "Regensburg DE · Toulouse FR",
+      logo: "/logos/continental.webp",
+      project:
+        "Entwicklung und Realisierung der automatisierten Fabrik-Materialversorgung — 2 Werke / 2 Konzepte. Planung und Projektmanagement.",
+      results: [
+        "Vollautomatisches Lager Regensburg mit direkter Anbindung an die Produktion, Linienversorgung < 30' vom Auftrag bis zur Bereitstellung, inkl. Rückflüsse",
+        "Zentrallager Toulouse versorgt 3 umliegende Werke, direkte Anbindung an den Materialpuffer (Pick to Drawer)",
+      ],
+      featured: true,
+    },
+    {
+      id: "rohde-schwarz-semiconductor-supply",
+      client: "Rohde & Schwarz",
+      title: "Materialversorgung Halbleiterfertigung",
+      industry: "Materialversorgung Halbleiterfertigung",
+      country: "Memmingen DE",
+      logo: "/logos/rohde-schwarz.svg",
+      project:
+        "Entwicklung und Realisierung der automatisierten Fabrik-Materialversorgung, neues Fabrik-Automatisierungskonzept. Planung und Projektmanagement.",
+      results: [
+        "Materialübergabe an Kleinteile-Karusselllager",
+        "Hängende Anbindung an Satellitenpuffer sowie Fertigungs- und Prüflinien",
+        "SMD-Linien und Prüfstationen direkt aus Puffern versorgt",
+      ],
+      featured: true,
+    },
+  ],
+};
+
 export const getCasesStudies = async (lang: Lang): Promise<CasesStudies> => {
+  const mergeElmar = (items: CaseStudy[]): CaseStudy[] => {
+    const ids = new Set(items.map((item) => item.id));
+    const missing = (ELMAR_FEATURED_CASES[lang] ?? ELMAR_FEATURED_CASES.en).filter(
+      (item) => !ids.has(item.id)
+    );
+    // Debajo de los featured existentes, como pidió Cony.
+    return [...items, ...missing];
+  };
+
   const studies = await getContent("cases", "studies", lang);
-  if (studies && Array.isArray(studies.items)) return studies as unknown as CasesStudies;
+  if (studies && Array.isArray(studies.items))
+    return { items: mergeElmar(studies.items as unknown as CaseStudy[]) };
 
   const legacy = await getContent("cases", "items", lang);
   if (legacy && Array.isArray(legacy.items)) {
     return {
-      items: legacy.items
-        .filter((item): item is Record<string, unknown> => item !== null && typeof item === "object" && !Array.isArray(item))
-        .map(adaptLegacyCaseStudy),
+      items: mergeElmar(
+        legacy.items
+          .filter((item): item is Record<string, unknown> => item !== null && typeof item === "object" && !Array.isArray(item))
+          .map(adaptLegacyCaseStudy)
+      ),
     };
   }
 
-  return { items: [] };
+  return { items: mergeElmar([]) };
 };
 
 export const getCasesClients = (lang: Lang) =>
@@ -1065,7 +1233,7 @@ export const getSettings = (lang: Lang) =>
     contact_email: "",
     whatsapp: "",
     facebook: "",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/elmar-beckord-40680333/",
     instagram: "",
     twitter: "",
     theme: {},

@@ -16,6 +16,10 @@ export const DEFAULT_LOCALE: SiteLocale = "en";
 
 export const SITE_NAME = "Xpert Agency";
 
+/** LinkedIn personal de Elmar A. Beckord — usado en footer y contacto. */
+export const ELMAR_LINKEDIN_URL =
+  "https://www.linkedin.com/in/elmar-beckord-40680333/";
+
 /** Rutas solo en inglés: ES/DE redirigen (308) y los enlaces apuntan a EN. */
 export const ENGLISH_ONLY_PATHS = ["/rbe", "/filling-packaging"] as const;
 

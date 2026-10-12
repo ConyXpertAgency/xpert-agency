@@ -15,15 +15,14 @@ interface LogoMarqueeProps {
 const READY_TIMEOUT_MS = 2500;
 
 const LogoMarquee = ({ logos, speed = 28 }: LogoMarqueeProps) => {
-    const [isReady, setIsReady] = useState(false);
+    const [readyKey, setReadyKey] = useState<string | null>(null);
     const marqueeRef = useRef<HTMLDivElement>(null);
     const key = (logos ?? []).join("|");
 
     useEffect(() => {
-        setIsReady(false);
         const root = marqueeRef.current;
         if (!root) {
-            setIsReady(true);
+            queueMicrotask(() => setReadyKey(key));
             return;
         }
         let cancelled = false;
@@ -44,12 +43,11 @@ const LogoMarquee = ({ logos, speed = 28 }: LogoMarqueeProps) => {
         const loads = Promise.allSettled(imgs.map(waitFor));
         const timeout = new Promise((resolve) => setTimeout(resolve, READY_TIMEOUT_MS));
         Promise.race([loads, timeout]).then(() => {
-            if (!cancelled) setIsReady(true);
+            if (!cancelled) setReadyKey(key);
         });
         return () => {
             cancelled = true;
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [key]);
 
     if (!logos || logos.length === 0) return null;
@@ -60,7 +58,7 @@ const LogoMarquee = ({ logos, speed = 28 }: LogoMarqueeProps) => {
         <div className={styles.Marquee} aria-label="Client logos" ref={marqueeRef}>
             <div
                 className={styles.Track}
-                style={{ animationDuration: `${speed}s`, animationPlayState: isReady ? "running" : "paused" }}
+                style={{ animationDuration: `${speed}s`, animationPlayState: readyKey === key ? "running" : "paused" }}
             >
                 {loop.map((src, i) => {
                     const url = resolveStorageUrl(src) ?? src;
