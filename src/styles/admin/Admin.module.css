@@ -91,6 +91,7 @@
 
 /* ── Login ───────────────────────────────────────────── */
 .LoginCard {
+  box-sizing: border-box;
   background: #171c2e;
   border: 1px solid #2a3350;
   border-radius: 14px;
@@ -122,6 +123,52 @@
   padding: 10px 12px;
   color: #e6e9f0;
   font-size: 0.9rem;
+}
+
+.PasswordField {
+  position: relative;
+  margin-top: -8px;
+}
+
+.LoginCard .PasswordField input {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding-right: 110px;
+}
+
+.PasswordToggle {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 96px;
+  border: 0;
+  border-radius: 6px;
+  background: #1b2238;
+  color: #e6e9f0;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.PasswordToggle:hover {
+  background: #22305a;
+}
+
+.PasswordToggle:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.PasswordToggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ── Shell ───────────────────────────────────────────── */

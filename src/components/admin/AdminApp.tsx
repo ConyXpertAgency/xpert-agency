@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import styles from "@/styles/admin/Admin.module.css";
 import { getAdminClient, getAccessToken } from "@/lib/supabase/admin";
 import { updatePath } from "@/lib/dataPath";
@@ -39,6 +40,7 @@ export default function AdminApp() {
   const [rows, setRows] = useState<ContentRow[]>([]);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [loginBusy, setLoginBusy] = useState(false);
 
@@ -165,6 +167,7 @@ export default function AdminApp() {
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
+    setShowPassword(false);
     setAuthError(null);
     setLoginBusy(true);
     try {
@@ -182,6 +185,8 @@ export default function AdminApp() {
       if (!ok) {
         await client.auth.signOut();
         setAuthError("Tu cuenta no tiene acceso al editor. Contacta a soporte para habilitarla.");
+      } else {
+        setLoginPassword("");
       }
     } catch (err) {
       setAuthError(err instanceof Error ? err.message : "Error de login");
@@ -526,17 +531,32 @@ export default function AdminApp() {
               required
             />
           </label>
-          <label>
+          <label htmlFor="admin-login-password">
             <span>Contraseña</span>
+          </label>
+          <div className={styles.PasswordField}>
             <input
-              type="password"
+              id="admin-login-password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
               placeholder="••••••••"
               required
             />
-          </label>
+            <button
+              className={styles.PasswordToggle}
+              type="button"
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              aria-controls="admin-login-password"
+              aria-pressed={showPassword}
+              disabled={loginBusy}
+              onClick={() => setShowPassword((visible) => !visible)}
+            >
+              {showPassword ? <FiEyeOff size={18} aria-hidden="true" /> : <FiEye size={18} aria-hidden="true" />}
+              <span>{showPassword ? "Ocultar" : "Mostrar"}</span>
+            </button>
+          </div>
           {authError && <p className={styles.ErrorText}>{authError}</p>}
           <button className={styles.PrimaryBtn} type="submit" disabled={loginBusy}>
             {loginBusy ? "Entrando…" : "Entrar"}
