@@ -9,6 +9,7 @@ import {
   saveConsent,
 } from "@/lib/consent";
 import styles from "@/styles/consent/Consent.module.css";
+import type { Settings } from "@/lib/supabase/types";
 
 interface Draft {
   analytics: boolean;
@@ -17,8 +18,8 @@ interface Draft {
 
 type View = "banner" | "panel";
 
-const ConsentBanner = ({ lang }: { lang: string }) => {
-  const t = getUiCopy(lang).consent;
+const ConsentBanner = ({ lang, copy }: { lang: string; copy?: Settings["consent"] }) => {
+  const t = { ...getUiCopy(lang).consent, ...copy };
   const [view, setView] = useState<View | null>(null);
   const [draft, setDraft] = useState<Draft>({ analytics: false, marketing: false });
 

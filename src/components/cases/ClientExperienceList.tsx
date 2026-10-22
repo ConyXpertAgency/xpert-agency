@@ -158,6 +158,9 @@ const ClientExperienceList = ({ title, items }: ClientExperienceListProps) => {
                                     {item.industry && (
                                         <p><RichText>{item.industry}</RichText></p>
                                     )}
+                                    {item.note && (
+                                        <p><RichText>{item.note}</RichText></p>
+                                    )}
                                     {type && (
                                         <span><RichText>{type}</RichText></span>
                                     )}

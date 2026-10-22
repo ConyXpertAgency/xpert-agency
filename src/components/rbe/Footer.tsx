@@ -8,6 +8,7 @@ import Link from 'next/link'
 import styles from '@/styles/rbe/Footer.module.css'
 import type { RbeFooter } from '@/lib/supabase/types'
 import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
+import { localizedPath } from '@/lib/site'
 
 interface FooterProps {
     footer: RbeFooter
@@ -34,10 +35,10 @@ const Footer = ({ footer, lang = "" }: FooterProps) => {
                         </span>
                     </article>
                     <div className={styles.FooterCtas}>
-                        <Link href={`/${lang}/contact`}>
-                            <Button arrow={true} variant='full'>Contact Marc</Button>
+                        <Link href={localizedPath(lang, footer.contact_href)}>
+                            <Button arrow={true} variant='full'><RichText>{footer.contact_cta}</RichText></Button>
                         </Link>
-                        <Link href={`/${lang}`}>
+                        <Link href={localizedPath(lang, footer.cta_href)}>
                             <Button arrow={true} variant='outlineG'><RichText>{footer.cta}</RichText></Button>
                         </Link>
                     </div>

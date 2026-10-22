@@ -3,6 +3,8 @@ import { getSupabase, resolveStorageUrl } from "./supabase/client";
 import { DEFAULT_GLOBAL_REACH_NODES } from "./adminSchema";
 import { expertiseGroups } from "./expertiseGroups";
 import { serviceGroups } from "./serviceGroups";
+import { getUiCopy } from "./i18n";
+import { SEO_DEFAULTS, type SeoEntry, type SeoPageKey } from "./seoDefaults";
 import type {
   AboutFirst,
   AboutSecond,
@@ -18,6 +20,8 @@ import type {
   HomeFinalCta,
   HomePartners,
   HomeRoles,
+  HomeTrustBand,
+  HomeFillingBanner,
   IndustriesPage,
   Lang,
   NavItem,
@@ -37,57 +41,85 @@ export const LOCALES: Lang[] = ["en", "es", "de"];
 // Idiomas disponibles en la web: los base + cualquiera que ya tenga contenido
 // creado desde el admin. El navbar y generateStaticParams los consumen, así
 // que un idioma nuevo se vuelve seleccionable apenas tiene un apartado.
-export const getAvailableLangs = cache(async (): Promise<Lang[]> => {
-  try {
-    const client = getSupabase();
-    const { data } = await client.from("content").select("lang");
-    const extra = [...new Set((data ?? []).map((r) => String(r.lang)))].filter(
-      (l) => l && !LOCALES.includes(l)
-    );
-    return [...LOCALES, ...(extra.sort() as Lang[])];
-  } catch {
-    return [...LOCALES];
-  }
-});
+export const getAvailableLangs = cache(async (): Promise<Lang[]> => [...LOCALES]);
 
 async function getRow(
   collection: string,
   keyname: string,
   lang: Lang
 ): Promise<Record<string, unknown> | null> {
-  try {
-    const client = getSupabase();
-    const { data } = await client
-      .from("content")
-      .select("data, lang")
-      .eq("collection", collection)
-      .eq("keyname", keyname)
-      .in("lang", [lang, FALLBACK_LANG]);
+  const client = getSupabase();
+  const { data, error } = await client
+    .from("content")
+    .select("data, lang")
+    .eq("collection", collection)
+    .eq("keyname", keyname)
+    .in("lang", [lang, FALLBACK_LANG]);
 
-    if (!data || data.length === 0) return null;
-    const exact = data.find((r) => r.lang === lang);
-    const fallback = data.find((r) => r.lang === FALLBACK_LANG);
-    return (exact ?? fallback)?.data ?? null;
-  } catch {
-    return null;
+  if (error) {
+    // Keep database failures distinct from an intentionally missing content
+    // row. During static regeneration, throwing preserves the last good page
+    // instead of replacing it with fallback copy.
+    console.error("[CMS] Content read failed", {
+      collection,
+      keyname,
+      lang,
+      code: error.code,
+    });
+    throw error;
   }
+
+  if (!data || data.length === 0) return null;
+  const exact = data.find((r) => r.lang === lang);
+  const fallback = data.find((r) => r.lang === FALLBACK_LANG);
+  return (exact ?? fallback)?.data ?? null;
 }
 
 export const getContent = cache(getRow);
+
+export type ContentReader = (collection: string, keyname: string, lang: Lang) => Promise<Record<string, unknown> | null>;
+
+export async function getPageSeo(lang: Lang, page: SeoPageKey, fallback: SeoEntry = SEO_DEFAULTS[lang][page]): Promise<SeoEntry> {
+  const content = await getContent("settings", "seo", lang);
+  const saved = content?.[page];
+  if (!saved || typeof saved !== "object" || Array.isArray(saved)) return fallback;
+  const values = saved as Partial<SeoEntry>;
+  return {
+    title: typeof values.title === "string" && values.title.trim() ? values.title : fallback.title,
+    description: typeof values.description === "string" && values.description.trim() ? values.description : fallback.description,
+  };
+}
 
 async function getTyped<T>(
   collection: string,
   keyname: string,
   lang: Lang,
-  defaults: T
+  defaults: T,
+  reader: ContentReader = getContent
 ): Promise<T> {
-  const raw = await getContent(collection, keyname, lang);
+  const raw = await reader(collection, keyname, lang);
   if (!raw) return defaults;
-  if (Array.isArray(defaults)) return (Array.isArray(raw) ? raw : defaults) as T;
-  return { ...defaults, ...raw } as T;
+  return mergeContent(defaults, raw);
 }
 
-export const getHomeHero = (lang: Lang) =>
+function mergeContent<T>(defaults: T, raw: unknown): T {
+  if (Array.isArray(defaults)) return (Array.isArray(raw) ? raw : defaults) as T;
+  if (defaults !== null && typeof defaults === "object") {
+    if (raw === null || typeof raw !== "object" || Array.isArray(raw)) return defaults;
+    const source = raw as Record<string, unknown>;
+    const result: Record<string, unknown> = { ...(defaults as Record<string, unknown>), ...source };
+    for (const [key, fallback] of Object.entries(defaults as Record<string, unknown>)) {
+      if (key in source) result[key] = mergeContent(fallback, source[key]);
+    }
+    return result as T;
+  }
+  if (typeof defaults === "string") return (typeof raw === "string" ? raw : defaults) as T;
+  if (typeof defaults === "number") return (typeof raw === "number" && Number.isFinite(raw) ? raw : defaults) as T;
+  if (typeof defaults === "boolean") return (typeof raw === "boolean" ? raw : defaults) as T;
+  return (raw ?? defaults) as T;
+}
+
+export const getHomeHero = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<HomeHero>("home", "hero", lang, {
     badge: "MANUFACTURING & LOGISTICS CONSULTING",
     title: [
@@ -127,9 +159,9 @@ export const getHomeHero = (lang: Lang) =>
       title: "Global project delivery",
       text: "Delivering value across industries and borders.",
     },
-  });
+  }, reader);
 
-export const getHomePartners = (lang: Lang) =>
+export const getHomePartners = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<HomePartners>("home", "partners", lang, {
     badge: "OUR EXPERT NETWORK",
     title: "Partners driving operational excellence.",
@@ -215,9 +247,9 @@ export const getHomePartners = (lang: Lang) =>
       { icon: "GrLineChart", value: "98%", label: "Client satisfaction" },
     ],
     footer: { text: "Looking for a specific expertise?", cta: "Let's connect" },
-  });
+  }, reader);
 
-export const getHomeGlobalReach = (lang: Lang) =>
+export const getHomeGlobalReach = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<HomeGlobalReach>("home", "global_reach", lang, {
     badge: "GLOBAL REACH",
     title: "Delivering impact across borders.",
@@ -249,9 +281,9 @@ export const getHomeGlobalReach = (lang: Lang) =>
     ],
     cta: "Explore our global capabilities",
     nodes: DEFAULT_GLOBAL_REACH_NODES,
-  });
+  }, reader);
 
-export const getHomeRoles = (lang: Lang) =>
+export const getHomeRoles = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<HomeRoles>("home", "roles", lang, {
     badge: "ROLES & CAPABILITIES",
     title: "The expertise to transform operations.",
@@ -279,17 +311,38 @@ export const getHomeRoles = (lang: Lang) =>
       { icon: "BiTargetLock", value: "Tailored matching", label: "Right expert for your challenge", text: "We match expertise to your industry, context and goals." },
       { icon: "IoRocketOutline", value: "Measurable impact", label: "Results that move the needle", text: "Experts focused on delivering outcomes that matter." },
     ],
-  });
+  }, reader);
 
-export const getHomeFinalCta = (lang: Lang) =>
+export const getHomeFinalCta = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<HomeFinalCta>("home", "final_cta", lang, {
     title: "Let's create impact together",
     text: "Partner with us to transform your engineering and operations.",
     cta: "Contact us",
     href: "/contact",
-  });
+  }, reader);
 
-export const getAboutFirst = (lang: Lang) =>
+export const getHomeTrustBand = (lang: Lang, reader: ContentReader = getContent) =>
+  getTyped<HomeTrustBand>("home", "trust_band", lang, {
+    caption: {
+      en: "Trusted across industries",
+      es: "Confianza en distintas industrias",
+      de: "Branchenübergreifendes Vertrauen",
+    }[lang],
+    logos: [],
+    show_logos: true,
+  }, reader);
+
+export const getHomeFillingBanner = (lang: Lang, reader: ContentReader = getContent) =>
+  getTyped<HomeFillingBanner>("home", "filling_banner", lang, {
+    badge: "FILLING & PACKAGING TECHNOLOGIES",
+    title: "Field-proven filling & packaging expertise",
+    text: "Explore experience across installation, commissioning, ramp-up, modernization and production performance.",
+    cta: "Explore Filling & Packaging",
+    href: "/filling-packaging",
+    image: "/filling-packaging/linea_produccion.png",
+  }, reader);
+
+export const getAboutFirst = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<AboutFirst>("about", "first", lang, {
     badge: "| ABOUT XPERT.AGENCY",
     title: "Who we are",
@@ -316,9 +369,9 @@ export const getAboutFirst = (lang: Lang) =>
       title: ["Global perspective.", "Local understanding."],
       text: "We work side by side with our clients to deliver value that transcends borders.",
     },
-  });
+  }, reader);
 
-export const getAboutSecond = (lang: Lang) =>
+export const getAboutSecond = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<AboutSecond>("about", "second", lang, {
     badge: "HOW WE WORK.",
     title: ["A proven methodology.", "Measurable results."],
@@ -377,9 +430,9 @@ export const getAboutSecond = (lang: Lang) =>
       { icon: "FaChartLine", value: "Measurable impact", label: "Data-driven solutions that scale" },
       { icon: "FiUsers", value: "Client partnership", label: "Collaborative approach focused on your success" },
     ],
-  });
+  }, reader);
 
-export const getServicesPage = (lang: Lang) =>
+export const getServicesPage = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<ServicesPage>("services", "page", lang, {
     badge: "AREAS OF EXPERTISE",
     title: "Services",
@@ -407,9 +460,9 @@ export const getServicesPage = (lang: Lang) =>
       text: "Let's discuss how our experts can help you achieve your goals.",
       cta: "Contact us",
     },
-  });
+  }, reader);
 
-export const getIndustriesPage = (lang: Lang) =>
+export const getIndustriesPage = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<IndustriesPage>("industries", "page", lang, {
     badge: "OUR INDUSTRIES",
     title: "Industries.",
@@ -423,13 +476,14 @@ export const getIndustriesPage = (lang: Lang) =>
       { icon: "IoBagHandleOutline", title: "Consumer Goods", text: "Accelerating innovation and ensuring consistency from product development to delivery." },
       { icon: "PiFactoryLight", title: "Industrial Operations", text: "Improving asset performance, safety, and sustainability with data-driven operations." },
     ],
+    marquee_logos: [],
     info_card: {
       title: "Cross-industry expertise. Measurable results.",
       text: "We bring proven frameworks and deep industry knowledge to every engagement — delivering solutions that scale.",
       cta: "View all services",
       cta_href: "/services",
     },
-  });
+  }, reader);
 
 const CASE_STUDY_IDS_BY_TITLE: Record<string, string> = {
   "Pistor AG - Swiss (CH).": "pistor-ag-swiss",
@@ -632,7 +686,7 @@ const ELMAR_FEATURED_CASES: Record<Lang, CaseStudy[]> = {
   ],
 };
 
-export const getCasesStudies = async (lang: Lang): Promise<CasesStudies> => {
+export const getCasesStudies = async (lang: Lang, reader: ContentReader = getContent): Promise<CasesStudies> => {
   const mergeElmar = (items: CaseStudy[]): CaseStudy[] => {
     const ids = new Set(items.map((item) => item.id));
     const missing = (ELMAR_FEATURED_CASES[lang] ?? ELMAR_FEATURED_CASES.en).filter(
@@ -642,11 +696,13 @@ export const getCasesStudies = async (lang: Lang): Promise<CasesStudies> => {
     return [...items, ...missing];
   };
 
-  const studies = await getContent("cases", "studies", lang);
-  if (studies && Array.isArray(studies.items))
-    return { items: mergeElmar(studies.items as unknown as CaseStudy[]) };
+  const studies = await reader("cases", "studies", lang);
+  if (studies && Array.isArray(studies.items)) {
+    const items = studies.items as unknown as CaseStudy[];
+    return { items: studies.include_default_cases === false ? items : mergeElmar(items) };
+  }
 
-  const legacy = await getContent("cases", "items", lang);
+  const legacy = await reader("cases", "items", lang);
   if (legacy && Array.isArray(legacy.items)) {
     return {
       items: mergeElmar(
@@ -660,16 +716,19 @@ export const getCasesStudies = async (lang: Lang): Promise<CasesStudies> => {
   return { items: mergeElmar([]) };
 };
 
-export const getCasesClients = (lang: Lang) =>
-  getTyped<CasesClients>("cases", "clients", lang, { items: [] });
+export const getCasesClients = (lang: Lang, reader: ContentReader = getContent) =>
+  getTyped<CasesClients>("cases", "clients", lang, { items: [] }, reader);
 
-export const getCasesPage = (lang: Lang) =>
+export const getCasesPage = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<CasesPage>("cases", "page", lang, {
     header: {
       badge: "CASES",
       title: "Proven impact across industries and challenges.",
       text: "We partner with organizations worldwide to solve complex operational challenges through integrated improvement, automation, and logistics solutions.",
     },
+    featured_title: { en: "Featured case studies", es: "Casos de éxito destacados", de: "Ausgewählte Fallstudien" }[lang],
+    studies_title: { en: "More case studies", es: "Más casos de éxito", de: "Weitere Fallstudien" }[lang],
+    clients_title: { en: "Clients / Experience", es: "Clientes / Experiencia", de: "Kunden / Erfahrung" }[lang],
     items: [
       {
         title: "NOVENTIS",
@@ -732,9 +791,9 @@ export const getCasesPage = (lang: Lang) =>
         ],
       },
     ],
-  });
+  }, reader);
 
-export const getContactPage = (lang: Lang) =>
+export const getContactPage = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<ContactPage>("contact", "page", lang, {
     badge: "LET'S BUILD WHAT'S NEXT",
     title: "Ready to improve your operations?",
@@ -772,7 +831,7 @@ export const getContactPage = (lang: Lang) =>
       ],
       trust: "We respect your time. No spam, ever.",
     },
-  });
+  }, reader);
 
 const isRegionalContact = (value: unknown): value is ContactTeams["items"][number]["contacts"][number] =>
   Boolean(
@@ -821,13 +880,13 @@ const normalizeContactTeams = (value: unknown): ContactTeams | undefined => {
   return { title, items: Array.from(groups.values()) };
 };
 
-export const getContactTeams = async (lang: Lang): Promise<ContactTeams> => {
-  const teams = await getContent("contact", "teams", lang);
+export const getContactTeams = async (lang: Lang, reader: ContentReader = getContent): Promise<ContactTeams> => {
+  const teams = await reader("contact", "teams", lang);
   const normalizedTeams = normalizeContactTeams(teams);
   if (normalizedTeams) return normalizedTeams;
 
   if (lang !== FALLBACK_LANG) {
-    const fallback = await getContent("contact", "teams", FALLBACK_LANG);
+    const fallback = await reader("contact", "teams", FALLBACK_LANG);
     const normalizedFallback = normalizeContactTeams(fallback);
     if (normalizedFallback) return normalizedFallback;
   }
@@ -835,7 +894,7 @@ export const getContactTeams = async (lang: Lang): Promise<ContactTeams> => {
   return { items: [] };
 };
 
-export const getRbeFirst = async (lang: Lang): Promise<RbeFirst> => {
+export const getRbeFirst = async (lang: Lang, reader: ContentReader = getContent): Promise<RbeFirst> => {
   const d = await getTyped<RbeFirst>("rbe", "first", lang, {
     badge: "Interim Management",
     title: ["Rapid Business Elevating <strong>RBE™</strong>"],
@@ -856,11 +915,11 @@ export const getRbeFirst = async (lang: Lang): Promise<RbeFirst> => {
       { number: "03", title: "PREFORMING", text: "Execute improvements and elevate performance." },
     ],
     image: "/rbe/panel-1.png",
-  });
-  return { ...d, image: "/rbe/panel-1.png" };
+  }, reader);
+  return { ...d, image: resolveStorageUrl(d.image) ?? d.image };
 };
 
-export const getRbeSecond = async (lang: Lang): Promise<RbeSecond> => {
+export const getRbeSecond = async (lang: Lang, reader: ContentReader = getContent): Promise<RbeSecond> => {
   const d = await getTyped<RbeSecond>("rbe", "second", lang, {
     badge: "THE CHALLENGE",
     title: "What are we talking about?",
@@ -887,13 +946,13 @@ export const getRbeSecond = async (lang: Lang): Promise<RbeSecond> => {
       badge: "RBE focus",
       title: "Let us talk about ramp-up with RBE - our solution for risk mitigation.",
     },
-  });
+  }, reader);
   // Resuelve rutas Storage (/uploads/…) a URL pública; lo demás pasa intacto.
   // Ya no se pisa el valor del CMS con un asset local.
   return { ...d, image: resolveStorageUrl(d.image) ?? d.image };
 };
 
-export const getRbeThird = (lang: Lang) =>
+export const getRbeThird = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<RbeThird>("rbe", "third", lang, {
     title: "What can you expect from RBE Interim Management?",
     subtitle: "A well-structured, systematic management approach to success.",
@@ -955,9 +1014,9 @@ export const getRbeThird = (lang: Lang) =>
     footer_title: "RBE 3-PHASE MODEL",
     footer_text:
       "A structured management approach that drives rapid ramp-up, protects value, and delivers measurable impact - fast, safe and sustainable.",
-  });
+  }, reader);
 
-export const getRbeFour = async (lang: Lang): Promise<RbeFour> => {
+export const getRbeFour = async (lang: Lang, reader: ContentReader = getContent): Promise<RbeFour> => {
   const d = await getTyped<RbeFour>("rbe", "four", lang, {
     title: "10+1 Elements for ramp-up with RBE",
     subtitle:
@@ -982,11 +1041,11 @@ export const getRbeFour = async (lang: Lang): Promise<RbeFour> => {
       title: "Improvement Waves",
       text: "Exec-program • Agile projects • Progress awards",
     },
-  });
-  return { ...d, image: "/rbe/panel-4.png" };
+  }, reader);
+  return { ...d, image: resolveStorageUrl(d.image) ?? d.image };
 };
 
-export const getRbeFive = async (lang: Lang): Promise<RbeFive> => {
+export const getRbeFive = async (lang: Lang, reader: ContentReader = getContent): Promise<RbeFive> => {
   const d = await getTyped<RbeFive>("rbe", "five", lang, {
     title: "What does RBE mean?",
     subtitle: "A phased framework that stabilizes operations fast and drives measurable improvement.",
@@ -1013,21 +1072,24 @@ export const getRbeFive = async (lang: Lang): Promise<RbeFive> => {
     ],
     footer_text:
       "RBE closes the gap between planned performance and actual performance.",
-  });
-  return { ...d, image: "/rbe/panel-5.png" };
+  }, reader);
+  return { ...d, image: resolveStorageUrl(d.image) ?? d.image };
 };
 
-export const getRbeFooter = (lang: Lang) =>
+export const getRbeFooter = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<RbeFooter>("rbe", "footer", lang, {
     title: "Contact",
     text: "For ramp-up support, interim management and operational stabilization.",
     contact_name: "Elmar A. Beckord",
     contact_phone: "+49 171 889 2788",
+    contact_cta: "Contact Marc",
+    contact_href: "/contact",
     cta: "Back to site",
+    cta_href: "/",
     year: "2026 RBE",
-  });
+  }, reader);
 
-export const getFillingPackagingPage = (lang: Lang) =>
+export const getFillingPackagingPage = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<FillingPackagingPage>("filling_packaging", "page", lang, {
     hero: {
       badge: "FILLING & PACKAGING",
@@ -1076,6 +1138,7 @@ export const getFillingPackagingPage = (lang: Lang) =>
         { number: "05", title: "PREVENT DOWNTIME", icon: "IoShieldCheckmarkOutline" },
       ],
       supporting: ["Construction", "Commissioning", "Modernization", "Quality", "Improvement"],
+      image: "/filling-packaging/linea_produccion.png",
     },
     foundation: {
       badge: "EXPERIENCE FOUNDATION",
@@ -1199,7 +1262,7 @@ export const getFillingPackagingPage = (lang: Lang) =>
       cta: "Start a conversation",
       href: "/contact",
     },
-  });
+  }, reader);
 
 const NAV_DEFAULTS: NavItem[] = [
   { href: "/", label: "Home" },
@@ -1212,23 +1275,31 @@ const NAV_DEFAULTS: NavItem[] = [
   { href: "/contact", label: "Contact us" },
 ];
 
-export const getNav = async (lang: Lang): Promise<NavItem[]> => {
-  const raw = await getTyped<NavItem[]>("nav", "items", lang, NAV_DEFAULTS);
+export const getNav = async (lang: Lang, reader: ContentReader = getContent): Promise<NavItem[]> => {
+  const saved = await reader("nav", "items", lang);
+  // New editor saves explicitly own the list. Keep the legacy backfill below
+  // only for older rows, so deliberate reordering and removal stay effective.
+  if (saved && !Array.isArray(saved) && saved.editor_managed === true && Array.isArray(saved.items)) {
+    return saved.items as NavItem[];
+  }
+  const raw = await getTyped<NavItem[]>("nav", "items", lang, NAV_DEFAULTS, reader);
   // Supabase may contain stale nav without Filling & Packaging and with hasDropdown — enforce architecture
   let items = Array.isArray(raw) ? [...raw] : [...NAV_DEFAULTS];
+  const configuredFillingPackaging = items.find((it) => it.href === "/filling-packaging");
   // strip false chevrons
-  items = items.map((it) => ({ ...it, hasDropdown: undefined } as NavItem)).filter((it) => it.href !== "/filling-packaging");
+  items = items.map((it) => ({ ...it, hasDropdown: undefined } as NavItem));
+  if (configuredFillingPackaging) return items;
   // re-inject at approved position: after Industries (or after Services if Industries missing)
   const idxIndustries = items.findIndex((it) => it.href === "/industries");
   const insertAt = idxIndustries >= 0 ? idxIndustries + 1 : items.findIndex((it) => it.href === "/cases");
-  const fp: NavItem = { href: "/filling-packaging", label: "Filling & Packaging" };
+  const fp: NavItem = configuredFillingPackaging ?? { href: "/filling-packaging", label: "Filling & Packaging" };
   if (insertAt >= 0) items.splice(insertAt, 0, fp);
   else items.splice(Math.max(0, items.length - 2), 0, fp); // before contact/rbe fallback
   // ensure contact stays last CTA (Navbar splits it)
   return items;
 };
 
-export const getSettings = (lang: Lang) =>
+export const getSettings = (lang: Lang, reader: ContentReader = getContent) =>
   getTyped<Settings>("settings", "general", lang, {
     contact_email: "",
     whatsapp: "",
@@ -1237,4 +1308,13 @@ export const getSettings = (lang: Lang) =>
     instagram: "",
     twitter: "",
     theme: {},
-  });
+    footer: {
+      description: {
+        en: "Experts for integrated manufacturing & logistics improvement",
+        es: "Expertos en mejora integral de manufactura y logística",
+        de: "Experten für integrierte Verbesserung von Fertigung und Logistik",
+      }[lang],
+      ...getUiCopy(lang).footer,
+    },
+    consent: getUiCopy(lang).consent,
+  }, reader);

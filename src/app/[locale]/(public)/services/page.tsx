@@ -7,7 +7,7 @@ import PictureSvg from '@/components/ui/PictureSvg'
 import RichText from '@/components/ui/RichText'
 import Button from '@/components/ui/Button'
 import { getIcon } from '@/lib/supabase/icons'
-import { getServicesPage } from "@/lib/data";
+import { getServicesPage, getPageSeo } from "@/lib/data";
 import { isValidLocale, pageMetadata } from "@/lib/site";
 import { resolveStorageUrl } from "@/lib/supabase/client";
 import type { Lang } from "@/lib/supabase/types";
@@ -36,7 +36,7 @@ const META = {
 export async function generateMetadata(): Promise<Metadata> {
     const raw = (await locale()) as string;
     const lang = isValidLocale(raw) ? raw : "en";
-    const t = META[lang];
+    const t = await getPageSeo(lang, "services", META[lang]);
     return pageMetadata({ lang, path: "/services", title: t.title, description: t.description });
 }
 

@@ -1,44 +1,52 @@
 // Etiquetas y estructura de grupos del editor visual del admin.
+import { getUiCopy } from "./i18n";
+import { SEO_DEFAULTS } from "./seoDefaults";
 
 export const LANGS = ["en", "es", "de"] as const;
 
+export function getSectionLanguages(collection: string): ReadonlyArray<(typeof LANGS)[number]> {
+  return collection === "rbe" || collection === "filling_packaging" ? ["en"] : LANGS;
+}
+
 export const COLLECTION_LABELS: Record<string, string> = {
-  home: "🏠 Home",
-  about: "ℹ️ About",
-  services: "🛠 Services",
-  industries: "🏭 Industries",
-  cases: "📁 Cases",
-  contact: "✉️ Contact",
+  home: "🏠 Inicio",
+  about: "ℹ️ Nosotros",
+  services: "🛠 Servicios",
+  industries: "🏭 Industrias",
+  cases: "📁 Casos",
+  contact: "✉️ Contacto",
   rbe: "⚡ RBE",
   filling_packaging: "🏭 Filling & Packaging",
-  nav: "🧭 Navigation",
-  settings: "⚙️ Settings",
+  nav: "🧭 Navegación",
+  settings: "⚙️ Ajustes",
 };
 
 export const SECTION_LABELS: Record<string, Record<string, string>> = {
   home: {
-    hero: "Hero",
-    partners: "Partners / Experts",
-    global_reach: "Global Reach",
-    roles: "Roles & Capabilities",
-    final_cta: "Final CTA",
+    hero: "Portada",
+    partners: "Red de expertos",
+    global_reach: "Alcance global",
+    roles: "Capacidades",
+    final_cta: "Llamada final",
+    trust_band: "Franja de confianza / logotipos",
+    filling_banner: "Banner de Filling & Packaging",
   },
-  about: { first: "Who we are", second: "How we work" },
-  services: { page: "Services page" },
-  industries: { page: "Industries page" },
-  cases: { page: "Cases page", studies: "Case studies", clients: "Clients / Experience" },
-  contact: { page: "Contact page", teams: "Regional contacts" },
+  about: { first: "Quiénes somos", second: "Cómo trabajamos" },
+  services: { page: "Servicios y categorías" },
+  industries: { page: "Industrias y clientes" },
+  cases: { page: "Encabezados", studies: "Casos de éxito", clients: "Clientes y experiencia" },
+  contact: { page: "Contacto y formulario", teams: "Contactos regionales" },
   rbe: {
-    first: "Hero",
+    first: "Portada",
     second: "The challenge",
     third: "3-phase model",
     four: "10+1 elements",
     five: "What does RBE mean?",
     footer: "Contact / footer",
   },
-  filling_packaging: { page: "Filling & Packaging Page" },
-  nav: { items: "Navigation" },
-  settings: { general: "General settings" },
+  filling_packaging: { page: "Contenido de la página" },
+  nav: { items: "Menú principal" },
+  settings: { general: "Pie, cookies y ajustes", seo: "SEO / metadatos" },
 };
 
 export const SECTION_ORDER = [
@@ -58,7 +66,7 @@ export const SECTION_ORDER = [
 // Todo lo que no esté aquí se considera contenido antiguo / sin uso y se
 // muestra marcado como "deprecated" al final de la barra lateral.
 export const USED_SECTIONS: Record<string, string[]> = {
-  home: ["hero", "partners", "global_reach", "roles", "final_cta"],
+  home: ["hero", "partners", "global_reach", "roles", "trust_band", "filling_banner", "final_cta"],
   about: ["first", "second"],
   services: ["page"],
   industries: ["page"],
@@ -67,8 +75,64 @@ export const USED_SECTIONS: Record<string, string[]> = {
   rbe: ["first", "second", "third", "four", "five", "footer"],
   filling_packaging: ["page"],
   nav: ["items"],
-  settings: ["general"],
+  settings: ["general", "seo"],
 };
+
+export function getInitialSectionData(collection: string, keyname: string, lang: string): Record<string, unknown> | null {
+  if (collection === "settings" && keyname === "seo") {
+    const defaults = JSON.parse(JSON.stringify(SEO_DEFAULTS[lang as keyof typeof SEO_DEFAULTS] ?? SEO_DEFAULTS.en)) as Record<string, unknown>;
+    if (lang !== "en") {
+      delete defaults.rbe;
+      delete defaults.filling_packaging;
+    }
+    return defaults;
+  }
+  if (collection === "settings" && keyname === "general") {
+    const description: Record<string, string> = {
+      en: "Experts for integrated manufacturing & logistics improvement",
+      es: "Expertos en mejora integral de manufactura y logística",
+      de: "Experten für integrierte Verbesserung von Fertigung und Logistik",
+    };
+    const copy = getUiCopy(lang);
+    return {
+      footer: { description: description[lang] ?? description.en, ...copy.footer },
+      consent: copy.consent,
+    };
+  }
+  if (collection !== "home") return null;
+  if (keyname === "trust_band") {
+    const captions: Record<string, string> = {
+      en: "Trusted across industries",
+      es: "Confianza en distintas industrias",
+      de: "Branchenübergreifendes Vertrauen",
+    };
+    return { caption: captions[lang] ?? captions.en, logos: [], show_logos: true };
+  }
+  if (keyname === "filling_banner") {
+    const copy: Record<string, { badge: string; title: string; text: string; cta: string }> = {
+      en: {
+        badge: "FILLING & PACKAGING TECHNOLOGIES",
+        title: "Field-proven filling & packaging expertise",
+        text: "Explore experience across installation, commissioning, ramp-up, modernization and production performance.",
+        cta: "Explore Filling & Packaging",
+      },
+      es: {
+        badge: "TECNOLOGÍAS DE LLENADO Y EMPAQUE",
+        title: "Experiencia comprobada en llenado y empaque",
+        text: "Conoce nuestra experiencia en instalación, puesta en marcha, modernización y mejora del desempeño productivo.",
+        cta: "Explorar Filling & Packaging",
+      },
+      de: {
+        badge: "ABFÜLL- UND VERPACKUNGSTECHNOLOGIEN",
+        title: "Bewährte Expertise für Abfüllung und Verpackung",
+        text: "Erfahrung mit Installation, Inbetriebnahme, Modernisierung und Produktionsleistung.",
+        cta: "Filling & Packaging entdecken",
+      },
+    };
+    return { ...(copy[lang] ?? copy.en), href: "/filling-packaging", image: "/filling-packaging/linea_produccion.png" };
+  }
+  return null;
+}
 
 export function isUsedSection(collection: string, keyname: string): boolean {
   return USED_SECTIONS[collection]?.includes(keyname) ?? false;
@@ -98,7 +162,6 @@ export const ELEMENT_TEMPLATES: Record<string, Record<string, unknown>> = {
   "services:page:groups.*.services": { icon: "", title: "", text: "" },
   "industries:page:items": { icon: "", title: "", text: "", image: "" },
   "cases:page:items": { title: "", slug: "", description: "", stats: [] },
-  "cases:page:items.*.stats": { icon: "", value: "", text: "" },
   "cases:studies:items": {
     id: "",
     slug: "",
@@ -220,6 +283,28 @@ export interface FieldGroup {
 
 // Orden y agrupación de los campos de cada apartado.
 const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
+  "settings:general": [
+    { label: "Contacto y redes", fields: ["contact_email", "whatsapp", "facebook", "linkedin", "instagram", "twitter"] },
+    { label: "Pie global", fields: ["footer"] },
+    { label: "Aviso y preferencias de cookies", fields: ["consent"] },
+  ],
+  "settings:seo": [
+    { label: "Sitio", fields: ["site"] },
+    { label: "Inicio", fields: ["home"] },
+    { label: "Nosotros", fields: ["about"] },
+    { label: "Servicios", fields: ["services"] },
+    { label: "Industrias", fields: ["industries"] },
+    { label: "Casos", fields: ["cases"] },
+    { label: "Contacto", fields: ["contact"] },
+    { label: "RBE", fields: ["rbe"] },
+    { label: "Filling & Packaging", fields: ["filling_packaging"] },
+  ],
+  "home:trust_band": [
+    { label: "Franja de confianza", fields: ["caption", "show_logos", "logos"] },
+  ],
+  "home:filling_banner": [
+    { label: "Banner de Filling & Packaging", fields: ["badge", "title", "text", "cta", "href", "image"] },
+  ],
   "home:hero": [
     { label: "Cabecera", fields: ["badge", "title", "subtitle", "cta_primary", "cta_secondary", "cta_primary_href", "cta_secondary_href"] },
     { label: "Tarjetas de información", fields: ["info_cards"] },
@@ -272,14 +357,13 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
   ],
   "industries:page": [
     { label: "Cabecera", fields: ["badge", "title", "subtitle"] },
+    { label: "Marquee de clientes", fields: ["marquee_logos"] },
     { label: "Industrias", fields: ["items"] },
     { label: "Tarjeta de información", fields: ["info_card"] },
   ],
   "cases:page": [
     { label: "Cabecera", fields: ["header"] },
     { label: "Secciones", fields: ["featured_title", "studies_title", "clients_title"] },
-    { label: "Botones", fields: ["view_all_label", "view_less_label"] },
-    { label: "Casos de éxito legacy", fields: ["items"] },
   ],
   "cases:studies": [
     { label: "Case studies", fields: ["items"] },
@@ -297,7 +381,7 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
     { label: "Contactos regionales", fields: ["items"] },
   ],
   "rbe:first": [
-    { label: "Cabecera", fields: ["badge", "title", "subtitle", "text"] },
+    { label: "Cabecera e imagen", fields: ["badge", "title", "subtitle", "image"] },
     { label: "Botones", fields: ["cta_primary", "cta_primary_href", "cta_secondary", "cta_secondary_href"] },
     { label: "Pilares", fields: ["list"] },
     { label: "Fases (cards)", fields: ["cards"] },
@@ -327,7 +411,7 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
   "rbe:footer": [
     { label: "Tarjeta de contacto", fields: ["title", "text"] },
     { label: "Contacto", fields: ["contact_name", "contact_phone"] },
-    { label: "Botones", fields: ["cta"] },
+    { label: "Botones", fields: ["contact_cta", "contact_href", "cta", "cta_href"] },
     { label: "Pie", fields: ["year"] },
   ],
   "filling_packaging:page": [
@@ -342,6 +426,12 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
 };
 
 const KEY_LABELS: Record<string, string> = {
+  contact_email: "Correo de contacto",
+  whatsapp: "WhatsApp (número con país o enlace)",
+  facebook: "Enlace a Facebook",
+  linkedin: "Enlace a LinkedIn",
+  instagram: "Enlace a Instagram",
+  twitter: "Enlace a X / Twitter",
   badge: "Etiqueta (badge)",
   title: "Título",
   subtitle: "Subtítulo",
@@ -361,6 +451,15 @@ const KEY_LABELS: Record<string, string> = {
   slug: "Slug / etiqueta",
   name: "Nombre",
   logo: "Logo / imagen",
+  marquee_logos: "Logos del marquee",
+  site: "Sitio",
+  home: "Inicio",
+  about: "Nosotros",
+  industries: "Industrias",
+  cases: "Casos",
+  contact: "Contacto",
+  rbe: "RBE",
+  filling_packaging: "Filling & Packaging",
   img: "Imagen",
   image: "Imagen",
   background_image: "Imagen de fondo",
@@ -431,6 +530,8 @@ const KEY_LABELS: Record<string, string> = {
   letter: "Letra",
   contact_name: "Nombre de contacto",
   contact_phone: "Teléfono de contacto",
+  contact_cta: "Texto del botón de contacto",
+  contact_href: "Enlace del botón de contacto",
   year: "Año",
   phases: "Fases",
   phase: "Fase",
@@ -492,8 +593,6 @@ const PATH_LABELS: Record<string, string> = {
   "cases:page:featured_title": "Título destacados",
   "cases:page:studies_title": "Título listado completo",
   "cases:page:clients_title": "Título clientes / experiencia",
-  "cases:page:view_all_label": "Botón ver todos",
-  "cases:page:view_less_label": "Botón ver menos",
   "cases:studies:items.id": "ID técnico (no traducir)",
   "cases:studies:items.slug": "Slug técnico futuro (no traducir)",
   "cases:studies:items.featured": "Destacado (técnico)",
@@ -554,8 +653,8 @@ export function getGroups(collection: string, keyname: string): FieldGroup[] | u
   const base = GROUP_SCHEMAS[`${collection}:${keyname}`];
   if (supportsBackground(collection, keyname)) {
     return [
-      { label: "Fondo", fields: ["background_image", "background_overlay"] },
       ...(base ?? []),
+      { label: "Fondo", fields: ["background_image", "background_overlay"] },
     ];
   }
   return base;

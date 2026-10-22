@@ -8,7 +8,7 @@ import RichText from '@/components/ui/RichText'
 import styles from '@/styles/cases/Cases.module.css'
 import theme from '@/styles/theme/SurfaceThemes.module.css'
 import { getIcon } from '@/lib/supabase/icons'
-import { getCasesClients, getCasesPage, getCasesStudies } from "@/lib/data";
+import { getCasesClients, getCasesPage, getCasesStudies, getPageSeo } from "@/lib/data";
 import { isValidLocale, pageMetadata } from "@/lib/site";
 import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import type { Lang } from "@/lib/supabase/types";
@@ -34,7 +34,7 @@ const META = {
 export async function generateMetadata(): Promise<Metadata> {
     const raw = (await locale()) as string;
     const lang = isValidLocale(raw) ? raw : "en";
-    const t = META[lang];
+    const t = await getPageSeo(lang, "cases", META[lang]);
     return pageMetadata({ lang, path: "/cases", title: t.title, description: t.description });
 }
 
@@ -45,7 +45,7 @@ const page = async () => {
     const clients = await getCasesClients(lang);
     const featuredStudies = studies.items.filter((item) => item.featured);
     const otherStudies = studies.items.filter((item) => !item.featured);
-    const publicClientItems = clients.items.map(({ note: _note, ...item }) => item);
+    const publicClientItems = clients.items;
 
     return (
         <main className={`${styles.CasesPage} ${theme.LightSurface} ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>
@@ -57,6 +57,8 @@ const page = async () => {
                     </article>
                     <p><RichText>{data.header.text}</RichText></p>
                 </header>
+                {featuredStudies.length > 0 && <section>
+                <h2 className={styles.SectionTitle}><RichText>{data.featured_title ?? "Featured case studies"}</RichText></h2>
                 <ul className={styles.Content}>
                     {featuredStudies.map((item) => (
                         <CardContent key={item.id} title={item.title} slug={item.industry} description={item.project} logo={item.logo}>
@@ -69,7 +71,8 @@ const page = async () => {
                         </CardContent>
                     ))}
                 </ul>
-                <CaseStudyList items={otherStudies} />
+                </section>}
+                <CaseStudyList title={data.studies_title ?? "More case studies"} items={otherStudies} />
                 <ClientExperienceList title={data.clients_title ?? "Clients / Experience"} items={publicClientItems} />
             </div>
         </main>

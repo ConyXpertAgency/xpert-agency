@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { getCasesStudies } from "@/lib/data";
+import { getCasesStudies, type ContentReader } from "@/lib/data";
 import type { Lang } from "@/lib/supabase/types";
 
 /**
@@ -9,8 +9,11 @@ import type { Lang } from "@/lib/supabase/types";
  * logos locales + storage) sin tocar esa página: mismos assets,
  * mismos formatos originales, sin marcas inventadas.
  */
-export async function getTrustBandLogos(lang: Lang): Promise<string[]> {
-  const studies = await getCasesStudies(lang);
+export async function getTrustBandLogos(lang: Lang, configuredLogos?: string[], reader?: ContentReader): Promise<string[]> {
+  if (configuredLogos?.length) {
+    return [...new Set(configuredLogos.map((logo) => logo.trim()).filter(Boolean))];
+  }
+  const studies = await getCasesStudies(lang, reader);
   const studyLogosRaw = studies.items
     .map((s) => s.logo)
     .filter((v): v is string => Boolean(v));

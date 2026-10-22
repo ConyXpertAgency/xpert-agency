@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import "@/styles/globals.css";
 import Navbar from "@/components/ui/Navbar";
 import PublicFooter from "@/components/ui/PublicFooter";
-import { getNav, getAvailableLangs, getSettings } from "@/lib/data";
+import { getNav, getAvailableLangs, getSettings, getPageSeo } from "@/lib/data";
 import { SITE_URL, isValidLocale } from "@/lib/site";
 import ConsentBanner from "@/components/consent/ConsentBanner";
 import type { Lang } from "@/lib/supabase/types";
@@ -39,12 +39,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const raw = (await locale()) as string;
   if (!isValidLocale(raw)) notFound();
   const lang = raw;
+  const seo = await getPageSeo(lang, "site");
   return {
     title: {
-      default: "Xpert Agency",
-      template: "%s | Xpert Agency",
+      default: seo.title,
+      template: `%s | ${seo.title}`,
     },
-    description: "Experts for integrated manufacturing & logistics improvement",
+    description: seo.description,
     metadataBase: new URL(SITE_URL),
     openGraph: {
       locale:
@@ -101,7 +102,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Navbar lang={lang} items={nav} langs={langs} />
         {children}
         <PublicFooter lang={lang} nav={nav} settings={settings} />
-        <ConsentBanner lang={lang} />
+        <ConsentBanner lang={lang} copy={settings.consent} />
       </body>
     </html>
   );

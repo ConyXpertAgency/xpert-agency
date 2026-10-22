@@ -5,6 +5,7 @@ import styles from '@/styles/rbe/First.module.css'
 import Image from 'next/image'
 import type { RbeFirst } from '@/lib/supabase/types'
 import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
+import { localizedPath } from '@/lib/site'
 
 interface FirstProps {
     first: RbeFirst
@@ -12,11 +13,7 @@ interface FirstProps {
 }
 
 const First = ({ first, lang = "" }: FirstProps) => {
-    const ctaHref = first.cta_primary_href
-        ? first.cta_primary_href.startsWith('/')
-            ? `${lang}${first.cta_primary_href}`
-            : first.cta_primary_href
-        : `${lang}/rbe`
+    const ctaHref = localizedPath(lang, first.cta_primary_href || '/rbe')
     return (
         <header className={`${styles.Hero} ${sectionBgClass(first)}`} style={sectionBgStyle(first)}>
             <section className={styles.HeroText}>

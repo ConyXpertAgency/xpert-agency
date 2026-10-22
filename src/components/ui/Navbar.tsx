@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import styles from '@/styles/ui/Navbar.module.css'
 import { FaArrowRight, FaBars, FaTimes } from 'react-icons/fa'
 import { LOCALES } from '@/lib/data'
-import { localizedPath } from '@/lib/site'
+import { ENGLISH_ONLY_PATHS, localizedPath } from '@/lib/site'
 import type { Lang, NavItem } from '@/lib/supabase/types'
 
 interface NavbarProps {
@@ -23,6 +23,8 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const localePath = pathname.replace(/^\/[a-z]{2}/, '') || '/'
+    const englishOnly = ENGLISH_ONLY_PATHS.some(path => localePath === path || localePath.startsWith(`${path}/`))
+    const pageLangs = englishOnly ? ['en'] : (langs ?? LOCALES)
     const contact = items.find((i) => i.href === '/contact')
     const links = items.filter((i) => i.href !== '/contact')
 
@@ -32,7 +34,7 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
     const onLangChange = (next: string) => {
         if (next === lang) return
         setIsOpen(false)
-        router.push(`/${next}${localePath}`)
+        router.push(localizedPath(next, localePath))
     }
 
     useEffect(() => {
@@ -69,7 +71,7 @@ const Navbar = ({ lang, items, langs }: NavbarProps) => {
             </ul>
             <section>
                 <select id="lang" value={lang} onChange={(e) => onLangChange(e.target.value)}>
-                    {(langs ?? LOCALES).map((l) => (
+                    {pageLangs.map((l) => (
                         <option key={l} value={l}>{l.toUpperCase()}</option>
                     ))}
                 </select>

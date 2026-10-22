@@ -28,7 +28,11 @@ const isEnglishOnlyPath = (path: string): boolean =>
 
 /** Ruta localizada; las english-only siempre resuelven a /en/... */
 export function localizedPath(lang: string, path: string): string {
-  if (isEnglishOnlyPath(path)) return `/en${path}`;
+  // CMS links may be anchors, external URLs or already include a locale.
+  if ((path && !path.startsWith("/")) || path.startsWith("//")) return path;
+  const unlocalized = path.replace(/^\/(en|es|de)(?=\/|[?#]|$)/, "");
+  if (isEnglishOnlyPath(unlocalized.split(/[?#]/, 1)[0])) return `/en${unlocalized}`;
+  if (unlocalized !== path) return path;
   const locale: SiteLocale = isValidLocale(lang) ? lang : DEFAULT_LOCALE;
   return `/${locale}${path}`;
 }

@@ -17,7 +17,12 @@ const SITE_DESCRIPTION =
   "Experts for integrated manufacturing & logistics improvement";
 
 const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
-  const copy = getUiCopy(lang).footer;
+  const copy = { ...getUiCopy(lang).footer, ...settings.footer };
+  const siteDescription = copy.description || SITE_DESCRIPTION;
+  const whatsapp = settings.whatsapp?.trim();
+  const whatsappHref = whatsapp && /^https?:\/\//i.test(whatsapp)
+    ? whatsapp
+    : whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : undefined;
   const contactLink = nav.find((item) => item.href === "/contact");
   const serviceLinks = nav.filter((item) =>
     ["/services", "/industries", "/filling-packaging", "/cases", "/rbe"].includes(item.href)
@@ -55,7 +60,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
           <Link href={`/${lang}`} aria-label={copy.homeAria}>
             <Image src="/logo_largo_blanco2.webp" alt="Xpert Agency" width={500} height={50} />
           </Link>
-          <p>{SITE_DESCRIPTION}</p>
+          <p>{siteDescription}</p>
         </section>
 
         <nav className={styles.Group} aria-label="Footer navigation">
@@ -92,7 +97,7 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
           {settings.contact_email && (
             <a href={`mailto:${settings.contact_email}`}>{settings.contact_email}</a>
           )}
-          {settings.whatsapp && <a href={settings.whatsapp}>{copy.whatsapp}</a>}
+          {whatsappHref && <a href={whatsappHref}>{copy.whatsapp}</a>}
           {socialLinks.length > 0 && (
             <div className={styles.Socials}>
               {socialLinks.map((item) => (

@@ -2,23 +2,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
 import styles from "@/styles/Home/HomeFillingPackagingBanner.module.css";
+import type { HomeFillingBanner, Lang } from "@/lib/supabase/types";
+import { localizedPath } from "@/lib/site";
 
-const HomeFillingPackagingBanner = () => (
-  <section className={styles.Banner} aria-label="Filling & Packaging">
+const HomeFillingPackagingBanner = ({ data, lang }: { data: HomeFillingBanner; lang: Lang }) => (
+  <section className={styles.Banner} aria-label={data.badge}>
     <div className={styles.Inner}>
       <div className={styles.Copy}>
-        <strong className="details">FILLING & PACKAGING TECHNOLOGIES</strong>
-        <h2>Field-proven filling &amp; packaging expertise</h2>
-        <p>
-          Explore experience across installation, commissioning, ramp-up, modernization and production performance.
-        </p>
-        <Link href="/en/filling-packaging" className={styles.Cta}>
-          Explore Filling &amp; Packaging <FaArrowRight />
+        <strong className="details">{data.badge}</strong>
+        <h2>{data.title}</h2>
+        <p>{data.text}</p>
+        <Link href={localizedPath(lang, data.href)} className={styles.Cta}>
+          {data.cta} <FaArrowRight />
         </Link>
       </div>
       <div className={styles.Visual} aria-hidden="true">
         <Image
-          src="/filling-packaging/linea_produccion.png"
+          src={data.image}
           alt=""
           width={800}
           height={500}

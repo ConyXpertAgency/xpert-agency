@@ -108,6 +108,32 @@
   justify-content: center;
 }
 
+.HeroFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.HeroFacts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.HeroFacts strong {
+  color: var(--color-text-inverse);
+  font-size: 1.15rem;
+}
+
+.HeroFacts span {
+  color: var(--color-text-inverse);
+  opacity: 0.78;
+  font-size: 0.8rem;
+}
+
 .HeroAlsCta :global(a) {
   display: inline-flex;
 }

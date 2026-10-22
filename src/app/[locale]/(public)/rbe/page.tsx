@@ -6,7 +6,7 @@ import Footer from '@/components/rbe/Footer'
 import Four from '@/components/rbe/Four'
 import Second from '@/components/rbe/Second'
 import Third from '@/components/rbe/Third'
-import { getRbeFirst, getRbeSecond, getRbeThird, getRbeFour, getRbeFive, getRbeFooter } from "@/lib/data";
+import { getRbeFirst, getRbeSecond, getRbeThird, getRbeFour, getRbeFive, getRbeFooter, getPageSeo } from "@/lib/data";
 import { isValidLocale, pageMetadata } from "@/lib/site";
 import type { Lang } from "@/lib/supabase/types";
 
@@ -31,7 +31,7 @@ const META = {
 export async function generateMetadata(): Promise<Metadata> {
   const raw = (await locale()) as string;
   const lang = isValidLocale(raw) ? raw : "en";
-  const t = META[lang];
+  const t = await getPageSeo(lang, "rbe", META[lang]);
     return pageMetadata({ lang, path: "/rbe", title: t.title, description: t.description, englishOnly: true });
 }
 

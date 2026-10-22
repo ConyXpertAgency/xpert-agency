@@ -1,7 +1,7 @@
 import { locale } from "next/root-params";
 import type { Metadata } from "next";
 import { First, Second } from '@/components/about'
-import { getAboutFirst, getAboutSecond } from "@/lib/data";
+import { getAboutFirst, getAboutSecond, getPageSeo } from "@/lib/data";
 import { isValidLocale, pageMetadata } from "@/lib/site";
 import type { Lang } from "@/lib/supabase/types";
 
@@ -26,7 +26,7 @@ const META = {
 export async function generateMetadata(): Promise<Metadata> {
   const raw = (await locale()) as string;
   const lang = isValidLocale(raw) ? raw : "en";
-  const t = META[lang];
+  const t = await getPageSeo(lang, "about", META[lang]);
   return pageMetadata({ lang, path: "/about", title: t.title, description: t.description });
 }
 

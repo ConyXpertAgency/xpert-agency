@@ -7,6 +7,7 @@ import type { CaseStudy } from '@/lib/supabase/types'
 import RichText from '../ui/RichText'
 
 interface CaseStudyListProps {
+    title: string
     items: CaseStudy[]
 }
 
@@ -23,7 +24,7 @@ const columnClass = (index: number) => {
     return styles.CenterColumn
 }
 
-const CaseStudyList = ({ items }: CaseStudyListProps) => {
+const CaseStudyList = ({ title, items }: CaseStudyListProps) => {
     const [activeId, setActiveId] = useState<string | null>(null)
     const [pinnedId, setPinnedId] = useState<string | null>(null)
     const [placement, setPlacement] = useState<Placement>("bottom")
@@ -93,7 +94,8 @@ const CaseStudyList = ({ items }: CaseStudyListProps) => {
     }
 
     return (
-        <section className={styles.Section} ref={rootRef} aria-label="Additional case studies">
+        <section className={styles.Section} ref={rootRef} aria-label={title}>
+            <h2 className={styles.Title}><RichText>{title}</RichText></h2>
             <ul className={styles.List}>
                 {items.map((item, index) => {
                     const isActive = activeId === item.id

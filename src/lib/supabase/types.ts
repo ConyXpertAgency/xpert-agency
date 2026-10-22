@@ -1,9 +1,8 @@
 import type { ServiceGroup } from "../serviceGroups";
 import type { ExpertiseGroup } from "../expertiseGroups";
 
-// Idiomas base del sitio. Se mantiene la unión literal para autocomplete,
-// pero se acepta cualquier código nuevo creado desde el admin (fr, pt, ...).
-export type Lang = "en" | "es" | "de" | (string & {});
+// Idiomas admitidos por el sitio y por el CMS.
+export type Lang = "en" | "es" | "de";
 
 export interface ContentRow {
   collection: string;
@@ -11,6 +10,9 @@ export interface ContentRow {
   lang: Lang;
   data: Record<string, unknown>;
   order_index?: number;
+  /** Editor response only: no row has been saved for this locale yet. */
+  is_default?: boolean;
+  copied_from?: Lang;
 }
 
 export interface TextItem {
@@ -119,6 +121,21 @@ export interface HomeFinalCta {
   href: string;
 }
 
+export interface HomeTrustBand {
+  caption: string;
+  logos: string[];
+  show_logos: boolean;
+}
+
+export interface HomeFillingBanner {
+  badge: string;
+  title: string;
+  text: string;
+  cta: string;
+  href: string;
+  image: string;
+}
+
 /* ───────────────────────────── About ───────────────────────────── */
 
 export interface AboutFirst extends SectionBackground {
@@ -175,6 +192,7 @@ export interface IndustriesPage extends SectionBackground {
   title: string;
   subtitle: string;
   items: IndustryItem[];
+  marquee_logos?: string[];
   info_card: { title: string; text: string; cta: string; cta_href: string };
 }
 
@@ -385,7 +403,10 @@ export interface RbeFooter extends SectionBackground {
   text: string;
   contact_name: string;
   contact_phone: string;
+  contact_cta: string;
+  contact_href: string;
   cta: string;
+  cta_href: string;
   year: string;
 }
 
@@ -429,6 +450,7 @@ export interface FillingPackagingPage extends SectionBackground {
     subtitle: string;
     steps: TextItem[];
     supporting: string[];
+    image?: string;
   };
   foundation: {
     badge: string;
@@ -464,4 +486,29 @@ export interface Settings {
   instagram?: string;
   twitter?: string;
   theme?: Record<string, string>;
+  footer?: Partial<{
+    description: string;
+    navigation: string;
+    expertise: string;
+    contact: string;
+    whatsapp: string;
+    homeAria: string;
+    aiDisclosure: string;
+    cookieSettings: string;
+  }>;
+  consent?: Partial<{
+    title: string;
+    text: string;
+    acceptAll: string;
+    reject: string;
+    customize: string;
+    save: string;
+    necessary: string;
+    necessaryDesc: string;
+    alwaysOn: string;
+    analytics: string;
+    analyticsDesc: string;
+    marketing: string;
+    marketingDesc: string;
+  }>;
 }

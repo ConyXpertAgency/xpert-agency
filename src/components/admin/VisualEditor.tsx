@@ -23,6 +23,15 @@ const isImageValue = (v: unknown): boolean =>
 // aunque estén vacías, y abren el modal de imágenes al añadir un elemento nuevo.
 const IMAGE_FIELD_KEYS = new Set(["logo", "image", "img", "background_image", "focus_image"]);
 
+// Preserve older stored values while showing only fields used by the current page.
+const UNUSED_FIELD_PATHS: Record<string, string[]> = {
+  "rbe/first": ["list.*.icon", "list.*.text"],
+  "rbe/third": ["phases.*.icon", "phases.*.subtitle"],
+  "rbe/four": ["left.*.icon", "right.*.icon", "extra.icon"],
+  "filling_packaging/page": ["international.nodes", "capabilities.steps.*.icon", "capabilities.steps.*.number"],
+  "nav/items": ["*.hasDropdown"],
+};
+
 const roleFor = (key: string): Role => {
   if (key === "badge") return "badge";
   if (/href|url|link/.test(key)) return "link";
@@ -55,6 +64,10 @@ const VisualEditor = ({
   keyname,
 }: VisualEditorProps) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const [openCards, setOpenCards] = useState<Record<string, boolean>>({});
+  const isHiddenField = (path: string[]) => (UNUSED_FIELD_PATHS[`${collection}/${keyname}`] ?? [])
+    .includes(path.map((part) => /^\d+$/.test(part) ? "*" : part).join("."));
 
   const patch = (path: string[], next: unknown) => {
     onChange(updatePath(value, path, next) as Record<string, unknown>);
@@ -71,32 +84,6 @@ const VisualEditor = ({
     if (target < 0 || target >= next.length) return;
     [next[index], next[target]] = [next[target], next[index]];
     patch(path, next);
-  };
-
-  const addField = (path: string[]) => {
-    const key = window.prompt("Nuevo campo (nombre):")?.trim();
-    if (!key) return;
-    if (!/^[a-zA-Z0-9_]+$/.test(key)) {
-      window.alert("El nombre solo puede contener letras, números y guiones bajos.");
-      return;
-    }
-    const node = getAtPath(value, path);
-    if (node === null || typeof node !== "object" || Array.isArray(node)) return;
-    const obj = node as Record<string, unknown>;
-    if (key in obj) {
-      window.alert("Ese campo ya existe en este objeto.");
-      return;
-    }
-    const type = (
-      window.prompt(`Tipo para "${key}" (texto, numero, booleano, lista, objeto):`, "texto") ??
-      "texto"
-    ).trim();
-    let initial: unknown = "";
-    if (/^num(e|ero)?$/.test(type)) initial = 0;
-    else if (/^bool(eano)?$/.test(type)) initial = false;
-    else if (/^(lista|array)$/.test(type)) initial = [];
-    else if (/^(objeto|object)$/.test(type)) initial = {};
-    patch(path, { ...obj, [key]: initial });
   };
 
   const label = (path: string[]): string => fieldLabel(collection, keyname, path) ?? path[path.length - 1];
@@ -116,7 +103,11 @@ const VisualEditor = ({
   };
 
   const renderArray = (arr: unknown[], key: string, path: string[]) => {
-    const allStrings = arr.every((v) => typeof v === "string");
+    const template = getElementTemplate(collection, keyname, path);
+    const allStrings = arr.length === 0 ? !template : arr.every((v) => typeof v === "string");
+    const isLogoList =
+      (collection === "home" && keyname === "trust_band" && path.join(".") === "logos") ||
+      (collection === "industries" && keyname === "page" && path.join(".") === "marquee_logos");
     return (
       <div className={styles.VArray}>
         <span className={styles.VKey}>
@@ -131,6 +122,16 @@ const VisualEditor = ({
                   onChange={(next) => patch([...path, String(i)], next)}
                   role="p"
                 />
+                {isLogoList && (
+                  <button
+                    className={styles.ImageBtn}
+                    onClick={() => onUploadImage([...path, String(i)])}
+                    title="Seleccionar o subir este logo"
+                    aria-label={`Seleccionar o subir logo ${i + 1}`}
+                  >
+                    Imagen
+                  </button>
+                )}
                 <button
                   className={styles.SettingsBtn}
                   onClick={() => onOpenSettings([...path, String(i)], item as string)}
@@ -163,8 +164,15 @@ const VisualEditor = ({
                 </button>
               </div>
             ))}
-            <button className={styles.AddBtn} onClick={() => patch(path, [...arr, ""])}>
-              + añadir línea
+            <button
+              className={styles.AddBtn}
+              onClick={() => {
+                const index = arr.length;
+                patch(path, [...arr, ""]);
+                if (isLogoList) onUploadImage([...path, String(index)]);
+              }}
+            >
+              {isLogoList ? "+ añadir logo" : "+ añadir línea"}
             </button>
           </>
         ) : (
@@ -174,12 +182,20 @@ const VisualEditor = ({
                 typeof item === "object" && item !== null ? (item as Record<string, unknown>) : null;
               const display =
                 (obj && (String(obj.title ?? obj.name ?? obj.slug ?? obj.label ?? "")).trim()) || `Elemento ${i + 1}`;
+              const cardId = `${path.join(".")}.${i}`;
+              const cardOpen = openCards[cardId] ?? i === 0;
               return (
                 <div key={`${lang}-${i}`} className={styles.VCard}>
                   <header className={styles.VCardHeader}>
-                    <span>
-                      {display} <em>[{i}]</em>
-                    </span>
+                    <button
+                      type="button"
+                      className={styles.VCardToggle}
+                      aria-expanded={cardOpen}
+                      onClick={() => setOpenCards((prev) => ({ ...prev, [cardId]: !cardOpen }))}
+                    >
+                      <span>{display} <em>[{i}]</em></span>
+                      <span aria-hidden="true">{cardOpen ? "−" : "+"}</span>
+                    </button>
                     <div className={styles.VCardActions}>
                       <button
                         className={styles.ArrowBtn}
@@ -202,7 +218,7 @@ const VisualEditor = ({
                       </button>
                     </div>
                   </header>
-                  {renderNode(item, [...path, String(i)])}
+                  {cardOpen && renderNode(item, [...path, String(i)])}
                 </div>
               );
             })}
@@ -219,6 +235,7 @@ const VisualEditor = ({
   };
 
   const renderLeaf = (key: string, val: unknown, path: string[]): React.ReactNode => {
+    if (isHiddenField(path)) return null;
     if (collection === "home" && keyname === "global_reach" && key === "nodes" && Array.isArray(val)) {
       return (
         <div className={styles.VField}>
@@ -231,7 +248,14 @@ const VisualEditor = ({
         </div>
       );
     }
-    if (typeof val === "string" && key !== "icon" && (IMAGE_FIELD_KEYS.has(key) || isImageValue(val))) {
+    const isRbeFocusImage =
+      collection === "rbe" &&
+      keyname === "second" &&
+      path.join(".") === "focus.icon";
+    if (
+      typeof val === "string" &&
+      (isRbeFocusImage || (key !== "icon" && (IMAGE_FIELD_KEYS.has(key) || isImageValue(val))))
+    ) {
       const url = resolveStorageUrl(val);
       const emptyLabel = key === "background_image" ? "sin imagen de fondo" : "sin imagen";
       const actionLabel =
@@ -355,9 +379,6 @@ const VisualEditor = ({
         {Object.entries(obj).map(([k, v]) => (
           <div key={k}>{renderLeaf(k, v, [...path, k])}</div>
         ))}
-        <button className={styles.AddBtn} onClick={() => addField(path)}>
-          + añadir campo
-        </button>
       </>
     );
   };
@@ -367,7 +388,18 @@ const VisualEditor = ({
   );
 
   const isRootArray = Array.isArray(value);
-  const topKeys = isRootArray ? [] : Object.keys(value);
+  const ignoredRootKeys = new Set(["width", "height", "include_default_cases"]);
+  const unusedFields: Record<string, string[]> = {
+    "cases/page": ["items", "view_all_label", "view_less_label"],
+    "rbe/first": ["text", "cards", "cta_secondary", "cta_secondary_href"],
+    "settings/general": ["theme"],
+  };
+  for (const key of unusedFields[`${collection}/${keyname}`] ?? []) ignoredRootKeys.add(key);
+  if (collection === "settings" && keyname === "seo" && lang !== "en") {
+    ignoredRootKeys.add("rbe");
+    ignoredRootKeys.add("filling_packaging");
+  }
+  const topKeys = isRootArray ? [] : Object.keys(value).filter((key) => !ignoredRootKeys.has(key));
   const groups = getGroups(collection, keyname);
   const usedKeys = new Set<string>();
   const sections: { label: string; keys: string[] }[] = [];
@@ -390,20 +422,26 @@ const VisualEditor = ({
       ) : (
         <>
           {sections.length === 0 && <p className={styles.Muted}>Este apartado está vacío todavía.</p>}
-          {sections.map((s) => (
+          {sections.map((s, index) => {
+            const isOpen = openSections[s.label] ?? index === 0;
+            return (
             <section key={s.label} className={styles.VSection}>
               <header className={styles.VSectionHeader}>
-                <strong>{s.label}</strong>
-                <span>{s.keys.length} campos</span>
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenSections((prev) => ({ ...prev, [s.label]: !isOpen }))}
+                >
+                  <strong>{s.label}</strong>
+                  <span>{s.keys.length} campos</span>
+                  <span aria-hidden="true">{isOpen ? "−" : "+"}</span>
+                </button>
               </header>
-              <div className={styles.VSectionBody}>
+              {isOpen && <div className={styles.VSectionBody}>
                 {s.keys.map((k) => renderField(k, value[k], []))}
-              </div>
+              </div>}
             </section>
-          ))}
-          <button className={styles.AddBtn} onClick={() => addField([])}>
-            + añadir campo
-          </button>
+          );})}
         </>
       )}
     </div>

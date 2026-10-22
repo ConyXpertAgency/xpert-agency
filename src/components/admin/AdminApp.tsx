@@ -5,7 +5,7 @@ import styles from "@/styles/admin/Admin.module.css";
 import { getAdminClient, getAccessToken } from "@/lib/supabase/admin";
 import { updatePath } from "@/lib/dataPath";
 import { insertAtSelection, wrapActiveSelection } from "@/lib/adminFormat";
-import { COLLECTION_LABELS, DEFAULT_GLOBAL_REACH_NODES, LANGS, SECTION_LABELS, SECTION_ORDER, USED_SECTIONS, isUsedSection, supportsBackground } from "@/lib/adminSchema";
+import { COLLECTION_LABELS, DEFAULT_GLOBAL_REACH_NODES, getInitialSectionData, getSectionLanguages, LANGS, SECTION_LABELS, SECTION_ORDER, USED_SECTIONS, isUsedSection, supportsBackground } from "@/lib/adminSchema";
 import type { Lang, ContentRow } from "@/lib/supabase/types";
 import IconPickerModal from "./IconPickerModal";
 import ImageUploadModal from "./ImageUploadModal";
@@ -25,10 +25,12 @@ function encodeSectionId(collection: string, keyname: string, lang: string): str
   return `${collection}${SECTION_ID_SEP}${keyname}${SECTION_ID_SEP}${lang}`;
 }
 
-function decodeSectionId(id: string): { collection: string; keyname: string; lang: string } | null {
+function decodeSectionId(id: string): { collection: string; keyname: string; lang: Lang } | null {
   const parts = id.split(SECTION_ID_SEP);
-  if (parts.length !== 3 || !parts[0] || !parts[1] || !parts[2]) return null;
-  return { collection: parts[0], keyname: parts[1], lang: parts[2] };
+  if (parts.length !== 3 || !parts[0] || !parts[1]) return null;
+  const lang = LANGS.find((supported) => supported === parts[2]);
+  if (!lang) return null;
+  return { collection: parts[0], keyname: parts[1], lang };
 }
 
 export default function AdminApp() {
@@ -59,14 +61,32 @@ export default function AdminApp() {
   const [opacity, setOpacity] = useState("0.6");
   const [color, setColor] = useState("#05154B");
 
-  const [showNewLang, setShowNewLang] = useState(false);
-  const [newLangCode, setNewLangCode] = useState("");
-  const [langNotice, setLangNotice] = useState<string | null>(null);
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarQuery, setSidebarQuery] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const [editorLoading, setEditorLoading] = useState(false);
   const loadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [baseline, setBaseline] = useState("{}");
+  const hasUnsavedChanges = Boolean(selected) && (
+    JSON.stringify(data) !== baseline ||
+    (jsonView && jsonDraft !== JSON.stringify(data, null, 2))
+  );
+
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    const warnBeforeLeaving = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warnBeforeLeaving);
+    return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
+  }, [hasUnsavedChanges]);
+
+  const loadEditorData = (next: Record<string, unknown>) => {
+    setBaseline(JSON.stringify(next));
+    setData(next);
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -76,12 +96,19 @@ export default function AdminApp() {
   }, []);
 
   const loadRows = async () => {
-    const token = await getAccessToken();
-    if (!token) return;
-    const res = await fetch("/api/admin/content", { headers: { Authorization: `Bearer ${token}` } });
-    const json = await res.json();
-    if (res.ok) setRows(json.rows ?? []);
-    else setError(json.error ?? "No se pudieron cargar los apartados");
+    try {
+      const token = await getAccessToken();
+      if (!token) throw new Error("Tu sesión venció. Vuelve a entrar para cargar el contenido.");
+      const res = await fetch("/api/admin/content", { headers: { Authorization: `Bearer ${token}` } });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "No se pudieron cargar los apartados. Pulsa Recargar para intentarlo de nuevo.");
+      setRows(json.rows ?? []);
+      setError(null);
+      return (json.rows ?? []) as ContentRow[];
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo conectar. Pulsa Recargar para intentarlo de nuevo.");
+      return null;
+    }
   };
 
   const verifyAndLoad = async () => {
@@ -103,6 +130,7 @@ export default function AdminApp() {
     let disposed = false;
     let sub: { subscription: { unsubscribe: () => void } } | null = null;
     (async () => {
+      try {
       const client = getAdminClient();
       const { data } = await client.auth.getSession();
       if (disposed) return;
@@ -118,6 +146,11 @@ export default function AdminApp() {
         }
       });
       sub = s.data;
+      } catch {
+        if (!disposed) setAuthError("No se pudo comprobar la sesión. Intenta entrar nuevamente.");
+      } finally {
+        if (!disposed) setChecking(false);
+      }
     })();
     return () => {
       disposed = true;
@@ -141,14 +174,14 @@ export default function AdminApp() {
         password: loginPassword,
       });
       if (signInError) {
-        setAuthError(signInError.message);
+        setAuthError("No se pudo iniciar sesión. Revisa tu correo y contraseña e inténtalo de nuevo.");
         setLoginBusy(false);
         return;
       }
       const ok = await verifyAndLoad();
       if (!ok) {
         await client.auth.signOut();
-        setAuthError("Este usuario no está admitido como admin (revisa la tabla legacy_users).");
+        setAuthError("Tu cuenta no tiene acceso al editor. Contacta a soporte para habilitarla.");
       }
     } catch (err) {
       setAuthError(err instanceof Error ? err.message : "Error de login");
@@ -158,6 +191,7 @@ export default function AdminApp() {
   };
 
   const logout = async () => {
+    if (busy || (hasUnsavedChanges && !window.confirm("Tienes cambios sin guardar. ¿Quieres descartarlos y salir?"))) return;
     await getAdminClient().auth.signOut();
   };
 
@@ -168,15 +202,19 @@ export default function AdminApp() {
   };
 
   const buildGroups = (
-    keys: Iterable<string>
+    keys: Iterable<string>, active: boolean
   ): { collection: string; label: string; keynames: { keyname: string; label: string; langs: Lang[] }[] }[] => {
     const map = new Map<string, { keyname: string; langs: Set<Lang> }[]>();
     for (const collection of keys) {
       const km = new Map<string, Set<Lang>>();
       for (const r of rows) {
-        if (r.collection !== collection) continue;
+        if (r.collection !== collection || isUsedSection(r.collection, r.keyname) !== active) continue;
         if (!km.has(r.keyname)) km.set(r.keyname, new Set());
         km.get(r.keyname)!.add(r.lang);
+      }
+      const initialSections = active ? USED_SECTIONS[collection] ?? [] : [];
+      for (const keyname of initialSections) {
+        if (!km.has(keyname)) km.set(keyname, new Set());
       }
       map.set(collection, [...km.entries()].map(([keyname, langs]) => ({ keyname, langs })));
     }
@@ -203,27 +241,39 @@ export default function AdminApp() {
     return out;
   };
 
-  // Idiomas base + cualquier idioma extra que ya tenga contenido creado.
-  const extraLangs = [...new Set(rows.map((r) => r.lang))]
-    .filter((l) => !(LANGS as readonly string[]).includes(l))
-    .sort();
-  const allLangs = [...LANGS, ...extraLangs];
+  const allLangs: Lang[] = [...LANGS];
 
   const sidebar = useMemo(() => {
-    const used = new Set<string>();
+    const used = new Set<string>(SECTION_ORDER);
     const deprecated = new Set<string>();
     for (const r of rows) {
       (isUsedSection(r.collection, r.keyname) ? used : deprecated).add(r.collection);
     }
+    used.add("home");
+    used.add("settings");
     const usedOrder = SECTION_ORDER.filter((c) => used.has(c));
     const usedExtra = [...used].filter((c) => !SECTION_ORDER.includes(c)).sort();
     const deprecatedOrder = [...deprecated].sort((a, b) => a.localeCompare(b));
     return {
-      used: buildGroups([...usedOrder, ...usedExtra]),
-      deprecated: buildGroups(deprecatedOrder),
+      used: buildGroups([...usedOrder, ...usedExtra], true),
+      deprecated: buildGroups(deprecatedOrder, false),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows]);
+
+  const query = sidebarQuery.trim().toLocaleLowerCase();
+  const visibleGroups = !query
+    ? sidebar.used
+    : sidebar.used
+      .map((group) => ({
+        ...group,
+        keynames: group.keynames.filter((section) =>
+          `${group.label} ${section.label} ${group.collection} ${section.keyname}`
+            .toLocaleLowerCase()
+            .includes(query)
+        ),
+      }))
+      .filter((group) => group.keynames.length > 0);
 
   // Garantiza que campos añadidos después de la creación de la fila existan
   // al editar: imagen de fondo en apartados compatibles y puntos del mapa
@@ -233,6 +283,7 @@ export default function AdminApp() {
     keyname: string,
     raw: Record<string, unknown>
   ): Record<string, unknown> => {
+    if (Array.isArray(raw)) return JSON.parse(JSON.stringify(raw)) as Record<string, unknown>;
     const base: Record<string, unknown> = supportsBackground(collection, keyname)
       ? { background_image: "", background_overlay: 0, ...raw }
       : { ...raw };
@@ -242,12 +293,14 @@ export default function AdminApp() {
     return base;
   };
 
-  const selectSection = (collection: string, keyname: string, lang?: Lang) => {
+  const selectSection = (collection: string, keyname: string, lang?: Lang, sourceRows = rows) => {
+    if (busy || (hasUnsavedChanges && !window.confirm("Tienes cambios sin guardar. ¿Quieres descartarlos y cambiar de apartado?"))) return;
     if (loadTimerRef.current) clearTimeout(loadTimerRef.current);
     setEditorLoading(true);
 
-    const targetLang = lang ?? "en";
-    const row = rows.find(
+    const sectionLanguages = getSectionLanguages(collection);
+    const targetLang = sectionLanguages.find((supported) => supported === lang) ?? "en";
+    const row = sourceRows.find(
       (r) => r.collection === collection && r.keyname === keyname && r.lang === targetLang
     );
     setSelected({ collection, keyname, lang: targetLang });
@@ -259,19 +312,19 @@ export default function AdminApp() {
     if (isMobile) setSidebarOpen(false);
 
     if (row) {
-      setData(normalizeSectionData(collection, keyname, row.data as Record<string, unknown>));
-      setCopiedFrom(null);
+      loadEditorData(normalizeSectionData(collection, keyname, row.data as Record<string, unknown>));
+      setCopiedFrom(row.copied_from ?? null);
     } else {
       // El apartado no existe en este idioma: lo creamos copiando los datos
       // de otro idioma existente del mismo apartado (preferimos "en").
-      const source = rows
-        .filter((r) => r.collection === collection && r.keyname === keyname)
+      const source = sourceRows
+        .filter((r) => r.collection === collection && r.keyname === keyname && sectionLanguages.includes(r.lang))
         .sort((a, b) => {
           const rank: Record<string, number> = { en: 0, es: 1, de: 2 };
           return (rank[a.lang] ?? 9) - (rank[b.lang] ?? 9);
         })[0];
       if (source) {
-        setData(
+        loadEditorData(
           normalizeSectionData(
             collection,
             keyname,
@@ -280,7 +333,7 @@ export default function AdminApp() {
         );
         setCopiedFrom(source.lang);
       } else {
-        setData(normalizeSectionData(collection, keyname, {}));
+        loadEditorData(normalizeSectionData(collection, keyname, getInitialSectionData(collection, keyname, targetLang) ?? {}));
         setCopiedFrom(null);
       }
     }
@@ -329,84 +382,8 @@ export default function AdminApp() {
     selectSection(selected.collection, selected.keyname, lang);
   };
 
-  const addLanguage = async () => {
-    if (!selected || busy) return;
-    const code = newLangCode.trim().toLowerCase();
-    if (!/^[a-z]{2,3}(-[a-z]{2})?$/.test(code)) {
-      setError("Código de idioma inválido. Usa 2 letras, ej: fr, pt, it.");
-      return;
-    }
-    const exists = rows.some(
-      (r) =>
-        r.collection === selected.collection &&
-        r.keyname === selected.keyname &&
-        r.lang === code
-    );
-    if (exists) {
-      setError(`Este apartado ya existe en "${code.toUpperCase()}".`);
-      return;
-    }
-    setBusy(true);
-    setError(null);
-    try {
-      const token = await getAccessToken();
-      const res = await fetch("/api/admin/content", {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          collection: selected.collection,
-          keyname: selected.keyname,
-          lang: code,
-          data,
-          order_index: 0,
-        }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error ?? "Error al crear el idioma");
-      setRows((prev) => [
-        ...prev,
-        {
-          collection: selected.collection,
-          keyname: selected.keyname,
-          lang: code as Lang,
-          data: data as Record<string, unknown>,
-          order_index: 0,
-        },
-      ]);
-      setSelected({ ...selected, lang: code });
-      setShowNewLang(false);
-      setNewLangCode("");
-      setSavedAt(new Date().toLocaleTimeString());
-      setLangNotice(
-        `Idioma "${code}" añadido a este apartado como copia del contenido actual. Tradúcelo y guarda. ` +
-        `Para que sea seleccionable en la web, actualiza el selector de idiomas del navbar si aún no aparece.`
-      );
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error al crear el idioma");
-    } finally {
-      setBusy(false);
-    }
-  };
-
   const patchPath = (path: string[], next: unknown) => {
     setData((prev) => updatePath(prev, path, next) as Record<string, unknown>);
-  };
-
-  const size = useMemo(() => {
-    return {
-      width: typeof data.width === "number" ? String(data.width) : "",
-      height: typeof data.height === "number" ? String(data.height) : "",
-    };
-  }, [data]);
-
-  const updateSize = (key: "width" | "height", value: string) => {
-    const trimmed = value.trim();
-    setData((prev) => {
-      if (trimmed === "") return updatePath(prev, [key], undefined) as Record<string, unknown>;
-      const num = Number(trimmed);
-      if (!Number.isFinite(num)) return prev;
-      return updatePath(prev, [key], num) as Record<string, unknown>;
-    });
   };
 
   const save = async () => {
@@ -464,9 +441,11 @@ export default function AdminApp() {
         }
         return [...prev, row];
       });
-      setData(payload as Record<string, unknown>);
+      loadEditorData(payload as Record<string, unknown>);
+      if (jsonView) setJsonDraft(JSON.stringify(payload, null, 2));
       setCopiedFrom(null);
       setSavedAt(new Date().toLocaleTimeString());
+      await loadRows();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error al guardar");
     } finally {
@@ -486,12 +465,7 @@ export default function AdminApp() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Error al eliminar");
-      setRows((prev) =>
-        prev.filter(
-          (r) =>
-            !(r.collection === selected.collection && r.keyname === selected.keyname && r.lang === selected.lang)
-        )
-      );
+      await loadRows();
       setSelected(null);
       setData({});
       setConfirmDelete(false);
@@ -527,6 +501,10 @@ export default function AdminApp() {
     setSettingsValue("");
   };
 
+  const selectedRow = selected ? rows.find((row) =>
+    row.collection === selected.collection && row.keyname === selected.keyname && row.lang === selected.lang
+  ) : undefined;
+
   if (checking) {
     return <div className={styles.CenterScreen}>Verificando sesión…</div>;
   }
@@ -536,11 +514,12 @@ export default function AdminApp() {
       <div className={styles.CenterScreen}>
         <form className={styles.LoginCard} onSubmit={login}>
           <h1>Admin · Xpert.agency</h1>
-          <p className={styles.Muted}>Solo usuarios admitidos en legacy_users pueden entrar.</p>
+          <p className={styles.Muted}>Entra con tu correo y contraseña para editar el contenido de tu sitio.</p>
           <label>
             <span>Email</span>
             <input
               type="email"
+              autoComplete="username"
               value={loginEmail}
               onChange={(e) => setLoginEmail(e.target.value)}
               placeholder="admin@xpert.agency"
@@ -551,6 +530,7 @@ export default function AdminApp() {
             <span>Contraseña</span>
             <input
               type="password"
+              autoComplete="current-password"
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
               placeholder="••••••••"
@@ -575,32 +555,51 @@ export default function AdminApp() {
           </button>
         )}
         <div>
-          <strong>Xpert.agency — Admin</strong>
+          <strong>Xpert.agency — Administrador</strong>
           <span className={styles.Muted}>{user.email ?? ""}</span>
         </div>
         <div className={styles.TopbarActions}>
-          <button className={styles.PrimaryBtn} onClick={loadRows}>
+          <button className={styles.OutlineBtn} disabled={busy} onClick={async () => {
+            const refreshed = await loadRows();
+            if (selected && refreshed) selectSection(selected.collection, selected.keyname, selected.lang, refreshed);
+          }}>
             ↻ Recargar
           </button>
-          <button className={styles.PrimaryBtn} onClick={save} disabled={!selected || busy}>
+          <button className={styles.PrimaryBtn} onClick={save} disabled={!selected || busy || (!hasUnsavedChanges && !selectedRow?.is_default)}>
             {busy ? "Guardando…" : "💾 Guardar"}
           </button>
-          <button className={styles.OutlineBtn} onClick={logout}>
+          <button className={styles.OutlineBtn} onClick={logout} disabled={busy}>
             Salir
           </button>
         </div>
       </header>
 
+      {error && !selected && <p className={styles.ErrorText} role="alert">{error}</p>}
+
       <div className={styles.Main}>
         {isMobile && sidebarOpen && <div className={styles.Overlay} onClick={() => setSidebarOpen(false)} />}
         <aside className={`${styles.Sidebar} ${isMobile && !sidebarOpen ? styles.SidebarClosed : ""}`}>
-          <h3>Apartados</h3>
-          {sidebar.used.length === 0 && sidebar.deprecated.length === 0 && (
-            <p className={styles.Muted}>Sin contenido todavía.</p>
+          <div className={styles.SidebarHeading}>
+            <div>
+              <h3>Contenido del sitio</h3>
+              <span>{sidebar.used.reduce((total, group) => total + group.keynames.length, 0)} apartados · EN / ES / DE</span>
+            </div>
+          </div>
+          <label className={styles.SidebarSearch}>
+            <span>Buscar apartado</span>
+            <input
+              type="search"
+              value={sidebarQuery}
+              onChange={(event) => setSidebarQuery(event.target.value)}
+              placeholder="Ej. casos, contacto, hero"
+            />
+          </label>
+          {visibleGroups.length === 0 && (
+            <p className={styles.Muted}>{sidebarQuery.trim() ? "No hay apartados que coincidan con la búsqueda." : "Sin contenido todavía."}</p>
           )}
 
-          {sidebar.used.map((g) => {
-            const open = openCollections[g.collection] ?? false;
+          {visibleGroups.map((g) => {
+            const open = Boolean(sidebarQuery.trim()) || (openCollections[g.collection] ?? false);
             return (
               <div key={g.collection} className={styles.Group}>
                 <button
@@ -619,32 +618,11 @@ export default function AdminApp() {
                         <div key={k.keyname} className={styles.SectionRow}>
                           <button
                             className={`${styles.SectionBtn} ${active ? styles.ActiveSection : ""}`}
-                            onClick={() => selectSection(g.collection, k.keyname)}
+                            onClick={() => selectSection(g.collection, k.keyname, selected?.lang ?? "en")}
                           >
                             {k.label}
                           </button>
-                          <div className={styles.LangBadges}>
-                            {allLangs.map((l) => {
-                              const exists = k.langs.includes(l);
-                              const isActive = active && selected.lang === l;
-                              return (
-                                <button
-                                  key={l}
-                                  title={
-                                    exists
-                                      ? `${l.toUpperCase()} (existe)`
-                                      : `${l.toUpperCase()} (crear copiando de otro idioma)`
-                                  }
-                                  className={`${styles.LangBadge} ${isActive ? styles.ActiveLang : ""} ${
-                                    exists ? "" : styles.LangBadgeNew
-                                  }`}
-                                  onClick={() => selectSection(g.collection, k.keyname, l)}
-                                >
-                                  {exists ? l.toUpperCase() : `+${l.toUpperCase()}`}
-                                </button>
-                              );
-                            })}
-                          </div>
+                          {active && <span className={styles.SelectedLanguage}>{selected.lang.toUpperCase()}</span>}
                         </div>
                       );
                     })}
@@ -654,9 +632,9 @@ export default function AdminApp() {
             );
           })}
 
-          {sidebar.deprecated.length > 0 && (
-            <div className={styles.DeprecatedBlock}>
-              <h4>Contenido antiguo / sin uso</h4>
+          {sidebar.deprecated.length > 0 && !sidebarQuery.trim() && (
+            <details className={styles.DeprecatedBlock}>
+              <summary>Contenido antiguo / sin uso ({sidebar.deprecated.reduce((total, group) => total + group.keynames.length, 0)})</summary>
               {sidebar.deprecated.map((g) => (
                 <div key={g.collection} className={styles.Group}>
                   <div className={styles.DeprecatedCollection}>
@@ -672,38 +650,17 @@ export default function AdminApp() {
                           className={`${styles.SectionBtn} ${styles.DeprecatedSection} ${
                             active ? styles.ActiveSection : ""
                           }`}
-                          onClick={() => selectSection(g.collection, k.keyname)}
+                          onClick={() => selectSection(g.collection, k.keyname, selected?.lang ?? "en")}
                         >
                           {k.label}
                         </button>
-                        <div className={styles.LangBadges}>
-                          {allLangs.map((l) => {
-                            const exists = k.langs.includes(l);
-                            const isActive = active && selected.lang === l;
-                            return (
-                              <button
-                                key={l}
-                                title={
-                                  exists
-                                    ? `${l.toUpperCase()} (existe)`
-                                    : `${l.toUpperCase()} (crear copiando de otro idioma)`
-                                }
-                                className={`${styles.LangBadge} ${isActive ? styles.ActiveLang : ""} ${
-                                  exists ? "" : styles.LangBadgeNew
-                                }`}
-                                onClick={() => selectSection(g.collection, k.keyname, l)}
-                              >
-                                {exists ? l.toUpperCase() : `+${l.toUpperCase()}`}
-                              </button>
-                            );
-                          })}
-                        </div>
+                        {active && <span className={styles.SelectedLanguage}>{selected.lang.toUpperCase()}</span>}
                       </div>
                     );
                   })}
                 </div>
               ))}
-            </div>
+            </details>
           )}
         </aside>
 
@@ -722,86 +679,43 @@ export default function AdminApp() {
                     {SECTION_LABELS[selected.collection]?.[selected.keyname] ?? selected.keyname}
                   </strong>
                   <span className={styles.Muted}>
-                    collection={selected.collection} · keyname={selected.keyname} · lang={selected.lang}
+                    {getSectionLanguages(selected.collection).length === 1 ? "Esta página se administra únicamente en inglés." : `Idioma del contenido: ${selected.lang === "en" ? "inglés" : selected.lang === "es" ? "español" : "alemán"}`}
+                  </span>
+                  <span className={hasUnsavedChanges ? styles.UnsavedText : styles.Muted} role="status">
+                    {hasUnsavedChanges ? "Cambios sin guardar" : "Sin cambios pendientes"}
                   </span>
                 </div>
                 <div className={styles.EditorHeaderActions}>
                   <div className={styles.LangSwitch}>
-                    {allLangs.map((l) => {
+                    {getSectionLanguages(selected.collection).map((l) => {
                       const exists = rows.some(
                         (r) =>
                           r.collection === selected.collection &&
                           r.keyname === selected.keyname &&
-                          r.lang === l
+                          r.lang === l && !r.is_default
                       );
                       return (
                         <button
                           key={l}
-                          title={exists ? `${l.toUpperCase()} (guardado)` : `${l.toUpperCase()} (nuevo)`}
+                          title={`${l.toUpperCase()} · ${l === "en" ? "Inglés" : l === "es" ? "Español" : "Alemán"} · ${exists ? "guardado" : "nuevo"}`}
+                          aria-label={`Editar en ${l === "en" ? "inglés" : l === "es" ? "español" : "alemán"}${exists ? " (guardado)" : " (nuevo, copiar contenido)"}`}
+                          aria-pressed={selected.lang === l}
+                          disabled={busy}
                           className={`${styles.LangSwitchBtn} ${selected.lang === l ? styles.ActiveLang : ""}`}
                           onClick={() => switchLang(l)}
                         >
-                          {l.toUpperCase()}
-                          {exists ? "✓" : "+"}
+                          {l === "en" ? "Inglés" : l === "es" ? "Español" : "Alemán"}
+                          <span aria-hidden="true">{exists ? "✓" : "+"}</span>
                         </button>
                       );
                     })}
-                    {showNewLang ? (
-                      <span className={styles.NewLangRow}>
-                        <input
-                          autoFocus
-                          className={styles.NewLangInput}
-                          placeholder="ej: fr"
-                          maxLength={7}
-                          value={newLangCode}
-                          onChange={(e) => setNewLangCode(e.target.value.toLowerCase())}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") addLanguage();
-                            if (e.key === "Escape") setShowNewLang(false);
-                          }}
-                        />
-                        <button className={styles.MiniBtn} onClick={addLanguage} disabled={busy}>
-                          Crear
-                        </button>
-                        <button className={styles.MiniBtn} onClick={() => setShowNewLang(false)}>
-                          ✕
-                        </button>
-                      </span>
-                    ) : (
-                      <button
-                        className={styles.LangSwitchBtn}
-                        title="Añadir un nuevo idioma para este apartado"
-                        onClick={() => setShowNewLang(true)}
-                      >
-                        🌐+
-                      </button>
-                    )}
-                  </div>
-                  <div className={styles.SizeRow}>
-                    <label>
-                      W
-                      <input
-                        type="number"
-                        value={size.width}
-                        onChange={(e) => updateSize("width", e.target.value)}
-                        placeholder="–"
-                      />
-                    </label>
-                    <label>
-                      H
-                      <input
-                        type="number"
-                        value={size.height}
-                        onChange={(e) => updateSize("height", e.target.value)}
-                        placeholder="–"
-                      />
-                    </label>
                   </div>
                   <button
                     className={`${styles.DangerBtn} ${confirmDelete ? styles.ConfirmDanger : ""}`}
+                    disabled={busy || !selectedRow || selectedRow.is_default}
                     onClick={() => (confirmDelete ? removeRow() : setConfirmDelete(true))}
                   >
-                    {confirmDelete ? "¿Seguro?" : "🗑 Delete"}
+                    {confirmDelete ? "¿Confirmar eliminación?" : "Eliminar versión"}
                   </button>
                 </div>
               </header>
@@ -817,15 +731,13 @@ export default function AdminApp() {
                 </div>
               )}
 
-              {langNotice && (
+              {selectedRow?.is_default && !copiedFrom && (
                 <div className={styles.NewBanner}>
-                  <strong>🌐 Idioma añadido</strong>
-                  <span>{langNotice}</span>
-                  <button className={styles.MiniBtn} onClick={() => setLangNotice(null)}>
-                    Entendido
-                  </button>
+                  <strong>Contenido listo para editar</strong>
+                  <span>Estos son los valores que utiliza la web. Haz tus cambios y pulsa Guardar para crear esta versión.</span>
                 </div>
               )}
+
 
               {!isUsedSection(selected.collection, selected.keyname) && (
                 <div className={styles.NewBanner}>
@@ -838,6 +750,8 @@ export default function AdminApp() {
                 </div>
               )}
 
+              <details className={styles.AdvancedTools} inert={busy}>
+              <summary>Formato de texto y opciones avanzadas</summary>
               <div className={styles.Toolbar}>
                 <button title="Negrita" onClick={() => wrapActiveSelection("<strong>", "</strong>")}>
                   <b>B</b>
@@ -864,7 +778,7 @@ export default function AdminApp() {
                   🔗
                 </button>
                 <label className={styles.ToolOp}>
-                  Opacity
+                  Opacidad
                   <input
                     type="number"
                     step="0.1"
@@ -923,6 +837,7 @@ export default function AdminApp() {
                   {"{ }"}
                 </button>
               </div>
+              </details>
 
               {error && <p className={styles.ErrorText}>{error}</p>}
               {savedAt && <p className={styles.SavedText}>Guardado a las {savedAt}</p>}
@@ -936,9 +851,10 @@ export default function AdminApp() {
                     setSavedAt(null);
                   }}
                   spellCheck={false}
+                  disabled={busy}
                 />
               ) : (
-                <div className={styles.Canvas}>
+                <div className={styles.Canvas} inert={busy}>
                   <VisualEditor
                     key={`${selected.collection}/${selected.keyname}/${selected.lang}`}
                     value={data}
@@ -961,9 +877,9 @@ export default function AdminApp() {
 
               <footer className={styles.EditorFooter}>
                 <span className={styles.Muted}>
-                  Haz clic sobre un texto para editarlo. La toolbar formatea la selección del texto activo.
+                  Haz clic en un texto para editarlo. Los cambios se aplican al pulsar Guardar.
                 </span>
-                <button className={styles.PrimaryBtn} onClick={save} disabled={busy}>
+                <button className={styles.PrimaryBtn} onClick={save} disabled={busy || (!hasUnsavedChanges && !selectedRow?.is_default)}>
                   {busy ? "Guardando…" : "💾 Guardar cambios"}
                 </button>
               </footer>
