@@ -60,12 +60,12 @@ export default async function Page() {
             </p>
             <div className={styles.HeroAlsCta}>
               <Link href={localizedPath(lang, data.hero.ctaPrimaryHref || "#capabilities")}>
-                <Button variant="full" arrow>
+                <Button variant="full" arrow className={styles.HeroAlsPrimaryButton}>
                   <RichText>{data.hero.ctaPrimary}</RichText>
                 </Button>
               </Link>
               {data.hero.ctaSecondary && <Link href={localizedPath(lang, data.hero.ctaSecondaryHref || "#projects")}>
-                <Button variant="outline" arrow>
+                <Button variant="outline" arrow className={styles.HeroAlsSecondaryButton}>
                   <RichText>{data.hero.ctaSecondary}</RichText>
                 </Button>
               </Link>}

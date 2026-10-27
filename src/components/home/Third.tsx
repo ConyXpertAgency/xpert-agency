@@ -1,18 +1,26 @@
 import React from 'react'
+import Link from 'next/link'
+import { FaArrowRight } from 'react-icons/fa'
 import styles from '@/styles/Home/Third.module.css'
+import buttonStyles from '@/styles/ui/Button.module.css'
 import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
-import Button from '../ui/Button'
 import GlobalReachMap from './GlobalReachMap'
 import { getIcon } from '@/lib/supabase/icons'
 import type { HomeGlobalReach } from '@/lib/supabase/types'
 import { sectionBgClass, sectionBgStyle } from '@/lib/sectionBg'
+import { localizedPath } from '@/lib/site'
 
 interface ThirdProps {
     globalReach: HomeGlobalReach
+    lang: string
 }
 
-const Third = ({ globalReach }: ThirdProps) => {
+const Third = ({ globalReach, lang }: ThirdProps) => {
+    const rawHref = globalReach.href?.trim()
+    const ctaHref = rawHref && (rawHref.startsWith('/') && !rawHref.startsWith('//') || /^https:\/\//i.test(rawHref))
+        ? localizedPath(lang, rawHref)
+        : undefined
     return (
         <section className={`${styles.Third} ${sectionBgClass(globalReach)}`} style={sectionBgStyle(globalReach)}>
             <header className={styles.Header}>
@@ -57,7 +65,9 @@ const Third = ({ globalReach }: ThirdProps) => {
                     </li>
                 ))}
             </ul>
-            <Button variant='outlineG' arrow={true}><RichText>{globalReach.cta}</RichText></Button>
+            {ctaHref && <Link className={`${buttonStyles.base} ${buttonStyles.outlineG} ${styles.CtaLink}`} href={ctaHref}>
+                <RichText>{globalReach.cta}</RichText><FaArrowRight aria-hidden="true" />
+            </Link>}
         </section>
     )
 }

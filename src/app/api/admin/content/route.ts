@@ -1,6 +1,8 @@
 import { revalidatePath } from "next/cache";
 import { getSectionLanguages, LANGS } from "@/lib/adminSchema";
 import { getEditorContentRows } from "@/lib/adminContent";
+import { isPlainAdminField, validateContactTeamsPlainText } from "@/lib/adminTextPolicy";
+import { sanitizeAdminRichText } from "@/lib/adminRichText";
 import { adminClient, requireAdmin } from "@/lib/supabase/server";
 import type { ContentRow } from "@/lib/supabase/types";
 import type { NextRequest } from "next/server";
@@ -9,6 +11,30 @@ const supportedLanguages = new Set<string>(LANGS);
 
 function tokenOf(request: NextRequest) {
   return request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ?? "";
+}
+
+function unsafeChangedText(next: unknown, previous: unknown, collection: string, keyname: string, path: string[] = []): string | null {
+  if (typeof next === "string") {
+    if (next === previous) return null;
+    const unsafe = isPlainAdminField(collection, keyname, path)
+      ? validateContactTeamsPlainText({ value: next }) !== null
+      : /<\s*\/?\s*[a-z]|&(?:#[0-9]+|[a-z][a-z0-9]+);/i.test(next) && sanitizeAdminRichText(next) !== next;
+    return unsafe ? path.join(".") : null;
+  }
+  if (Array.isArray(next)) {
+    for (let i = 0; i < next.length; i++) {
+      const problem = unsafeChangedText(next[i], Array.isArray(previous) ? previous[i] : undefined, collection, keyname, [...path, String(i)]);
+      if (problem) return problem;
+    }
+  } else if (next && typeof next === "object") {
+    for (const [key, value] of Object.entries(next)) {
+      const prior = previous && typeof previous === "object" && !Array.isArray(previous)
+        ? (previous as Record<string, unknown>)[key] : undefined;
+      const problem = unsafeChangedText(value, prior, collection, keyname, [...path, key]);
+      if (problem) return problem;
+    }
+  }
+  return null;
 }
 
 export async function GET(request: NextRequest) {
@@ -50,7 +76,27 @@ export async function PUT(request: NextRequest) {
     ? { ...body.data, include_default_cases: false }
     : body.data;
 
-  const { error } = await adminClient(tokenOf(request))
+  if (body.collection === "contact" && body.keyname === "teams") {
+    const invalidPath = validateContactTeamsPlainText(contentData);
+    if (invalidPath) {
+      return Response.json({ error: `El campo ${invalidPath} debe contener texto sin HTML.` }, { status: 400 });
+    }
+  }
+
+  const client = adminClient(tokenOf(request));
+  const { data: existing, error: readError } = await client.from("content")
+    .select("data")
+    .eq("collection", body.collection)
+    .eq("keyname", body.keyname)
+    .eq("lang", body.lang)
+    .maybeSingle();
+  if (readError) return Response.json({ error: readError.message }, { status: 500 });
+  const unsafePath = unsafeChangedText(contentData, existing?.data, body.collection, body.keyname);
+  if (unsafePath) {
+    return Response.json({ error: `El campo ${unsafePath} contiene HTML no permitido.` }, { status: 400 });
+  }
+
+  const { error } = await client
     .from("content")
     .upsert(
       {

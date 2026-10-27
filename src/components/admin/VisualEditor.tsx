@@ -7,6 +7,7 @@ import MapNodesEditor, { type MapNodeItem } from "./MapNodesEditor";
 import { getIcon } from "@/lib/supabase/icons";
 import { resolveStorageUrl } from "@/lib/supabase/client";
 import { getAtPath, removeAtPath, updatePath } from "@/lib/dataPath";
+import { isPlainAdminField } from "@/lib/adminTextPolicy";
 import { fieldLabel, getElementTemplate, getGroups } from "@/lib/adminSchema";
 
 type Role = "h1" | "h2" | "p" | "badge" | "btn" | "link";
@@ -121,6 +122,7 @@ const VisualEditor = ({
                   value={item as string}
                   onChange={(next) => patch([...path, String(i)], next)}
                   role="p"
+                  plain={isPlainAdminField(collection, keyname, [...path, String(i)])}
                 />
                 {isLogoList && (
                   <button
@@ -132,13 +134,13 @@ const VisualEditor = ({
                     Imagen
                   </button>
                 )}
-                <button
+                {!isPlainAdminField(collection, keyname, [...path, String(i)]) && <button
                   className={styles.SettingsBtn}
                   onClick={() => onOpenSettings([...path, String(i)], item as string)}
                   title="Propiedades del texto"
                 >
                   ⚙
-                </button>
+                </button>}
                 <button
                   className={styles.ArrowBtn}
                   onClick={() => moveItem(path, i, -1)}
@@ -313,14 +315,15 @@ const VisualEditor = ({
               role={roleFor(key)}
               multiline={roleFor(key) === "p" || roleFor(key) === "h1"}
               placeholder={label(path)}
+              plain={isPlainAdminField(collection, keyname, path)}
             />
-            <button
+            {!isPlainAdminField(collection, keyname, path) && <button
               className={styles.SettingsBtn}
               onClick={() => onOpenSettings(path, val)}
               title="Propiedades del texto"
             >
               ⚙
-            </button>
+            </button>}
           </div>
         </div>
       );

@@ -101,6 +101,7 @@ export interface HomeGlobalReach extends SectionBackground {
   features: TextItem[];
   stats: TextItem[];
   cta: string;
+  href?: string;
   nodes?: GlobalReachNode[];
 }
 

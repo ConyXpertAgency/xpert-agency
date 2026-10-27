@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import CookieSettingsLink from "@/components/consent/CookieSettingsLink";
 import { getUiCopy } from "@/lib/i18n";
-import { ELMAR_LINKEDIN_URL, localizedPath } from "@/lib/site";
+import { ELMAR_LINKEDIN_URL, localizedPath, publicContactEmail } from "@/lib/site";
 import type { Lang, NavItem, Settings } from "@/lib/supabase/types";
 import styles from "@/styles/ui/PublicFooter.module.css";
 
@@ -19,10 +19,10 @@ const SITE_DESCRIPTION =
 const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
   const copy = { ...getUiCopy(lang).footer, ...settings.footer };
   const siteDescription = copy.description || SITE_DESCRIPTION;
-  const whatsapp = settings.whatsapp?.trim();
-  const whatsappHref = whatsapp && /^https?:\/\//i.test(whatsapp)
-    ? whatsapp
-    : whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : undefined;
+  const contactEmail = publicContactEmail(settings.contact_email);
+  // The CMS setting currently contains an unapproved number. Only the
+  // explicitly approved Mexico WhatsApp may appear in the public footer.
+  const whatsappHref = "https://wa.me/525534315953";
   const contactLink = nav.find((item) => item.href === "/contact");
   const serviceLinks = nav.filter((item) =>
     ["/services", "/industries", "/filling-packaging", "/cases", "/rbe"].includes(item.href)
@@ -94,15 +94,20 @@ const PublicFooter = ({ lang, nav, settings }: PublicFooterProps) => {
               {contactLink.label} <FaArrowRight />
             </Link>
           )}
-          {settings.contact_email && (
-            <a href={`mailto:${settings.contact_email}`}>{settings.contact_email}</a>
+          {contactEmail && (
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           )}
-          {whatsappHref && <a href={whatsappHref}>{copy.whatsapp}</a>}
+          <a href={whatsappHref} target="_blank" rel="noreferrer" aria-label={`${copy.whatsapp}: México 55 3431 5953`}>
+            <FaWhatsapp aria-hidden="true" />
+          </a>
           {socialLinks.length > 0 && (
             <div className={styles.Socials}>
               {socialLinks.map((item) => (
-                <a key={item.label} href={item.href} rel="noreferrer" target="_blank">
-                  {item.label}
+                <a key={item.label} href={item.href} rel="noreferrer" target="_blank" aria-label={item.label}>
+                  {item.label.startsWith("LinkedIn") ? <FaLinkedinIn aria-hidden="true" />
+                    : item.label === "Facebook" ? <FaFacebookF aria-hidden="true" />
+                    : item.label === "Instagram" ? <FaInstagram aria-hidden="true" />
+                    : <FaTwitter aria-hidden="true" />}
                 </a>
               ))}
             </div>

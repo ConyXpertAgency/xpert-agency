@@ -324,7 +324,7 @@ const GROUP_SCHEMAS: Record<string, FieldGroup[]> = {
     { label: "Cabecera", fields: ["badge", "title", "description"] },
     { label: "Características", fields: ["features"] },
     { label: "Estadísticas", fields: ["stats"] },
-    { label: "Llamada a la acción", fields: ["cta"] },
+    { label: "Llamada a la acción", fields: ["cta", "href"] },
     { label: "Puntos del mapa", fields: ["nodes"] },
   ],
   "home:roles": [

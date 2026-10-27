@@ -8,6 +8,8 @@ import styles from "@/styles/contact/Contact.module.css";
 import { resolveStorageUrl } from "@/lib/supabase/client";
 import { ELMAR_LINKEDIN_URL } from "@/lib/site";
 import { getIcon } from "@/lib/supabase/icons";
+import { approvedWhatsAppHref } from "@/lib/contactSocial";
+import { FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import type { ContactPage, ContactTeams, RegionalContact } from "@/lib/supabase/types";
 
 interface Props {
@@ -91,6 +93,7 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                                             const phones = formatList(contact.phones);
                                             const photoSrc = resolveStorageUrl(contact.photo);
                                             const linkedinUrl = getContactLinkedIn(contact);
+                                            const whatsappUrl = approvedWhatsAppHref(contact);
 
                                             return (
                                                 <li key={contact.id}>
@@ -131,8 +134,15 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                                                                     href={linkedinUrl}
                                                                     target="_blank"
                                                                     rel="noreferrer"
+                                                                    aria-label={`LinkedIn: ${contact.name}`}
                                                                 >
-                                                                    LinkedIn
+                                                                    <FaLinkedinIn aria-hidden="true" />
+                                                                </a>
+                                                            )}
+                                                            {whatsappUrl && (
+                                                                <a className={`${styles.ContactMeta} ${styles.ContactLink}`} href={whatsappUrl}
+                                                                    target="_blank" rel="noreferrer" aria-label={`WhatsApp: ${contact.name}`}>
+                                                                    <FaWhatsapp aria-hidden="true" />
                                                                 </a>
                                                             )}
                                                 </li>
