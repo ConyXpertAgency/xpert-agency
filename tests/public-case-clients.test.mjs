@@ -15,6 +15,51 @@ const reviewNotes = {
   de: 'REVIEW: prüfen, ob dies getrennt vom Case Study Landmark ist',
 };
 
+const editorialClients = [
+  { id: 'hermes-cosmoper', name: 'Hermes Cosmoper', notes: {
+    en: 'REVIEW: verify exact name', es: 'REVIEW: verificar nombre exacto', de: 'REVIEW: genauen Namen prüfen',
+  } },
+  { id: 'hilti', name: 'HILTI', notes: {
+    en: 'REVIEW: first handwritten location "L?" is ambiguous',
+    es: 'REVIEW: la primera ubicación manuscrita "L?" es ambigua',
+    de: 'REVIEW: erste handschriftliche Location "L?" ist unklar',
+  } },
+  { id: 'heineken', name: 'Heineken', notes: {
+    en: 'REVIEW: verify Southeast Asia locations belong to Heineken entry',
+    es: 'REVIEW: verificar que las ubicaciones de Southeast Asia pertenecen a Heineken',
+    de: 'REVIEW: prüfen, ob die Southeast-Asia-Standorte zum Heineken-Eintrag gehören',
+  } },
+  { id: 'schmid-fashion', name: 'Schmid Fashion', notes: {
+    en: 'REVIEW: verify whether this is separate from Schuh Schmid Case Study',
+    es: 'REVIEW: verificar si es una experiencia separada del Case Study Schuh Schmid',
+    de: 'REVIEW: prüfen, ob dies getrennt vom Case Study Schuh Schmid ist',
+  } },
+  { id: 'popeci-machines', name: 'POPECI Machines', notes: {
+    en: 'REVIEW: verify exact name', es: 'REVIEW: verificar nombre exacto', de: 'REVIEW: genauen Namen prüfen',
+  } },
+  { id: 'osram-light', name: 'OSRAM Light', notes: {
+    en: 'REVIEW: handwritten location "SB" is ambiguous',
+    es: 'REVIEW: la ubicación manuscrita "SB" es ambigua',
+    de: 'REVIEW: handschriftliche Location "SB" ist unklar',
+  } },
+];
+
+test('the 18 identified editorial notes are filtered only in their client context without losing commercial fields', () => {
+  for (const lang of ['en', 'es', 'de']) {
+    const items = editorialClients.map(({ id, name, notes }) => ({
+      id, name, note: notes[lang], locations: ['Approved location'], industry: 'Approved industry',
+      description: 'Approved description.', image: '/approved-logo.webp',
+    }));
+    const before = JSON.stringify(items);
+    assert.deepEqual(publicCaseClients(items), items.map((item) => ({ ...item, note: undefined })));
+    assert.equal(JSON.stringify(items), before);
+    const legitimate = items.map((item) => ({ ...item, note: 'REVIEW: <strong>Annual logistics assessment</strong> delivered.' }));
+    assert.deepEqual(publicCaseClients(legitimate), legitimate);
+    const unrelated = items.map((item, index) => ({ ...item, id: `unrelated-client-${index}` }));
+    assert.deepEqual(publicCaseClients(unrelated), unrelated);
+  }
+});
+
 test('known Landmark review notes are omitted without mutating CMS records or legitimate notes', () => {
   for (const note of Object.values(reviewNotes)) {
     const items = [
@@ -43,7 +88,8 @@ test('public Cases page excludes review copy before serializing client props and
         getCasesPage: async () => ({ header: { badge: 'Cases', title: 'Cases', text: 'Approved commercial description.' } }),
         getCasesClients: async () => ({ items: [
           { id: 'landmark-fashion', name: 'Landmark Fashion', note },
-          { id: 'other-client', name: 'Other client', note: 'Approved public client note.' },
+          ...editorialClients.map(({ id, name, notes }) => ({ id, name, note: notes[lang] })),
+          { id: 'other-client', name: 'Other client', note: 'REVIEW: Approved public client performance assessment.' },
         ] }),
         getCasesStudies: async () => ({ items: [
           { id: 'featured', featured: true, title: 'Landmark Fashion', project: 'Approved fashion logistics project.', results: [] },
@@ -68,9 +114,12 @@ test('public Cases page excludes review copy before serializing client props and
     }).outputText, filename);
     const html = renderToStaticMarkup(await page.exports.default());
     assert.ok(!html.includes(note), lang);
-    assert.ok(!html.includes('REVIEW:'), lang);
-    for (const expected of ['Landmark Fashion', 'Approved commercial description.', 'Approved fashion logistics project.', 'Approved public client note.', 'Other case study']) {
+    for (const expected of ['Landmark Fashion', 'Approved commercial description.', 'Approved fashion logistics project.', 'REVIEW: Approved public client performance assessment.', 'Other case study']) {
       assert.ok(html.includes(expected), `${lang}: ${expected}`);
+    }
+    for (const { name, notes } of editorialClients) {
+      assert.ok(html.includes(name), `${lang}: ${name}`);
+      assert.ok(!html.includes(notes[lang]), `${lang}: ${name} note`);
     }
   }
 });
