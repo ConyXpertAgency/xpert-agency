@@ -129,7 +129,7 @@
     min-width: 0;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+    grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
     gap: 1.2rem;
     align-items: stretch;
     justify-items: stretch;
@@ -217,8 +217,8 @@
     min-width: 0;
     box-sizing: border-box;
     display: flex;
-    align-items: flex-start;
-    gap: .85rem;
+    flex-direction: column;
+    gap: .25rem;
     padding: .9rem 0;
     border: 0;
     border-bottom: 1px solid var(--surface-border);
@@ -231,7 +231,7 @@
 }
 
 .ContactCard:hover,
-.ContactCard:focus-visible,
+.ContactCard:focus-within,
 .ContactCardActive {
     border-color: transparent;
     border-bottom-color: var(--surface-border-hover);
@@ -239,9 +239,43 @@
     box-shadow: none;
 }
 
-.ContactCard:focus-visible {
+.ContactSelect:focus-visible,
+a.ContactLink:focus-visible {
     outline: 2px solid color-mix(in srgb, var(--surface-accent) 45%, transparent);
     outline-offset: 2px;
+}
+
+.ContactSelect {
+    display: flex;
+    align-items: flex-start;
+    gap: .85rem;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.ContactDetails {
+    padding-left: 5.05rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.ContactCard:not(:has(.ContactPhoto)) .ContactDetails {
+    padding-left: 0;
+}
+
+.PhoneRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .25rem;
 }
 
 .ContactPhoto {
@@ -266,6 +300,7 @@
     flex-direction: column;
     gap: .25rem;
     min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .ContactName,
@@ -300,6 +335,13 @@ a.ContactLink {
     text-decoration: underline;
     text-underline-offset: 3px;
     width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    min-width: 44px;
+    min-height: 44px;
+    flex-shrink: 0;
 }
 
 a.ContactLink:hover {
@@ -589,9 +631,6 @@ a.ContactLink:hover {
     }
 
     .ContactCard {
-        flex-direction: row;
-        align-items: center;
-        gap: .65rem;
         padding: .6rem 0;
     }
 
@@ -661,4 +700,9 @@ a.ContactLink:hover {
         width: 1rem;
         height: 1rem;
     }
+}
+
+@media (max-width: 768px) {
+    .ContactSelect { align-items: center; gap: .65rem; }
+    .ContactDetails { padding-left: 3.85rem; }
 }

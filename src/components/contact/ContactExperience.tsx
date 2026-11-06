@@ -81,7 +81,7 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                     </header>
 
                     <div className={styles.DirectoryList}>
-                        <ul className={styles.ContactList} role="listbox" aria-label="Regional contacts">
+                        <ul className={styles.ContactList}>
                             {contactGroups.map((group) => (
                                 <li className={styles.RegionGroup} key={group.id}>
                                     <strong className={styles.RegionHeading}>{group.region}</strong>
@@ -90,19 +90,17 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                                             const contact = { ...rawContact, region: rawContact.region ?? group.region };
                                             const isActive = contact.id === selectedContact?.id;
                                             const countries = formatList(contact.countries);
-                                            const phones = formatList(contact.phones);
                                             const photoSrc = resolveStorageUrl(contact.photo);
                                             const linkedinUrl = getContactLinkedIn(contact);
                                             const whatsappUrl = approvedWhatsAppHref(contact);
 
                                             return (
-                                                <li key={contact.id}>
+                                                <li key={contact.id} className={`${styles.ContactCard} ${isActive ? styles.ContactCardActive : ""}`}>
                                                     <button
                                                         type="button"
-                                                        className={`${styles.ContactCard} ${isActive ? styles.ContactCardActive : ""}`}
+                                                        className={styles.ContactSelect}
                                                         onClick={() => selectContact(contact.id)}
-                                                        role="option"
-                                                        aria-selected={isActive}
+                                                        aria-pressed={isActive}
                                                     >
                                                         {photoSrc && (
                                                             <span className={styles.ContactPhoto}>
@@ -122,29 +120,30 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                                                                     ))}
                                                                 </span>
                                                             ) : null}
-                                                            {phones && <span className={styles.ContactMeta}>{phones}</span>}
-                                                            {contact.publicEmail && <span className={styles.ContactMeta}>{contact.publicEmail}</span>}
-                                                            {contact.website && <span className={styles.ContactMeta}>{contact.website}</span>}
-
                                                         </span>
                                                     </button>
-                                                            {linkedinUrl && (
-                                                                <a
-                                                                    className={`${styles.ContactMeta} ${styles.ContactLink}`}
-                                                                    href={linkedinUrl}
-                                                                    target="_blank"
-                                                                    rel="noreferrer"
-                                                                    aria-label={`LinkedIn: ${contact.name}`}
-                                                                >
-                                                                    <FaLinkedinIn aria-hidden="true" />
-                                                                </a>
-                                                            )}
-                                                            {whatsappUrl && (
-                                                                <a className={`${styles.ContactMeta} ${styles.ContactLink}`} href={whatsappUrl}
-                                                                    target="_blank" rel="noreferrer" aria-label={`WhatsApp: ${contact.name}`}>
-                                                                    <FaWhatsapp aria-hidden="true" />
-                                                                </a>
-                                                            )}
+                                                    <div className={styles.ContactDetails}>
+                                                        {contact.phones?.filter(Boolean).map((phone, index) => (
+                                                            <div className={styles.PhoneRow} key={index}>
+                                                                <span className={styles.ContactMeta}>{phone}</span>
+                                                                {phone.replace(/\D/g, "") === whatsappUrl?.split("/").pop() && (
+                                                                    <a className={styles.ContactLink} href={whatsappUrl}
+                                                                        target="_blank" rel="noreferrer" aria-label={`WhatsApp: ${contact.name} — ${phone}`}>
+                                                                        <FaWhatsapp aria-hidden="true" />
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                        {contact.publicEmail && <span className={styles.ContactMeta}>{contact.publicEmail}</span>}
+                                                        {contact.website && <span className={styles.ContactMeta}>{contact.website}</span>}
+                                                        {linkedinUrl && (
+                                                            <a className={styles.ContactLink} href={linkedinUrl}
+                                                                target="_blank" rel="noreferrer" aria-label={`LinkedIn: ${contact.name}`}>
+                                                                <FaLinkedinIn aria-hidden="true" />
+                                                                <span>LinkedIn</span>
+                                                            </a>
+                                                        )}
+                                                    </div>
                                                 </li>
                                             );
                                         })}
