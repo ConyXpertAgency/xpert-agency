@@ -55,7 +55,7 @@ export default async function Home() {
       <First hero={hero} />
       <TrustBand logos={logos} caption={trustBand.caption} />
       <Second partners={partners} lang={lang} />
-      <Third globalReach={globalReach} />
+      <Third globalReach={globalReach} lang={lang} />
       <Four roles={roles} groups={roles.groups ?? expertiseGroups} lang={lang} />
       <HomeFillingPackagingBanner data={fillingBanner} lang={lang} />
       <HomeFinalCta lang={lang} data={finalCta} />

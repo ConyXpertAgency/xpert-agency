@@ -20,6 +20,12 @@ export const SITE_NAME = "Xpert Agency";
 export const ELMAR_LINKEDIN_URL =
   "https://www.linkedin.com/in/elmar-beckord-40680333/";
 
+/** Never republish the personal address that Cony withdrew from Contact. */
+export function publicContactEmail(value?: string | null): string | undefined {
+  const email = value?.trim();
+  return email && email.toLowerCase() !== "elmar.beckord@outlook.de" ? email : undefined;
+}
+
 /** Rutas solo en inglés: ES/DE redirigen (308) y los enlaces apuntan a EN. */
 export const ENGLISH_ONLY_PATHS = ["/rbe", "/filling-packaging"] as const;
 

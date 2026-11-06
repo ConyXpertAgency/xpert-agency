@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import styles from "@/styles/admin/Admin.module.css";
+import { sanitizeAdminRichText } from "@/lib/adminRichText";
 
 interface TextPropertiesModalProps {
   value: string;
@@ -112,7 +113,7 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
 
   useEffect(() => {
     if (!editorRef.current || !value) return;
-    editorRef.current.innerHTML = value;
+    editorRef.current.innerHTML = sanitizeAdminRichText(value);
   }, [value]);
 
   /* Track selection — only clear when user clicks/changes selection INSIDE the editor */
@@ -174,6 +175,8 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
         el.parentNode?.replaceChild(textNode, el);
       }
     } else {
+      const trial = sanitizeAdminRichText(`<span style="${prop}:${val.replaceAll('"', '&quot;')}">x</span>`);
+      if (!trial.includes(`${prop}:`)) return;
       const span = document.createElement("span");
       const parent = range.commonAncestorContainer;
       const parentEl = parent.nodeType === Node.ELEMENT_NODE ? parent as HTMLElement : parent.parentElement;
@@ -202,14 +205,21 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
   }, []);
 
   const toggleInline = useCallback((tag: string) => {
-    document.execCommand("insertHTML", false, `<${tag}>${window.getSelection()?.toString() ?? ""}</${tag}>`);
+    const selection = window.getSelection();
+    if (!selection?.rangeCount || !editorRef.current) return;
+    const range = selection.getRangeAt(0);
+    if (!editorRef.current.contains(range.commonAncestorContainer)) return;
+    const node = document.createElement(tag);
+    node.textContent = selection.toString();
+    range.deleteContents();
+    range.insertNode(node);
   }, []);
 
   const activeMeta = selectedProp ? PROPS[selectedProp] : null;
 
   const handleApply = () => {
     if (editorRef.current) {
-      onApply(editorRef.current.innerHTML);
+      onApply(sanitizeAdminRichText(editorRef.current.innerHTML));
     }
     onClose();
   };
@@ -217,7 +227,7 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
   const handleClearAll = () => {
     if (editorRef.current) {
       const text = editorRef.current.textContent ?? "";
-      editorRef.current.innerHTML = text;
+      editorRef.current.textContent = text;
       onApply(text);
     }
     onClose();
@@ -225,7 +235,7 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
 
   const handleReset = () => {
     if (editorRef.current) {
-      editorRef.current.innerHTML = value;
+      editorRef.current.innerHTML = sanitizeAdminRichText(value);
     }
   };
 
@@ -363,6 +373,20 @@ const TextPropertiesModal = ({ value, onApply, onClose }: TextPropertiesModalPro
                 className={styles.SettingsEditorContent}
                 contentEditable
                 suppressContentEditableWarning
+                onPaste={(e) => {
+                  e.preventDefault();
+                  const text = e.clipboardData.getData("text/plain");
+                  const selection = window.getSelection();
+                  if (!selection?.rangeCount) return;
+                  const range = selection.getRangeAt(0);
+                  range.deleteContents();
+                  const node = document.createTextNode(text);
+                  range.insertNode(node);
+                  range.setStartAfter(node);
+                  range.collapse(true);
+                  selection.removeAllRanges();
+                  selection.addRange(range);
+                }}
                 onFocus={() => { editorHasFocus.current = true; }}
                 onBlur={() => { editorHasFocus.current = false; }}
                 style={{

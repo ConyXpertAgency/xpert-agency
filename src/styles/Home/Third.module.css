@@ -11,6 +11,12 @@
     }
 }
 
+.CtaLink {
+    width: fit-content;
+    margin: 0 auto;
+    text-decoration: none;
+}
+
 .Third::before {
     content: "";
     position: absolute;

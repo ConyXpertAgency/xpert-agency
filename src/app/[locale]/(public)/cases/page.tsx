@@ -12,6 +12,7 @@ import { getCasesClients, getCasesPage, getCasesStudies, getPageSeo } from "@/li
 import { isValidLocale, pageMetadata } from "@/lib/site";
 import { sectionBgClass, sectionBgStyle } from "@/lib/sectionBg";
 import type { Lang } from "@/lib/supabase/types";
+import { publicCaseClients } from "@/lib/publicCaseClients";
 
 const META = {
   en: {
@@ -45,7 +46,8 @@ const page = async () => {
     const clients = await getCasesClients(lang);
     const featuredStudies = studies.items.filter((item) => item.featured);
     const otherStudies = studies.items.filter((item) => !item.featured);
-    const publicClientItems = clients.items;
+    // Filter before the client boundary so internal copy is not serialized publicly.
+    const publicClientItems = publicCaseClients(clients.items);
 
     return (
         <main className={`${styles.CasesPage} ${theme.LightSurface} ${sectionBgClass(data)}`} style={sectionBgStyle(data)}>

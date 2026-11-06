@@ -7,9 +7,13 @@ import "@/styles/globals.css";
 import Navbar from "@/components/ui/Navbar";
 import PublicFooter from "@/components/ui/PublicFooter";
 import { getNav, getAvailableLangs, getSettings, getPageSeo } from "@/lib/data";
-import { SITE_URL, isValidLocale } from "@/lib/site";
+import { SITE_URL, isValidLocale, publicContactEmail } from "@/lib/site";
 import ConsentBanner from "@/components/consent/ConsentBanner";
 import type { Lang } from "@/lib/supabase/types";
+
+// Bound stale CMS content even when a record is edited directly in Supabase,
+// bypassing the admin route's on-demand revalidation.
+export const revalidate = 300;
 
 // Consent Mode v2: todo denegado por defecto, antes de que GTM procese
 // ningún tag. wait_for_update da margen a aplicar la preferencia guardada.
@@ -71,7 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   ]);
   // Structured data global. sameAs se omite: el CMS no tiene perfiles
   // sociales confirmados. contactPoint sale del CMS y se omite si está vacío.
-  const contactEmail = (settings.contact_email ?? "").trim();
+  const contactEmail = publicContactEmail(settings.contact_email);
   const contactPhone = (settings.whatsapp ?? "").replace(/[^\d+]/g, "");
   const organization = {
     "@context": "https://schema.org",

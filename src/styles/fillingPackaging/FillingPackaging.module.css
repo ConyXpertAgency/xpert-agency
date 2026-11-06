@@ -150,6 +150,27 @@
   white-space: nowrap;
 }
 
+.HeroAlsCta .HeroAlsPrimaryButton {
+  color: var(--color-text-inverse);
+}
+
+.HeroAlsCta .HeroAlsPrimaryButton:focus-visible {
+  outline-color: var(--color-text-inverse);
+}
+
+/* The secondary CTA crosses a light part of the image: keep it readable there. */
+.HeroAlsCta .HeroAlsSecondaryButton {
+  background: #fff;
+  color: var(--color-success-soft);
+  border-color: var(--color-success-soft);
+}
+
+.HeroAlsCta .HeroAlsSecondaryButton:hover:not(:disabled) {
+  background: var(--color-success-soft);
+  color: #fff;
+  border-color: var(--color-success-soft);
+}
+
 .HeroAlsCta :global(svg) {
   font-size: 0.68rem;
 }
@@ -652,7 +673,13 @@
 }
 
 @media (max-width: 576px) {
-  .HeroAlsContent h1 { font-size: 1.9rem; }
+  .HeroAls { padding-inline: 16px; }
+  .HeroAlsFrame { width: 100%; min-height: 0; aspect-ratio: auto; }
+  .HeroAlsContent { position: relative; inset: auto; width: 100%; max-width: none; box-sizing: border-box; padding: 1.75rem 1rem; }
+  .HeroAlsContent h1 { font-size: clamp(1.65rem, 7vw, 1.9rem); }
+  .HeroAlsCta { flex-direction: column; gap: 0.5rem; }
+  .HeroAlsCta :global(a), .HeroAlsCta :global(button) { width: 100%; }
+  .HeroFacts { justify-content: center; }
   .GlanceAlsInner { gap: 1.2rem; }
   .InternationalRight { height: 300px; }
   .CapabilitiesWorkflowInline { flex-wrap: wrap; gap: 0.35rem 0.7rem; justify-content: center; }
