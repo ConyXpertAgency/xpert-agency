@@ -4,6 +4,7 @@ import { DEFAULT_GLOBAL_REACH_NODES } from "./adminSchema";
 import { expertiseGroups } from "./expertiseGroups";
 import { serviceGroups } from "./serviceGroups";
 import { getUiCopy } from "./i18n";
+import { normalizeNavLabels } from "./navigationLabels";
 import { SEO_DEFAULTS, type SeoEntry, type SeoPageKey } from "./seoDefaults";
 import type {
   AboutFirst,
@@ -1280,7 +1281,7 @@ export const getNav = async (lang: Lang, reader: ContentReader = getContent): Pr
   // New editor saves explicitly own the list. Keep the legacy backfill below
   // only for older rows, so deliberate reordering and removal stay effective.
   if (saved && !Array.isArray(saved) && saved.editor_managed === true && Array.isArray(saved.items)) {
-    return saved.items as NavItem[];
+    return normalizeNavLabels(saved.items as NavItem[], lang);
   }
   const raw = await getTyped<NavItem[]>("nav", "items", lang, NAV_DEFAULTS, reader);
   // Supabase may contain stale nav without Filling & Packaging and with hasDropdown — enforce architecture
@@ -1288,7 +1289,7 @@ export const getNav = async (lang: Lang, reader: ContentReader = getContent): Pr
   const configuredFillingPackaging = items.find((it) => it.href === "/filling-packaging");
   // strip false chevrons
   items = items.map((it) => ({ ...it, hasDropdown: undefined } as NavItem));
-  if (configuredFillingPackaging) return items;
+  if (configuredFillingPackaging) return normalizeNavLabels(items, lang);
   // re-inject at approved position: after Industries (or after Services if Industries missing)
   const idxIndustries = items.findIndex((it) => it.href === "/industries");
   const insertAt = idxIndustries >= 0 ? idxIndustries + 1 : items.findIndex((it) => it.href === "/cases");
@@ -1296,7 +1297,7 @@ export const getNav = async (lang: Lang, reader: ContentReader = getContent): Pr
   if (insertAt >= 0) items.splice(insertAt, 0, fp);
   else items.splice(Math.max(0, items.length - 2), 0, fp); // before contact/rbe fallback
   // ensure contact stays last CTA (Navbar splits it)
-  return items;
+  return normalizeNavLabels(items, lang);
 };
 
 export const getSettings = (lang: Lang, reader: ContentReader = getContent) =>
