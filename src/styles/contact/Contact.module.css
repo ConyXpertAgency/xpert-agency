@@ -271,6 +271,14 @@ a.ContactLink:focus-visible {
     padding-left: 0;
 }
 
+.ContactActions {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: .25rem;
+    max-width: 100%;
+}
+
 .PhoneRow {
     display: flex;
     align-items: center;

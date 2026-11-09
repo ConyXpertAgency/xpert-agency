@@ -9,7 +9,7 @@ import { resolveStorageUrl } from "@/lib/supabase/client";
 import { ELMAR_LINKEDIN_URL } from "@/lib/site";
 import { getIcon } from "@/lib/supabase/icons";
 import { approvedWhatsAppHref } from "@/lib/contactSocial";
-import { FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+import { FaEnvelope, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import type { ContactPage, ContactTeams, RegionalContact } from "@/lib/supabase/types";
 
 interface Props {
@@ -126,23 +126,33 @@ const ContactExperience = ({ pageData, teamsData, lang = "en" }: Props) => {
                                                         {contact.phones?.filter(Boolean).map((phone, index) => (
                                                             <div className={styles.PhoneRow} key={index}>
                                                                 <span className={styles.ContactMeta}>{phone}</span>
-                                                                {phone.replace(/\D/g, "") === whatsappUrl?.split("/").pop() && (
+
+                                                            </div>
+                                                        ))}
+                                                        {contact.publicEmail && <span className={styles.ContactMeta}>{contact.publicEmail}</span>}
+                                                        {(contact.publicEmail || linkedinUrl || whatsappUrl) && (
+                                                            <div className={styles.ContactActions}>
+                                                                {contact.publicEmail && (
+                                                                    <a className={styles.ContactLink} href={`mailto:${contact.publicEmail}`}
+                                                                        aria-label={`Email: ${contact.name}`}>
+                                                                        <FaEnvelope aria-hidden="true" />
+                                                                    </a>
+                                                                )}
+                                                                {linkedinUrl && (
+                                                                    <a className={styles.ContactLink} href={linkedinUrl}
+                                                                        target="_blank" rel="noreferrer" aria-label={`LinkedIn: ${contact.name}`}>
+                                                                        <FaLinkedinIn aria-hidden="true" />
+                                                                    </a>
+                                                                )}
+                                                                {whatsappUrl && (
                                                                     <a className={styles.ContactLink} href={whatsappUrl}
-                                                                        target="_blank" rel="noreferrer" aria-label={`WhatsApp: ${contact.name} — ${phone}`}>
+                                                                        target="_blank" rel="noreferrer" aria-label={`WhatsApp: ${contact.name}`}>
                                                                         <FaWhatsapp aria-hidden="true" />
                                                                     </a>
                                                                 )}
                                                             </div>
-                                                        ))}
-                                                        {contact.publicEmail && <span className={styles.ContactMeta}>{contact.publicEmail}</span>}
-                                                        {contact.website && <span className={styles.ContactMeta}>{contact.website}</span>}
-                                                        {linkedinUrl && (
-                                                            <a className={styles.ContactLink} href={linkedinUrl}
-                                                                target="_blank" rel="noreferrer" aria-label={`LinkedIn: ${contact.name}`}>
-                                                                <FaLinkedinIn aria-hidden="true" />
-                                                                <span>LinkedIn</span>
-                                                            </a>
                                                         )}
+                                                        {contact.website && <span className={styles.ContactMeta}>{contact.website}</span>}
                                                     </div>
                                                 </li>
                                             );

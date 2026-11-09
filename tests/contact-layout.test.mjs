@@ -33,13 +33,20 @@ function renderContact(contacts) {
 
 test('rendered social links belong to their contact and exact authorized phone, preserving CMS text', () => {
   const html = renderContact([
-    { id: 'elmar-a-beckord', name: 'Elmar A. Beckord', role: 'Partner', countries: ['Germany'], phones: ['+49 171 8892 788', '+55 52 3431 5953'] },
+    { id: 'elmar-a-beckord', name: 'Elmar A. Beckord', role: 'Partner', countries: ['Germany'], publicEmail: 'elmar@example.test', phones: ['+49 171 8892 788', '+55 52 3431 5953'] },
     { id: 'manuel-josef-schmid', name: 'Manuel Josef Schmid', phones: ['+49 151 42471640'] },
   ]);
   const cards = html.match(/<li class="ContactCard[\s\S]*?<\/li>/g);
   assert.equal(cards.length, 2);
   assert.match(cards[0], /aria-label="LinkedIn: Elmar A\. Beckord"/);
-  assert.match(cards[0], /<div class="PhoneRow"><span class="ContactMeta">\+49 171 8892 788<\/span><a[^>]*href="https:\/\/wa.me\/491718892788"/);
+  assert.match(cards[0], /<div class="PhoneRow"><span class="ContactMeta">\+49 171 8892 788<\/span><\/div>/);
+  const row = cards[0].match(/<div class="ContactActions">([\s\S]*?)<\/div>/)?.[1];
+  assert.ok(row);
+  assert.deepEqual([...row.matchAll(/href="([^"]+)"/g)].map((match) => match[1]), [
+    'mailto:elmar@example.test', 'https://www.linkedin.com/in/elmar-beckord/', 'https://wa.me/491718892788',
+  ]);
+  assert.doesNotMatch(row, /<span>LinkedIn<\/span>/);
+  assert.match(row, /aria-label="Email: Elmar A\. Beckord"/);
   assert.match(cards[0], /\+55 52 3431 5953/);
   assert.match(cards[0], /Partner/);
   assert.match(cards[0], /Germany/);
@@ -58,6 +65,31 @@ test('contact selection and social links share a card without nested interactive
   assert.doesNotMatch(button, /<a\s/);
   assert.match(source, /className=\{styles.ContactDetails\}/);
   assert.match(source, /className=\{styles.PhoneRow\}/);
-  assert.match(source, /phone.replace\(\/\\D\/g, ""\) === whatsappUrl\?\.split\("\/"\).pop\(\)/);
-  assert.match(source, /aria-label=\{`WhatsApp: \$\{contact.name\} — \$\{phone\}`\}/);
+  assert.match(source, /approvedWhatsAppHref\(contact\)/);
+  assert.match(source, /className=\{styles.ContactActions\}/);
+});
+
+test('only available approved actions render, including Cony and missing approved phones', () => {
+  const html = renderContact([
+    { id: 'maria-concepcion-lona-romero', name: 'Cony', phones: ['+52 55 3431 5953'] },
+    { id: 'elmar-a-beckord', name: 'Elmar', phones: ['+49 999'] },
+    { id: 'other', name: 'Other', publicEmail: 'other@example.test', linkedin: 'https://www.linkedin.com/in/configured/' },
+  ]);
+  const cards = html.match(/<li class="ContactCard[\s\S]*?<\/li>/g);
+  assert.match(cards[0], /href="https:\/\/wa.me\/525534315953"/);
+  assert.doesNotMatch(cards[0], /mailto:|linkedin.com/);
+  assert.doesNotMatch(cards[1], /wa.me/);
+  assert.match(cards[2], /href="mailto:other@example.test"/);
+  assert.match(cards[2], /href="https:\/\/www.linkedin.com\/in\/configured\/"/);
+  assert.doesNotMatch(cards[2], /wa.me/);
+});
+
+test('action row stays horizontal with uniform accessible targets', () => {
+  const css = readFileSync('src/styles/contact/Contact.module.css', 'utf8');
+  const row = css.match(/\.ContactActions\s*\{([^}]+)\}/)[1];
+  assert.match(row, /display: flex/);
+  assert.match(row, /flex-wrap: nowrap/);
+  const link = css.match(/a\.ContactLink\s*\{([^}]+)\}/)[1];
+  assert.match(link, /min-width: 44px/);
+  assert.match(link, /min-height: 44px/);
 });
