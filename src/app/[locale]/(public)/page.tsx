@@ -2,6 +2,7 @@ import { locale } from "next/root-params";
 import type { Metadata } from "next";
 import { First, Four, HomeFinalCta, Second, Third } from "@/components/home";
 import TrustBand from "@/components/home/TrustBand";
+import LaCostenaFeature from "@/components/home/LaCostenaFeature";
 import HomeFillingPackagingBanner from "@/components/home/HomeFillingPackagingBanner";
 import { getHomeFinalCta, getHomeFillingBanner, getHomeGlobalReach, getHomeHero, getHomePartners, getHomeRoles, getHomeTrustBand, getPageSeo } from "@/lib/data";
 import { getTrustBandLogos } from "@/lib/industryLogos";
@@ -36,8 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const lang = (await locale()) as Lang;
-
-  const [hero, partners, globalReach, roles, finalCta, trustBand, fillingBanner, trustLogos] = await Promise.all([
+  const [hero, partners, globalReach, roles, finalCta, trustBand, fillingBanner] = await Promise.all([
     getHomeHero(lang),
     getHomePartners(lang),
     getHomeGlobalReach(lang),
@@ -45,14 +45,14 @@ export default async function Home() {
     getHomeFinalCta(lang),
     getHomeTrustBand(lang),
     getHomeFillingBanner(lang),
-    getTrustBandLogos(lang),
   ]);
 
-  const logos = trustBand.show_logos ? (trustBand.logos.length ? trustBand.logos : trustLogos) : [];
+  const logos = trustBand.show_logos ? await getTrustBandLogos(lang, trustBand.logos) : [];
 
   return (
     <main className="AppShell">
       <First hero={hero} />
+      <LaCostenaFeature lang={lang} />
       <TrustBand logos={logos} caption={trustBand.caption} />
       <Second partners={partners} lang={lang} />
       <Third globalReach={globalReach} lang={lang} />

@@ -83,6 +83,8 @@ test('public Cases page excludes review copy before serializing client props and
     page.filename = filename;
     page.require = (id) => {
       if (id === 'next/root-params') return { locale: async () => lang };
+      if (id === 'next/image') return { __esModule: true, default: () => null };
+      if (id === '@/lib/supabase/client') return { resolveStorageUrl: (src) => src };
       if (id === '@/lib/publicCaseClients') return { publicCaseClients };
       if (id === '@/lib/data') return {
         getCasesPage: async () => ({ header: { badge: 'Cases', title: 'Cases', text: 'Approved commercial description.' } }),
@@ -93,6 +95,8 @@ test('public Cases page excludes review copy before serializing client props and
         ] }),
         getCasesStudies: async () => ({ items: [
           { id: 'featured', featured: true, title: 'Landmark Fashion', project: 'Approved fashion logistics project.', results: [] },
+          { id: 'la-costena-mexico-distribution', featured: true, title: 'Conservas La Costeña', results: ['Result 1', 'Result 2', 'Result 3', 'Result 4'] },
+          ...Array.from({ length: 8 }, (_, index) => ({ id: 'normal-' + index, featured: true, title: 'Normal ' + index })),
           { id: 'other-study', featured: false, title: 'Other case study' },
         ] }),
       };
@@ -105,7 +109,8 @@ test('public Cases page excludes review copy before serializing client props and
         // Model the client boundary: any unfiltered note would be exposed in the serialized props.
         return { __esModule: true, default: ({ items }) => React.createElement('pre', null, JSON.stringify(items)) };
       }
-      if (id.endsWith('/CardContent')) return { __esModule: true, default: ({ title, description }) => React.createElement('article', null, title, description) };
+      if (id.endsWith('/LaCostenaFeature')) return { __esModule: true, default: ({ variant }) => React.createElement('div', { 'data-variant': variant }) };
+      if (id.endsWith('/CardContent')) return { __esModule: true, default: ({ id, title, description, children }) => React.createElement('article', { id }, title, description, children) };
       if (id.endsWith('/PictureSvg')) return { __esModule: true, default: () => null };
       return require(id);
     };
@@ -113,6 +118,11 @@ test('public Cases page excludes review copy before serializing client props and
       compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS },
     }).outputText, filename);
     const html = renderToStaticMarkup(await page.exports.default());
+    assert.equal((html.match(/id="la-costena"/g) ?? []).length, 1, lang);
+    assert.deepEqual([...html.matchAll(/id="(featured|normal-\d|la-costena)"/g)].map(([, id]) => id),
+      ['featured', ...Array.from({ length: 8 }, (_, index) => 'normal-' + index), 'la-costena'], lang);
+    assert.ok(html.indexOf('data-variant="cases"') >= 0 && html.indexOf('data-variant="cases"') < html.indexOf('Approved commercial description.'), lang);
+    for (let i = 1; i <= 4; i++) assert.ok(html.includes('Result ' + i), lang);
     assert.ok(!html.includes(note), lang);
     for (const expected of ['Landmark Fashion', 'Approved commercial description.', 'Approved fashion logistics project.', 'REVIEW: Approved public client performance assessment.', 'Other case study']) {
       assert.ok(html.includes(expected), `${lang}: ${expected}`);

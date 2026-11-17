@@ -687,10 +687,16 @@ const ELMAR_FEATURED_CASES: Record<Lang, CaseStudy[]> = {
   ],
 };
 
+const LA_COSTENA_CASE: Record<Lang, CaseStudy> = {
+  en: { id: "la-costena-mexico-distribution", client: "Conservas La Costeña", title: "Conservas La Costeña", industry: "Food manufacturing and distribution · Mexico", logo: "/logos/la-costena.jpg", project: "On-site project leadership for a major systems integrator in a distribution-center project involving high-bay warehousing, picking and packing, and SAP-based WMS. Production plants connect to the distribution center.", results: ["Headcount reduced by more than 50%", "Immediate availability improved by more than 25%", "Lead time reduced by more than 30%", "Service level improved by more than 20%"], featured: true },
+  es: { id: "la-costena-mexico-distribution", client: "Conservas La Costeña", title: "Conservas La Costeña", industry: "Industria alimentaria y distribución · México", logo: "/logos/la-costena.jpg", project: "Liderazgo de proyecto en sitio para un importante integrador de sistemas en un centro de distribución con almacén de gran altura, preparación y empaque de pedidos, y WMS basado en SAP. Las plantas de producción están conectadas con el centro de distribución.", results: ["Reducción de personal superior al 50 %", "Mejora de la disponibilidad inmediata superior al 25 %", "Reducción del tiempo de entrega superior al 30 %", "Mejora del nivel de servicio superior al 20 %"], featured: true },
+  de: { id: "la-costena-mexico-distribution", client: "Conservas La Costeña", title: "Conservas La Costeña", industry: "Lebensmittelproduktion und Distribution · Mexiko", logo: "/logos/la-costena.jpg", project: "Projektleitung vor Ort für einen großen Systemintegrator bei einem Distributionszentrum mit Hochregallager, Kommissionierung und Verpackung sowie SAP-basiertem Warehouse-Management-System (WMS). Die Produktionsstandorte sind mit dem Distributionszentrum verbunden.", results: ["Personalbedarf um mehr als 50 % reduziert", "Unmittelbare Verfügbarkeit um mehr als 25 % verbessert", "Durchlaufzeit um mehr als 30 % reduziert", "Servicegrad um mehr als 20 % verbessert"], featured: true },
+};
+
 export const getCasesStudies = async (lang: Lang, reader: ContentReader = getContent): Promise<CasesStudies> => {
   const mergeElmar = (items: CaseStudy[]): CaseStudy[] => {
     const ids = new Set(items.map((item) => item.id));
-    const missing = (ELMAR_FEATURED_CASES[lang] ?? ELMAR_FEATURED_CASES.en).filter(
+    const missing = [LA_COSTENA_CASE[lang], ...(ELMAR_FEATURED_CASES[lang] ?? ELMAR_FEATURED_CASES.en)].filter(
       (item) => !ids.has(item.id)
     );
     // Debajo de los featured existentes, como pidió Cony.

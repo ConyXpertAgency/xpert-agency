@@ -1,6 +1,7 @@
 // Intrinsic dimensions of the approved trust-band assets, keyed by filename.
 // Reserve each logo's existing proportions before its bytes arrive.
 const dimensions: Record<string, readonly [number, number]> = {
+  "la-costena.jpg": [179, 107],
   "heineken.png": [
     320,
     320

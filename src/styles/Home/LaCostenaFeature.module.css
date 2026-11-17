@@ -1,0 +1,141 @@
+.Banner {
+  position: relative;
+  left: 50%;
+  isolation: isolate;
+  width: 100dvw;
+  max-width: none;
+  flex: none;
+  margin: -0.5rem 0;
+  transform: translateX(-50%);
+  overflow: hidden;
+  border-radius: 0;
+  background-color: #061b33;
+  background-image: linear-gradient(90deg, rgb(6 27 51 / 35%), transparent 58%), url("/images/la-costena-home-desktop.webp");
+  background-position: center bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.Content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(100%, var(--site-max-width));
+  min-height: 260px;
+  box-sizing: border-box;
+  margin-inline: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 22px var(--side-padding);
+}
+
+.Eyebrow {
+  margin: 0 0 10px;
+  padding-left: 11px;
+  border-left: 2px solid #8bc540;
+  color: #e8edf4;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  line-height: 1.4;
+}
+
+.Logo {
+  display: block;
+  width: clamp(140px, 13vw, 170px);
+  height: auto;
+  max-height: 80px;
+  margin: 0 0 9px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.Description {
+  max-width: 350px;
+  margin: 0;
+  color: #e8edf4;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.Link {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 0 17px;
+  border: 1px solid #dbe8cc;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .18s ease, color .18s ease;
+}
+
+.Link:hover { background: #8bc540; color: #061b33; }
+.Link:focus-visible { outline: 3px solid #8bc540; outline-offset: 3px; }
+.Link span { font-size: 18px; line-height: 1; }
+.Photo { display: none; }
+.Disclaimer { position: absolute; right: 10px; bottom: 6px; z-index: 1; margin: 0; color: rgba(255,255,255,.82); font-size: 9px; text-shadow: 0 1px 3px #061b33; }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .Content { min-height: 250px; padding-block: 20px; }
+  .Logo { width: 145px; }
+  .Description { max-width: 330px; font-size: 14px; }
+}
+
+@media (max-width: 767px) {
+  .Banner {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    width: 100dvw;
+    margin: -0.5rem 0;
+    border-radius: 0;
+    transform: translateX(-50%);
+    background: #061b33;
+  }
+  .Content { width: min(100%, var(--site-max-width)); min-height: 0; padding: 19px var(--side-padding) 12px; }
+  .Eyebrow { margin-bottom: 8px; font-size: 10px; }
+  .Logo { width: 132px; max-height: 62px; margin-bottom: 8px; }
+  .Description { max-width: 100%; font-size: 13px; line-height: 1.4; }
+  .Link { min-height: 44px; margin-top: 10px; }
+  .Photo {
+    display: block;
+    width: 100%;
+    height: clamp(180px, 56vw, 220px);
+    flex: 0 0 auto;
+    background: #061b33 url("/images/la-costena-home-mobile.webp") center bottom / cover no-repeat;
+  }
+  .Disclaimer { right: 8px; bottom: 5px; max-width: 70%; font-size: 8px; text-align: right; }
+}
+
+@media (max-width: 359px) {
+  .Content { padding-inline: 16px; }
+  .Description { font-size: 12.5px; }
+}
+
+/* AppShell's 2rem gap exceeds the hero background's 1rem overhang. */
+.Home { margin-top: -1rem; }
+@media (max-width: 768px) { .Home { margin-top: -.75rem; } }
+
+.Cases {
+  left: auto;
+  width: 100%;
+  margin: 0;
+  transform: none;
+  background-image: linear-gradient(108deg, #061b33 0%, #061b33 36%, #581e31 47%, transparent 63%), url("/images/la-costena-cases.webp");
+  background-position: center, right center;
+  background-size: cover, max(64%, 570px) auto;
+}
+
+.Cases .Content { min-height: clamp(350px, 34vw, 490px); }
+
+@media (max-width: 767px) {
+  .Cases { background-image: none; }
+  .Cases .Content { min-height: 0; padding-block: 28px 18px; }
+}
