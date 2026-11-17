@@ -11,12 +11,12 @@ import type { Lang } from "@/lib/supabase/types";
  */
 export async function getTrustBandLogos(lang: Lang, configuredLogos?: string[], reader?: ContentReader): Promise<string[]> {
   if (configuredLogos?.length) {
-    return [...new Set(configuredLogos.map((logo) => logo.trim()).filter(Boolean))];
+    return [...new Set(configuredLogos.map((logo) => logo.trim()).filter((logo) => Boolean(logo) && !logo.toLowerCase().includes("la-costena")))];
   }
   const studies = await getCasesStudies(lang, reader);
   const studyLogosRaw = studies.items
     .map((s) => s.logo)
-    .filter((v): v is string => Boolean(v));
+    .filter((v): v is string => typeof v === "string" && !v.toLowerCase().includes("la-costena"));
   // Mapea los PNG de Supabase a WebP locales optimizados (public/logos/).
   const studyLogos = studyLogosRaw.map((p) => {
     const base = p.split("/").pop()!.replace(/\.png$/i, ".webp").toLowerCase();
