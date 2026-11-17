@@ -393,7 +393,7 @@
 
 .chartLine {
     fill: none;
-    stroke: var(--color-success);
+    stroke: #c4f479;
     /* Color verde claro */
     stroke-width: 4;
     stroke-linecap: round;
@@ -409,7 +409,7 @@
 
 /* Sombra opcional debajo de la línea */
 .chartArea {
-    fill: url(#gradient);
+    fill: url(#hero-productivity-fill);
     opacity: 0.2;
 }
 
@@ -897,4 +897,55 @@
     .Right > article > .AnimationCards > .FourCard .mapWrapper::before {
         background-size: 8px 8px;
     }
+}
+
+/* Executive KPI surfaces; the charts are illustrative, not additional data. */
+.First .CardRight,
+.First .Left footer article {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    background: linear-gradient(145deg, rgb(119 163 197 / 10%), transparent 65%), var(--hero-glass-bg);
+    border: 1px solid rgb(171 206 231 / 19%);
+    box-shadow: inset 0 1px rgb(255 255 255 / 7%), 0 10px 26px rgb(0 10 26 / 27%);
+}
+
+.First .Left footer article { padding: .65rem; border-radius: var(--radius-lg); }
+.First .Left footer article::after { display: none; }
+
+.KpiHeader { display: flex; width: 100%; justify-content: center; align-items: center; gap: .4rem; text-align: center; }
+.KpiHeader .KpiIcon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1.45rem;
+    height: 1.45rem;
+    border-radius: .4rem;
+    color: #c4f479;
+    background: rgb(196 244 121 / 11%);
+}
+.FirstCard > article { grid-template-rows: auto minmax(0, 1fr); }
+.chartContainer { width: 100%; scale: none; }
+.chartContainer svg { display: block; width: 100%; height: auto; max-height: 7rem; }
+.ChartGrid { stroke: rgb(179 211 233 / 20%); fill: none; }
+.chartLine { filter: drop-shadow(0 0 4px rgb(163 230 53 / 36%)); }
+
+.First .circularProgress {
+    width: min(100%, 8rem);
+    height: auto;
+    aspect-ratio: 1;
+    background: conic-gradient(from -5deg, #d2fb8c, #91cb57 82%, rgb(200 222 241 / 18%) 82%);
+    box-shadow: 0 0 16px rgb(163 230 53 / 12%);
+}
+.First .circularProgress::before {
+    inset: 5px;
+    width: auto;
+    height: auto;
+    background: radial-gradient(circle at 50% 34%, #18334f, #071a31 75%);
+}
+.progressValue { font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
+.ThirdCard > p { text-wrap: balance; }
+
+@media (max-width: 576px) {
+    .First .circularProgress { width: min(100%, 6rem); }
+    .First .Left footer article { padding: .55rem; }
 }
