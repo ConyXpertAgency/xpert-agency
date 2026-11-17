@@ -8,7 +8,8 @@ import type { IconType } from 'react-icons'
 import PictureSvg from '../ui/PictureSvg'
 import RichText from '../ui/RichText'
 import styles from '@/styles/Home/First.module.css'
-import type { HomeHero } from '@/lib/supabase/types'
+import type { HomeHero, Lang } from '@/lib/supabase/types'
+import { localizedPath } from '@/lib/site'
 
 const coreAreaIcons: IconType[] = [FaCogs, GiRobotGrab, FaTruckMoving, FaProjectDiagram]
 
@@ -16,9 +17,16 @@ const SWAP_INTERVAL_MS = 3500
 
 interface AnimationCardsProps {
     hero: HomeHero
+    lang: Lang
 }
 
-const AnimationCards = ({ hero }: AnimationCardsProps) => {
+const caseLabels: Record<Lang, string> = {
+    en: 'See our cases',
+    es: 'Ver nuestros casos',
+    de: 'Unsere Fallstudien ansehen',
+}
+
+const AnimationCards = ({ hero, lang }: AnimationCardsProps) => {
     const [showFour, setShowFour] = useState(false)
     useEffect(() => {
         const id = window.setInterval(() => setShowFour(value => !value), SWAP_INTERVAL_MS)
@@ -64,7 +72,7 @@ const AnimationCards = ({ hero }: AnimationCardsProps) => {
                         <div className={styles.FourTextColumn}>
                             <strong><RichText>{hero.global_delivery.title}</RichText></strong>
                             <p><RichText>{hero.global_delivery.text}</RichText></p>
-                            <Link href={'/cases'} className='details'>See our cases <FaArrowRight /></Link>
+                            <Link href={localizedPath(lang, '/cases')} className='details'>{caseLabels[lang]} <FaArrowRight /></Link>
                         </div>
                     </section>
                 </article>

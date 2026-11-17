@@ -12,16 +12,17 @@ import { InformationCard } from './index'
 import RichText from '../ui/RichText'
 import AnimationCards from './AnimationCards'
 import type { IconType } from 'react-icons'
-import type { HomeHero } from '@/lib/supabase/types'
+import type { HomeHero, Lang } from '@/lib/supabase/types'
 import { resolveStorageUrl } from '@/lib/supabase/client'
 
 const infoCardIcons: IconType[] = [IoShieldCheckmarkOutline, CiGlobe, GiChart]
 
 interface FirstProps {
     hero: HomeHero
+    lang: Lang
 }
 
-const First = ({ hero }: FirstProps) => {
+const First = ({ hero, lang }: FirstProps) => {
     const lines = hero.title.length > 0 ? hero.title : ['Xpert.agency']
     const heroImage = resolveStorageUrl(hero.background_image)
     // This preview belongs only to the approved asset, never to a new CMS image.
@@ -110,7 +111,7 @@ const First = ({ hero }: FirstProps) => {
                             <p><span><RichText>{hero.stat_success.label}</RichText></span></p>
                         </article>
                     </section>
-                    <AnimationCards hero={hero} />
+                    <AnimationCards hero={hero} lang={lang} />
                 </article>
             </section>
         </header>
