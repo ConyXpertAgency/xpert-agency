@@ -50,8 +50,8 @@ export default async function Home() {
   const logos = trustBand.show_logos ? await getTrustBandLogos(lang, trustBand.logos) : [];
 
   return (
-    <main className="AppShell">
-      <First hero={hero} />
+    <main className="AppShell HomeShell">
+      <First hero={hero} lang={lang} />
       <LaCostenaFeature lang={lang} />
       <TrustBand logos={logos} caption={trustBand.caption} />
       <Second partners={partners} lang={lang} />

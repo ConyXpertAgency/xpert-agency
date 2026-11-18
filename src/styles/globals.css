@@ -259,6 +259,13 @@ main {
   gap: 2rem;
 }
 
+@media (max-width: 1200px) {
+  .HomeShell {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
 /* ─── RBE page: light brochure theme (matches rbe.php) ─── */
 .RbePage {
   --rbe-primary: #05154B;
