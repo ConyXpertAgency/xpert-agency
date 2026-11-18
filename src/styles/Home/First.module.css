@@ -563,7 +563,7 @@
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
     .First {
         flex-direction: column;
     }
@@ -723,10 +723,12 @@
 
     .Left footer {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: .45rem;
         margin-top: .55rem;
     }
+
+    .Left footer article:last-child { grid-column: 1 / -1; }
 
     .Left footer article {
         min-width: 0;
@@ -760,6 +762,17 @@
 
     .Right article {
         gap: .75rem;
+    }
+
+    .Right > article > section:not(.AnimationCards) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        min-width: 0;
+    }
+
+    .Right > article > section:not(.AnimationCards) > .CardRight {
+        min-width: 0;
+        width: 100%;
     }
 
     .Right article section {
@@ -807,13 +820,7 @@
 }
 
 @media (max-width: 340px) {
-    .Left footer {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .Left footer article:nth-child(3) {
-        grid-column: 1 / -1;
-    }
+    .Left footer { grid-template-columns: minmax(0, 1fr); }
 }
 
 .HeroBackground img {
@@ -821,14 +828,14 @@
     object-position: center right;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
     .HeroBackground img { object-position: center top; }
 }
 
 /* Stacked columns: Core focus areas stays in flow and defines the compact
    shared height, even while transparent. Delivery fills that same space;
    only opacity changes when the panels alternate. */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
     .Right > article > .AnimationCards {
         display: block;
         min-height: 0;
